@@ -40,7 +40,7 @@ $sWhere = $filters['sWhere'];
 //------------------------------------------------------------------------------ QUERY
 $query=$query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
 
-echo "<br>".$query;
+// echo "<br>".$query;
 
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 if (pg_num_rows ($result)) 
