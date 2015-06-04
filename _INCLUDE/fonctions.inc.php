@@ -604,6 +604,7 @@ function frt ($field,$value) {
 function sql_format_quote ($value,$do) {
     $value = str_replace (CHR(13).CHR(10)," ",$value);
     $value = str_replace ("\n"," ",$value);
+    $value = str_replace ("\t"," ",$value);
     $value = rtrim($value,"'");
 	if(strpos($value,"'"))	{
 		// echo "<BR> la valeur : $value ";
