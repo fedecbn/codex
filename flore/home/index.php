@@ -105,8 +105,10 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
 //            echo ("<img src=\"../../_GRAPH/theme/home3.png\" width=20 height=600 border=\"0\" align=left >");
             if ($niveau >=128 )  {
                 echo ("<br><a href=\"../module_admin/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/admin.png\" border=\"0\" /><br>".$lang['fr']['Admin']."</a></p>");
-                echo ("<br><a href=\"../bugs/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/bugs.png\" border=\"0\" /><br>".$lang['fr']['bugs']."</a></p>");
             }
+            if ($niveau >=1 )  {
+                echo ("<br><a href=\"../bugs/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/bugs.png\" border=\"0\" /><br>".$lang['fr']['bugs']."</a></p>");
+			}
             echo ("<br>Contacts :<br><br>");
             echo ("<br><br>");
             echo ("<b>Fédération des Conservatoires botaniques nationaux</b><br><br>");
