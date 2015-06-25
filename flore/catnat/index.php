@@ -223,7 +223,7 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 				echo ("</td>");
 				/*Statut Nat Calculé*/
 				echo ("<td>");
-				if ($type_stt == 'RAR') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt_fr_cal[$type_stt]);}
+				if ($type_stt == 'RAR' OR $type_stt == 'INDI') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt_fr_cal[$type_stt]);}
 				else {metaform_sel ("","no_lab","disabled style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt,$res_stt_fr_cal[$type_stt]);}
 				echo ("</td>");
 				/*Status régionaux*/
