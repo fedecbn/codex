@@ -26,10 +26,11 @@ $config=$_SESSION['id_config'];
 $lang_select=$_COOKIE['lang_select'];
 
 $query_module = "
-	SELECT t.*,c.*,e.*  
+	SELECT t.*,c.*,e.*, f.indi_cal  
 	FROM liste_rouge.taxons AS t 
 	LEFT JOIN liste_rouge.chorologie AS c ON c.uid=t.uid 
-	LEFT JOIN liste_rouge.evaluation AS e ON e.uid=t.uid 
+	LEFT JOIN liste_rouge.evaluation AS e ON e.uid=t.uid
+	LEFT JOIN catnat.statut_nat AS f ON f.uid = t.uid
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.$id_rub = TRUE AND t.uid=";
 

@@ -141,7 +141,6 @@ include ("../commun/add_fiche.php");
 
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
             if (pg_num_rows ($result)) {
-
 			$hybride = pg_result($result,0,"hybride");
 			$exotique = pg_result($result,0,"id_indi");
 			if ($hybride == 't' or $exotique == '3')		/*Gestion des hybrides et exotiques*/
@@ -151,6 +150,8 @@ include ("../commun/add_fiche.php");
 
 		if (pg_result($result,0,"etape") == null) {$etape = 1;}
 		else {$etape =pg_result($result,0,"etape");}
+		
+		
 		
 		
         echo ("<br>");
@@ -185,6 +186,7 @@ include ("../commun/add_fiche.php");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=33%>");
                 echo ("<br>");
                 metaform_sel ("Statut d'indigénat","","",$ref[$champ_ref['id_indi']],"id_indi",pg_result($result,0,"id_indi"));
+                metaform_text ("Statut d'indigénat (calculé)","",8,"readonly disabled","indi_cal",pg_result($result,0,"indi_cal"));
                 metaform_bout ("Endémique en métropole","","endemisme",pg_result($result,0,"endemisme"));
                 metaform_bout ("Taxon en limite d'aire","","limite_aire",pg_result($result,0,"limite_aire"));
                 metaform_bout ("Taxon en aire disjointe","","aire_disjointe",pg_result($result,0,"aire_disjointe"));
