@@ -127,9 +127,10 @@ while ($row = pg_fetch_assoc($result_modif))
 		$res_stt[$row['type_statut']][$row['id_reg']] = $row['id_statut'];
 
 /*National*/
-$query_france = "SELECT cd_indi, lr, rarete, 
+$query_france = "SELECT cd_indi, lr, rarete, presence,
 CASE WHEN endemisme = true THEN 1 WHEN endemisme = false THEN 2 ELSE 0 END as endemisme, 
-presence 
+indi_cal, lr_cal, rarete_cal, presence_cal,
+CASE WHEN endemisme_cal = 'oui' THEN 1 WHEN endemisme_cal = 'non' THEN 2 ELSE 0 END as endemisme_cal
 FROM catnat.statut_nat
 LEFT JOIN referentiels.indigenat ON indi = lib_indi WHERE uid = ".$id; 
 $result_france=pg_query ($db,$query_france) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_modif),false);
@@ -138,8 +139,13 @@ while ($row = pg_fetch_assoc($result_france))	{
 		$res_stt_fr['LR'] = $row['lr'];
 		$res_stt_fr['RAR'] = $row['rarete'];
 		if ($row['endemisme'] == 1) {$res_stt_fr['END'] = 'oui';} elseif ($row['endemisme'] == 2) {$res_stt_fr['END'] = 'non';} else {$res_stt_fr['END'] = '';} 
-		// if ($row['presence'] == 1) {$res_stt_fr['PRES'] = 'oui';} elseif ($row['presence'] == 2) {$res_stt_fr['PRES'] = 'non';} else {$res_stt_fr['PRES'] = '';} 
 		$res_stt_fr['PRES'] = $row['presence'];
+		
+		$res_stt_fr_cal['INDI'] = $row['indi_cal'];
+		$res_stt_fr_cal['LR'] = $row['lr_cal'];
+		$res_stt_fr_cal['RAR'] = $row['rarete_cal'];
+		if ($row['endemisme_cal'] == 1) {$res_stt_fr_cal['END'] = 'oui';} elseif ($row['endemisme_cal'] == 2) {$res_stt_fr_cal['END'] = 'non';} else {$res_stt_fr_cal['END'] = '';} 
+		$res_stt_fr_cal['PRES'] = $row['presence_cal'];
 		}
 
 
@@ -202,6 +208,7 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 			echo ("<tr valign=center >");
 			echo ("<th></th>");
 			echo ("<th style=\" text-align: center;	vertical-align: center;\">National</th>");
+			echo ("<th style=\" text-align: center;	vertical-align: center;\">National (calculé)</th>");
 			foreach ($ref['region'] as $id_reg => $region)	{
 					echo ("<th style=\" text-align: center;	vertical-align: center;\">$region</th>");
 					}
@@ -209,10 +216,17 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 			foreach ($ref['statut'] as $type_stt => $lib_stt)	{
 				echo ("<tr valign=top>");
 				echo ("<td style=\" text-align: center;	vertical-align: center;\">$lib_stt</td>");
+				/*Statut NAT*/
 				echo ("<td>");
 				if ($type_stt == 'RAR') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt_fr[$type_stt]);}
 				else {metaform_sel ("","no_lab","style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt,$res_stt_fr[$type_stt]);}
 				echo ("</td>");
+				/*Statut Nat Calculé*/
+				echo ("<td>");
+				if ($type_stt == 'RAR') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt_fr_cal[$type_stt]);}
+				else {metaform_sel ("","no_lab","disabled style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt,$res_stt_fr_cal[$type_stt]);}
+				echo ("</td>");
+				/*Status régionaux*/
 				foreach ($ref['region'] as $id_reg => $region)	{
 					if (empty($res_stt[$type_stt][$id_reg])) {
 						echo ("<td>");
