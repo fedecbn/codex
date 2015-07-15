@@ -468,6 +468,13 @@ function metaform_text ($label,$descr,$long,$extra,$champ,$val)
     echo ("<br>");
 }
 
+function metaform_text_calc ($label,$descr,$long,$extra,$champ,$val)
+{
+    if ($descr != 'no_lab') {echo ("<label class=\"preField_calc\">".$label."</label>");}
+    echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\" size=\"".$long."\" value=\"".$val."\" ".$extra." readonly disabled style=\"background-color:#EFEFEF\"/>");
+    echo ("<br>");
+}
+
 function metaform_text_area ($label,$descr,$row,$cols,$extra,$champ,$val)
 {
     if ($descr != 'no_lab') {echo ("<label class=\"preField\">".$label."</label>");}

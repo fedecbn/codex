@@ -428,6 +428,19 @@ label.preField {
     text-align: right;
 }
 
+label.preField_calc {
+    display: -moz-inline-box;
+    display: inline-block;  
+    margin: 2px 4px 0 0px;
+    padding: 2px;
+    width: 13em;
+    min-width: 13em;
+    background-color: #CFCFCF;                                                  /* Coul du label */
+    font-size:12px;
+	color: #757474;
+    text-align: right;
+}
+
 label.preField2 {
     display: -moz-inline-box;
     display: inline-block;  
