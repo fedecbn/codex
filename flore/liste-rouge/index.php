@@ -87,9 +87,10 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau > 64) 
+                if ($niveau >= 128) 
                     echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-                echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+				if ($niveau >= 64) 
+					echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
                 if ($niveau == 255) 
                     echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
@@ -116,6 +117,7 @@ include ("../commun/add_fiche.php");
 //------------------------------------------------------------------------------ REF. LR
 /*Récupération des référentiels ==> ref_champ ($table,$index,$valeur,$orderby)*/
 // include ("./lr-ref.php");		
+/*Gestion des niveau de droit*/
 
 //------------------------------------------------------------------------------ EDIT LR EN TETE
         echo ("<div id=\"$id_page\" >");
