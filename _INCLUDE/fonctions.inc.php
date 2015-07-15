@@ -910,7 +910,7 @@ if ($mod == 'add')
 	
 	INSERT INTO liste_rouge.taxons(uid,famille,cd_ref,nom_sci,nom_vern,id_rang,hybride) VALUES ($uid,$famille,$cd_nom,$nom_complet,$nom_vern,$id_rang,$hybride);
 	INSERT INTO liste_rouge.chorologie(uid) VALUES ($uid);
-	INSERT INTO liste_rouge.evaluation(uid) VALUES ($uid);
+	INSERT INTO liste_rouge.evaluation(uid,etape,valid) VALUES ($uid,1,false);
 	";
 	}
 else
@@ -941,7 +941,16 @@ else
 	id_rang=$id_rang,
 	hybride=$hybride 
 	WHERE uid=$uid_modif;
+	
+	UPDATE liste_rouge.evaluation SET 
+	etape=(SELECT CASE WHEN etape = 0 THEN etape = 1 ELSE etape END as etape FROM liste_rouge.evaluation WHERE uid=$uid_modif),
+	valid=(SELECT CASE WHEN valid IS NULL THEN valid = FALSE ELSE valid END as valid FROM liste_rouge.evaluation WHERE uid=$uid_modif)
+	WHERE uid=$uid_modif;
 	";
+	
+		
+
+	
 	}
 
 	

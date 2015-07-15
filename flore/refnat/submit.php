@@ -56,7 +56,7 @@ $in["pf"] = sql_format ($_POST["pf"]);
 $in["nc"] = sql_format ($_POST["nc"]);
 $in["wf"] = sql_format ($_POST["wf"]);
 $in["cli"] = sql_format ($_POST["cli"]);
-$in["habitat"] = sql_format_quote ($_POST["habitat"],'do');
+$in["habitat"] = sql_format_num ($_POST["habitat"],'do');
 
 $in["catnat"] = sql_format_bool ($_POST["catnat"],'do');
 $in["liste_rouge"] = sql_format_bool ($_POST["liste_rouge"],'do');
