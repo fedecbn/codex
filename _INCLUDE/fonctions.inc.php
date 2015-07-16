@@ -45,7 +45,7 @@ function menu_rubrique ($niveau,$module){
 		0 => 'pas d\'accès',
 		1 => 'lecteur',
 		64 => 'participant',
-		128 => 'pas d\'accès',
+		128 => 'évaluateur',
 		255 => 'administrateur'
 		);
 	
