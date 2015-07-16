@@ -78,7 +78,6 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
 			menu_rubrique ($niveau_catnat,"catnat");
 			menu_rubrique ($niveau_lr,"eval_lr");
 			menu_rubrique ($niveau_eee,"eval_eee");
-			
 			menu_rubrique ($niveau_lsi,"lsi");
 
 			// echo ("<br/>");

@@ -40,7 +40,15 @@ function footer () {
 
 function menu_rubrique ($niveau,$module){
     global $db;
-
+	
+	$ref_niveau = array(
+		0 => 'pas d\'accès',
+		1 => 'lecteur',
+		64 => 'participant',
+		128 => 'pas d\'accès',
+		255 => 'administrateur'
+		);
+	
     echo ("<div lang=\"fr\" id=\"rubriques\"><center><ul>");
     $query="SELECT * FROM ".SQL_schema_app.".rubrique WHERE id_module='".$module."' ORDER BY pos;";
     $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
@@ -49,7 +57,8 @@ function menu_rubrique ($niveau,$module){
             aff_pres ($module,"header",FR,false);
             echo ("<li><div class=\"icon\"><a href=\"".$row['link']."\"><img src=\"../../_GRAPH/".ICONES_SET."/".$row['icone']."\" align=left width=\"48\" height=\"48\" border=\"0\" /></a></div>");
             echo ("<a href=\"".$row["link"]."\"><strong>".$row["titre"]."</strong>".$row["descr"]."</a></li>");
-            aff_pres ($module,"footer",FR,false);
+			echo ("Droits d'accès à cette rubrique : <b> $ref_niveau[$niveau] </b>");
+		   aff_pres ($module,"footer",FR,false);
 		}
     } 
     echo ("</ul></div>");
