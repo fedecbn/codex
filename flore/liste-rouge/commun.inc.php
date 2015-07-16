@@ -41,7 +41,7 @@ $query_liste = "
 	CASE taxons.endemisme WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as endemisme,
 	chorologie.aoo4,chorologie.aoo_precis,chorologie.id_aoo,chorologie.nbloc_precis,chorologie.id_nbloc,chorologie.nbm5_post1990_est,chorologie.nbm5_post1990,chorologie.nbm5_post2000,chorologie.nbm5_total,chorologie.nbcommune,
 	evaluation.etape,evaluation.cat_a,evaluation.just_a,evaluation.cat_b,evaluation.just_b,evaluation.cat_c,evaluation.just_c,evaluation.cat_d,evaluation.just_d,evaluation.menace,evaluation.cat_fin,evaluation.just_fin,evaluation.cat_euro , evaluation.cat_synt_reg,evaluation.nb_reg_presence,evaluation.nb_reg_evalue,evaluation.notes,
-	CASE evaluation.avancement WHEN 1 THEN 'a réaliser' WHEN 2 THEN 'en cours' WHEN 3 THEN 'réalisée' ELSE '' END as avancement
+	evaluation.avancement
 	FROM liste_rouge.taxons
 	LEFT JOIN liste_rouge.chorologie ON chorologie.uid=taxons.uid 
 	LEFT JOIN liste_rouge.evaluation ON evaluation.uid=taxons.uid  
