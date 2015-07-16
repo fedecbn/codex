@@ -282,11 +282,14 @@
             }
 			switch (aData[21])                                                  // Cat EU
             {	
-                case 'oui' : 
-                    $('td:eq(21)', nRow).addClass('valid_oui');
+                case 'a réaliser' : 
+                    $('td:eq(21)', nRow).addClass('avancement_1');
                 break;
-                case 'non' : 
-                    $('td:eq(21)', nRow).addClass('valid_non');
+                case 'en cours' : 
+                    $('td:eq(21)', nRow).addClass('avancement_2');
+                break;
+                case 'réalisée' : 
+                    $('td:eq(21)', nRow).addClass('avancement_3');
                 break;
             }
             return nRow;
@@ -378,7 +381,7 @@
                 { type: "text" },
                 { type: "text" },
 //              { type: "select", values: ['EX','EW','RE','CR','CR*','EN','VU','NT','LC','DD','NA','NE']}, // cat_fin
-                { type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non'}]}                                               //  
+                { type: "select", values: [{ value: 1, label: 'a réaliser'},{ value: 2, label: 'en cours'},{ value: 3, label: 'réalisée'}]}                                               //  
 			]
 		});        
 	} else {

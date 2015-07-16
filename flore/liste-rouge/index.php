@@ -155,6 +155,9 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		if (pg_result($result,0,"etape") == null) {$etape = 1;}
 		else {$etape =pg_result($result,0,"etape");}
 		
+		if (pg_result($result,0,"avancement") == null) {$avancement = 1;}
+		else {$avancement =pg_result($result,0,"avancement");}
+		
 		
 		
 		
@@ -168,6 +171,17 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
         echo ("</div>");
         echo ("</center>");
 
+		
+		echo ("<center>");
+		echo ("<div id=\"radio2\">");
+			echo ("Avancement
+			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement1\" value=\"1\" ".($avancement==1 ? "checked=\"true\"" : "")." ><label for=\"avancement1\">A réaliser</label>
+			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement2\" value=\"2\" ".($avancement==2 ? "checked=\"true\"" : "")." ><label for=\"avancement2\">En cours</label>
+			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement3\" value=\"3\" ".($avancement==3 ? "checked=\"true\"" : "")." ><label for=\"avancement3\">Réalisée</label>");
+		echo ("</div>"); 
+		echo ("</center>");
+		
+		
 //------------------------------------------------------------------------------ EDIT LR GRP1
 		echo ("<div id=\"radio2\">");    
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_lr_1']."</LEGEND>");
@@ -183,7 +197,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					if ($niveau >= 128)
 						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"); 
 				echo ("</td></tr></table>");
-			echo ("<br><label class=\"preField\">Commentaires sur l'évaluation</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".pg_result($result,0,"commentaire")."</textarea><br><br>");
+			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".pg_result($result,0,"commentaire")."</textarea><br><br>");
 			echo ("</fieldset>");
 			echo ("</div>"); 
 //------------------------------------------------------------------------------ EDIT LR GRP2
@@ -304,22 +318,22 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
             echo ("</td><td width=250>");
                 metaform_sel ("<b>Catégorie fin</b>",$desc,$extra,$ref[$champ_ref['cat_fin']],"cat_fin",pg_result($result,0,"cat_fin"));
                 metaform_text ("Critère(s) fin",$desc,10,$extra,"just_fin",pg_result($result,0,"just_fin"));
+            echo ("</td><td width=250>");
+				if ($niveau <= 64) echo ("<label class=\"preField_calc\">Explication eval</label>"); else echo ("<label class=\"preField\">Explication eval</label>");
+				if ($niveau <= 64) echo ("<textarea name=\"notes\" $disa style=\"width:30em;background-color: #EFEFEF;\" rows=\"2\" >".pg_result($result,0,"notes")."</textarea><br><br>");
+				else echo ("<textarea name=\"notes\" $disa style=\"width:30em;\" rows=\"2\" >".pg_result($result,0,"notes")."</textarea><br><br>");
             echo ("</td></tr></table><br>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
                 metaform_sel ("Ajustement",$desc,$extra,$ref[$champ_ref['cd_ajustmt']],"cd_ajustmt",pg_result($result,0,"cd_ajustmt"));
             echo ("</td><td width=250>");
                 metaform_sel ("Changement de Catégorie",$desc,$extra,$ref[$champ_ref['id_raison_ajust']],"id_raison_ajust",pg_result($result,0,"id_raison_ajust"));
             echo ("</td></tr></table><br>");
-            if ($niveau <= 64) echo ("<label class=\"preField_calc\">Notes</label>"); else echo ("<label class=\"preField\">Notes</label>");
-			if ($niveau <= 64) echo ("<textarea name=\"notes\" $disa style=\"width:60em;background-color: #EFEFEF;\" rows=\"2\" >".pg_result($result,0,"notes")."</textarea><br><br>");
-			else echo ("<textarea name=\"notes\" $disa style=\"width:60em;\" rows=\"2\" >".pg_result($result,0,"notes")."</textarea><br><br>");
-
-            echo ("<center>");
-                echo ("
-				<input type=\"radio\" $disa name=\"valid\" id=\"valid1\" value=\"FALSE\" checked=\"true\" ".(pg_result($result,0,"valid")=="f" ? "checked=\"true\"" : "")." ><label for=\"valid1\">Evaluation non validée</label>
-                <input type=\"radio\" $disa name=\"valid\" id=\"valid2\" value=\"TRUE\" ".(pg_result($result,0,"valid")=="t" ? "checked=\"true\"" : "")." ><label for=\"valid2\">Evaluation validée</label><br>");
-            echo ("</center>");
-
+        echo ("</fieldset>");
+//------------------------------------------------------------------------------ EDIT LR GRP4
+        echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
+            if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion évaluation</label>"); else echo ("<label class=\"preField\">Discussion évaluation</label>");
+			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" >".pg_result($result,0,"notes")."</textarea><br><br>");
+			else echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;\" rows=\"4\" >".pg_result($result,0,"notes")."</textarea><br><br>");
         echo ("</fieldset>");
         echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP FIN

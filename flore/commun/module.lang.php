@@ -115,10 +115,16 @@ $langliste['fr']['lr-popup'][]="Synthèse des Catégories UICN issue des évalua
 $langliste['fr']['lr'][]="Nb region<br>eval";
 $langliste['fr']['lr-popup'][]="Nombre de régions ayant une évaluation régionale pour ce taxon";
 
-$langliste['fr']['lr'][]="Notes";
-$langliste['fr']['lr-popup'][]="Notes concernant l'évaluation";
+$langliste['fr']['lr'][]="Note Explic";
+$langliste['fr']['lr-popup'][]="Notes explicative l'évaluation";
 
-$langliste['fr']['lr'][]="Validation";
+// $langliste['fr']['lr'][]="Notes";
+// $langliste['fr']['lr-popup'][]="Notes concernant l'évaluation";
+
+// $langliste['fr']['lr'][]="Validation";
+// $langliste['fr']['lr-popup'][]="";
+
+$langliste['fr']['lr'][]="Avancement";
 $langliste['fr']['lr-popup'][]="";
 
 

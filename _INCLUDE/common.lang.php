@@ -246,6 +246,9 @@ $lang['it']['groupe_lr_3']="";
 $lang['fr']['groupe_lr_4']="Evaluation";
 $lang['it']['groupe_lr_4']="";
 
+$lang['fr']['groupe_lr_5']="Commentaires";
+$lang['it']['groupe_lr_5']="";
+
 //------------------------------------------------------------------------------ Form / Groupes EEE
 $lang['fr']['groupe_eee_1']="Identification";
 $lang['it']['groupe_eee_1']="";

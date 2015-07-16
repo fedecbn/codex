@@ -934,13 +934,18 @@ Option.D,  select.D {
 }
 
 
-.valid_oui {
+.avancement_1 {
     color:white; 
-    background-color:#6DC05E;  
+    background-color:#DA1C23;   
 }
-.valid_non {
+.avancement_2 {
     color:white; 
-    background-color:#DA1C23;  
+    background-color:#F2C43C;  
+}
+
+.avancement_3 {
+    color:white; 
+    background-color:#6DC05E;
 }
 
 .hyb_oui {
