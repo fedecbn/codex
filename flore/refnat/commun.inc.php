@@ -23,7 +23,7 @@ $config=$_SESSION['id_config'];
 
 $lang_select=$_COOKIE['lang_select'];
 
-/*Récupèration des info pour la fiche*/
+/*RÃ©cupÃ¨ration des info pour la fiche*/
 $query_module = "
 SELECT t.* 
 	FROM refnat.taxons t 
@@ -43,6 +43,11 @@ $query_user = "
 	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
 	FROM applications.utilisateur
 	WHERE utilisateur.niveau_".$id_page." <> 0";
+
+$query_discussion = "
+	SELECT prenom||' '||nom||' ('||cd_cbn||') le '||to_char(datetime, 'dd/MM/YYYY')||' Ã  '||to_char(datetime, 'HH24')||'h'||to_char(datetime, 'MI'), commentaire_eval 
+	FROM refnat.discussion a JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn 
+	WHERE uid = ";
 
 // ------------------------------------------------------------------------------ PATHS du module
 

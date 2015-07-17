@@ -354,7 +354,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			/*requete discussion*/
 			$query= $query_discussion.$id.";";
 			$discussion=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
-			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion évaluation</label>"); else echo ("<label class=\"preField\">Discussion évaluation</label>");
+			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion sur la fiche</label>"); else echo ("<label class=\"preField\">Discussion sur la fiche</label>");
 			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" ></textarea><br><br>");
 			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
 			echo "<table>";

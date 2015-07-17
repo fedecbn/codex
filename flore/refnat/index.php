@@ -229,6 +229,8 @@ echo ("</div>");
 	case "view" : 
 	case "edit" : {
 /*------------------------------------------------------------------------------ REF. */
+if ($niveau <= 64) $desc = "bloque";
+if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
 
 /*------------------------------------------------------------------------------ #Onglet 1*/
@@ -367,6 +369,26 @@ echo ("</div>");
 		echo ("<fieldset><LEGEND>Informations supplémentaires</LEGEND>");
 				metaform_bool ("Hybride","","hybride",$hybride);
 		echo ("</fieldset>");
+
+//------------------------------------------------------------------------------ EDIT GRP4
+        echo ("<div id=\"radio2\">");
+		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
+			/*requete discussion*/
+			$query= $query_discussion.$id.";";
+			$discussion=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
+			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion sur la fiche</label>"); else echo ("<label class=\"preField\">Discussion sur la fiche</label>");
+			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" ></textarea><br><br>");
+			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
+			echo "<table>";
+			while ($val = pg_fetch_row($discussion)) {
+				echo "<tr valign=top style=\"border-bottom:1pt solid #D0C5AA;\">";
+				if (empty($val)) echo "<td>Pas de commentaire à ce jour</td>";
+				else echo "<td style=\"padding-right: 10px\";>$val[0] :</td><td>".sql_format_quote($val[1],'undo_hmtl')."</td>";
+				echo "</tr>";
+				}
+			echo "</table>";
+		echo ("</fieldset>");
+        echo ("</div>");
 
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
 			echo ("<div style=\"float:right;\"><br>");
