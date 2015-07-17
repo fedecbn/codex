@@ -211,7 +211,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					if ($niveau >= 128)
 						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"); 
 				echo ("</td></tr></table>");
-			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".pg_result($result,0,"commentaire")."</textarea><br><br>");
+			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
 			echo ("</fieldset>");
 			echo ("</div>"); 
 //------------------------------------------------------------------------------ EDIT LR GRP2
@@ -338,7 +338,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_text ("Critère(s) fin",$desc,10,$extra,"just_fin",pg_result($result,0,"just_fin"));
             echo ("</td><td width=250>");
 				if ($niveau <= 64) echo ("<label class=\"preField_calc\">Explication eval</label>"); else echo ("<label class=\"preField\">Explication eval</label>");
-				if ($niveau <= 64) echo ("<textarea name=\"notes\" $disa style=\"width:30em;background-color: #EFEFEF;\" rows=\"2\" >".pg_result($result,0,"notes")."</textarea><br><br>");
+				if ($niveau <= 64) echo ("<textarea name=\"notes\" $disa style=\"width:30em;background-color: #EFEFEF;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"notes"),'undo_hmtl')."</textarea><br><br>");
 				else echo ("<textarea name=\"notes\" $disa style=\"width:30em;\" rows=\"2\" >".pg_result($result,0,"notes")."</textarea><br><br>");
             echo ("</td></tr></table><br>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
@@ -360,9 +360,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			echo "<table>";
 			while ($val = pg_fetch_row($discussion)) {
 				echo "<tr valign=top style=\"border-bottom:1pt solid #D0C5AA;\">";
-				$commentaire = str_replace("\n","<BR>",$val[1]);
 				if (empty($val)) echo "<td>Pas de commentaire à ce jour</td>";
-				else echo "<td style=\"padding-right: 10px\";>$val[0] :</td><td>$commentaire</td>";
+				else echo "<td style=\"padding-right: 10px\";>$val[0] :</td><td>".sql_format_quote($val[1],'undo_hmtl')."</td>";
 				echo "</tr>";
 				}
 			echo "</table>";

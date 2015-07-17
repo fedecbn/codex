@@ -647,6 +647,10 @@ function sql_assoc ($query,$back) {
 
 
 function frt ($field,$value) {
+	/*Cette fonction a pour objectif de transformer les valeur passer dans les formulaire depuis des champ text en valeurs adapté pour la base de données
+	De plus il utilise la fonction sql_format_quote pour s'occuper des soucis potentiels d'apostrophe et de guillemets
+	Par exemple, un champ texte vide sera transformé de '' en null */
+	
 	global $aColumnsTot;
 	$type = $aColumnsTot[$_SESSION['page']][$field]['type'];
 	echo "<BR> type $type";
@@ -679,30 +683,37 @@ function frt ($field,$value) {
 
 
 function sql_format_quote ($value,$do) {
-    $value = str_replace (CHR(13).CHR(10)," ",$value);
-    $value = str_replace ("\n"," ",$value);
     $value = str_replace ("\t"," ",$value);
     $value = rtrim($value,"'");
 	if(strpos($value,"'"))	{
 		// echo "<BR> la valeur : $value ";
 		if ($do == 'do')	{
-			$value = str_replace("'","''",$value);
+			$value = str_replace("'","\'",$value);
 			// echo "sans quote : $value ";
 			}
-		else if ($do == 'undo')	{
-			$value = str_replace("''","'",$value);
+		else if ($do == 'undo' OR $do == 'undo_hmtl')	{
+			$value = str_replace("\'","'",$value);
 			// echo "avec quote : $value ";
 			}
 	}
 	if(strpos($value,'"'))	{
 		// echo "<BR> la valeur : $value ";
 		if ($do == 'do')	{
-			$value = str_replace("\"","''",$value);
+			$value = str_replace('"','\"',$value);
 			// echo "sans quote : $value ";
+			}
+		else if ($do == 'undo' OR $do == 'undo_hmtl')	{
+			$value = str_replace('\"','"',$value);
+			// echo "avec quote : $value ";
 			}
 	}
 	if ($do == 'do')	{
         $value = "'" . pg_escape_string ($value) . "'";
+		$value = str_replace ("<BR>","\n",$value);
+		}
+	else if ($do == 'undo_hmtl') {
+		$value = str_replace ("\n","<BR>",$value);
+		$value = str_replace (CHR(13).CHR(10),"<BR>",$value);
 		}
 
 	return ($value);

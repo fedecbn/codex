@@ -86,15 +86,14 @@ if (!empty ($id))
 	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
 		{
 		if (isset($_POST['commentaire_eval']))	{
-			if (isset($_POST['commentaire_eval'])) {
+			if (!empty($_POST['commentaire_eval'])) {
 				$result=pg_query ($db,$query_user." AND id_user = '$id_user'") or die ("Erreur pgSQL : ".pg_result_error ($result));
 				$user=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
-				var_dump($user);
 				$insert = "INSERT INTO liste_rouge.discussion (uid,id_user,nom,prenom,id_cbn,commentaire_eval,datetime) 
-				VALUES ($id,'$user[id_user]','$user[nom]','$user[prenom]',$user[id_cbn],'$_POST[commentaire_eval]',NOW())";
+				VALUES ($id,'$user[id_user]','$user[nom]','$user[prenom]',$user[id_cbn],".sql_format_quote($_POST[commentaire_eval],'do').",NOW())";
 				echo $insert;
 				$result=pg_query ($db,$insert) or die ("Erreur pgSQL : ".pg_result_error ($result));
-				add_suivi2($etape,$id_user,$id,"discussion","commentaire_eval","",$_POST['commentaire_eval'],$id_page,'manuel',"ajout");
+				add_suivi2($etape,$id_user,$id,"discussion","commentaire_eval","",sql_format_quote($_POST[commentaire_eval],'do'),$id_page,'manuel',"ajout");
 				}
 			}
 		}
