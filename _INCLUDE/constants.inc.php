@@ -52,6 +52,7 @@ $user_level=array("0"=>"Pas d'accès",
 				"1"=>"Lecteur",
                 "64"=>"Participant",
                 "128"=>"Evaluateur",
+                "128"=>"Référent",
                 "255"=>"Administrateur");
 
 //------------------------------------------------------------------------------ multi-langues
