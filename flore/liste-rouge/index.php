@@ -190,7 +190,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		echo ("<center>");
 		echo ("<div id=\"radio2\">");
 			echo ("Avancement
-			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement1\" value=\"1\" ".($avancement==1 ? "checked=\"true\"" : "")." ><label for=\"avancement1\">A réaliser</label>
+			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement1\" value=\"1\" ".($avancement==1 ? "checked=\"true\"" : "")." ><label for=\"avancement1\">À réaliser</label>
 			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement2\" value=\"2\" ".($avancement==2 ? "checked=\"true\"" : "")." ><label for=\"avancement2\">En cours</label>
 			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement3\" value=\"3\" ".($avancement==3 ? "checked=\"true\"" : "")." ><label for=\"avancement3\">Réalisée</label>");
 		echo ("</div>"); 
@@ -347,8 +347,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 //------------------------------------------------------------------------------ EDIT LR GRP4
         echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
             if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion évaluation</label>"); else echo ("<label class=\"preField\">Discussion évaluation</label>");
-			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" >".pg_result($result,0,"notes")."</textarea><br><br>");
-			else echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;\" rows=\"4\" >".pg_result($result,0,"notes")."</textarea><br><br>");
+			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" >".pg_result($result,0,"commentaire_eval")."</textarea><br><br>");
+			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" >".pg_result($result,0,"commentaire_eval")."</textarea><br><br>");
         echo ("</fieldset>");
         echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP FIN
