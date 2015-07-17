@@ -78,7 +78,6 @@ switch ($mode) {
 /*------------------------------------------------------------------------------------------------------- */
     case "liste" : {
         echo ("<div id=\"".$id_page."\" >");
-
             /*Troisième bandeau*/
             echo ("<div id=\"titre2\">");
                 echo ($lang[$lang_select]["liste_taxons"]);
@@ -99,8 +98,24 @@ switch ($mode) {
 			aff_table_new ($id_page,true,true);			
             // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
-//------------------------------------------------------------------------------ #fiche
-        echo ("<div id=\"fiche\" >");
+//------------------------------------------------------------------------------ #deuxieme onglet (DROIT)
+        echo ("<div id=\"droit\" >");
+            /*Troisième bandeau*/
+            echo ("<div id=\"titre2\">");
+                echo "Droit d'utilisation de la rubrique";
+            echo ("</div>");
+            echo ("<div style=\"float:right;\">");
+                // if ($niveau >= 128) 
+                    // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				// if ($niveau >= 64) 
+					// echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                // if ($niveau == 255) 
+                    // echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+            echo ("</div><br><br>");
+            echo ("<div id=\"dialog\"></div>");
+			/*Table des données*/
+			aff_table_new ("droit",false,true);			
+            // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
     }
     break;

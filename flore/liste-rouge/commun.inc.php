@@ -15,7 +15,7 @@ require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "lr";
-$id_page_2 = "lr_reg";
+$id_page_2 = "droit";
 $id_rub = "liste_rouge";
 $rub[$id_rub] = 'true';
 
@@ -57,6 +57,11 @@ SELECT *
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.$id_rub = TRUE;
 	";
+
+$query_user = "
+	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
+	FROM applications.utilisateur
+	WHERE utilisateur.niveau_".$id_page." <> 0";
 
 $rang= array(''=>'','ES'=>'ES','SSES'=>'SSES','VAR'=>'VAR','SVAR'=>'SVAR','FO'=>'FO','SSFO'=>'SSFO','CAR'=>'CAR');
 $tables = array ('taxons','chorologie','evaluation');

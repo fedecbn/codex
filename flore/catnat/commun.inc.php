@@ -15,7 +15,7 @@ require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "catnat";
-$id_page_2 = "catnat_reg";
+$id_page_2 = "droit";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];
@@ -43,7 +43,12 @@ $query_export = "
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.catnat = TRUE ";
 
-	$rang= array(''=>'','ES'=>'ES','SSES'=>'SSES','VAR'=>'VAR','SVAR'=>'SVAR','FO'=>'FO','SSFO'=>'SSFO','CAR'=>'CAR');
+$query_user = "
+	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
+	FROM applications.utilisateur
+	WHERE utilisateur.niveau_".$id_page." <> 0";
+
+$rang= array(''=>'','ES'=>'ES','SSES'=>'SSES','VAR'=>'VAR','SVAR'=>'SVAR','FO'=>'FO','SSFO'=>'SSFO','CAR'=>'CAR');
 
 //------------------------------------------------------------------------------ PATHS du module
 

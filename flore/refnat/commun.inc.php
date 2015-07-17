@@ -15,7 +15,7 @@ require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "refnat";
-$id_page_2 = "refnat_2";
+$id_page_2 = "droit";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];
@@ -38,6 +38,12 @@ $query_export = "
 SELECT t.* 
 	FROM refnat.taxons t 
 	WHERE t.uid=";
+	
+$query_user = "
+	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
+	FROM applications.utilisateur
+	WHERE utilisateur.niveau_".$id_page." <> 0";
+
 // ------------------------------------------------------------------------------ PATHS du module
 
 //------------------------------------------------------------------------------ FONCTIONS du module

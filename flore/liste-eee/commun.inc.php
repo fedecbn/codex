@@ -15,7 +15,7 @@ require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "eee";
-$id_page_2 = "eee_reg";
+$id_page_2 = "droit";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];
@@ -63,6 +63,11 @@ $query_export = "
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.$id_page = TRUE;
 	";
+
+$query_user = "
+	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
+	FROM applications.utilisateur
+	WHERE utilisateur.niveau_".$id_page." <> 0";
 
 $rang= array(''=>'','ES'=>'ES','SSES'=>'SSES','VAR'=>'VAR','SVAR'=>'SVAR','FO'=>'FO','SSFO'=>'SSFO','CAR'=>'CAR');
 $fiab = array (1=> "fiab1",2=> "fiab2",3=> "fiab3",4=> "fiab4",5=> "fiab5",6=> "fiab6",7=> "fiab7",8=> "fiab8",9=> "fiab9",10=> "fiab10",11=> "fiab11",12=> "fiab12",13=> "fiab13");

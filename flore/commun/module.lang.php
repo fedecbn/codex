@@ -127,6 +127,22 @@ $langliste['fr']['lr-popup'][]="Notes explicative l'évaluation";
 $langliste['fr']['lr'][]="Avancement";
 $langliste['fr']['lr-popup'][]="";
 
+//------------------------------------------------------------------------------ Module gestion LR - droit
+$langliste['fr']['droit'][]="Code";
+$langliste['fr']['droit-popup'][]="";
+
+$langliste['fr']['droit'][]="Prénom";
+$langliste['fr']['droit-popup'][]="";
+
+$langliste['fr']['droit'][]="Nom";
+$langliste['fr']['droit-popup'][]="";
+
+$langliste['fr']['droit'][]="Institution";
+$langliste['fr']['droit-popup'][]="";
+
+$langliste['fr']['droit'][]="Niveau de droit";
+$langliste['fr']['droit-popup'][]="";
+
 
 //------------------------------------------------------------------------------ Module gestion LSI 
 $langliste['fr']['lsi-liste'][]="Id";

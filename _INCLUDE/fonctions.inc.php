@@ -453,7 +453,10 @@ function aff_table_new ($id_liste,$actions,$check) {
     global $lang_select,$langliste;
 
     $nbre_col=count($langliste[$lang_select][$id_liste]);
-    echo ("<table id=\"data-liste\" class=\"display\" ><thead><tr>");
+    if ($id_liste == 'droit')
+		echo ("<table id=\"user-liste\" class=\"display\" ><thead><tr>");
+	else
+		echo ("<table id=\"data-liste\" class=\"display\" ><thead><tr>");
     for ($i=1;$i<=$nbre_col;$i++) 
         echo ("<th></th>");
     echo ("</tr><tr>");
@@ -872,6 +875,7 @@ if ( isset( $_GET['iSortCol_0'] ) )                                             
 			}
 		}
 	}
+if ($sOrder=="ORDER BY ") $sOrder="";
 
 $sWhere = ""; 																  // FILTRE
 foreach ($colonne as $key => $val )                                       // columnFilter v2.1

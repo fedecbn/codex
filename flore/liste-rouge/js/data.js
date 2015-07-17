@@ -384,6 +384,81 @@
                 { type: "select", values: [{ value: 1, label: 'a réaliser'},{ value: 2, label: 'en cours'},{ value: 3, label: 'réalisée'}]}                                               //  
 			]
 		});        
+
+		var oTable2 = $('#user-liste').dataTable({
+   	    "bJQueryUI": true,
+        "iDisplayLength": 100,
+    	"aLengthMenu": [[50,100,300],[50,100,300]],
+    	"bPaginate": true,
+        "sPaginationType": "full_numbers",
+    	"bLengthChange": true,
+    	"bFilter": true,
+    	"bSort": true,
+    	"bInfo": true,
+    	"bAutoWidth": false,
+		"bProcessing": true,
+    	"bServerSide": true,
+    	"sAjaxSource": "liste_user.php",
+        "bStateSave": true,
+        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			// switch (aData[4])                                                  // Cat EU
+            // {	
+                // case '0' : 
+                    // $('td:eq(21)', nRow).addClass('avancement_1');
+                // break;
+                // case '1' : 
+                    // $('td:eq(21)', nRow).addClass('avancement_2');
+                // break;
+                // case '64' : 
+                    // $('td:eq(21)', nRow).addClass('avancement_3');
+                // break;
+                // case '128' : 
+                    // $('td:eq(21)', nRow).addClass('avancement_4');
+                // break;
+                // case '255' : 
+                    // $('td:eq(21)', nRow).addClass('avancement_5');
+                // break;
+            // }
+            // return nRow;
+        },
+        "oLanguage": { "sProcessing":   "Traitement en cours...",
+            "sLengthMenu":   "Afficher _MENU_ taxons",
+            "sZeroRecords":  "Aucun uilisateur à afficher",
+            "sInfo": "Affichage de l'utilisateur _START_ à _END_",
+            "sInfoEmpty": "Affichage de l'utilisateur 0 à 0 sur 0 ",
+            "sInfoFiltered": "",
+            "sInfoPostFix":  "",
+            "sSearch":       "Rechercher ",
+            "sUrl":          "",
+            "oPaginate": {
+                "sFirst":    "Premier",
+                "sPrevious": "Précédent",
+                "sNext":     "Suivant",
+                "sLast":     "Dernier"
+            }
+        }, 
+		"aaSorting": [[2,'asc']],                                               // Nom scientifique 
+        "sDom": '<"top"fl>rt<"bottom"ip>',
+            "aoColumns": [
+                null,                                                           
+                null,                                                           
+        		null,                         									
+        		null,                         									
+        		null,                         									
+    			// { "sClass": "center","sWidth": "50px","bSortable": false },     // Actions
+        		{ "sClass": "center","sWidth": "20px","bSortable": false }      // Sélect.
+        ]
+        }).columnFilter({
+            sPlaceHolder: "head:after",
+            aoColumns: [ 
+                { type: "text" },                                               // Famille
+                { type: "text" },                                               // CD_REF
+                { type: "text" },                                               // Nom scientifique 
+                { type: "text" },                                               //  
+                { type: "text" }                                               //  
+			]
+		});		
+
 	} else {
 		oTable.fnClearTable (false);
 		oTable.fnDraw ();

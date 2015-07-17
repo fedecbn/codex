@@ -70,8 +70,8 @@ $lang['it']['lr']="";
 $lang['fr']['lsi']="News";
 $lang['it']['lsi']="";
 
-$lang['fr']['lr_reg']="Listes Rouges régionales";
-$lang['it']['lr_reg']="";
+$lang['fr']['droit']="Utilisateurs";
+$lang['it']['droit']="";
 
 $lang['fr']['eee']="Liste EEE";
 $lang['it']['eee']="";
