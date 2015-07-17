@@ -365,6 +365,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				else echo "<td style=\"padding-right: 10px\";>$val[0] :</td><td>$commentaire</td>";
 				echo "</tr>";
 				}
+			echo "</table>";
 		echo ("</fieldset>");
         echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP FIN
