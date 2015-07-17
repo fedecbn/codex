@@ -359,7 +359,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
 			echo "<table>";
 			while ($val = pg_fetch_row($discussion)) {
-				echo "<tr valign=top style=\"border-bottom:1pt solid black;\">";
+				echo "<tr valign=top style=\"border-bottom:1pt solid #D0C5AA;\">";
 				$commentaire = str_replace("\n","<BR>",$val[1]);
 				if (empty($val)) echo "<td>Pas de commentaire à ce jour</td>";
 				else echo "<td style=\"padding-right: 10px\";>$val[0] :</td><td>$commentaire</td>";
