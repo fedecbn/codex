@@ -152,10 +152,12 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
             }
         echo ("</div>");
+		
         if (isset($_GET['id']) & !empty($_GET['id'])) {                         // Modifier
             $id=$_GET['id'];
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
-            		
+            
+			/*requete liste principale*/			
 			$query= $query_module.$id.";";
 
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
@@ -172,9 +174,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		
 		if (pg_result($result,0,"avancement") == null) {$avancement = 1;}
 		else {$avancement =pg_result($result,0,"avancement");}
-		
-		
-		
 		
         echo ("<br>");
         echo ("<center>");
@@ -247,8 +246,10 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_text (" observé >=1990 - calculé","bloque",5,"","nbcommune",pg_result($result,0,"nbcommune"));
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
+		echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP3
-        echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_3']."</LEGEND>");
+        echo ("<div id=\"radio2\">");
+		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_3']."</LEGEND>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=33%>");
                 echo ("<br>");
                 metaform_precis_plage ("Nb Ind",$desc,5,$ref[$champ_ref['id_nbindiv']],"nbindiv_precis","id_nbindiv",pg_result($result,0,"nbindiv_precis"),pg_result($result,0,"id_nbindiv"));
@@ -267,8 +268,10 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_bout ("Fluct extrêm Nb Ind",$desc,"fluct_extrem_v",pg_result($result,0,"fluct_extrem_v"));
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
+		echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP4
-        echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_4']."</LEGEND>");
+        echo ("<div id=\"radio2\">");
+		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_4']."</LEGEND>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
                 echo ("<br>");
                 metaform_sel ("Catégorie A",$desc,$extra,$ref[$champ_ref['cat_a']],"cat_a",pg_result($result,0,"cat_a"));
@@ -344,12 +347,25 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_sel ("Changement de Catégorie",$desc,$extra,$ref[$champ_ref['id_raison_ajust']],"id_raison_ajust",pg_result($result,0,"id_raison_ajust"));
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
+		echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP4
-        echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
-            if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion évaluation</label>"); else echo ("<label class=\"preField\">Discussion évaluation</label>");
-			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" >".pg_result($result,0,"commentaire_eval")."</textarea><br><br>");
-			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" >".pg_result($result,0,"commentaire_eval")."</textarea><br><br>");
-        echo ("</fieldset>");
+        echo ("<div id=\"radio2\">");
+		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
+			/*requete discussion*/
+			$query= $query_discussion.$id.";";
+			$discussion=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
+			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion évaluation</label>"); else echo ("<label class=\"preField\">Discussion évaluation</label>");
+			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" ></textarea><br><br>");
+			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
+			echo "<table>";
+			while ($val = pg_fetch_row($discussion)) {
+				echo "<tr valign=top style=\"border-bottom:1pt solid black;\">";
+				$commentaire = str_replace("\n","<BR>",$val[1]);
+				if (empty($val)) echo "<td>Pas de commentaire à ce jour</td>";
+				else echo "<td style=\"padding-right: 10px\";>$val[0] :</td><td>$commentaire</td>";
+				echo "</tr>";
+				}
+		echo ("</fieldset>");
         echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP FIN
                 echo ("<br>");
