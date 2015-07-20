@@ -268,10 +268,19 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 			echo ("<input type=\"hidden\" name=\"uid\" id=\"uid\" value=\"".pg_result($result,0,"uid")."\">");
 	/*------------------------------------------------------------------------------ EDIT fieldset1*/
-		echo ("<fieldset><LEGEND>Rubrique</LEGEND>");
-				metaform_bool ("Rub. CATNAT","","catnat",pg_result($result,0,"catnat"));
-				metaform_bool ("Rub. Liste rouge","","liste_rouge",pg_result($result,0,"liste_rouge"));
-				metaform_bool ("Rub Liste EEE","","eee",pg_result($result,0,"eee"));
+		echo ("<fieldset><LEGEND>Taxon</LEGEND>");
+			echo ("<table><tr><TD style=\"padding-right:20px;\">");
+				echo ("Le taxon appartient aux listes suivantes : <BR>");
+				metaform_bool ("Rubrique CATNAT",$desc,"catnat",pg_result($result,0,"catnat"));
+				echo ("<BR>");
+				metaform_bool ("Rubrique Liste rouge",$desc,"liste_rouge",pg_result($result,0,"liste_rouge"));
+				echo ("<BR>");
+				metaform_bool ("Rubrique Liste EEE",$desc,"eee",pg_result($result,0,"eee"));
+				echo ("<BR>");
+			echo("</td><td valign=\"top\">");
+				echo ("Informations supplémentaires sur le taxon : <BR>");
+				metaform_bout ("Hybride",$desc,"hybride",$hybride);
+				echo ("</td></tr></table>");
 		echo ("</fieldset>");
 		
 	/*------------------------------------------------------------------------------ EDIT fieldset2*/
@@ -308,13 +317,13 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			{
 			
 			/*Tableau Nomenclature*/
-			echo ("<table border=1 width=\"1200\"><tr valign=center >");
+			echo ("<table width=\"1200\"><tr valign=center style=\"border-bottom:1pt solid #D0C5AA;\">");
 			/*entete de colonne*/
 			foreach ($entete as $field => $val) echo ("<th style=\" text-align: center;	vertical-align: center;\">$field</th>");
 			echo("</tr>");
 			
 			/*premiere ligne*/
-			echo("<tr valign=top>");
+			echo("<tr valign=top style=\"border-bottom:1pt solid #D0C5AA;\">");
 			foreach ($entete as $field => $val)
 				{
 					echo ("<td  style=\"text-align: center;\">");
@@ -322,7 +331,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						{
 						$field_inteface = $field;
 						echo ("<input type=\"hidden\" id=\"version\" value=\"vRéseauCBN\" />");
-						if ($field_inteface == 'version') {echo $val;} else {metaform_text ($field,"no_lab","","style=\"width:".$length."em;\" ",$field_inteface,$val);}
+						if ($field_inteface == 'version') {echo $val;} else {metaform_text ($field," no_lab bloque","","style=\"width:".$length."em;\" ",$field_inteface,$val);}
 						} else {
 						$field_inteface = $field."_taxref";
 						echo $val;
@@ -336,7 +345,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			while ($row = pg_fetch_assoc ($result))
 				{
 				// var_dump($row);
-				echo("<tr valign=top>");
+				echo("<tr valign=top style=\"border-bottom:1pt solid #D0C5AA;\">");
 				foreach ($row as $field => $val)
 					{
 					$diff = (($row[$field] == $row_plus[$field]) OR ($field == 'version')) ? "" : "background-color:orange" ;	/*Gestion du changement*/
@@ -346,7 +355,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						{
 						$field_inteface = $field;
 						echo ("<input type=\"hidden\" id=\"version\" value=\"vRéseauCBN\" />");
-						if ($field_inteface == 'version') {echo $row[$field];} else {metaform_text ($field,"no_lab","","style=\"width:".$length."em;$diff\" ",$field_inteface,$row[$field]);}
+						if ($field_inteface == 'version') {echo $row[$field];} else {metaform_text ($field," no_lab bloque","","style=\"width:".$length."em;$diff\" ",$field_inteface,$row[$field]);}
 						} else {
 						$field_inteface = $field."_taxref";
 						echo $row[$field];
@@ -364,13 +373,9 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		}
 	if ($flag == 1) echo ("Taxon non rattaché à TAXREF");
 	echo ("</fieldset>");		
-	
-/*------------------------------------------------------------------------------ EDIT fieldset3*/
-		echo ("<fieldset><LEGEND>Informations supplémentaires</LEGEND>");
-				metaform_bool ("Hybride","","hybride",$hybride);
-		echo ("</fieldset>");
 
-//------------------------------------------------------------------------------ EDIT GRP4
+
+//------------------------------------------------------------------------------ EDIT fieldset3
         echo ("<div id=\"radio2\">");
 		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
 			/*requete discussion*/
