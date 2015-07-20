@@ -367,6 +367,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			echo "</table>";
 		echo ("</fieldset>");
         echo ("</div>");
+		
 //------------------------------------------------------------------------------ EDIT LR GRP FIN
                 echo ("<br>");
                 echo ("<div style=\"float:right;\">");

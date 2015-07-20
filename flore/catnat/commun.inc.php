@@ -48,6 +48,11 @@ $query_user = "
 	FROM applications.utilisateur
 	WHERE utilisateur.niveau_".$id_page." <> 0";
 
+$query_discussion = "
+	SELECT prenom||' '||nom||' ('||cd_cbn||') le '||to_char(datetime, 'dd/MM/YYYY')||' à '||to_char(datetime, 'HH24')||'h'||to_char(datetime, 'MI'), commentaire_eval 
+	FROM catnat.discussion a JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn 
+	WHERE uid = ";
+
 $rang= array(''=>'','ES'=>'ES','SSES'=>'SSES','VAR'=>'VAR','SVAR'=>'SVAR','FO'=>'FO','SSFO'=>'SSFO','CAR'=>'CAR');
 
 //------------------------------------------------------------------------------ PATHS du module

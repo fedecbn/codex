@@ -181,6 +181,11 @@ $liste_statut['LR'] = $ref['categorie_final'];
 $liste_statut['END'] = array(''=>'','oui'=>'oui','non'=>'non');
 $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','D'=>'D');
 
+
+/*Gestion des niveau de droit*/
+if ($niveau <= 64) $desc = " bloque"; else $desc = null;
+if ($niveau <= 64) $disa = "disabled"; else $disa = null;
+
 /*------------------------------------------------------------------------------ EDIT catnat EN TETE*/
         echo ("<div id=\"$id_page\" >");
         echo ("</div>");
@@ -211,23 +216,26 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 		echo("<input type=\"hidden\" name=\"zone\" id=\"zone1\" value=\"gl\">");
 
 /*------------------------------------------------------------------------------ EDIT catnat GRP1*/
-   	    echo ("<div id=\"radio2\">"); 
-        echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
-        echo ("<input type=\"hidden\" name=\"uid\" id=\"uid\" value=\"".pg_result($result,0,"uid")."\">");
-		echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_catnat_1']."</LEGEND>");
-				echo ("<label class=\"preField\">Code REF.</label>
-				<input type=\"text\" name=\"cd_ref\" id=\"cd_ref\" size=\"10\" disabled value=\"".pg_result($result,0,"cd_ref")."\" />  ");
-                echo ("<label class=\"preField\">Nom scientifique</label>
-				<input type=\"text\" name=\"nom_sci\" id=\"nom_sci\" style=\"width:30em;\" maxlength=\"250\" disabled value=\"".pg_result($result,0,"nom_sci")."\" />");
-                metaform_sel ("Rang","","disabled",$rang,"cd_rang",pg_result($result,0,"cd_rang"));
-                echo ("<br>");
-                metaform_text ("Nom vernaculaire","","","disabled style=width:50em;","nom_verna",pg_result($result,0,"nom_vern"));
-				echo ("<br><label class=\"preField\">Commentaires généraux</label>
-				<textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".pg_result($result,0,"commentaire")."</textarea><br><br>");		
-				metaform_bout_new ("Taxon hybride?","","disabled","hybride",pg_result($result,0,"hybride"));
-        echo ("</fieldset>");
+		echo ("<div id=\"radio2\">");    
+        echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_lr_1']."</LEGEND>");
+				echo ("<table border=0 width=\"100%\"><tr valign=top >");
+				echo ("<td style=\"width: 800px;\">");
+					metaform_text ("Nom scientifique"," bloque",100,"","nom_sci",pg_result($result,0,"nom_sci"));
+					metaform_text ("Nom vernaculaire"," bloque",100,"","nom_vern",pg_result($result,0,"nom_vern"));
+					metaform_bout ("Taxon hybride?"," bloque","","hybride",pg_result($result,0,"hybride"));
+				echo ("</td><td>");	
+					metaform_text ("Code REF."," bloque",8,"","cd_ref",pg_result($result,0,"cd_ref"));
+					metaform_sel ("Rang"," bloque","",$ref[$champ_ref['cd_rang']],"cd_rang",pg_result($result,0,"cd_rang"));
+				echo ("</td><td>");	
+					if ($niveau >= 128)
+						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"); 
+				echo ("</td></tr></table>");
+			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
+			echo ("</fieldset>");
+			echo ("</div>"); 
 /*------------------------------------------------------------------------------ EDIT catnat GRP2*/
-        echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_catnat_2']."</LEGEND>");
+       echo ("<div id=\"radio2\">");
+       echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_catnat_2']."</LEGEND>");
             /*----------------*/
 			/*Statuts Nationaux*/
 			/*----------------*/
@@ -242,20 +250,20 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 			foreach ($ref['statut'] as $type_stt => $lib_stt)	{
 				echo ("<tr valign=top>");
 				echo ("<td style=\" text-align: center;	vertical-align: center;\">$lib_stt</td>");
-				/*Statut NAT*/
+				/*Statut national*/
 				echo ("<td>");
-				if ($type_stt == 'RAR') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt_fr[$type_stt]);}
-				else {metaform_sel ("","no_lab","style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt,$res_stt_fr[$type_stt]);}
+				if ($type_stt == 'RAR') {metaform_text (""," no_lab $desc","","width:5.5em;",$type_stt,$res_stt_fr[$type_stt]);}
+				else {metaform_sel (""," no_lab $desc","width:5em;",$liste_statut[$type_stt],$type_stt,$res_stt_fr[$type_stt]);}
 				echo ("</td>");
-				/*Statut Nat Calculé*/
+				/*Statut ,ational Calculé*/
 				echo ("<td>");
-				if ($type_stt == 'RAR' OR $type_stt == 'INDI') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt_fr_cal[$type_stt]);}
-				else {metaform_sel ("","no_lab","disabled style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt,$res_stt_fr_cal[$type_stt]);}
+				if ($type_stt == 'RAR' OR $type_stt == 'INDI') {metaform_text (""," no_lab bloque","","width:5.5em;",$type_stt,$res_stt_fr_cal[$type_stt]);}
+				else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt,$res_stt_fr_cal[$type_stt]);}
 				echo ("</td>");
-				/*Statut From Liste rouge*/
+				/*Statut national expert déterminé dans la rubrique Liste rouge*/
 				echo ("<td>");
-				if ($type_stt == 'INDI' OR $type_stt == 'PRES' OR $type_stt == 'RAR') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt_fr_lr[$type_stt]);}
-				else {metaform_sel ("","no_lab","disabled style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt,$res_stt_fr_lr[$type_stt]);}
+				if ($type_stt == 'INDI' OR $type_stt == 'PRES' OR $type_stt == 'RAR') {metaform_text (""," no_lab bloque","","width:5.5em;",$type_stt,$res_stt_fr_lr[$type_stt]);}
+				else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt,$res_stt_fr_lr[$type_stt]);}
 				echo ("</td>");
 				}
 			echo("</tr>");	
@@ -265,11 +273,11 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 			/*Status régionaux*/
 			/*----------------*/
 			echo ("<table border=1 width=\"1200\">");
-			echo ("<tr valign=center >");
-			echo ("<th></th>");			
+			echo ("<tr valign=center>");
+			echo ("<th style=\"width:5em;\></th>");			
 			/*en-tête*/
 			foreach ($ref['region'] as $id_reg => $region)	{
-					echo ("<th style=\" text-align: center;	vertical-align: center;\">$region</th>");
+					echo ("<th style=\" text-align: center;	vertical-align: center; width:5em;\">$region</th>");
 					}
 			/*valeurs*/
 			foreach ($ref['statut'] as $type_stt => $lib_stt)	{
@@ -278,13 +286,13 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 				foreach ($ref['region'] as $id_reg => $region)	{
 					if (empty($res_stt[$type_stt][$id_reg])) {
 						echo ("<td>");
-						if ($type_stt == 'RAR') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar","");}
-						else {metaform_sel ("","no_lab","style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt."_".$id_reg,"");}
+						if ($type_stt == 'RAR') {metaform_text ("Rar"," no_lab bloque","","width:5.5em;","rar","");}
+						else {metaform_sel (""," no_lab $desc","width:5em;",$liste_statut[$type_stt],$type_stt."_".$id_reg,"");}
 						echo ("</td>");
 					} else {
 						echo ("<td>");
-						if ($type_stt == 'RAR') {metaform_text ("Rar","no_lab","","style=width:5em; disabled","rar",$res_stt[$type_stt][$id_reg]);}
-						else {metaform_sel ("","no_lab","style = \"width:60px;\"",$liste_statut[$type_stt],$type_stt."_".$id_reg,$res_stt[$type_stt][$id_reg]);}
+						if ($type_stt == 'RAR') {metaform_text ("Rar"," no_lab bloque","","width:5.5em;","rar",$res_stt[$type_stt][$id_reg]);}
+						else {metaform_sel (""," no_lab $desc","width:5em;",$liste_statut[$type_stt],$type_stt."_".$id_reg,$res_stt[$type_stt][$id_reg]);}
 						echo ("</td>");
 						}
 					}
@@ -292,8 +300,9 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 			echo("</tr>");
 			echo("</table><br>");
         echo ("</fieldset>");
-		
+        echo ("</div>");		
 /*------------------------------------------------------------------------------ EDIT catnat GRP3*/
+        echo ("<div id=\"radio2\">");
         echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_catnat_3']."</LEGEND>");
 		
 		$path = "../../_GRAPH/carte/";
@@ -321,6 +330,28 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 			}
 		} 
         echo ("</fieldset>");
+        echo ("</div>");
+		
+//------------------------------------------------------------------------------ EDIT LR GRP4
+        echo ("<div id=\"radio2\">");
+		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
+			/*requete discussion*/
+			$query= $query_discussion.$id.";";
+			$discussion=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
+			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion sur la fiche</label>"); else echo ("<label class=\"preField\">Discussion sur la fiche</label>");
+			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" ></textarea><br><br>");
+			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
+			echo "<table>";
+			while ($val = pg_fetch_row($discussion)) {
+				echo "<tr valign=top style=\"border-bottom:1pt solid #D0C5AA;\">";
+				if (empty($val)) echo "<td>Pas de commentaire à ce jour</td>";
+				else echo "<td style=\"padding-right: 10px\";>$val[0] :</td><td>".sql_format_quote($val[1],'undo_hmtl')."</td>";
+				echo "</tr>";
+				}
+			echo "</table>";
+		echo ("</fieldset>");
+        echo ("</div>");
+
 /* ------------------------------------------------------------------------------ EDIT catnat SAVE*/
         echo ("<div style=\"float:right;\"><br>");
 			if ($mode == "edit") {
@@ -333,7 +364,7 @@ $liste_statut['PRES'] = array(''=>'','Pr'=>'Pr','Nr'=>'Nr','Ab'=>'Ab','E'=>'E','
 			echo ("</form>");
 			} else fatal_error ("ID ".$id." > Vide !",false);
 		} else fatal_error ("ID ".$id." > Vide !",false);
-        echo ("</div>");
+        // echo ("</div>");
 
         echo ("<div id=\"exit-confirm\" title=\"Retour\">");
             echo ("<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>".$lang[$lang_select]['retour_dialog']."</p>");

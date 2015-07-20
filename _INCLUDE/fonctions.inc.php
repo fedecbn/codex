@@ -477,15 +477,11 @@ function metaform_text ($label,$descr,$long,$extra,$champ,$val)
 {
 	
 	if (strpos($descr,"no_lab") == false)
-		if (strpos($descr,"bloque") != false)
-			echo ("<label class=\"preField_calc\">".$label."</label>");
-		else
-			echo ("<label class=\"preField\">".$label."</label>");
+		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
+		else echo ("<label class=\"preField\">".$label."</label>");
 		
-	if (strpos($descr,"bloque") != false)
-		echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\" size=\"".$long."\" value=\"".$val."\" ".$extra." readonly disabled style=\"background-color:#EFEFEF;\"/>");
-	else
-		echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\" size=\"".$long."\" value=\"".$val."\" ".$extra." />");
+	if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
+	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\" size=\"".$long."\" value=\"".$val."\" $bloc style=\"$extra\"/>");
     echo ("<br>");
 }
 
@@ -500,16 +496,14 @@ function metaform_text_area ($label,$descr,$row,$cols,$extra,$champ,$val)
 function metaform_sel ($label,$descr,$extra,$liste,$champ,$val)
 {
 	if ($val == '1') {$class = 'oui';} elseif ($val == '2') {$class = 'non';} else {$class = $val;}
+	
 	if (strpos($descr,"no_lab") == false)
-		if (strpos($descr,"bloque") != false)
-			echo ("<label class=\"preField_calc\">".$label."</label>");
-		else
-			echo ("<label class=\"preField\">".$label."</label>");
-		
-	if (strpos($descr,"bloque") != false)
-		echo ("<select class=\"$class\" name=\"".$champ."\" id=\"".$champ."\" ".$extra." disabled/>");
-	else
-		echo ("<select class=\"$class\" name=\"".$champ."\" id=\"".$champ."\" ".$extra." />");
+		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
+		else echo ("<label class=\"preField\">".$label."</label>");
+	
+	if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";}	
+	if (strpos($descr,"bloque") != false AND $val == null) {$extra .= "background-color:#EFEFEF";}	
+		echo ("<select class=\"$class\" name=\"".$champ."\" id=\"".$champ."\" $bloc style=\"$extra\"/>");
 	
     foreach ($liste as $key => $value) {
         echo ("<option class=\"$value\" value=\"$key\" ".($key == $val ? "SELECTED" : "")." >".$value."</option>");
