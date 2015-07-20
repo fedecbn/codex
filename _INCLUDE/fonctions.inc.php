@@ -282,7 +282,7 @@ function check_modif($val1,$val2,$field) {
 			$modif = 'suppr';
 		else if ($test1 == 'empty' AND $test2 == 'empty') 
 			$modif = 'vide';
-		echo "<BR> val1 $test1 et val2 $test2 donne $modif";
+		// echo "<BR> val1 $test1 et val2 $test2 donne $modif";
 		}
 	else {$modif = 'identiques';}
 
@@ -368,7 +368,7 @@ function add_suivi2 ($etape,$id_user,$uid,$table,$champ,$valeur_1,$valeur_2,$rub
 	
 	$query="INSERT INTO ".SQL_schema_app.".suivi (etape,id_user,uid,tables,champ,valeur_1,valeur_2,datetime,rubrique,methode,type_modif,libelle_1,libelle_2) VALUES  
 	(".$etape.",'".$id_user."',".$uid.",'".$table."','".$champ."',".sql_format_quote ($valeur_1,'do').",".sql_format_quote ($valeur_2,'do').",NOW(),'".$rubrique."','".$methode."','".$type_modif."',".sql_format_quote($libelle1,'do').",".sql_format_quote($libelle2,'do').");";
-	echo "<BR> $query";
+	// echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	
 }
@@ -696,7 +696,6 @@ function frt ($field,$value) {
 
 
 function sql_format_quote ($value,$do) {
-    // if ($value != null) {
 		$value = str_replace ("\t"," ",$value);
 		$value = rtrim($value,"'");
 		if(strpos($value,"'"))	{
@@ -729,7 +728,6 @@ function sql_format_quote ($value,$do) {
 			$value = str_replace ("\n","<BR>",$value);
 			$value = str_replace (CHR(13).CHR(10),"<BR>",$value);
 		}
-	// }
 	return ($value);
 }
 

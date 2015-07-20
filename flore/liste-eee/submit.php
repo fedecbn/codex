@@ -113,8 +113,7 @@ if (!empty ($id))  {                                                            
 			if ($_POST[$val_st] != $source[$key_st] OR $_POST[$fiab] != $fiabilite[$key_st])	{	/*différence*/
 				if (empty($source[$key_st]) AND empty($fiabilite[$key_st]))	/*NEW*/
 					{
-					$valeur = sql_format($_POST[$val_st]);
-					$query = "INSERT INTO eee.source (uid,ids,contenu,fiabilite) VALUES ($id, $key_st, ".sql_format_quote($valeur,'do').", ".frt($fiab,$_POST[$fiab]).");";
+					$query = "INSERT INTO eee.source (uid,ids,contenu,fiabilite) VALUES ($id, $key_st, ".sql_format_quote($_POST[$val_st],'do').", ".frt($fiab,$_POST[$fiab]).");";
 					if (DEBUG) echo "<BR>$query";		
 					$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);			
 					}
@@ -125,8 +124,7 @@ if (!empty ($id))  {                                                            
 					$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 					}
 				else {																										/*Autres cas = modif*/
-					$valeur = sql_format($_POST[$val_st]);
-					$query = "UPDATE eee.source SET (contenu,fiabilite) = (".sql_format_quote($valeur,'do').",".frt($fiab,$_POST[$fiab]).") WHERE uid = $id AND ids = $key_st";
+					$query = "UPDATE eee.source SET (contenu,fiabilite) = (".sql_format_quote($_POST[$val_st],'do').",".frt($fiab,$_POST[$fiab]).") WHERE uid = $id AND ids = $key_st";
 					if (DEBUG) echo "<BR>$query";
 					$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 					}
@@ -161,14 +159,12 @@ if (!empty ($id))  {                                                            
 			{
 			if (!empty($_POST[$val_st]) AND empty($argument[$key_st]))
 				{
-				$valeur = sql_format($_POST[$val_st]);
-				$query = "INSERT INTO eee.argument (uid,ida,contenu) VALUES ($id, $key_st, ".sql_format_quote($valeur,'do').")";	
+				$query = "INSERT INTO eee.argument (uid,ida,contenu) VALUES ($id, $key_st, ".sql_format_quote($_POST[$val_st],'do').")";	
 				$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);			
 				}
 			elseif(!empty($_POST[$val_st]) AND $_POST[$val_st] != $argument[$key_st])
 				{
-				$valeur = sql_format($_POST[$val_st]);
-				$query = "UPDATE eee.argument SET contenu = ".sql_format_quote($valeur,'do')." WHERE uid = $id AND ida = $key_st";
+				$query = "UPDATE eee.argument SET contenu = ".sql_format_quote($_POST[$val_st],'do')." WHERE uid = $id AND ida = $key_st";
 				$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 				}
 			elseif(empty($_POST[$val_st]) AND !empty($argument[$key_st]))
@@ -513,7 +509,7 @@ if (!empty ($id))  {                                                            
 		if ($eval_expert != $_POST["eval_expert"])
 			{
 			if ($_POST["eval_expert"] == '') {$_POST["eval_expert"] = NULL;}
-			$query = "UPDATE eee.evaluation SET eval_expert = '".$_POST["eval_expert"]."' WHERE uid = $id";
+			$query = "UPDATE eee.evaluation SET eval_expert = ".sql_format_quote($_POST["eval_expert"],'do')." WHERE uid = $id";
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : $query");
 			pg_free_result ($result);
 			}
