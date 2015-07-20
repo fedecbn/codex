@@ -230,7 +230,8 @@ function ref_colonne_et_valeur ($rubrique)	{
 function mono_table ($value)	{
 	if (is_array($value))	{
 		if (sizeof($value) == 1)	{
-			$key = array_shift(array_keys($value));
+			$x = array_keys($value);
+			$key = array_shift($x);
 			$new_value = $value[$key];
 			} else {
 			$new_value = implode($value,',');
@@ -246,12 +247,6 @@ function check_modif($val1,$val2,$field) {
 	global $aColumnsTot;
 	$type = $aColumnsTot[$_SESSION['page']][$field]['type'];
 			
-	// echo "<BR> Type : $type";
-	// echo "<BR>";
-	// var_dump($val1);
-	// echo "<BR>";
-	// var_dump($val2);
-
 	$val1 = mono_table($val1);
 	$val2 = mono_table($val2);
 	
@@ -307,32 +302,40 @@ function add_suivi2 ($etape,$id_user,$uid,$table,$champ,$valeur_1,$valeur_2,$rub
 	if (is_array($valeur_2) AND sizeof($valeur_2)==1)
 		$valeur_2 = mono_table($valeur_2);
 	
-	/*valeur_1*/
-	if (is_array($valeur_1) AND sizeof($valeur_1)>1)	{													/*Cas de valeur multiple*/
-		if (isset($ref[$champ_ref[$champ]])) {										/*Récupération des référentiels*/
-				foreach ($valeur_1 as $val)
-					$lib1[$val] = $ref[$champ_ref[$champ]][$val];
-				$libelle1 = implode(',',$lib1);
-				if (DEBUG) echo "<BR> libelle_ref_1 Multi $champ : ".$libelle1;
-		} else { 
-			$libelle1 = implode(',',$valeur_1);
-			if (DEBUG) echo "<BR> libelle_1 Multi $champ : ".$libelle1;		
+	/*valeur_1 = VALEUR INITIALE*/
+	var_dump($valeur_1);
+	if (($valeur_1 == null) OR (!empty($valeur_1)))
+		{
+		$valeur_1 = null;
+		$libelle1 = null;
+		if (DEBUG) echo "<BR> libelle_1 Unique $champ : vide";
+		} else {
+		if (is_array($valeur_1) AND sizeof($valeur_1)>1)	{							/*Cas de valeur multiple*/
+			if (isset($ref[$champ_ref[$champ]])) {										/*Récupération des référentiels*/
+					foreach ($valeur_1 as $val)
+						$lib1[$val] = $ref[$champ_ref[$champ]][$val];
+					$libelle1 = implode(',',$lib1);
+					if (DEBUG) echo "<BR> libelle_ref_1 Multi $champ : ".$libelle1;
+			} else { 
+				$libelle1 = implode(',',$valeur_1);
+				if (DEBUG) echo "<BR> libelle_1 Multi $champ : ".$libelle1;		
+				}
+		$valeur_1 = implode(',',$valeur_1);
+		if (DEBUG) echo "<BR> valeur_1 Multi $champ : ".var_dump($valeur_1);
+		} else {																		/*Cas de valeur unique*/
+		if (isset($ref[$champ_ref[$champ]])) {											/*Récupération des référentiels*/
+				$libelle1 = $ref[$champ_ref[$champ]][$valeur_1];		
+				if (DEBUG) echo "<BR> libelle_ref_1 Unique $champ : ".$libelle1;
+				} else {
+				$libelle1 = $valeur_1;
+				if (DEBUG) echo "<BR> libelle_1 Unique $champ : ".$libelle1;
+				}
+			if (DEBUG) echo "<BR> valeur_1 Unique $champ : ".$valeur_1;
 			}
-	$valeur_1 = implode(',',$valeur_1);
-	if (DEBUG) echo "<BR> valeur_1 Multi $champ : ".var_dump($valeur_1);
-	} else {																		/*Cas de valeur unique*/
-	if (isset($ref[$champ_ref[$champ]])) {											/*Récupération des référentiels*/
-			$libelle1 = $ref[$champ_ref[$champ]][$valeur_1];		
-			if (DEBUG) echo "<BR> libelle_ref_1 Unique $champ : ".$libelle1;
-			} else {
-			$libelle1 = $valeur_1;
-			if (DEBUG) echo "<BR> libelle_1 Unique $champ : ".$libelle1;
-			}
-		if (DEBUG) echo "<BR> valeur_1 Unique $champ : ".$valeur_1;
 		}
 
 	// /*idem valeur_2*/		
-	if (is_array($valeur_2) AND sizeof($valeur_2)>1)	{													/*Cas de valeur multiple*/
+	if (is_array($valeur_2) AND sizeof($valeur_2)>1)	{							/*Cas de valeur multiple*/
 		if (isset($ref[$champ_ref[$champ]])) {										/*Récupération des référentiels*/
 				foreach ($valeur_2 as $val)
 					$lib2[$val] = $ref[$champ_ref[$champ]][$val];
@@ -486,10 +489,14 @@ function metaform_text ($label,$descr,$long,$extra,$champ,$val)
 }
 
 
-function metaform_text_area ($label,$descr,$row,$cols,$extra,$champ,$val)
+function metaform_text_area ($label,$descr,$row,$cols,$style,$champ,$val)
 {
-    if ($descr != 'no_lab') {echo ("<label class=\"preField\">".$label."</label>");}
-    echo ("<textarea name=\"".$champ."\" id=\"".$champ."\" row=\"".$row."\" cols=\"".$cols."\" value=\"".$val."\" ".$extra." />".$val."</textarea>");
+	if (strpos($descr,"no_lab") == false)
+		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
+		else echo ("<label class=\"preField\">".$label."</label>");
+	
+	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+    echo ("<textarea name=\"".$champ."\" id=\"".$champ."\" row=\"".$row."\" cols=\"".$cols."\" value=\"".$val."\" $extra style=\"$style\" />".$val."</textarea>");
     echo ("<br>");
 }
 
@@ -512,10 +519,14 @@ function metaform_sel ($label,$descr,$extra,$liste,$champ,$val)
 }
 
 
-function metaform_sel_multi ($label,$descr,$extra,$liste,$champ,$val)
+function metaform_sel_multi ($label,$descr,$size,$style,$extra,$liste,$champ,$val)
 {
-    if ($descr != 'no_lab') {echo ("<label class=\"preField\">".$label."</label>");}
-	echo ("<select name=\"".$champ."[]\" id=\"".$champ."\" ".$extra." />");
+	if (strpos($descr,"no_lab") == false)
+		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
+		else echo ("<label class=\"preField\">".$label."</label>");
+	
+	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	echo ("<select name=\"".$champ."[]\" id=\"".$champ."\" size = $size multiple  $extra style=\"$style\" />");
     if ($liste != "")
 		{
 		foreach ($liste as $key => $value) 
@@ -573,39 +584,26 @@ function metaform_bout ($label,$descr,$champ,$val)
 
 function metaform_bool ($label,$descr,$champ,$val)
 {
-    if ($descr == 'bloque') {
-		echo ("<label class=\"preField_calc\">".$label."</label>");
-		echo ("<input type=\"radio\" disabled readonly name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
-		<input type=\"radio\" disabled readonly name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>");
-		}
-	else if ($descr != 'no_lab') {
-		echo ("<label class=\"preField\">".$label."</label>");
-		echo ("<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
-		<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>");
-		} else {
-		echo ("<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
-		<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>");
-		}
+	if (strpos($descr,"no_lab") == false)
+		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
+		else echo ("<label class=\"preField\">".$label."</label>");
+	
+	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	echo ("	<input type=\"radio\" $extra name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" style=\"$style\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
+			<input type=\"radio\" $extra name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" style=\"$style\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>");
 }
 
 
 function metaform_bout_plus ($label,$descr,$champ,$val)
 {
-    if ($descr == 'bloque') {
-    echo ("<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."1\" value=\"-1\" ".($val== -1 ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">-</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."2\" value=\"\" ".($val== null ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">0</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."3\" value=\"1\" ".($val== 1 ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">+</label><br>");
-		}
-	else if ($descr != 'no_lab') {
-	echo ("<label class=\"preField\">".$label."</label>");
-    echo ("<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."1\" value=\"-1\" ".($val== -1 ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">-</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."2\" value=\"\" ".($val== null ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">0</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."3\" value=\"1\" ".($val== 1 ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">+</label><br>");
-		} else {
-    echo ("<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."1\" value=\"-1\" ".($val== -1 ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">-</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."2\" value=\"\" ".($val== null ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">0</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."3\" value=\"1\" ".($val== 1 ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">+</label><br>");
-	}
+	if (strpos($descr,"no_lab") == false)
+		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
+		else echo ("<label class=\"preField\">".$label."</label>");
+	
+	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+    echo (" <input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."1\" value=\"-1\" style=\"$style\" ".($val== -1 ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">-</label>
+			<input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."2\" value=\"\" style=\"$style\" ".($val== null ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">0</label>
+			<input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."3\" value=\"1\" style=\"$style\" ".($val== 1 ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">+</label>");
 }
 
 function metaform_precis_plage ($label,$descr,$long,$liste,$champ_pr,$champ_pl,$val_pr,$val_pl)
@@ -698,39 +696,40 @@ function frt ($field,$value) {
 
 
 function sql_format_quote ($value,$do) {
-    $value = str_replace ("\t"," ",$value);
-    $value = rtrim($value,"'");
-	if(strpos($value,"'"))	{
-		// echo "<BR> la valeur : $value ";
-		if ($do == 'do')	{
-			$value = str_replace("'","\'",$value);
-			// echo "sans quote : $value ";
-			}
-		else if ($do == 'undo' OR $do == 'undo_hmtl')	{
-			$value = str_replace("\'","'",$value);
-			// echo "avec quote : $value ";
-			}
-	}
-	if(strpos($value,'"'))	{
-		// echo "<BR> la valeur : $value ";
-		if ($do == 'do')	{
-			$value = str_replace('"','\"',$value);
-			// echo "sans quote : $value ";
-			}
-		else if ($do == 'undo' OR $do == 'undo_hmtl')	{
-			$value = str_replace('\"','"',$value);
-			// echo "avec quote : $value ";
-			}
-	}
-	if ($do == 'do')	{
-        $value = "'" . pg_escape_string ($value) . "'";
-		$value = str_replace ("<BR>","\n",$value);
+    // if ($value != null) {
+		$value = str_replace ("\t"," ",$value);
+		$value = rtrim($value,"'");
+		if(strpos($value,"'"))	{
+			// echo "<BR> la valeur : $value ";
+			if ($do == 'do')	{
+				$value = str_replace("'","\'",$value);
+				// echo "sans quote : $value ";
+				}
+			else if ($do == 'undo' OR $do == 'undo_hmtl')	{
+				$value = str_replace("\'","'",$value);
+				// echo "avec quote : $value ";
+				}
 		}
-	else if ($do == 'undo_hmtl') {
-		$value = str_replace ("\n","<BR>",$value);
-		$value = str_replace (CHR(13).CHR(10),"<BR>",$value);
+		if(strpos($value,'"'))	{
+			// echo "<BR> la valeur : $value ";
+			if ($do == 'do')	{
+				$value = str_replace('"','\"',$value);
+				// echo "sans quote : $value ";
+				}
+			else if ($do == 'undo' OR $do == 'undo_hmtl')	{
+				$value = str_replace('\"','"',$value);
+				// echo "avec quote : $value ";
+				}
 		}
-
+		if ($do == 'do')	{
+			$value = "'" . pg_escape_string ($value) . "'";
+			$value = str_replace ("<BR>","\n",$value);
+		}
+		else if ($do == 'undo_hmtl') {
+			$value = str_replace ("\n","<BR>",$value);
+			$value = str_replace (CHR(13).CHR(10),"<BR>",$value);
+		}
+	// }
 	return ($value);
 }
 
@@ -830,7 +829,7 @@ function update_multi($query,$statut,$id_att,$att_sel,$table,$id)
 	if (!empty($add))		/*Ajout*/
 		{
 		foreach ($add as $field => $val)
-			$query= $query."INSERT INTO $table VALUES ($id,$val,'$statut'); ";
+			$query= $query."INSERT INTO $table VALUES ($val,'$statut',$id); ";
 		// echo "<br>".$query;
 		$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 		}

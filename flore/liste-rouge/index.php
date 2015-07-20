@@ -348,7 +348,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
 		echo ("</div>");
-//------------------------------------------------------------------------------ EDIT LR GRP4
+//------------------------------------------------------------------------------ EDIT LR GRP5
         echo ("<div id=\"radio2\">");
 		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
 			/*requete discussion*/
