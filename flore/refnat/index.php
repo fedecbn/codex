@@ -229,7 +229,7 @@ echo ("</div>");
 	case "view" : 
 	case "edit" : {
 /*------------------------------------------------------------------------------ REF. */
-if ($niveau <= 64) $desc = "bloque";
+if ($niveau <= 64) $desc = "bloque"; else $desc = null;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
 
@@ -331,7 +331,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						{
 						$field_inteface = $field;
 						echo ("<input type=\"hidden\" id=\"version\" value=\"vRéseauCBN\" />");
-						if ($field_inteface == 'version') {echo $val;} else {metaform_text ($field," no_lab bloque","","style=\"width:".$length."em;\" ",$field_inteface,$val);}
+						if ($field_inteface == 'version') {echo $val;} else {metaform_text ($field," no_lab $desc","","style=\"width:".$length."em;\" ",$field_inteface,$val);}
 						} else {
 						$field_inteface = $field."_taxref";
 						echo $val;
@@ -355,7 +355,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						{
 						$field_inteface = $field;
 						echo ("<input type=\"hidden\" id=\"version\" value=\"vRéseauCBN\" />");
-						if ($field_inteface == 'version') {echo $row[$field];} else {metaform_text ($field," no_lab bloque","","style=\"width:".$length."em;$diff\" ",$field_inteface,$row[$field]);}
+						if ($field_inteface == 'version') {echo $row[$field];} else {metaform_text ($field," no_lab $desc","","style=\"width:".$length."em;$diff\" ",$field_inteface,$row[$field]);}
 						} else {
 						$field_inteface = $field."_taxref";
 						echo $row[$field];
