@@ -317,7 +317,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			{
 			
 			/*Tableau Nomenclature*/
-			echo ("<table width=\"1200\"><tr valign=center style=\"border-bottom:1pt solid #D0C5AA;\">");
+			echo ("<table width=\"1200\"><tr valign=center style=\"border-bottom:3pt solid #D0C5AA;\">");
 			/*entete de colonne*/
 			foreach ($entete as $field => $val) echo ("<th style=\" text-align: center;	vertical-align: center;\">$field</th>");
 			echo("</tr>");
