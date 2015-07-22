@@ -240,7 +240,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			/*Statuts Nationaux*/
 			/*----------------*/
 			echo ("<table border=1 width=\"300\">");
-			echo ("<tr valign=center >");
 			echo ("<th></th>");
 			/*en-tête*/
 			echo ("<th style=\" text-align: center;	vertical-align: center;\">National</th>");
@@ -265,16 +264,15 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				if ($type_stt == 'INDI' OR $type_stt == 'PRES' OR $type_stt == 'RAR') {metaform_text (""," no_lab bloque","","width:5.5em;",$type_stt,$res_stt_fr_lr[$type_stt]);}
 				else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt,$res_stt_fr_lr[$type_stt]);}
 				echo ("</td>");
+				echo("</tr>");
 				}
-			echo("</tr>");	
 			echo("</table><br>");
 			
 			/*----------------*/
 			/*Status régionaux*/
 			/*----------------*/
 			echo ("<table border=1 width=\"1200\">");
-			echo ("<tr valign=center>");
-			echo ("<th style=\"width:5em;\></th>");			
+			echo ("<th style=\"width:5em;\"></th>");			
 			/*en-tête*/
 			foreach ($ref['region'] as $id_reg => $region)	{
 					echo ("<th style=\" text-align: center;	vertical-align: center; width:5em;\">$region</th>");
@@ -296,8 +294,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						echo ("</td>");
 						}
 					}
+				echo ("</tr>");
 				}
-			echo("</tr>");
 			echo("</table><br>");
         echo ("</fieldset>");
         echo ("</div>");		
