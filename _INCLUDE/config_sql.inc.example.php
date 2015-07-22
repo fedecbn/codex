@@ -11,12 +11,17 @@
 //  Renseigner les paramètre de connexion et remplacer le nom du fichier par confi_sql.inc.php//
 //------------------------------------------------------------------------------//
 
-    define ("SQL_server", "");
+    define ("ON_Server", "no");
+	define ("SQL_server", "");
     define ("SQL_port", "");
     define ("SQL_user", "");
     define ("SQL_pass", "");
     define ("SQL_base", "");
 
+	define ("SQL_admin_user", "");
+    define ("SQL_admin_pass", "");
+	define ("SQL_taxa", "");
+	
     define ("SQL_schema_app", "applications");
     define ("SQL_schema_lr", "liste_rouge");
     define ("SQL_schema_eee", "eee");

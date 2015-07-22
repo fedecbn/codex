@@ -23,7 +23,7 @@ $config=$_SESSION['id_config'];
 
 $lang_select=$_COOKIE['lang_select'];
 
-if (SQL_server == 'localhost') $path = 'D:/'; else $path = '/home/export_pgsql/';
+if (ON_Server == 'no') $path = 'D:/'; else $path = '/home/export_pgsql/';
 
 $query_module = "
 	SELECT * FROM catnat.taxons_nat t
