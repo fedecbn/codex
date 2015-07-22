@@ -28,10 +28,11 @@ ref_colonne_et_valeur ($id_page);
 //------------------------------------------------------------------------------ VAR.
 $in["cd_nom"] = sql_format_num ($_POST["cd_nom"]);$in["cd_ref"] = sql_format_num ($_POST["cd_ref"]);$in["lb_nom"] = sql_format_quote ($_POST["lb_nom"],'do');$in["lb_auteur"] = sql_format_quote ($_POST["lb_auteur"],'do');$in["nom_complet"] = sql_format_quote ($_POST["nom_complet"],'do');$in["nom_valide"] = sql_format_quote ($_POST["nom_valide"],'do');$in["nom_vern"] = sql_format_quote ($_POST["nom_vern"],'do');$in["nom_vern_eng"] = sql_format_quote ($_POST["nom_vern_eng"],'do');$in["cd_taxsup"] = sql_format_num ($_POST["cd_ref"]);$in["rang"] = sql_format_quote ($_POST["rang"],'do');$in["regne"] = sql_format_quote ($_POST["regne"],'do');$in["phylum"] = sql_format_quote ($_POST["phylum"],'do');$in["classe"] = sql_format_quote ($_POST["classe"],'do');$in["ordre"] = sql_format_quote ($_POST["ordre"],'do');$in["famille"] = sql_format_quote ($_POST["famille"],'do');$in["fr"] = sql_format ($_POST["fr"]);$in["gf"] = sql_format ($_POST["gf"]);$in["mar"] = sql_format ($_POST["mar"]);$in["gua"] = sql_format ($_POST["gua"]);$in["sm"] = sql_format ($_POST["sm"]);$in["sb"] = sql_format ($_POST["sb"]);$in["spm"] = sql_format ($_POST["spm"]);$in["may"] = sql_format ($_POST["may"]);$in["epa"] = sql_format ($_POST["epa"]);$in["reu"] = sql_format ($_POST["reu"]);$in["taaf"] = sql_format ($_POST["taaf"]);$in["pf"] = sql_format ($_POST["pf"]);$in["nc"] = sql_format ($_POST["nc"]);$in["wf"] = sql_format ($_POST["wf"]);$in["cli"] = sql_format ($_POST["cli"]);$in["habitat"] = sql_format_num ($_POST["habitat"],'do');
 
-$in["catnat"] = sql_format_bool ($_POST["catnat"],'do');$in["liste_rouge"] = sql_format_bool ($_POST["liste_rouge"],'do');$in["eee"] = sql_format_bool ($_POST["eee"],'do');
+$in["catnat"] = sql_format_bool ($_POST["catnat"]);$in["liste_rouge"] = sql_format_bool ($_POST["liste_rouge"]);$in["eee"] = sql_format_bool ($_POST["eee"]);
 
 $in["hybride"] = sql_format_bool ($_POST["hybride"],'do');
 
+// var_dump($in);
 
 //------------------------------------------------------------------------------ EDIT
 if (!empty ($id))                                                               
@@ -75,20 +76,20 @@ if (!empty ($id))
 		
 			add_and_modif_taxon ($in,'modif',$id);
 		}
-		if ($niveau >= 64)	/*Seulement les participants et au dessus*/
-			{
-			if (isset($_POST['commentaire_eval']))	{
-				if (!empty($_POST['commentaire_eval'])) {
-					$result=pg_query ($db,$query_user." AND id_user = '$id_user'") or die ("Erreur pgSQL : ".pg_result_error ($result));
-					$user=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
-					$insert = "INSERT INTO refnat.discussion (uid,id_user,nom,prenom,id_cbn,commentaire_eval,datetime) 
-					VALUES ($id,'$user[id_user]','$user[nom]','$user[prenom]',$user[id_cbn],".sql_format_quote($_POST[commentaire_eval],'do').",NOW())";
-					echo $insert;
-					$result=pg_query ($db,$insert) or die ("Erreur pgSQL : ".pg_result_error ($result));
-					add_suivi2($etape,$id_user,$id,"discussion","commentaire_eval","",sql_format_quote($_POST[commentaire_eval],'do'),$id_page,'manuel',"ajout");
-					}
+	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
+		{
+		if (isset($_POST['commentaire_eval']))	{
+			if (!empty($_POST['commentaire_eval'])) {
+				$result=pg_query ($db,$query_user." AND id_user = '$id_user'") or die ("Erreur pgSQL : ".pg_result_error ($result));
+				$user=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
+				$insert = "INSERT INTO refnat.discussion (uid,id_user,nom,prenom,id_cbn,commentaire_eval,datetime) 
+				VALUES ($id,'$user[id_user]','$user[nom]','$user[prenom]',$user[id_cbn],".sql_format_quote($_POST[commentaire_eval],'do').",NOW())";
+				echo $insert;
+				$result=pg_query ($db,$insert) or die ("Erreur pgSQL : ".pg_result_error ($result));
+				add_suivi2($etape,$id_user,$id,"discussion","commentaire_eval","",sql_format_quote($_POST[commentaire_eval],'do'),$id_page,'manuel',"ajout");
 				}
 			}
+		}
 	} else {                                                                     //  ADD
 //------------------------------------------------------------------------------ Valeurs numériques
     if ($_POST['etape']=="") $_POST['etape']=2;
