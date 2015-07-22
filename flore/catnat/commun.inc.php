@@ -23,6 +23,8 @@ $config=$_SESSION['id_config'];
 
 $lang_select=$_COOKIE['lang_select'];
 
+if (SQL_server == 'localhost') $path = 'D:/'; else $path = '/home/export_pgsql/';
+
 $query_module = "
 	SELECT * FROM catnat.taxons_nat t
 	JOIN refnat.taxons a ON a.uid = t.uid 
@@ -81,8 +83,7 @@ WHERE code_type_territoire = 'REG' AND s.cd_ref_referentiel NOT IN
 	)
 GROUP BY cd_ref_referentiel, type_statut, code_statut, libelle_statut, code_territoire, libelle_territoire
 ORDER BY cd_ref_referentiel)
---- TO '/home/export_pgsql/taxa_statut.csv' WITH csv HEADER DELIMITER ';';
-TO 'D:/taxa_statut.csv' WITH csv HEADER DELIMITER ';';
+ TO '".$path."taxa_statut.csv' WITH csv HEADER DELIMITER ';';
 ";
 	
 /*mise à jour du catalogue régional et national calculé à partir du taxa*/
@@ -93,8 +94,7 @@ DROP TABLE IF EXISTS codex_taxa;
 CREATE TABLE codex_taxa
 (cd_ref_referentiel integer, type_statut character varying, code_statut character varying, libelle_statut character varying, code_territoire character varying, libelle_territoire character varying,CONSTRAINT codex_taxa_pkey PRIMARY KEY (cd_ref_referentiel,type_statut,code_territoire)) WITH (OIDS=FALSE);
 ALTER TABLE codex_taxa  OWNER TO postgres;
---- COPY codex_taxa FROM '/home/export_pgsql/taxa_statut.csv' WITH csv HEADER DELIMITER ';';
-COPY codex_taxa FROM 'D:/taxa_statut.csv' WITH csv HEADER DELIMITER ';';
+COPY codex_taxa FROM '".$path."taxa_statut.csv' WITH csv HEADER DELIMITER ';';
 ";
 
 $maj_from_taxa = "
@@ -122,8 +122,7 @@ WHERE b.type_statut = two.type_statut AND code_territoire=two.code_territoire AN
 ------------------------------------------------------------------------------------------
 --- MISE A JOUR DES STATUTS NATIONAUX CALCULÉ
 --- Sauvegarde de l'existant
---- COPY (SELECT * FROM catnat.statut_nat) TO '/home/export_pgsql/codex.statut_nat.csv' WITH csv HEADER DELIMITER ';';
-COPY (SELECT * FROM catnat.statut_nat) TO 'D:/codex.statut_nat.csv' WITH csv HEADER DELIMITER ';';
+COPY (SELECT * FROM catnat.statut_nat) TO '".$path."codex.statut_nat.csv' WITH csv HEADER DELIMITER ';';
 
 ------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------
@@ -156,8 +155,7 @@ UPDATE catnat.statut_nat a SET indi_lr = indi_liste_rouge FROM (
 COPY (
 	SELECT a.uid, b.cd_ref, b.famille, b.nom_complet, indi as indi_expert, indi_cal as indi_calcule
 	FROM catnat.statut_nat a JOIN refnat.taxons b ON a.uid = b.uid WHERE (indi IS NOT NULL OR indi_cal IS NOT NULL) AND (indi <> 'Indigène' AND indi_cal = 'Indigène') ORDER BY b.famille, b.nom_complet ASC
---- ) TO '/home/export_pgsql/codex.pb_indigenat.csv' WITH csv HEADER DELIMITER ';';
-) TO 'D:/codex.pb_indigenat.csv' WITH csv HEADER DELIMITER ';';
+) TO '".$path."codex.pb_indigenat.csv' WITH csv HEADER DELIMITER ';';
 
 
 ------------------------------------------------------------------------------------------
