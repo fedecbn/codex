@@ -50,6 +50,9 @@ $lang['it']['close']="Vicino";
 $lang['fr']['del']="Supprimer";
 $lang['it']['del']="";
 
+$lang['fr']['maj_taxa']="Mise à jour depuis le Taxa";
+$lang['it']['maj_taxa']="";
+
 $lang['fr']['del_sel']="Supprimer la sélection";
 $lang['it']['del_sel']="";
 

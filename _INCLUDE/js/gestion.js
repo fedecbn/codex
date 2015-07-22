@@ -66,7 +66,13 @@ $(document).ready(function(){
 
     if ( $("#mode").val() == 'liste') {
         $tabs.tabs('disable',2);                                                // Fiche
-    } else {
+    } 
+	else if ( $("#mode").val() == 'maj') {
+        $tabs.tabs ('disable',0);                                               // LR                                                
+        $tabs.tabs ('disable',1);                                               // EVEE                                                	
+        $tabs.tabs ('disable',2);                                               // EVEE                                                	
+	}
+	else {
         $tabs.tabs ("option","active",2);                                       // Fiche
         $tabs.tabs ('disable',0);                                               // LR                                                
         $tabs.tabs ('disable',1);                                               // EVEE                                                
@@ -120,6 +126,14 @@ $(document).ready(function(){
         .click(function() {
             var sData = oTable.$('input').serialize();
             deleteFunc ("Supprimer des fiches",'#dialog',oTable,"del.php","",sData,"");
+		});
+
+    $( "#maj-from-taxa-button" )
+        .button({
+            text: true
+        })
+        .click(function() {
+            window.location.replace ('index.php?m=maj');
 		});
 
 //------------------------------------------------------------------------------ BOUTONS / Exports PDF

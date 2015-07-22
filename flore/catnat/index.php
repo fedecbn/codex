@@ -92,9 +92,11 @@ switch ($mode) {
                 if ($niveau > 64) 
                     echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
                 echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau == 255) 
+                if ($niveau <= 255) 
                     echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
-            echo ("</div><br><br>");
+                if ($niveau <= 512) 
+                    echo ("<button id=\"maj-from-taxa-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");        
+			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
 			aff_table_new ($id_page,true,true);			
@@ -285,12 +287,12 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					if (empty($res_stt[$type_stt][$id_reg])) {
 						echo ("<td>");
 						if ($type_stt == 'RAR') {metaform_text ("Rar"," no_lab bloque","","width:5.5em;","rar","");}
-						else {metaform_sel (""," no_lab $desc","width:5em;",$liste_statut[$type_stt],$type_stt."_".$id_reg,"");}
+						else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt."_".$id_reg,"");}
 						echo ("</td>");
 					} else {
 						echo ("<td>");
 						if ($type_stt == 'RAR') {metaform_text ("Rar"," no_lab bloque","","width:5.5em;","rar",$res_stt[$type_stt][$id_reg]);}
-						else {metaform_sel (""," no_lab $desc","width:5em;",$liste_statut[$type_stt],$type_stt."_".$id_reg,$res_stt[$type_stt][$id_reg]);}
+						else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt."_".$id_reg,$res_stt[$type_stt][$id_reg]);}
 						echo ("</td>");
 						}
 					}
@@ -373,6 +375,40 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
         echo ("</div>");
     }
     break;
+
+	case "maj"	: {
+/*------------------------------------------------------------------------------ EDIT catnat EN TETE*/
+	echo ("<div id=\"$id_page\" >");
+	echo ("</div>");
+/*------------------------------------------------------------------------------ #Onglet Fiche*/
+	echo ("<div style=\"float:right;\">");
+		echo ("<button id=\"retour3-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
+	echo ("</div>");
+	
+	echo ("<div id=\"maj\" >");
+		/*connexion au si_flore_national_v3 pour récupérer le taxa*/
+		$db2=sql_connect_admin (SQL_taxa);
+		if (!$db2) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
+		$result = pg_query ($db2,$recup_taxa) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		if ($result != FALSE) echo ("<BR>- Taxa exporté"); else echo ("Problème d'export");
+		pg_free_result ($result);
+		
+		/*Application du nouveau taxa*/
+		$db=sql_connect_admin (SQL_base);
+		if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
+		$result = pg_query ($db,$import_taxa) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		if ($result != FALSE) echo ("<BR>- Taxa importé"); else echo ("Problème d'import");
+		pg_free_result ($result);
+		
+		$result = pg_query ($db,$maj_from_taxa) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		if ($result != FALSE) echo ("<BR>- CATNAT mis à jour"); else echo ("Problème d'export");
+		pg_free_result ($result);
+
+	echo ("</div>");
+	
+	
+	}
+	break;
 
 }
 
