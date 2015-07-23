@@ -26,10 +26,12 @@ if (isset($_GET['o']) & !empty($_GET['o'])) $o=$_GET['o'];
 $id=$_GET['id'];
 /*Tailles des cases*/
 $etude = array (
-0 => 13,
-1 => 12,
-2=> 4
+"Nomenclature" => 10,
+"Taxonomie" => 10,
+"Répartition"=> 4
 );
+	
+	
 	
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -170,15 +172,14 @@ echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 	/*Requete référentiels*/
 	$flag = 0;
 
-	
 	/*Nomenclature*/
-	$select_fcbn[0] = "'' as cd_nom,'' as  cd_ref,'' as  lb_nom,'' as  lb_auteur,'' as  nom_complet,'' as  nom_valide,'' as  nom_vern,'' as  nom_vern_eng";
+	$select_fcbn["Nomenclature"] = "'' as cd_nom,'' as  cd_ref,'' as  lb_nom,'' as  lb_auteur,'' as  nom_complet,'' as  nom_valide,'' as  nom_vern,'' as  nom_vern_eng";
 	
 	/*Taxonomie*/
-	$select_fcbn[1] = "'' as  cd_taxsup,'' as  rang,'' as  regne,'' as  phylum,'' as  classe,'' as  ordre,'' as  famille";
+	$select_fcbn["Taxonomie"] = "'' as  cd_taxsup,'' as  rang,'' as  regne,'' as  phylum,'' as  classe,'' as  ordre,'' as  famille";
 	
 	/*Répartition*/
-	$select_fcbn[2] = "'' as  fr,'' as  gf,'' as  mar,'' as  gua,'' as  sm,'' as  sb,'' as  spm,'' as  may,'' as  epa,'' as  reu,'' as  taaf,'' as  pf,'' as  nc,'' as  wf,'' as  cli,'' as  habitat";
+	$select_fcbn["Répartition"] = "'' as  fr,'' as  gf,'' as  mar,'' as  gua,'' as  sm,'' as  sb,'' as  spm,'' as  may,'' as  epa,'' as  reu,'' as  taaf,'' as  pf,'' as  nc,'' as  wf,'' as  cli,'' as  habitat";
 
 	echo ("<fieldset><LEGEND>Correspondance avec TAXREF</LEGEND>");
 	foreach ($etude as $num => $length)
@@ -189,6 +190,7 @@ echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 		$entete=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
 		
 			/*Tableau Nomenclature*/
+			echo ("<table width=\"1200\"><tr align=center style=\"border-bottom:1pt solid #D0C5AA;\"><td>$num</td></tr></table>");
 			echo ("<table width=\"1200\"><tr valign=center style=\"border-bottom:1pt solid #D0C5AA;\">");
 			/*entete de colonne*/
 			foreach ($entete as $field => $val) echo ("<th style=\" text-align: center;	vertical-align: center;\">$field</th>");
@@ -295,17 +297,17 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 	$flag = 0;
 	
 	/*Nomenclature*/
-	$select_fcbn[0] = $select1[0] = $select2[0] = $select3[0] = $select4[0] = " ,cd_nom::text, cd_ref::text, lb_nom, lb_auteur, nom_complet, nom_valide, nom_vern, nom_vern_eng";
+	$select_fcbn["Nomenclature"] = $select1["Nomenclature"] = $select2["Nomenclature"] = $select3["Nomenclature"] = $select4["Nomenclature"] = " ,cd_nom::text, cd_ref::text, lb_nom, lb_auteur, nom_complet, nom_valide, nom_vern, nom_vern_eng";
 	
 	/*Taxonomie*/
-	$select_fcbn[1] = $select1[1] = $select2[1] = $select3[1] =", cd_taxsup::text, rang, regne, phylum, classe, ordre, famille";
-	$select4[1] = ", '-' as cd_taxsup, rang, regne, phylum, classe, ordre, famille";
+	$select_fcbn["Taxonomie"] = $select1["Taxonomie"] = $select2["Taxonomie"] = $select3["Taxonomie"] =", cd_taxsup::text, rang, regne, phylum, classe, ordre, famille";
+	$select4["Taxonomie"] = ", '-' as cd_taxsup, rang, regne, phylum, classe, ordre, famille";
 	
 	/*Répartition*/
-	$select_fcbn[2] = $select1[2] = $select2[2] = ", fr, gf, mar, gua, sm, sb, spm, may, epa, reu, taaf, pf, nc, wf, cli, habitat::text";
-	$select3[2] = ", fr, gf, mar, gua, smsb as sm, smsb as sb, spm, may, epa, reu, taaf, pf, nc, wf, cli, habitat";
-	// $select4[2] = ", fr, 'non prévu dans cette version' as gf, mar, gua, smsb as sm, smsb as sb, spm, may, 'non prévu dans cette version' as habitat,'non prévu dans cette version' as epa, reu, taaf, 'non prévu dans cette version' as pf, 'non prévu dans cette version' as nc, 'non prévu dans cette version' as wf, 'non prévu dans cette version' as cli";
-	$select4[2] = ", fr, '-' as gf, mar, gua, smsb as sm, smsb as sb, spm, may, '-' as habitat,'-' as epa, reu, taaf, '-' as pf, '-' as nc, '-' as wf, '-' as cli";
+	$select_fcbn["Répartition"] = $select1["Répartition"] = $select2["Répartition"] = ", fr, gf, mar, gua, sm, sb, spm, may, epa, reu, taaf, pf, nc, wf, cli, habitat::text";
+	$select3["Répartition"] = ", fr, gf, mar, gua, smsb as sm, smsb as sb, spm, may, epa, reu, taaf, pf, nc, wf, cli, habitat";
+	// $select4["Répartition"] = ", fr, 'non prévu dans cette version' as gf, mar, gua, smsb as sm, smsb as sb, spm, may, 'non prévu dans cette version' as habitat,'non prévu dans cette version' as epa, reu, taaf, 'non prévu dans cette version' as pf, 'non prévu dans cette version' as nc, 'non prévu dans cette version' as wf, 'non prévu dans cette version' as cli";
+	$select4["Répartition"] = ", fr, '-' as gf, mar, gua, smsb as sm, smsb as sb, spm, may, '-' as habitat,'-' as epa, reu, taaf, '-' as pf, '-' as nc, '-' as wf, '-' as cli";
 
 	
 	
@@ -321,7 +323,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		if (!empty($entete))
 			{
 			
-			/*Tableau Nomenclature*/
+			/*Tableau*/
+			echo ("<table width=\"1200\"><tr align=center style=\"border-bottom:1pt solid #D0C5AA;\"><td><h1>$num</h1></td></tr></table>");
 			echo ("<table width=\"1200\"><tr valign=center style=\"border-bottom:3pt solid #D0C5AA;\">");
 			/*entete de colonne*/
 			foreach ($entete as $field => $val) echo ("<th style=\" text-align: center;	vertical-align: center;\">$field</th>");
