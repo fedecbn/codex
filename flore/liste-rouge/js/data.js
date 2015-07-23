@@ -44,253 +44,116 @@
             }
             switch (aData[11])                                                  // Cat A
             {
-                case "DD" : 
-                    $('td:eq(11)', nRow).addClass('UICN_DD');
-                break;
-                case "LC" : 
-                    $('td:eq(11)', nRow).addClass('UICN_LC');
-                break;
-                case "NT" : 
-                    $('td:eq(11)', nRow).addClass('UICN_NT');
-                break;
-                case "VU" : 
-                    $('td:eq(11)', nRow).addClass('UICN_VU');
-                break;
-                case "EN" : 
-                    $('td:eq(11)', nRow).addClass('UICN_EN');
-                break;
-                case "CR" : 
-                case "CR*" : 
-                    $('td:eq(11)', nRow).addClass('UICN_CR');
-                break;
-                case "RE" : 
-                    $('td:eq(11)', nRow).addClass('UICN_RE');
-                break;
-                case "EW" : 
-                    $('td:eq(11)', nRow).addClass('UICN_EW');
-                break;
-                case "EX" : 
-                    $('td:eq(11)', nRow).addClass('UICN_EX');
-                break;
-                case "NA" : 
-                    $('td:eq(11)', nRow).addClass('UICN_NA');
-                break;
+                case "DD" : $('td:eq(11)', nRow).addClass('UICN_DD'); break;
+                case "LC" : $('td:eq(11)', nRow).addClass('UICN_LC'); break;
+                case "NT" : $('td:eq(11)', nRow).addClass('UICN_NT'); break;
+                case "VU" : $('td:eq(11)', nRow).addClass('UICN_VU'); break;
+                case "EN" : $('td:eq(11)', nRow).addClass('UICN_EN'); break;
+                case "CR" : $('td:eq(11)', nRow).addClass('UICN_CR'); break;
+				case "CR*" : $('td:eq(11)', nRow).addClass('UICN_CR');break;
+                case "RE" : $('td:eq(11)', nRow).addClass('UICN_RE'); break;
+                case "EW" : $('td:eq(11)', nRow).addClass('UICN_EW'); break;
+                case "EX" : $('td:eq(11)', nRow).addClass('UICN_EX'); break;
+                case "NA" : $('td:eq(11)', nRow).addClass('UICN_NA'); break;
+                case "NE" : $('td:eq(11)', nRow).addClass('UICN_NE'); break;
             }
-            switch (aData[13])                                                  // Cat B
+            switch (aData[12])                                                  // Cat B
             {
-                case "DD" : 
-                    $('td:eq(13)', nRow).addClass('UICN_DD');
-                break;
-                case "LC" : 
-                    $('td:eq(13)', nRow).addClass('UICN_LC');
-                break;
-                case "NT" : 
-                    $('td:eq(13)', nRow).addClass('UICN_NT');
-                break;
-                case "VU" : 
-                    $('td:eq(13)', nRow).addClass('UICN_VU');
-                break;
-                case "EN" : 
-                    $('td:eq(13)', nRow).addClass('UICN_EN');
-                break;
-                case "CR" : 
-                case "CR*" : 
-                    $('td:eq(13)', nRow).addClass('UICN_CR');
-                break;
-                case "RE" : 
-                    $('td:eq(13)', nRow).addClass('UICN_RE');
-                break;
-                case "EW" : 
-                    $('td:eq(13)', nRow).addClass('UICN_EW');
-                break;
-                case "EX" : 
-                    $('td:eq(13)', nRow).addClass('UICN_EX');
-                break;
-                case "NA" : 
-                    $('td:eq(13)', nRow).addClass('UICN_NA');
-                break;
+                case "DD" : $('td:eq(12)', nRow).addClass('UICN_DD'); break;
+                case "LC" : $('td:eq(12)', nRow).addClass('UICN_LC'); break;
+                case "NT" : $('td:eq(12)', nRow).addClass('UICN_NT'); break;
+                case "VU" : $('td:eq(12)', nRow).addClass('UICN_VU'); break;
+                case "EN" : $('td:eq(12)', nRow).addClass('UICN_EN'); break;
+                case "CR" : $('td:eq(12)', nRow).addClass('UICN_CR'); break;
+				case "CR*" : $('td:eq(12)', nRow).addClass('UICN_CR');break;
+                case "RE" : $('td:eq(12)', nRow).addClass('UICN_RE'); break;
+                case "EW" : $('td:eq(12)', nRow).addClass('UICN_EW'); break;
+                case "EX" : $('td:eq(12)', nRow).addClass('UICN_EX'); break;
+                case "NA" : $('td:eq(12)', nRow).addClass('UICN_NA'); break;
+                case "NE" : $('td:eq(12)', nRow).addClass('UICN_NE'); break;
             }
-            switch (aData[12])                                                  // Cat C
+            switch (aData[13])                                                  // Cat C
             {
-                case "DD" : 
-                    $('td:eq(12)', nRow).addClass('UICN_DD');
-                break;
-                case "LC" : 
-                    $('td:eq(12)', nRow).addClass('UICN_LC');
-                break;
-                case "NT" : 
-                    $('td:eq(12)', nRow).addClass('UICN_NT');
-                break;
-                case "VU" : 
-                    $('td:eq(12)', nRow).addClass('UICN_VU');
-                break;
-                case "EN" : 
-                    $('td:eq(12)', nRow).addClass('UICN_EN');
-                break;
-                case "CR" : 
-                case "CR*" : 
-                    $('td:eq(12)', nRow).addClass('UICN_CR');
-                break;
-                case "RE" : 
-                    $('td:eq(12)', nRow).addClass('UICN_RE');
-                break;
-                case "EW" : 
-                    $('td:eq(12)', nRow).addClass('UICN_EW');
-                break;
-                case "EX" : 
-                    $('td:eq(12)', nRow).addClass('UICN_EX');
-                break;
-                case "NA" : 
-                    $('td:eq(12)', nRow).addClass('UICN_NA');
-                break;
+                case "DD" : $('td:eq(13)', nRow).addClass('UICN_DD'); break;
+                case "LC" : $('td:eq(13)', nRow).addClass('UICN_LC'); break;
+                case "NT" : $('td:eq(13)', nRow).addClass('UICN_NT'); break;
+                case "VU" : $('td:eq(13)', nRow).addClass('UICN_VU'); break;
+                case "EN" : $('td:eq(13)', nRow).addClass('UICN_EN'); break;
+                case "CR" : $('td:eq(13)', nRow).addClass('UICN_CR'); break;
+				case "CR*" : $('td:eq(13)', nRow).addClass('UICN_CR');break;
+                case "RE" : $('td:eq(13)', nRow).addClass('UICN_RE'); break;
+                case "EW" : $('td:eq(13)', nRow).addClass('UICN_EW'); break;
+                case "EX" : $('td:eq(13)', nRow).addClass('UICN_EX'); break;
+                case "NA" : $('td:eq(13)', nRow).addClass('UICN_NA'); break;
+                case "NE" : $('td:eq(13)', nRow).addClass('UICN_NE'); break;
             }
             switch (aData[14])                                                  // Cat D
             {
-                case "DD" : 
-                    $('td:eq(14)', nRow).addClass('UICN_DD');
-                break;
-                case "LC" : 
-                    $('td:eq(14)', nRow).addClass('UICN_LC');
-                break;
-                case "NT" : 
-                    $('td:eq(14)', nRow).addClass('UICN_NT');
-                break;
-                case "VU" : 
-                    $('td:eq(14)', nRow).addClass('UICN_VU');
-                break;
-                case "EN" : 
-                    $('td:eq(14)', nRow).addClass('UICN_EN');
-                break;
-                case "CR" : 
-                case "CR*" : 
-                    $('td:eq(14)', nRow).addClass('UICN_CR');
-                break;
-                case "RE" : 
-                    $('td:eq(14)', nRow).addClass('UICN_RE');
-                break;
-                case "EW" : 
-                    $('td:eq(14)', nRow).addClass('UICN_EW');
-                break;
-                case "EX" : 
-                    $('td:eq(14)', nRow).addClass('UICN_EX');
-                break;
-                case "NA" : 
-                    $('td:eq(14)', nRow).addClass('UICN_NA');
-                break;
+                case "DD" : $('td:eq(14)', nRow).addClass('UICN_DD'); break;
+                case "LC" : $('td:eq(14)', nRow).addClass('UICN_LC'); break;
+                case "NT" : $('td:eq(14)', nRow).addClass('UICN_NT'); break;
+                case "VU" : $('td:eq(14)', nRow).addClass('UICN_VU'); break;
+                case "EN" : $('td:eq(14)', nRow).addClass('UICN_EN'); break;
+                case "CR" : $('td:eq(14)', nRow).addClass('UICN_CR'); break;
+				case "CR*" : $('td:eq(14)', nRow).addClass('UICN_CR');break;
+                case "RE" : $('td:eq(14)', nRow).addClass('UICN_RE'); break;
+                case "EW" : $('td:eq(14)', nRow).addClass('UICN_EW'); break;
+                case "EX" : $('td:eq(14)', nRow).addClass('UICN_EX'); break;
+                case "NA" : $('td:eq(14)', nRow).addClass('UICN_NA'); break;
+                case "NE" : $('td:eq(14)', nRow).addClass('UICN_NE'); break;
             }
             switch (aData[15])                                                  // Cat 
             {
-                case "DD" : 
-                    $('td:eq(15)', nRow).addClass('UICN_DD');
-                break;
-                case "LC" : 
-                    $('td:eq(15)', nRow).addClass('UICN_LC');
-                break;
-                case "NT" : 
-                    $('td:eq(15)', nRow).addClass('UICN_NT');
-                break;
-                case "VU" : 
-                    $('td:eq(15)', nRow).addClass('UICN_VU');
-                break;
-                case "EN" : 
-                    $('td:eq(15)', nRow).addClass('UICN_EN');
-                break;
-                case "CR" : 
-                case "CR*" : 
-                    $('td:eq(15)', nRow).addClass('UICN_CR');
-                break;
-                case "RE" : 
-                    $('td:eq(15)', nRow).addClass('UICN_RE');
-                break;
-                case "EW" : 
-                    $('td:eq(15)', nRow).addClass('UICN_EW');
-                break;
-                case "EX" : 
-                    $('td:eq(15)', nRow).addClass('UICN_EX');
-                break;
-                case "NA" : 
-                    $('td:eq(15)', nRow).addClass('UICN_NA');
-                break;
+                case "DD" : $('td:eq(15)', nRow).addClass('UICN_DD'); break;
+                case "LC" : $('td:eq(15)', nRow).addClass('UICN_LC'); break;
+                case "NT" : $('td:eq(15)', nRow).addClass('UICN_NT'); break;
+                case "VU" : $('td:eq(15)', nRow).addClass('UICN_VU'); break;
+                case "EN" : $('td:eq(15)', nRow).addClass('UICN_EN'); break;
+                case "CR" : $('td:eq(15)', nRow).addClass('UICN_CR'); break;
+				case "CR*" : $('td:eq(15)', nRow).addClass('UICN_CR');break;
+                case "RE" : $('td:eq(15)', nRow).addClass('UICN_RE'); break;
+                case "EW" : $('td:eq(15)', nRow).addClass('UICN_EW'); break;
+                case "EX" : $('td:eq(15)', nRow).addClass('UICN_EX'); break;
+                case "NA" : $('td:eq(15)', nRow).addClass('UICN_NA'); break;
+                case "NE" : $('td:eq(15)', nRow).addClass('UICN_NE'); break;
             }
             switch (aData[17])                                                  // Cat EU
             {
-                case "DD" : 
-                    $('td:eq(17)', nRow).addClass('UICN_DD');
-                break;
-                case "LC" : 
-                    $('td:eq(17)', nRow).addClass('UICN_LC');
-                break;
-                case "NT" : 
-                    $('td:eq(17)', nRow).addClass('UICN_NT');
-                break;
-                case "VU" : 
-                    $('td:eq(17)', nRow).addClass('UICN_VU');
-                break;
-                case "EN" : 
-                    $('td:eq(17)', nRow).addClass('UICN_EN');
-                break;
-                case "CR" : 
-                case "CR*" : 
-                    $('td:eq(17)', nRow).addClass('UICN_CR');
-                break;
-                case "RE" : 
-                    $('td:eq(17)', nRow).addClass('UICN_RE');
-                break;
-                case "EW" : 
-                    $('td:eq(17)', nRow).addClass('UICN_EW');
-                break;
-                case "EX" : 
-                    $('td:eq(17)', nRow).addClass('UICN_EX');
-                break;
-                case "NA" : 
-                    $('td:eq(17)', nRow).addClass('UICN_NA');
+                case "DD" : $('td:eq(17)', nRow).addClass('UICN_DD'); break;
+                case "LC" : $('td:eq(17)', nRow).addClass('UICN_LC'); break;
+                case "NT" : $('td:eq(17)', nRow).addClass('UICN_NT'); break;
+                case "VU" : $('td:eq(17)', nRow).addClass('UICN_VU'); break;
+                case "EN" : $('td:eq(17)', nRow).addClass('UICN_EN'); break;
+                case "CR" : $('td:eq(17)', nRow).addClass('UICN_CR'); break;
+				case "CR*" : $('td:eq(17)', nRow).addClass('UICN_CR');break;
+                case "RE" : $('td:eq(17)', nRow).addClass('UICN_RE'); break;
+                case "EW" : $('td:eq(17)', nRow).addClass('UICN_EW'); break;
+                case "EX" : $('td:eq(17)', nRow).addClass('UICN_EX'); break;
+                case "NA" : $('td:eq(17)', nRow).addClass('UICN_NA'); break;
+                case "NE" : $('td:eq(17)', nRow).addClass('UICN_NE'); break;
                 break;
             }
             switch (aData[18])                                                  // Cat EU
             {
-                case "DD" : 
-                    $('td:eq(18)', nRow).addClass('UICN_DD');
-                break;
-                case "LC" : 
-                    $('td:eq(18)', nRow).addClass('UICN_LC');
-                break;
-                case "NT" : 
-                    $('td:eq(18)', nRow).addClass('UICN_NT');
-                break;
-                case "VU" : 
-                    $('td:eq(18)', nRow).addClass('UICN_VU');
-                break;
-                case "EN" : 
-                    $('td:eq(18)', nRow).addClass('UICN_EN');
-                break;
-                case "CR" : 
-                case "CR*" : 
-                    $('td:eq(18)', nRow).addClass('UICN_CR');
-                break;
-                case "RE" : 
-                    $('td:eq(18)', nRow).addClass('UICN_RE');
-                break;
-                case "EW" : 
-                    $('td:eq(18)', nRow).addClass('UICN_EW');
-                break;
-                case "EX" : 
-                    $('td:eq(18)', nRow).addClass('UICN_EX');
-                break;
-                case "NA" : 
-                    $('td:eq(18)', nRow).addClass('UICN_NA');
+                case "DD" : $('td:eq(18)', nRow).addClass('UICN_DD'); break;
+                case "LC" : $('td:eq(18)', nRow).addClass('UICN_LC'); break;
+                case "NT" : $('td:eq(18)', nRow).addClass('UICN_NT'); break;
+                case "VU" : $('td:eq(18)', nRow).addClass('UICN_VU'); break;
+                case "EN" : $('td:eq(18)', nRow).addClass('UICN_EN'); break;
+                case "CR" : $('td:eq(18)', nRow).addClass('UICN_CR'); break;
+				case "CR*" : $('td:eq(18)', nRow).addClass('UICN_CR');break;
+                case "RE" : $('td:eq(18)', nRow).addClass('UICN_RE'); break;
+                case "EW" : $('td:eq(18)', nRow).addClass('UICN_EW'); break;
+                case "EX" : $('td:eq(18)', nRow).addClass('UICN_EX'); break;
+                case "NA" : $('td:eq(18)', nRow).addClass('UICN_NA'); break;
+                case "NE" : $('td:eq(18)', nRow).addClass('UICN_NE'); break;
                 break;
             }
 			switch (aData[21])                                                  // Cat EU
             {	
-                case 'a réaliser' : 
-                    $('td:eq(21)', nRow).addClass('avancement_1');
-                break;
-                case 'en cours' : 
-                    $('td:eq(21)', nRow).addClass('avancement_2');
-                break;
-                case 'réalisée' : 
-                    $('td:eq(21)', nRow).addClass('avancement_3');
-                break;
+                case 'à réaliser' : $('td:eq(21)', nRow).addClass('avancement_1'); break;
+                case 'en cours' : $('td:eq(21)', nRow).addClass('avancement_2'); break;
+                case 'réalisée' : $('td:eq(21)', nRow).addClass('avancement_3'); break;
             }
             return nRow;
         },
