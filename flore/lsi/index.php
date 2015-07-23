@@ -90,10 +90,10 @@ switch ($mode) {
 				LEFT JOIN ".SQL_schema_lsi.".tag t ON nt.id_tag=t.id_tag  
 				LEFT JOIN ".SQL_schema_lsi.".subject s ON n.id_subject=s.id_subject \" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau > 64) 
+                if ($niveau >= 128) 
                     echo ("<button id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
                 echo ("<button id=\"".$id_page."-export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau == 255) 
+                if ($niveau >= 255) 
                     echo ("<button id=\"".$id_page."-del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"".$id_page."-dialog\"></div>");

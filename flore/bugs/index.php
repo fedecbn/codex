@@ -76,7 +76,7 @@ echo ("<div id=\"tab-new\" style=\"margin:0;padding:5;min-height:700px;\">");
          for ($i=1;$i<sizeof ($cat_txt);$i++)
              echo ("<option value=\"$i\">".$cat_txt[$i]."</option>");
     echo ("</select><br>");
-    if ($niveau == 255) {
+    if ($niveau >= 255) {
         $query="SELECT id_user,CONCAT(prenom,' ',nom) AS user FROM ".SQL_schema_app.".utilisateur ORDER BY prenom,nom;";
         $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
         while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))

@@ -88,9 +88,9 @@ switch ($mode) {
             echo ("<div style=\"float:right;\">");
                 if ($niveau >= 128) 
                     echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				if ($niveau >= 64) 
+				if ($niveau >= 128) 
 					echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau == 255) 
+                if ($niveau >= 255) 
                     echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
@@ -109,7 +109,7 @@ switch ($mode) {
                     // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
 				// if ($niveau >= 64) 
 					// echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                // if ($niveau == 255) 
+                // if ($niveau >= 255) 
                     // echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");

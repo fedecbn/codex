@@ -63,16 +63,16 @@ echo ("</div>");
 
 echo ("<div id=\"tabs\" style=\"min-height:800px;\">");
 echo ("<ul>");
-if ($niveau == 255) { echo ("<li><a href=\"#text\">".$lang[$lang_select]['text']."</a></li>");}
-if ($niveau == 255) { echo ("<li><a href=\"#user\">".$lang[$lang_select]['user']."</a></li>");}     // SU
+if ($niveau >= 255) { echo ("<li><a href=\"#text\">".$lang[$lang_select]['text']."</a></li>");}
+if ($niveau >= 255) { echo ("<li><a href=\"#user\">".$lang[$lang_select]['user']."</a></li>");}     // SU
 if ($niveau >= 128) { echo ("<li><a href=\"#suivi\">".$lang[$lang_select]['suivi']."</a></li>");}
-if ($niveau == 255) { echo ("<li><a href=\"#log\">".$lang[$lang_select]['log']."</a></li>");  }      // SU
+if ($niveau >= 255) { echo ("<li><a href=\"#log\">".$lang[$lang_select]['log']."</a></li>");  }      // SU
 echo ("</ul>");
 echo ("<input type=\"hidden\" id=\"niveau\" value=\"".$niveau."\" />");
 
 //------------------------------------------------------------------------------ #Text
 echo ("<div id=\"text\">");
-    if ($niveau == 255) {
+    if ($niveau >= 255) {
     $id_page="admin-text";
     echo ("<div id=\"titre2\">");
         echo ($lang[$lang_select]["titre_".$id_page]);
@@ -83,12 +83,12 @@ echo ("<div id=\"text\">");
 echo ("</div>");
 //------------------------------------------------------------------------------ #Stat
 echo ("<div id=\"stat\">");
-    if ($niveau == 255) {
+    if ($niveau >= 255) {
     } 
 echo ("</div>");
 //------------------------------------------------------------------------------ #Utilisateur
 echo ("<div id=\"user\">");
-    if ($niveau == 255) {
+    if ($niveau >= 255) {
         $id_page="admin-user";
         echo ("<div id=\"titre2\">");
             echo ($lang[$lang_select]["titre_".$id_page]);
@@ -125,7 +125,7 @@ echo ("<div id=\"suivi\">");
 echo ("</div>");
 //------------------------------------------------------------------------------ #Log
 echo ("<div id=\"log\">");
-    if ($niveau == 255) {
+    if ($niveau >= 255) {
         $id_page="admin-log";
         echo ("<div id=\"titre2\">");
             echo ($lang[$lang_select]["titre_".$id_page]);
