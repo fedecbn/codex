@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 //------------------------------------------------------------------------------//
 //  bugs/bugs-encours-liste.php                                                 //
 //                                                                              //
@@ -93,7 +93,9 @@ $iTotal = $aResultTotal;
 		else 
 		    $sOutput .= '"",';
 		$sOutput .= '"'.$row['statut'].'",';
-        if ($niveau == 255) 
+        if ($niveau == 64) 
+            $sOutput .= '"<a class=bug-encours-edit id=\"'.$row['id_bug'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"'; 
+        if ($niveau >= 255) 
             $sOutput .= '"<a class=bug-encours-edit id=\"'.$row['id_bug'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a><a class=bug-encours-del id=\"'.$row['id_bug'].'\" ><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>"'; 
         else
             $sOutput .= '""';

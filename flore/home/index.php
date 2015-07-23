@@ -127,7 +127,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
         }
     }
     break;
-    case "valid": 
+    case "valid": {
         $user_login=$_POST['user_login'];
         $user_pw=$_POST['user_pw'];
         if (!empty ($user_login) && !empty ($user_pw)) {
@@ -188,9 +188,10 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
             echo ("</div>");                                                    // post
             echo ("</div>");                                                    // narrowcolumn
         }
+	}
     break;
     case "notice" :
-    case "contact" :
+    case "contact" : {
         aff_titre ();
         echo ("<div id=\"page_main\">");
         echo ("<div class=\"whidecolumn\">");
@@ -203,9 +204,10 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
             echo ("<center><a href=\"index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/retour.png\" border=\"0\" /><br>".$lang['it']['retour']."</a></center><br><br>");
         echo ("</div>");                                                        // whidecolumn
         echo ("</div>");                                                        // whidecolumn
-    break;
+   
+	}
+	 break;
 }
-
 echo ("<table width=\"100%\"><tr>");
 echo ("<td align=center><img src=\"../../_GRAPH/logos/logo_FCBN.gif\" border=\"0\" /></td>");
 echo ("</tr></table><br>");

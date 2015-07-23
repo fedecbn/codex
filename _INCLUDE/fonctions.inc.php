@@ -510,12 +510,13 @@ function metaform_sel ($label,$descr,$extra,$liste,$champ,$val)
 	
 	if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";}	
 	if (strpos($descr,"bloque") != false AND $val == null) {$extra .= "background-color:#EFEFEF";}	
-		echo ("<select class=\"$class\" name=\"".$champ."\" id=\"".$champ."\" $bloc style=\"$extra\"/>");
+	echo ("<select class=\"$class\" name=\"".$champ."\" id=\"".$champ."\" $bloc style=\"$extra\"/>");
 	
     foreach ($liste as $key => $value) {
         echo ("<option class=\"$value\" value=\"$key\" ".($key == $val ? "SELECTED" : "")." >".$value."</option>");
 		}
-    echo ("</select><br>");
+    
+	echo ("</select><br>");
 }
 
 

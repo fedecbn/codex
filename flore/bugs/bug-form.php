@@ -10,6 +10,7 @@
 //----------------------------------------------------------------------------- INIT.
 include ("commun.inc.php");
 
+
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
@@ -34,29 +35,43 @@ $(document).ready(function(){
 });
 </script> 
 <?php
+//------------------------------------------------------------------------------ REF
+/*ne fonctionne pas*/
+// $niveau=$_SESSION['niveau'];
+// if ($niveau >= 255) $desc = null; else $desc = " bloque";
+$desc = " bloque";
+
 //------------------------------------------------------------------------------ MAIN
 echo ("<form method=\"POST\" id=\"form1\" name=\"add\" action=\"#\" >");
 
 if (isset($_GET['id']) & !empty($_GET['id']))                                   // EDIT
 {
     $id=$_GET['id'];
-     $query="SELECT b.*,u.nom,u.prenom
-FROM ".SQL_schema_app.".bug AS b
-LEFT JOIN ".SQL_schema_app.".utilisateur AS u ON b.id_user=u.id_user
-WHERE id_bug=".$id;
+     $query="SELECT b.id_bug, b.id_user, to_char(date_bug, 'DD/MM/YYYY') as date_bug, b.id_rubrique , b.descr, b.cat, b.statut, b.statut_descr, u.nom,u.prenom
+		FROM applications.bug AS b
+		LEFT JOIN applications.utilisateur AS u ON b.id_user=u.id_user
+		WHERE id_bug=".$id;
 
     $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-    if (pg_num_rows ($result)) {
+	$arr=pg_fetch_array($result, NULL, PGSQL_ASSOC);
+    
+	list ($a,$m,$j) = explode("-",$arr["date_bug"]);
+    $date_bug=$j."/".$m."/".$a;
+	
+	
+	if (pg_num_rows ($result)) {
         echo ("<fieldset><LEGEND> Bug ou remarque </LEGEND>");
-        echo ("<label class=\"preField\">Type</label><select id=\"cat\" name=\"cat\" >");
-        for ($i=0;$i<sizeof ($cat_txt);$i++)
+		echo ("<label class=\"preField_calc\">Type</label>");
+		echo ("<select id=\"cat\" name=\"cat\"  readonly disabled>");
+		for ($i=0;$i<sizeof ($cat_txt);$i++)
             echo ("<option value=\"$i\" ".($i == pg_result($result,0,"cat") ? "SELECTED" : "").">".$cat_txt[$i]."</option>");
         echo ("</select><br>");
-        echo ("<label class=\"preField\">Date</label><input type=\"text\" size=\"10\" maxlength=\"10\" value=\"".$date_bug."\" readonly /><br>");
-        echo ("<label class=\"preField\">Auteur</label><input type=\"text\" size=\"40\" value=\"".mysql_result($result,0,"nom")." ".pg_result($result,0,"prenom")."\" readonly /><br>"); 
-        list ($a,$m,$j) = explode("-",mysql_result($result,0,"date_bug"));
-        $date_bug=$j."/".$m."/".$a;
-        echo ("<label class=\"preField\">Rubrique</label><select id=\"id_rubrique\" name=\"id_rubrique\" >");
+        // echo ("<label class=\"preField\">Date</label><input type=\"text\" size=\"10\" maxlength=\"10\" value=\"".$date_bug."\" readonly /><br>");
+		metaform_text ("Date",$desc,10,null,"date",$arr["date_bug"]);
+        // echo ("<label class=\"preField\">Auteur</label><input type=\"text\" size=\"40\" value=\"".$arr["nom"]." ".$arr["prenom"]."\" readonly /><br>"); 
+        metaform_text ("Auteur",$desc,40,"","auteur",$arr["nom"]." ".$arr["prenom"]);
+
+        echo ("<label class=\"preField_calc\">Rubrique</label><select id=\"id_rubrique\" name=\"id_rubrique\"  readonly disabled>");
         for ($i=0;$i<sizeof ($rubriques_txt);$i++)
             echo ("<option value=\"$i\" ".($i == pg_result($result,0,"id_rubrique") ? "SELECTED" : "").">".$rubriques_txt[$i]."</option>");
         echo ("</select><br>");
