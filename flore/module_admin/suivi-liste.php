@@ -101,7 +101,7 @@ $query="SELECT count(*) OVER() AS total_count,s.*,ch.*,u.nom,u.prenom,u.id_cbn,c
  LEFT JOIN referentiels.cbn AS c ON c.id_cbn=u.id_cbn 
  LEFT JOIN referentiels.champs AS ch ON s.champ=ch.champ_interface AND s.tables = ch.table_champ AND s.rubrique=ch.rubrique_champ
  LEFT JOIN applications.taxons AS lt ON lt.uid=s.uid
- WHERE (libelle_1 <> '-' AND  libelle_2 <> '-') ".$sWhere." ".$sOrder." ".$sLimit;
+ WHERE libelle_1||libelle_2 <> '--' ".$sWhere." ".$sOrder." ".$sLimit;
 
 	 // echo  $query;
 
