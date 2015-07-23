@@ -102,12 +102,13 @@ $iTotal = $aResultTotal;
         if ($row['niveau'] == 255) $sOutput .= '"<img src=\"../../_GRAPH/admin.png\" border=\"0\" title=\"Admin.\" />",';
 		else $sOutput .= '"'.str_replace('"', '\"', $row['niveau']).'",';
 */
-        if ($niveau < 255 || $row['niveau']==255 ) $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
+        if ($niveau < 255 ) $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
         else $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" ><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>"'; 
 		$sOutput .= "],";
 	}
 	$sOutput = substr_replace ($sOutput,"",-1);
 	$sOutput .= '] }';
+
 	echo $sOutput;
 
 //------------------------------------------------------------------------------ FONCTIONS

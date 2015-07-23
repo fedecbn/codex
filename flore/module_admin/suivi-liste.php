@@ -101,7 +101,7 @@ $query="SELECT count(*) OVER() AS total_count,s.*,ch.*,u.nom,u.prenom,u.id_cbn,c
  LEFT JOIN referentiels.cbn AS c ON c.id_cbn=u.id_cbn 
  LEFT JOIN referentiels.champs AS ch ON s.champ=ch.champ_interface AND s.tables = ch.table_champ AND s.rubrique=ch.rubrique_champ
  LEFT JOIN applications.taxons AS lt ON lt.uid=s.uid
- WHERE 1=1 ".$sWhere." ".$sOrder." ".$sLimit;
+ WHERE (libelle_1 <> '-' AND  libelle_2 <> '-') ".$sWhere." ".$sOrder." ".$sLimit;
 
 	 // echo  $query;
 
@@ -130,8 +130,8 @@ $iTotal = $aResultTotal;
 		$sOutput .= '"'.$row['description'].'",';
 		// $sOutput .= '"'.$row['libelle_1'].'",';
 		// $sOutput .= '"'.$row['libelle_2'].'",';
-		$sOutput .= '"'.sql_format_quote($row['libelle_1'],'undo').'",';
-		$sOutput .= '"'.sql_format_quote($row['libelle_2'],'undo').'",';
+		$sOutput .= '"'.sql_format_quote($row['libelle_1'],'undo_hmtl').'",';
+		$sOutput .= '"'.sql_format_quote($row['libelle_2'],'undo_hmtl').'",';
 		$sOutput .= '"'.strftime ("%d/%m/%Y",strtotime ($row['datetime'])).'",';
 		$sOutput .= '"'.substr ($row['datetime'],11,5).'",';
 		$sOutput .= '"'.$row['id_suivi'].'",';
