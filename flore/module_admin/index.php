@@ -177,30 +177,35 @@ echo ("</div>");
 		$row['lsi'] = $row['lsi'] == null? $row['lsi']= "<i>--vide--</i>":$row['lsi'];
 		
 		$message_html = "<html><head></head><body>Bonjour,
-			<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
-			<br> - Login : ".$row['login']."
-			<br> - MdP : ".$row['pw']."
-			<br><br> Pour accéder directement à l'outil, veuillez suivre ce lien : <a href=\"codex.fcbn.fr\">codex.fcbn.fr</a>
+			<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex, ainsi que la description des informations de votre profil.
+			<br> Pour accéder directement à l'outil, veuillez suivre ce lien : <a href=\"codex.fcbn.fr\">codex.fcbn.fr</a>
 			<br> Retrouvez également la liste des outils de la FCBN à l'adresse suivante : <a href=\"services.fcbn.fr\">services.fcbn.fr</a>
-			<br><br> Voici également un rappel de vos informations de profil
+			<br> Si vous notez une erreur dans ces informations, merci d'envoyer un mail à <a href=\"mailto:informatique@fcbn.fr\">informatique@fcbn.fr</a> à ce sujet.
+
+			<br><br><b>Identifiants de connexion</b>
+			<table cellpadding=\"5\" border =\"solid 1px black\">
+			<tr><td> Login </td><td>".$row['login']."</td></tr>
+			<tr><td> MdP </td><td>".$row['pw']."</td></tr>
+			</table>
 			
 			<br><br> <b>Informations professionelles</b>
-			<table>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Nom </td><td>".$row['nom']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Prenom </td><td>".$row['prenom']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> CBN </td><td>".$row['lib_cbn']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Tel bureau </td><td>".$row['tel_bur']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Tel portable </td><td>".$row['tel_port']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> email </td><td>".$row['email']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Description </td><td>".$row['descr']."</td></tr>
+			<table cellpadding=\"5\" border =\"solid 1px black\">
+			<tr><td> Nom </td><td>".$row['nom']."</td></tr>
+			<tr><td> Prenom </td><td>".$row['prenom']."</td></tr>
+			<tr><td> CBN </td><td>".$row['lib_cbn']."</td></tr>
+			<tr><td> Tel bureau </td><td>".$row['tel_bur']."</td></tr>
+			<tr><td> Tel portable </td><td>".$row['tel_port']."</td></tr>
+			<tr><td> Email </td><td>".$row['email']."</td></tr>
+			<tr><td> Description </td><td>".$row['descr']."</td></tr>
 			</table>
+			
 			<br><br> <b> Droit d'accès</b>
-			<table>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Référentiel Nationale\" </td><td>".$row['refnat']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Catalogue Nationale\" </td><td>".$row['catnat']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$row['lr']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$row['eee']."</td></tr>
-			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$row['lsi']."</td></tr>
+			<table cellpadding=\"5\" border =\"solid 1px black\">
+			<tr><td> Rôle pour la rubrique \"Référentiel Nationale\" </td><td>".$row['refnat']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Catalogue Nationale\" </td><td>".$row['catnat']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$row['lr']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$row['eee']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$row['lsi']."</td></tr>
 			</table>
 			<br><br> Cordialement,
 			<br><br> Thomas Milon
