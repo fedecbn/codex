@@ -90,8 +90,8 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
             if ($_SESSION['EVAL_FLORE'] != "ok") {
                 echo ("<form method=\"POST\" id=\"form1\" name=\"loginform\" action=\"index.php\" >");
                 echo ("<center><input type=\"hidden\" name=\"action\" value=\"valid\" />");
-                echo ($lang['fr']['Utilisateur']."<br><input type=\"text\" name=\"user_login\" id=\"login\" size=\"20\" maxlength=\"20\" class=\"required\" /><br><br>");
-                echo ($lang['fr']['pass']."<input type=\"password\" name=\"user_pw\" id=\"pw\" size=\"20\" maxlength=\"20\" class=\"required\" /><br><br>");
+                echo ($lang['fr']['Utilisateur']."<br><input type=\"text\" name=\"user_login\" id=\"login\" size=\"20\" maxlength=\"100\" class=\"required\" /><br><br>");
+                echo ($lang['fr']['pass']."<input type=\"password\" name=\"user_pw\" id=\"pw\" size=\"20\" maxlength=\"100\" class=\"required\" /><br><br>");
                 echo ("<button id=\"valider_fr\">Login</button></center>");
                 echo ("</form>");
             }  else {                                                           // Session OK
