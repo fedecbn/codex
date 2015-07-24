@@ -146,18 +146,43 @@ echo ("</div>");
 	}
 	break;
 	 case "mdp" : {
-	// echo ini_get("SMTP");
-	// echo ini_get("smtp_port");
-	 // ini_set ('SMTP','smtp.fcbn.fr');
-	 // ini_set ('smtp_port','587');
-	 // email_pw ('thomas.milon@fcbn.fr','test','mdp');
-	 $message_html = "<html><head></head><body>Bonjour,
-		<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
-		<br> - Login : test
-		<br> - MdP : test
-		<br><br> Cordialement,
-		<br><br> Thomas Milon
-		</body></html>";
+	
+	$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi
+	    FROM applications.utilisateur a
+		JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
+		JOIN (SELECT id_user, lib as lr FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lr = cd) as aze ON aze.id_user = a.id_user
+		JOIN (SELECT id_user, lib as eee FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_eee = cd) as qsd ON qsd.id_user = a.id_user
+		JOIN (SELECT id_user, lib as refnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_refnat = cd) as wxc ON wxc.id_user = a.id_user
+		JOIN (SELECT id_user, lib as catnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_catnat = cd) as zer ON zer.id_user = a.id_user
+		JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user
+		WHERE login = 'thomas.milon@fcbn.fr';
+		";
+	 
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	while ($row = pg_fetch_array($result))
+		$message_html = "<html><head></head><body>Bonjour,
+			<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
+			<br> - Login : ".$row['login']."
+			<br> - MdP : ".$row['mdp']."
+			<br><br> Voici également un rappel de vos informationd de profil
+			<br> <b>Informations professionelles</b>
+			<br> - Nom : ".$row['nom']."
+			<br> - Prenom : ".$row['prenom']."
+			<br> - CBN : ".$row['lib_cbn']."
+			<br> - Tel bureau : ".$row['tel_bur']."
+			<br> - Tel portable : ".$row['tel_port']."
+			<br> - email : ".$row['email']."
+			<br> - Description : ".$row['descr']."
+			<br> <b>Droit d'accès</b>
+			<br> - Rôle pour la rubrique \"Référentiel Nationale\" : ".$row['refnat']."
+			<br> - Rôle pour la rubrique \"Catalogue Nationale\" : ".$row['catnat']."
+			<br> - Rôle pour la rubrique \"Liste rouge\" : ".$row['lr']."
+			<br> - Rôle pour la rubrique \"Liste EEE\" : ".$row['eee']."
+			<br> - Rôle pour la rubrique \"Lettre Système d'information et géomatique\" : ".$row['lsi']."
+
+			<br><br> Cordialement,
+			<br><br> Thomas Milon
+			</body></html>";
 
 	 envoi_mail('thomas.milon@fcbn.fr', 'test', $message_html, "");
 	 }

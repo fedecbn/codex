@@ -1189,8 +1189,8 @@ function envoi_mail($destinataires, $sujet_mail, $contenu_mail, $options="")
 	////	ENVOI DU MAIL + RAPPORT D'ENVOI SI DEMANDE
 	$message_envoye = mail($destinataire_php, suppr_carac_spe($sujet_mail,"faible"), $message, $header);
 	if($options["message_alert"]=="oui") {
-		if($message_envoye==true)	alert($trad["divers"]["mail_envoye"]);
-		else						alert($trad["divers"]["mail_pas_envoye"]);
+		if($message_envoye==true)	alert("mail_envoye");
+		else						alert("mail_pas_envoye");
 	}
 	return $message_envoye;
 }
