@@ -162,10 +162,11 @@ echo ("</div>");
 	
 	$sujet = "[FCBN] Accès à la plateforme CODEX";
 	while ($row = pg_fetch_array($result))
+		{
 		$message_html = "<html><head></head><body>Bonjour,
 			<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
 			<br> - Login : ".$row['login']."
-			<br> - MdP : ".$row['mdp']."
+			<br> - MdP : ".$row['pw']."
 			<br><br> Voici également un rappel de vos informationd de profil
 			<br> <b>Informations professionelles</b>
 			<br> - Nom : ".$row['nom']."
@@ -175,7 +176,7 @@ echo ("</div>");
 			<br> - Tel portable : ".$row['tel_port']."
 			<br> - email : ".$row['email']."
 			<br> - Description : ".$row['descr']."
-			<br> <b>Droit d'accès</b>
+			<br> <b> Droit d'accès</b>
 			<br> - Rôle pour la rubrique \"Référentiel Nationale\" : ".$row['refnat']."
 			<br> - Rôle pour la rubrique \"Catalogue Nationale\" : ".$row['catnat']."
 			<br> - Rôle pour la rubrique \"Liste rouge\" : ".$row['lr']."
@@ -184,9 +185,9 @@ echo ("</div>");
 			<br><br> Cordialement,
 			<br><br> Thomas Milon
 			</body></html>";
-	
-	 echo $message_html;
-	 envoi_mail($row['email'], $sujet, $message_html, "");
+
+		 echo envoi_mail($row['email'], $sujet, $message_html, "");
+		}
 	 }
 	 break;
 }
