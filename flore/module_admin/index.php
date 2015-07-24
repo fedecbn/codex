@@ -179,7 +179,6 @@ echo ("</div>");
 			<br> - Rôle pour la rubrique \"Liste rouge\" : ".$row['lr']."
 			<br> - Rôle pour la rubrique \"Liste EEE\" : ".$row['eee']."
 			<br> - Rôle pour la rubrique \"Lettre Système d'information et géomatique\" : ".$row['lsi']."
-
 			<br><br> Cordialement,
 			<br><br> Thomas Milon
 			</body></html>";

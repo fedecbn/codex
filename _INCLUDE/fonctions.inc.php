@@ -1065,65 +1065,6 @@ else
 return $uid;
 }
 
-function email_pw ($adresse,$login,$mdp) {
-
-/*Source de ce script : https://openclassrooms.com/courses/e-mail-envoyer-un-e-mail-en-php*/
-
-/*On filtre les serveurs qui rencontrent des bogues.*/
-if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $adresse)) 
-{$passage_ligne = "\r\n";}
-else{$passage_ligne = "\n";
-}
-
-/*====Déclaration des messages au format texte et au format HTML.*/
-// $message_txt = "Salut à tous, voici un e-mail envoyé par un script PHP.";
-$message_html = "<html><head></head><body>Bonjour,
-<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
-<br> - Login : $login
-<br> - MdP : $mdp
-<br><br> Cordialement,
-<br><br> Thomas Milon
-</body></html>";
-//==========
- 
-//=====Création de la boundary
-$boundary = "-----=".md5(rand());
-//==========
- 
-//=====Définition du sujet.
-$sujet = "[FCBN] Accès à l'outil Codex ";
-//=========
- 
-//=====Création du header de l'e-mail.
-$header = "From: \"Thomas Milon\"<thomas.milon@fcbn.fr>".$passage_ligne;
-$header.= "Reply-to: \"Thomas Milon\" <thomas.milon@fcbn.fr>".$passage_ligne;
-$header.= "MIME-Version: 1.0".$passage_ligne;
-$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
-//==========
- 
-//=====Création du message.
-// $message = $passage_ligne."--".$boundary.$passage_ligne;
-//=====Ajout du message au format texte.
-// $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
-// $message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-// $message.= $passage_ligne.$message_txt.$passage_ligne;
-//==========
-$message.= $passage_ligne."--".$boundary.$passage_ligne;
-//=====Ajout du message au format HTML
-$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
-$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
-$message.= $passage_ligne.$message_html.$passage_ligne;
-//==========
-$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
-//==========
- 
-//=====Envoi de l'e-mail.
-mail($adresse,$sujet,$message,$header);
-//==========
-
-}
-
 function envoi_mail($destinataires, $sujet_mail, $contenu_mail, $options="")
 {
 	////	INITIALISATION
@@ -1189,8 +1130,8 @@ function envoi_mail($destinataires, $sujet_mail, $contenu_mail, $options="")
 	////	ENVOI DU MAIL + RAPPORT D'ENVOI SI DEMANDE
 	$message_envoye = mail($destinataire_php, suppr_carac_spe($sujet_mail,"faible"), $message, $header);
 	if($options["message_alert"]=="oui") {
-		if($message_envoye==true)	alert("mail_envoye");
-		else						alert("mail_pas_envoye");
+		if($message_envoye==true)	alert("le(s) mail(s) a/ont été envoyé(s)");
+		else						alert("le(s) mail(s) n'a/ont <b>pas</b> été envoyé(s)");
 	}
 	return $message_envoye;
 }
