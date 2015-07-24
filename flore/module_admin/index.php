@@ -207,8 +207,8 @@ echo ("</div>");
 			
 			</body></html>";
 		
-		echo $message_html;
-		// envoi_mail($row['email'], $sujet, $message_html, "");
+		// echo $message_html;
+		envoi_mail($row['email'], $sujet, $message_html, "");
 		}
 	 }
 	 break;
