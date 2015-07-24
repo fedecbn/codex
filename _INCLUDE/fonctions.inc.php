@@ -1215,4 +1215,12 @@ function suppr_carac_spe($text, $etendue="moyen", $carac_remplace="_")
 	}
 	return trim($text,$carac_remplace);
 }
+
+function alert($text_alerte, $onload=true)
+{
+	echo "<script type=\"text/javascript\">  ".($onload==true?"onLoad=":"")." alert(\"".$text_alerte."\");  </script>";
+}
+
+
+
 ?>

@@ -150,16 +150,16 @@ echo ("</div>");
 	// echo ini_get("smtp_port");
 	 // ini_set ('SMTP','smtp.fcbn.fr');
 	 // ini_set ('smtp_port','587');
-	 email_pw ('thomas.milon@fcbn.fr','test','mdp');
-	 // $message_html = "<html><head></head><body>Bonjour,
-		// <br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
-		// <br> - Login : test
-		// <br> - MdP : test
-		// <br><br> Cordialement,
-		// <br><br> Thomas Milon
-		// </body></html>";
+	 // email_pw ('thomas.milon@fcbn.fr','test','mdp');
+	 $message_html = "<html><head></head><body>Bonjour,
+		<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
+		<br> - Login : test
+		<br> - MdP : test
+		<br><br> Cordialement,
+		<br><br> Thomas Milon
+		</body></html>";
 
-	 // envoi_mail('thomas.milon@fcbn.fr', 'test', $message_html, $options="");
+	 envoi_mail('thomas.milon@fcbn.fr', 'test', $message_html, "");
 	 }
 	 break;
 }
