@@ -19,6 +19,7 @@ $niveau=$_SESSION['niveau'];
 $id_user=$_SESSION['id_user'];
 $config=$_SESSION['id_config'];
 $lang_select=$_COOKIE['lang_select'];
+$mode = isset($_GET['m']) ? $_GET['m'] : "general";
 
 //----------------------------------------------------------------------------- PARMS.
 if (isset($_GET['action']) & !empty($_GET['action']))
@@ -69,6 +70,10 @@ if ($niveau >= 128) { echo ("<li><a href=\"#suivi\">".$lang[$lang_select]['suivi
 if ($niveau >= 255) { echo ("<li><a href=\"#log\">".$lang[$lang_select]['log']."</a></li>");  }      // SU
 echo ("</ul>");
 echo ("<input type=\"hidden\" id=\"niveau\" value=\"".$niveau."\" />");
+echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
+
+switch ($mode) {
+    case "general" : {
 
 //------------------------------------------------------------------------------ #Text
 echo ("<div id=\"text\">");
@@ -95,7 +100,8 @@ echo ("<div id=\"user\">");
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
         echo ("<button id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button> ");
-        echo ("</div>");
+        if ($niveau >= 512) echo ("<button id=\"mdp-button\">".$lang[$lang_select]['mdp']."</button> ");
+		echo ("</div>");
         echo ("<div id=\"".$id_page."-dialog\"></div>");
         aff_table ($id_page."-liste",true,false);
     } 
@@ -137,7 +143,26 @@ echo ("<div id=\"log\">");
         aff_table ($id_page."-liste",true,false);
     } 
 echo ("</div>");
+	}
+	break;
+	 case "mdp" : {
+	// echo ini_get("SMTP");
+	// echo ini_get("smtp_port");
+	 // ini_set ('SMTP','smtp.fcbn.fr');
+	 // ini_set ('smtp_port','587');
+	 email_pw ('thomas.milon@fcbn.fr','test','mdp');
+	 // $message_html = "<html><head></head><body>Bonjour,
+		// <br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
+		// <br> - Login : test
+		// <br> - MdP : test
+		// <br><br> Cordialement,
+		// <br><br> Thomas Milon
+		// </body></html>";
 
+	 // envoi_mail('thomas.milon@fcbn.fr', 'test', $message_html, $options="");
+	 }
+	 break;
+}
 echo ("</div>");
 //------------------------------------------------------------------------------
 echo ("</div>");

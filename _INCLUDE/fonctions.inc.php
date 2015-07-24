@@ -1065,5 +1065,154 @@ else
 return $uid;
 }
 
+function email_pw ($adresse,$login,$mdp) {
 
+/*Source de ce script : https://openclassrooms.com/courses/e-mail-envoyer-un-e-mail-en-php*/
+
+/*On filtre les serveurs qui rencontrent des bogues.*/
+if (!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $adresse)) 
+{$passage_ligne = "\r\n";}
+else{$passage_ligne = "\n";
+}
+
+/*====Déclaration des messages au format texte et au format HTML.*/
+// $message_txt = "Salut à tous, voici un e-mail envoyé par un script PHP.";
+$message_html = "<html><head></head><body>Bonjour,
+<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
+<br> - Login : $login
+<br> - MdP : $mdp
+<br><br> Cordialement,
+<br><br> Thomas Milon
+</body></html>";
+//==========
+ 
+//=====Création de la boundary
+$boundary = "-----=".md5(rand());
+//==========
+ 
+//=====Définition du sujet.
+$sujet = "[FCBN] Accès à l'outil Codex ";
+//=========
+ 
+//=====Création du header de l'e-mail.
+$header = "From: \"Thomas Milon\"<thomas.milon@fcbn.fr>".$passage_ligne;
+$header.= "Reply-to: \"Thomas Milon\" <thomas.milon@fcbn.fr>".$passage_ligne;
+$header.= "MIME-Version: 1.0".$passage_ligne;
+$header.= "Content-Type: multipart/alternative;".$passage_ligne." boundary=\"$boundary\"".$passage_ligne;
+//==========
+ 
+//=====Création du message.
+// $message = $passage_ligne."--".$boundary.$passage_ligne;
+//=====Ajout du message au format texte.
+// $message.= "Content-Type: text/plain; charset=\"ISO-8859-1\"".$passage_ligne;
+// $message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+// $message.= $passage_ligne.$message_txt.$passage_ligne;
+//==========
+$message.= $passage_ligne."--".$boundary.$passage_ligne;
+//=====Ajout du message au format HTML
+$message.= "Content-Type: text/html; charset=\"ISO-8859-1\"".$passage_ligne;
+$message.= "Content-Transfer-Encoding: 8bit".$passage_ligne;
+$message.= $passage_ligne.$message_html.$passage_ligne;
+//==========
+$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+//==========
+ 
+//=====Envoi de l'e-mail.
+mail($adresse,$sujet,$message,$header);
+//==========
+
+}
+
+function envoi_mail($destinataires, $sujet_mail, $contenu_mail, $options="")
+{
+	////	INITIALISATION
+	global $trad, $infos_trad;
+	if(empty($options["message_alert"]))								$options["message_alert"] = "oui";
+	if(empty($options["header_footer"]))								$options["header_footer"] = "oui";
+	if(empty($options["accuse_reception"]))								$options["accuse_reception"] = "non";
+	if(empty($options["afficher_dest_message"]))						$options["afficher_dest_message"] = "non";
+	if(empty($options["expediteur_noreply"]))							$options["expediteur_noreply"] = "non";
+	if(empty($options["envoi_fichiers"]) or control_upload()==false)	$options["envoi_fichiers"] = "non";
+	$frontiere = "-----=".uniqid(mt_rand());
+
+	////	EXPEDITEUR
+/**/if(isset($_SESSION["user"]["nom"]) and $options["expediteur_noreply"]=="non")	{ $expediteur_nom = auteur($_SESSION["user"]);	$expediteur_adresse = $_SESSION["user"]["mail"]; }
+	else																			{ $expediteur_nom = "SILENE-Projet";			$expediteur_adresse = "noreply@".str_replace("www.","",$_SERVER["SERVER_NAME"]); }
+
+	////	DESTINATAIRES
+	if(is_array($destinataires)==false)		$destinataires = array($destinataires);
+/**/foreach($destinataires as $dest_key => $dest_tmp){
+/**/	if(is_numeric($dest_tmp))	{ $mail_tmp = user_infos($dest_tmp,"mail");   if($mail_tmp!="") $destinataires[$dest_key] = $mail_tmp; }
+/**/}
+	$destinataires_txt = implode(",", array_unique($destinataires));
+	$destinataire_php = (count($destinataires)>1)  ?  ""  :  $destinataires_txt;
+
+	////	HEADERS
+	$header = "From: ".$expediteur_nom."<".$expediteur_adresse.">\n".
+			  "MIME-Version: 1.0\n";
+	$bcc_to = ($options["afficher_dest_message"]=="oui")  ?  "To: "  :  "Bcc: ";
+	if(count($destinataires)>1)		$header .= $bcc_to.$destinataires_txt."\n";
+	if($options["accuse_reception"]=="oui")   $header .= "Disposition-notification-to: ".$_SESSION["user"]["mail"]."\n";
+	if($options["envoi_fichiers"]=="oui")	{ $header .= "Content-Type: multipart/mixed; boundary=\"".$frontiere."\"\n"; }
+	else									{ $header .= "Content-Type: text/html; charset=UTF-8\n"; }
+
+	////	MESSAGE HTML
+	$message_html = "<html>\n<head>\n<title>\n</title>\n</head>\n<body>\n";
+/**/if($options["header_footer"]=="oui" and isset($_SESSION["user"]["nom"]))	$message_html .= $trad["divers"]["mail_envoye_par"]." ".auteur($_SESSION["user"])." (".$_SESSION["espace"]["nom"].") :<br /><br />";
+	$message_html .= wordwrap($contenu_mail);
+/**/if($options["header_footer"]=="oui")										$message_html .= "<br /><br /><a href=\"".$_SESSION["agora"]["adresse_web"]."\" target=\"_blank\">".$_SESSION["agora"]["nom"]."</a><br />";
+	$message_html .= "</body>\n</html>\n\n";
+
+	////	MESSAGE HTML ?  MESSAGE HTML + FICHIERS JOINTS ?
+	if($options["envoi_fichiers"]!="oui")	{ $message = $message_html; }
+	else
+	{
+		// Séparation du message html avec les fichiers
+		$message  = "--".$frontiere."\n";
+		$message .= "Content-Type: text/html; charset=UTF-8\n\n";
+		$message .= $message_html."\n\n";
+		// ajout de chaque fichier
+		foreach($_FILES as $fichier)
+		{
+			if($fichier["error"]==0) {
+				$message .= "--".$frontiere."\n";
+				$message .= "Content-Type: ".$fichier["type"]."; name=\"".$fichier["name"]."\"\n";
+				$message .= "Content-Transfer-Encoding: BASE64\n";
+				$message .= "Content-Disposition:attachment; filename=\"".$fichier["name"]."\"\n\n";
+				$message .= chunk_split(base64_encode(file_get_contents($fichier["tmp_name"])))."\n\n";
+			}
+		}
+		$message .= "--".$frontiere."--";
+	}
+
+	////	ENVOI DU MAIL + RAPPORT D'ENVOI SI DEMANDE
+	$message_envoye = mail($destinataire_php, suppr_carac_spe($sujet_mail,"faible"), $message, $header);
+	if($options["message_alert"]=="oui") {
+		if($message_envoye==true)	alert($trad["divers"]["mail_envoye"]);
+		else						alert($trad["divers"]["mail_pas_envoye"]);
+	}
+	return $message_envoye;
+}
+
+function suppr_carac_spe($text, $etendue="moyen", $carac_remplace="_")
+{
+	// Remplace les caractères de l'alphabet
+	$text = str_replace(array("à","â","ä"), "a", $text);
+	$text = str_replace(array("é","è","ê","ë"), "e", $text);
+	$text = str_replace(array("ï","ì"), "i", $text);
+	$text = str_replace(array("ô","ö"), "o", $text);
+	$text = str_replace(array("ù","û","ü"), "u", $text);
+	$text = str_replace("ç", "c", $text);
+	// Remplace les ponctuations et autres caractères spéciaux
+	if($etendue!="faible")
+	{
+		$carac_spe_autorise = ($etendue=="moyen")  ?  array("-",".","_","'")  :  array("-",".","_");
+		for($i=0; $i<strlen($text); $i++){
+			if(preg_match("/[0-9a-z]/i",$text[$i])==false and in_array($text[$i],$carac_spe_autorise)==false)	$text[$i] = $carac_remplace;
+		}
+		$text = str_replace($carac_remplace.$carac_remplace, $carac_remplace, $text);
+	}
+	return trim($text,$carac_remplace);
+}
 ?>

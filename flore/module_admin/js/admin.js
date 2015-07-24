@@ -119,6 +119,14 @@ $(document).ready(function(){
             metaForm ("Ajouter un utilisateur",670,390,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,"");
 		});
 
+	$( "#mdp-button" )
+        .button({
+            text: true
+        })
+        .click(function() {
+            window.location.replace ('index.php?m=mdp');				
+		});
+
 //------------------------------------------------------------------------------ UI / Boutons / LOG
 
 	$( "#admin-log-del-button" )

@@ -29,6 +29,9 @@ $lang['it']['rech_av']="Ricerca avanzata";
 $lang['fr']['ajouter']="Ajouter";
 $lang['it']['ajouter']="Aggiungere";
 
+$lang['fr']['mdp']="Envoie mdp";
+$lang['it']['mdp']="Envoie mdp";
+
 $lang['fr']['enregistrer']="Enregistrer";
 $lang['it']['enregistrer']="registro";
 
