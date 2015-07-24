@@ -163,30 +163,52 @@ echo ("</div>");
 	$sujet = "[FCBN] Accès à la plateforme CODEX";
 	while ($row = pg_fetch_array($result))
 		{
+		$row['nom'] = $row['nom'] == null? $row['nom']= "<i>--vide--</i>":$row['nom'];
+		$row['prenom'] = $row['prenom'] == null? $row['prenom']= "<i>--vide--</i>":$row['prenom'];
+		$row['lib_cbn'] = $row['lib_cbn'] == null? $row['lib_cbn']= "<i>--vide--</i>":$row['lib_cbn'];
+		$row['tel_bur'] = $row['tel_bur'] == null? $row['tel_bur']= "<i>--vide--</i>":$row['tel_bur'];
+		$row['tel_port'] = $row['tel_port'] == null? $row['tel_port']= "<i>--vide--</i>":$row['tel_port'];
+		$row['descr'] = $row['descr'] == null? $row['descr']= "<i>--vide--</i>":$row['descr'];
+		$row['email'] = $row['email'] == null? $row['email']= "<i>--vide--</i>":$row['email'];
+		$row['refnat'] = $row['refnat'] == null? $row['refnat']= "<i>--vide--</i>":$row['refnat'];
+		$row['catnat'] = $row['catnat'] == null? $row['catnat']= "<i>--vide--</i>":$row['catnat'];
+		$row['lr'] = $row['lr'] == null? $row['lr']= "<i>--vide--</i>":$row['lr'];
+		$row['eee'] = $row['eee'] == null? $row['eee']= "<i>--vide--</i>":$row['eee'];
+		$row['lsi'] = $row['lsi'] == null? $row['lsi']= "<i>--vide--</i>":$row['lsi'];
+		
 		$message_html = "<html><head></head><body>Bonjour,
 			<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
 			<br> - Login : ".$row['login']."
 			<br> - MdP : ".$row['pw']."
-			<br><br> Voici également un rappel de vos informationd de profil
-			<br> <b>Informations professionelles</b>
-			<br> - Nom : ".$row['nom']."
-			<br> - Prenom : ".$row['prenom']."
-			<br> - CBN : ".$row['lib_cbn']."
-			<br> - Tel bureau : ".$row['tel_bur']."
-			<br> - Tel portable : ".$row['tel_port']."
-			<br> - email : ".$row['email']."
-			<br> - Description : ".$row['descr']."
-			<br> <b> Droit d'accès</b>
-			<br> - Rôle pour la rubrique \"Référentiel Nationale\" : ".$row['refnat']."
-			<br> - Rôle pour la rubrique \"Catalogue Nationale\" : ".$row['catnat']."
-			<br> - Rôle pour la rubrique \"Liste rouge\" : ".$row['lr']."
-			<br> - Rôle pour la rubrique \"Liste EEE\" : ".$row['eee']."
-			<br> - Rôle pour la rubrique \"Lettre Système d'information et géomatique\" : ".$row['lsi']."
+			<br><br> Pour accéder directement à l'outil, veuillez suivre ce lien : <a href=\"codex.fcbn.fr\">codex.fcbn.fr</a>
+			<br> Retrouvez également la liste des outils de la FCBN à l'adresse suivante : <a href=\"services.fcbn.fr\">services.fcbn.fr</a>
+			<br><br> Voici également un rappel de vos informations de profil
+			
+			<br><br> <b>Informations professionelles</b>
+			<table>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Nom </td><td>".$row['nom']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Prenom </td><td>".$row['prenom']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> CBN </td><td>".$row['lib_cbn']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Tel bureau </td><td>".$row['tel_bur']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Tel portable </td><td>".$row['tel_port']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> email </td><td>".$row['email']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Description </td><td>".$row['descr']."</td></tr>
+			</table>
+			<br><br> <b> Droit d'accès</b>
+			<table>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Référentiel Nationale\" </td><td>".$row['refnat']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Catalogue Nationale\" </td><td>".$row['catnat']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$row['lr']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$row['eee']."</td></tr>
+			<tr style=\"border-bottom:1pt solid #D0C5AA;\"><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$row['lsi']."</td></tr>
+			</table>
 			<br><br> Cordialement,
 			<br><br> Thomas Milon
+			
 			</body></html>";
-
-		 echo envoi_mail($row['email'], $sujet, $message_html, "");
+		
+		echo $message_html;
+		// envoi_mail($row['email'], $sujet, $message_html, "");
 		}
 	 }
 	 break;
