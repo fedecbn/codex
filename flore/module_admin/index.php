@@ -159,6 +159,8 @@ echo ("</div>");
 		";
 	 
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	
+	$sujet = "[FCBN] Accès à la plateforme CODEX";
 	while ($row = pg_fetch_array($result))
 		$message_html = "<html><head></head><body>Bonjour,
 			<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex.
@@ -182,8 +184,9 @@ echo ("</div>");
 			<br><br> Cordialement,
 			<br><br> Thomas Milon
 			</body></html>";
-
-	 envoi_mail('thomas.milon@fcbn.fr', 'test', $message_html, "");
+	
+	 echo $message_html;
+	 envoi_mail($row['email'], $sujet, $message_html, "");
 	 }
 	 break;
 }
