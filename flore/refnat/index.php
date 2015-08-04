@@ -286,7 +286,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				echo ("<BR>");
 			echo("</td><td valign=\"top\">");
 				echo ("Informations supplémentaires sur le taxon : <BR>");
-				metaform_bout ("Hybride",$desc,"hybride",$hybride);
+				metaform_bout ("Hybride",$desc,"hybride",pg_result($result,0,"hybride"));
 				echo ("</td></tr></table>");
 		echo ("</fieldset>");
 		
