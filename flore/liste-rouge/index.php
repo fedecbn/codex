@@ -211,7 +211,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					if ($niveau >= 128)
 						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"); 
 				echo ("</td></tr></table>");
-			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
+			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo_hmtl')."</textarea><br><br>");
 			echo ("</fieldset>");
 			echo ("</div>"); 
 //------------------------------------------------------------------------------ EDIT LR GRP2
@@ -339,7 +339,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
             echo ("</td><td width=250>");
 				if ($niveau <= 64) echo ("<label class=\"preField_calc\">Explication eval</label>"); else echo ("<label class=\"preField\">Explication eval</label>");
 				if ($niveau <= 64) echo ("<textarea name=\"notes\" $disa style=\"width:30em;background-color: #EFEFEF;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"notes"),'undo_hmtl')."</textarea><br><br>");
-				else echo ("<textarea name=\"notes\" $disa style=\"width:30em;\" rows=\"2\" >".pg_result($result,0,"notes")."</textarea><br><br>");
+				else echo ("<textarea name=\"notes\" $disa style=\"width:30em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"notes"),'undo_hmtl')."</textarea><br><br>");
             echo ("</td></tr></table><br>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
                 metaform_sel ("Ajustement",$desc,$extra,$ref[$champ_ref['cd_ajustmt']],"cd_ajustmt",pg_result($result,0,"cd_ajustmt"));
