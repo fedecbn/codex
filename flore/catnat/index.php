@@ -232,7 +232,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					if ($niveau >= 128)
 						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"); 
 				echo ("</td></tr></table>");
-			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
+			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo_hmtl')."</textarea><br><br>");
 			echo ("</fieldset>");
 			echo ("</div>"); 
 /*------------------------------------------------------------------------------ EDIT catnat GRP2*/
