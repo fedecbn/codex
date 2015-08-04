@@ -229,12 +229,12 @@ if ( $("#mode").val() == 'liste') {
                     url: 'submit.php',
                     type: "post",
                     clearForm: true,                                 
-/*
-                    beforeSubmit:function(formData, jqForm, options){
-                        var queryString = $.param(formData); 
-                        alert ('submit: \n\n' + queryString); 
-                    },
-*/
+
+                    // beforeSubmit:function(formData, jqForm, options){
+                        // var queryString = $.param(formData); 
+                        // alert ('submit: \n\n' + queryString); 
+                    // },
+
                     error: function(){
                         alert ("Erreur AJAX");
                     },
@@ -272,12 +272,12 @@ if ( $("#mode").val() == 'liste') {
                     url: 'submit.php',
                     type: "post",
                     clearForm: false,                                 
-/*
-                    beforeSubmit:function(formData, jqForm, options){
-                        var queryString = $.param(formData); 
-                        alert ('submit: \n\n' + queryString); 
-                    },
-*/
+
+                    // beforeSubmit:function(formData, jqForm, options){
+                        // var queryString = $.param(formData); 
+                        // alert ('submit: \n\n' + queryString); 
+                    // },
+
                     error: function(){
                         alert ("Erreur AJAX");
                     },
@@ -350,7 +350,7 @@ if ( $("#mode").val() == 'liste') {
 
 //------------------------------------------------------------------------------ buttonset
 
-    $( "#radio1,#radio2,#radio3,#radio4" ).buttonset(  );
+    // $( "#radio1,#radio2,#radio3,#radio4" ).buttonset( );
 
 //------------------------------------------------------------------------------ icheck
 

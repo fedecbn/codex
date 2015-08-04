@@ -197,7 +197,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		
 		
 //------------------------------------------------------------------------------ EDIT LR GRP1
-		echo ("<div id=\"radio2\">");    
+		echo ("<div id=\"radio3\">");    
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_lr_1']."</LEGEND>");
 				echo ("<table border=0 width=\"100%\"><tr valign=top >");
 				echo ("<td style=\"width: 800px;\">");
@@ -213,9 +213,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				echo ("</td></tr></table>");
 			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo_hmtl')."</textarea><br><br>");
 			echo ("</fieldset>");
-			echo ("</div>"); 
-//------------------------------------------------------------------------------ EDIT LR GRP2
-   	    echo ("<div id=\"radio2\">");    
+//------------------------------------------------------------------------------ EDIT LR GRP2 
         echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_2']."</LEGEND>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=33%>");
                 echo ("<br>");
@@ -246,9 +244,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_text (" observé >=1990 - calculé"," bloque",5,"","nbcommune",pg_result($result,0,"nbcommune"));
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
-		echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP3
-        echo ("<div id=\"radio2\">");
 		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_3']."</LEGEND>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=33%>");
                 echo ("<br>");
@@ -268,9 +264,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_bout ("Fluct extrêm Nb Ind",$desc,"fluct_extrem_v",pg_result($result,0,"fluct_extrem_v"));
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
-		echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP4
-        echo ("<div id=\"radio2\">");
 		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_4']."</LEGEND>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
                 echo ("<br>");
@@ -347,9 +341,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_sel ("Changement de Catégorie",$desc,$extra,$ref[$champ_ref['id_raison_ajust']],"id_raison_ajust",pg_result($result,0,"id_raison_ajust"));
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
-		echo ("</div>");
 //------------------------------------------------------------------------------ EDIT LR GRP5
-        echo ("<div id=\"radio2\">");
 		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_5']."</LEGEND>");
 			/*requete discussion*/
 			$query= $query_discussion.$id.";";
@@ -366,7 +358,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				}
 			echo "</table>";
 		echo ("</fieldset>");
-        echo ("</div>");
 		
 //------------------------------------------------------------------------------ EDIT LR GRP FIN
                 echo ("<br>");

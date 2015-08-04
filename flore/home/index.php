@@ -19,7 +19,7 @@ define ("DEBUG",false);
 $action=isset ($_POST['action']) ? $_POST['action'] : "";
 
 if (!isset ($_COOKIE["lang_select"])) {                                          // FR par défaut
-    setcookie ("lang_select", "fr", time()+7200,"/"); 
+    setcookie ("lang_select", "fr", time()+0,"/"); 
     $lang_select="fr";
 } 
 else

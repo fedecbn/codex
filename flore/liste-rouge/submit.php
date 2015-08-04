@@ -26,7 +26,7 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 global $db, $ref, $aColumns, $aColumnsExp, $aColumnsTot, $aColumnsSub, $champ_ref;
 ref_colonne_et_valeur ($id_page);
 //$ref['etape'] = array(0 =>"",1=>"pré-eval",2=>"éval",3=>"post-éval");
-// $ref['endemisme'] = array("" =>"",f=>"NON",t=>"<b>OUI</b>");
+//$ref['endemisme'] = array("" =>"",f=>"NON",t=>"<b>OUI</b>");
 
 
 if ($_POST['hybride1'] == 'TRUE' OR $_POST['id_indi'] == '3')	{
@@ -68,7 +68,7 @@ if (!empty ($id))
 				if ($val_1 == 't') $val_1 = "TRUE";
 				if ($val_1 == 'f') $val_1 = "FALSE";
 				$modif = check_modif($val_1,$val_2,$field);
-				if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
+				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
 				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,$i,$field,$val_1,$val_2,$id_page,'manuel',$modif);
 				} 
 			/*UPDATE*/
