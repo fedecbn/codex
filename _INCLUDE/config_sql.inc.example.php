@@ -12,15 +12,15 @@
 //------------------------------------------------------------------------------//
 
     define ("ON_Server", "no");
-	define ("SQL_server", "");
-    define ("SQL_port", "");
-    define ("SQL_user", "");
-    define ("SQL_pass", "");
-    define ("SQL_base", "");
+    define ("SQL_server", "localhost");
+    define ("SQL_port", "5432");
+    define ("SQL_user", "pg_user");
+    define ("SQL_pass", "pg_user");
+    define ("SQL_base", "codex");
 
-	define ("SQL_admin_user", "");
-    define ("SQL_admin_pass", "");
-	define ("SQL_taxa", "");
+	define ("SQL_admin_user", "localhost");
+    define ("SQL_admin_pass", "pg_user");
+	define ("SQL_taxa", "pg_user");
 	
     define ("SQL_schema_app", "applications");
     define ("SQL_schema_lr", "liste_rouge");
