@@ -68,7 +68,7 @@ $iTotal = $aResultTotal;
 			else if ($key == 'nbm5_post1990_est')
 				if ($row['nbm5_post1990_est'] != '') {$sOutput .= '"'.$row['nbm5_post1990_est'].'",';} else {$sOutput .= '"'.$row['nbm5_post1990'].'",';}
 			else if ($key == 'notes')
-				if ($row['notes'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.$row['notes'].'\" ></a>",';} else {$sOutput .= '"",';}
+				if ($row['notes'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['notes'],"undo").'\" ></a>",';} else {$sOutput .= '"",';}
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
