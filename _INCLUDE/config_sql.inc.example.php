@@ -14,8 +14,8 @@
     define ("ON_Server", "no");
     define ("SQL_server", "localhost");
     define ("SQL_port", "5432");
-    define ("SQL_user", "pg_user");
-    define ("SQL_pass", "pg_user");
+    define ("SQL_user", "codex_admin");
+    define ("SQL_pass", "codex_admin");
     define ("SQL_base", "codex");
 
 	define ("SQL_admin_user", "localhost");

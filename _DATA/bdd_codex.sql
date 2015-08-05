@@ -7,31 +7,36 @@ SET standard_conforming_strings = on
 SET check_function_bodies = false
 SET client_min_messages = warning
 
+CREATE ROLE codex_admin LOGIN
+  PASSWORD 'codex_admin'
+  NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;
+
+  
 CREATE SCHEMA applications
-ALTER SCHEMA applications OWNER TO pg_user
+ALTER SCHEMA applications OWNER TO codex_admin
 
 CREATE SCHEMA catnat
-ALTER SCHEMA catnat OWNER TO pg_user
+ALTER SCHEMA catnat OWNER TO codex_admin
 
 CREATE SCHEMA defaut
-ALTER SCHEMA defaut OWNER TO pg_user
+ALTER SCHEMA defaut OWNER TO codex_admin
 
 CREATE SCHEMA eee
-ALTER SCHEMA eee OWNER TO pg_user
+ALTER SCHEMA eee OWNER TO codex_admin
 
 CREATE SCHEMA liste_rouge
-ALTER SCHEMA liste_rouge OWNER TO pg_user
+ALTER SCHEMA liste_rouge OWNER TO codex_admin
 
 CREATE SCHEMA lsi
-ALTER SCHEMA lsi OWNER TO pg_user
+ALTER SCHEMA lsi OWNER TO codex_admin
 
-ALTER SCHEMA public OWNER TO pg_user
+ALTER SCHEMA public OWNER TO codex_admin
 
 CREATE SCHEMA referentiels
-ALTER SCHEMA referentiels OWNER TO pg_user
+ALTER SCHEMA referentiels OWNER TO codex_admin
 
 CREATE SCHEMA refnat
-ALTER SCHEMA refnat OWNER TO pg_user
+ALTER SCHEMA refnat OWNER TO codex_admin
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language'
@@ -65,7 +70,7 @@ CREATE TABLE bug (
     statut smallint DEFAULT 0,
     statut_descr text
 )
-ALTER TABLE applications.bug OWNER TO pg_user
+ALTER TABLE applications.bug OWNER TO codex_admin
 COMMENT ON TABLE bug IS 'Buge et remarques'
 COMMENT ON COLUMN bug.id_bug IS 'PK'
 CREATE SEQUENCE applications.bug_id_bug_seq
@@ -74,7 +79,7 @@ CREATE SEQUENCE applications.bug_id_bug_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
-ALTER TABLE applications.bug_id_bug_seq OWNER TO pg_user
+ALTER TABLE applications.bug_id_bug_seq OWNER TO codex_admin
 ALTER SEQUENCE applications.bug_id_bug_seq OWNED BY bug.id_bug
 
 CREATE TABLE log (
@@ -87,7 +92,7 @@ CREATE TABLE log (
     tables character varying,
     datetime_event timestamp without time zone
 )
-ALTER TABLE applications.log OWNER TO pg_user
+ALTER TABLE applications.log OWNER TO codex_admin
 COMMENT ON TABLE log IS 'Logs'
 COMMENT ON COLUMN log.id_log IS 'PK'
 CREATE SEQUENCE applications.log_id_log_seq
@@ -96,7 +101,7 @@ CREATE SEQUENCE applications.log_id_log_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1
-ALTER TABLE applications.log_id_log_seq OWNER TO pg_user
+ALTER TABLE applications.log_id_log_seq OWNER TO codex_admin
 ALTER SEQUENCE applications.log_id_log_seq OWNED BY log.id_log
 
 CREATE TABLE pres (
@@ -107,7 +112,7 @@ CREATE TABLE pres (
     pres text,
     lang smallint DEFAULT 0
 )
-ALTER TABLE applications.pres OWNER TO pg_user
+ALTER TABLE applications.pres OWNER TO codex_admin
 COMMENT ON TABLE pres IS 'Textes de présentation'
 COMMENT ON COLUMN pres.id_pres IS 'PK'
 CREATE SEQUENCE applications.pres_id_pres_seq
@@ -117,7 +122,7 @@ CREATE SEQUENCE applications.pres_id_pres_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE applications.pres_id_pres_seq OWNER TO pg_user
+ALTER TABLE applications.pres_id_pres_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE applications.pres_id_pres_seq OWNED BY pres.id_pres
@@ -135,7 +140,7 @@ CREATE TABLE rubrique (
     lang smallint DEFAULT 0
 )
 
-ALTER TABLE applications.rubrique OWNER TO pg_user
+ALTER TABLE applications.rubrique OWNER TO codex_admin
 
 
 COMMENT ON TABLE rubrique IS 'Rubriques'
@@ -151,7 +156,7 @@ CREATE SEQUENCE applications.rubrique_id_rubrique_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE applications.rubrique_id_rubrique_seq OWNER TO pg_user
+ALTER TABLE applications.rubrique_id_rubrique_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE applications.rubrique_id_rubrique_seq OWNED BY rubrique.id_rubrique
@@ -174,7 +179,7 @@ CREATE TABLE suivi (
     uid integer
 )
 
-ALTER TABLE applications.suivi OWNER TO pg_user
+ALTER TABLE applications.suivi OWNER TO codex_admin
 
 
 COMMENT ON TABLE suivi IS 'Suivi des modifications'
@@ -190,7 +195,7 @@ CREATE SEQUENCE applications.suivi_id_suivi_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE applications.suivi_id_suivi_seq OWNER TO pg_user
+ALTER TABLE applications.suivi_id_suivi_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE applications.suivi_id_suivi_seq OWNED BY suivi.id_suivi
@@ -247,7 +252,7 @@ CREATE TABLE utilisateur (
     login character varying
 )
 
-ALTER TABLE applications.utilisateur OWNER TO pg_user
+ALTER TABLE applications.utilisateur OWNER TO codex_admin
 
 
 COMMENT ON TABLE utilisateur IS 'Utilisateurs'
@@ -273,7 +278,7 @@ CREATE TABLE discussion (
     datetime timestamp without time zone
 )
 
-ALTER TABLE catnat.discussion OWNER TO pg_user
+ALTER TABLE catnat.discussion OWNER TO codex_admin
 
 
 CREATE SEQUENCE catnat.discussion_id_discussion_seq
@@ -283,7 +288,7 @@ CREATE SEQUENCE catnat.discussion_id_discussion_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE catnat.discussion_id_discussion_seq OWNER TO pg_user
+ALTER TABLE catnat.discussion_id_discussion_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE catnat.discussion_id_discussion_seq OWNED BY discussion.id_discussion
@@ -333,7 +338,7 @@ CREATE TABLE taxons_nat (
     uid integer NOT NULL
 )
 
-ALTER TABLE catnat.taxons_nat OWNER TO pg_user
+ALTER TABLE catnat.taxons_nat OWNER TO codex_admin
 
 SET search_path = defaut, pg_catalog
 
@@ -346,7 +351,7 @@ CREATE TABLE base (
     info_bool boolean
 )
 
-ALTER TABLE defaut.base OWNER TO pg_user
+ALTER TABLE defaut.base OWNER TO codex_admin
 
 SET search_path = eee, pg_catalog
 
@@ -357,7 +362,7 @@ CREATE TABLE argument (
     uid integer NOT NULL
 )
 
-ALTER TABLE eee.argument OWNER TO pg_user
+ALTER TABLE eee.argument OWNER TO codex_admin
 
 
 CREATE TABLE discussion (
@@ -371,7 +376,7 @@ CREATE TABLE discussion (
     datetime timestamp without time zone
 )
 
-ALTER TABLE eee.discussion OWNER TO pg_user
+ALTER TABLE eee.discussion OWNER TO codex_admin
 
 
 CREATE SEQUENCE eee.discussion_id_discussion_seq
@@ -381,7 +386,7 @@ CREATE SEQUENCE eee.discussion_id_discussion_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE eee.discussion_id_discussion_seq OWNER TO pg_user
+ALTER TABLE eee.discussion_id_discussion_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE eee.discussion_id_discussion_seq OWNED BY discussion.id_discussion
@@ -404,7 +409,7 @@ CREATE TABLE evaluation (
     CONSTRAINT statut CHECK (((((liste_eval)::text = ANY (ARRAY[('pcpl'::character varying)::text, ('annexe'::character varying)::text, NULL::text])) AND ((carac_emerg)::text = ANY (ARRAY[('emerg'::character varying)::text, ('non_emerg'::character varying)::text, NULL::text]))) AND ((carac_avere)::text = ANY (ARRAY[('avere_local'::character varying)::text, ('avere_ailleurs'::character varying)::text, ('non_avere'::character varying)::text, NULL::text]))))
 )
 
-ALTER TABLE eee.evaluation OWNER TO pg_user
+ALTER TABLE eee.evaluation OWNER TO codex_admin
 
 
 CREATE TABLE liste_argument (
@@ -412,7 +417,7 @@ CREATE TABLE liste_argument (
     libelle character varying
 )
 
-ALTER TABLE eee.liste_argument OWNER TO pg_user
+ALTER TABLE eee.liste_argument OWNER TO codex_admin
 
 
 CREATE SEQUENCE eee.liste_argument_ida_seq
@@ -422,7 +427,7 @@ CREATE SEQUENCE eee.liste_argument_ida_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE eee.liste_argument_ida_seq OWNER TO pg_user
+ALTER TABLE eee.liste_argument_ida_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE eee.liste_argument_ida_seq OWNED BY liste_argument.ida
@@ -439,7 +444,7 @@ CREATE TABLE liste_reponse (
     coor_ids integer
 )
 
-ALTER TABLE eee.liste_reponse OWNER TO pg_user
+ALTER TABLE eee.liste_reponse OWNER TO codex_admin
 
 
 CREATE SEQUENCE eee.liste_reponse_idq_seq
@@ -449,7 +454,7 @@ CREATE SEQUENCE eee.liste_reponse_idq_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE eee.liste_reponse_idq_seq OWNER TO pg_user
+ALTER TABLE eee.liste_reponse_idq_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE eee.liste_reponse_idq_seq OWNED BY liste_reponse.idq
@@ -460,7 +465,7 @@ CREATE TABLE liste_source (
     libelle character varying
 )
 
-ALTER TABLE eee.liste_source OWNER TO pg_user
+ALTER TABLE eee.liste_source OWNER TO codex_admin
 
 
 CREATE SEQUENCE eee.liste_source_ids_seq
@@ -470,7 +475,7 @@ CREATE SEQUENCE eee.liste_source_ids_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE eee.liste_source_ids_seq OWNER TO pg_user
+ALTER TABLE eee.liste_source_ids_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE eee.liste_source_ids_seq OWNED BY liste_source.ids
@@ -489,7 +494,7 @@ CREATE TABLE pays (
     CONSTRAINT ck_pays CHECK (((region_biogeo)::text = ANY (ARRAY[('za'::character varying)::text, ('zc'::character varying)::text, ('zm'::character varying)::text])))
 )
 
-ALTER TABLE eee.pays OWNER TO pg_user
+ALTER TABLE eee.pays OWNER TO codex_admin
 
 
 CREATE SEQUENCE eee.pays_idp_seq
@@ -499,7 +504,7 @@ CREATE SEQUENCE eee.pays_idp_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE eee.pays_idp_seq OWNER TO pg_user
+ALTER TABLE eee.pays_idp_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE eee.pays_idp_seq OWNED BY pays.idp
@@ -514,7 +519,7 @@ CREATE TABLE region (
     CONSTRAINT ck_region CHECK (((region_biogeo)::text = ANY (ARRAY[('za'::character varying)::text, ('zc'::character varying)::text, ('zm'::character varying)::text])))
 )
 
-ALTER TABLE eee.region OWNER TO pg_user
+ALTER TABLE eee.region OWNER TO codex_admin
 
 
 CREATE TABLE reponse (
@@ -524,7 +529,7 @@ CREATE TABLE reponse (
     CONSTRAINT ck_zone_reponse CHECK (((zone)::text = ANY (ARRAY[('gl'::character varying)::text, ('za'::character varying)::text, ('zc'::character varying)::text, ('zm'::character varying)::text])))
 )
 
-ALTER TABLE eee.reponse OWNER TO pg_user
+ALTER TABLE eee.reponse OWNER TO codex_admin
 
 
 CREATE TABLE source (
@@ -534,7 +539,7 @@ CREATE TABLE source (
     uid integer NOT NULL
 )
 
-ALTER TABLE eee.source OWNER TO pg_user
+ALTER TABLE eee.source OWNER TO codex_admin
 
 
 CREATE TABLE statut_inter (
@@ -544,7 +549,7 @@ CREATE TABLE statut_inter (
     CONSTRAINT ck_statut_inter CHECK (((statut)::text = ANY (ARRAY[('pres'::character varying)::text, ('indig'::character varying)::text, ('invav'::character varying)::text])))
 )
 
-ALTER TABLE eee.statut_inter OWNER TO pg_user
+ALTER TABLE eee.statut_inter OWNER TO codex_admin
 
 
 CREATE TABLE statut_natio (
@@ -554,7 +559,7 @@ CREATE TABLE statut_natio (
     CONSTRAINT ck_statut_nation CHECK (((statut)::text = ANY (ARRAY[('pres'::character varying)::text, ('indig'::character varying)::text, ('invav'::character varying)::text])))
 )
 
-ALTER TABLE eee.statut_natio OWNER TO pg_user
+ALTER TABLE eee.statut_natio OWNER TO codex_admin
 
 
 CREATE TABLE taxons (
@@ -568,7 +573,7 @@ CREATE TABLE taxons (
     uid integer NOT NULL
 )
 
-ALTER TABLE eee.taxons OWNER TO pg_user
+ALTER TABLE eee.taxons OWNER TO codex_admin
 
 SET search_path = liste_rouge, pg_catalog
 
@@ -605,7 +610,7 @@ CREATE TABLE chorologie (
     uid integer NOT NULL
 )
 
-ALTER TABLE liste_rouge.chorologie OWNER TO pg_user
+ALTER TABLE liste_rouge.chorologie OWNER TO codex_admin
 
 
 COMMENT ON TABLE chorologie IS 'Taxons chorologie'
@@ -622,7 +627,7 @@ CREATE TABLE discussion (
     datetime timestamp without time zone
 )
 
-ALTER TABLE liste_rouge.discussion OWNER TO pg_user
+ALTER TABLE liste_rouge.discussion OWNER TO codex_admin
 
 
 CREATE SEQUENCE liste_rouge.discussion_id_discussion_seq
@@ -632,7 +637,7 @@ CREATE SEQUENCE liste_rouge.discussion_id_discussion_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE liste_rouge.discussion_id_discussion_seq OWNER TO pg_user
+ALTER TABLE liste_rouge.discussion_id_discussion_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE liste_rouge.discussion_id_discussion_seq OWNED BY discussion.id_discussion
@@ -686,7 +691,7 @@ CREATE TABLE evaluation (
     avancement smallint DEFAULT 1
 )
 
-ALTER TABLE liste_rouge.evaluation OWNER TO pg_user
+ALTER TABLE liste_rouge.evaluation OWNER TO codex_admin
 
 
 COMMENT ON TABLE evaluation IS 'Taxons évaluation'
@@ -707,7 +712,7 @@ CREATE TABLE taxons (
     uid integer NOT NULL
 )
 
-ALTER TABLE liste_rouge.taxons OWNER TO pg_user
+ALTER TABLE liste_rouge.taxons OWNER TO codex_admin
 
 
 COMMENT ON TABLE taxons IS 'Taxons liste rouge'
@@ -972,7 +977,7 @@ CREATE TABLE ajustmt (
     lib_ajustmt character varying
 )
 
-ALTER TABLE referentiels.ajustmt OWNER TO pg_user
+ALTER TABLE referentiels.ajustmt OWNER TO codex_admin
 
 
 COMMENT ON TABLE ajustmt IS 'Eval - Ajustements'
@@ -988,7 +993,7 @@ CREATE SEQUENCE referentiels.ajustmt_id_ajustmt_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.ajustmt_id_ajustmt_seq OWNER TO pg_user
+ALTER TABLE referentiels.ajustmt_id_ajustmt_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.ajustmt_id_ajustmt_seq OWNED BY ajustmt.id_ajustmt
@@ -1000,7 +1005,7 @@ CREATE TABLE aoo (
     lib_aoo character varying
 )
 
-ALTER TABLE referentiels.aoo OWNER TO pg_user
+ALTER TABLE referentiels.aoo OWNER TO codex_admin
 
 
 COMMENT ON TABLE aoo IS 'Zone d occupation'
@@ -1016,7 +1021,7 @@ CREATE SEQUENCE referentiels.aoo_id_aoo_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.aoo_id_aoo_seq OWNER TO pg_user
+ALTER TABLE referentiels.aoo_id_aoo_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.aoo_id_aoo_seq OWNED BY aoo.id_aoo
@@ -1028,7 +1033,7 @@ CREATE TABLE avancement (
     lib character varying
 )
 
-ALTER TABLE referentiels.avancement OWNER TO pg_user
+ALTER TABLE referentiels.avancement OWNER TO codex_admin
 
 
 CREATE TABLE cat_a (
@@ -1037,7 +1042,7 @@ CREATE TABLE cat_a (
     lib_cat_a character varying
 )
 
-ALTER TABLE referentiels.cat_a OWNER TO pg_user
+ALTER TABLE referentiels.cat_a OWNER TO codex_admin
 
 
 COMMENT ON TABLE cat_a IS 'Eval - Catégorie A,B,C,D,E'
@@ -1053,7 +1058,7 @@ CREATE SEQUENCE referentiels.cat_a_id_cat_a_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.cat_a_id_cat_a_seq OWNER TO pg_user
+ALTER TABLE referentiels.cat_a_id_cat_a_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.cat_a_id_cat_a_seq OWNED BY cat_a.id_cat_a
@@ -1065,7 +1070,7 @@ CREATE TABLE categorie (
     lib_cat character varying
 )
 
-ALTER TABLE referentiels.categorie OWNER TO pg_user
+ALTER TABLE referentiels.categorie OWNER TO codex_admin
 
 
 COMMENT ON TABLE categorie IS 'Eval - Catégories'
@@ -1080,7 +1085,7 @@ CREATE TABLE categorie_final (
     lib_cat character varying
 )
 
-ALTER TABLE referentiels.categorie_final OWNER TO pg_user
+ALTER TABLE referentiels.categorie_final OWNER TO codex_admin
 
 
 COMMENT ON TABLE categorie_final IS 'Eval - Catégories'
@@ -1096,7 +1101,7 @@ CREATE SEQUENCE referentiels.categorie_final_id_cat_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.categorie_final_id_cat_seq OWNER TO pg_user
+ALTER TABLE referentiels.categorie_final_id_cat_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.categorie_final_id_cat_seq OWNED BY categorie_final.id_cat
@@ -1109,7 +1114,7 @@ CREATE SEQUENCE referentiels.categorie_id_cat_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.categorie_id_cat_seq OWNER TO pg_user
+ALTER TABLE referentiels.categorie_id_cat_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.categorie_id_cat_seq OWNED BY categorie.id_cat
@@ -1121,7 +1126,7 @@ CREATE TABLE cbn (
     lib_cbn character varying
 )
 
-ALTER TABLE referentiels.cbn OWNER TO pg_user
+ALTER TABLE referentiels.cbn OWNER TO codex_admin
 
 
 COMMENT ON TABLE cbn IS 'CBN'
@@ -1196,7 +1201,7 @@ CREATE TABLE chgt_cat (
     lib_chgt_cat character varying
 )
 
-ALTER TABLE referentiels.chgt_cat OWNER TO pg_user
+ALTER TABLE referentiels.chgt_cat OWNER TO codex_admin
 
 
 COMMENT ON TABLE chgt_cat IS 'Eval - Changement de Catégorie'
@@ -1212,7 +1217,7 @@ CREATE SEQUENCE referentiels.chgt_cat_id_chgt_cat_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.chgt_cat_id_chgt_cat_seq OWNER TO pg_user
+ALTER TABLE referentiels.chgt_cat_id_chgt_cat_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.chgt_cat_id_chgt_cat_seq OWNED BY chgt_cat.id_chgt_cat
@@ -1224,7 +1229,7 @@ CREATE TABLE crit_a1 (
     lib_crit_a1 character varying
 )
 
-ALTER TABLE referentiels.crit_a1 OWNER TO pg_user
+ALTER TABLE referentiels.crit_a1 OWNER TO codex_admin
 
 
 COMMENT ON TABLE crit_a1 IS 'Eval - A1'
@@ -1240,7 +1245,7 @@ CREATE SEQUENCE referentiels.crit_a1_id_crit_a1_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.crit_a1_id_crit_a1_seq OWNER TO pg_user
+ALTER TABLE referentiels.crit_a1_id_crit_a1_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.crit_a1_id_crit_a1_seq OWNED BY crit_a1.id_crit_a1
@@ -1252,7 +1257,7 @@ CREATE TABLE crit_a234 (
     lib_crit_a234 character varying
 )
 
-ALTER TABLE referentiels.crit_a234 OWNER TO pg_user
+ALTER TABLE referentiels.crit_a234 OWNER TO codex_admin
 
 
 COMMENT ON TABLE crit_a234 IS 'Eval - A2,A3,A4'
@@ -1268,7 +1273,7 @@ CREATE SEQUENCE referentiels.crit_a234_id_crit_a234_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.crit_a234_id_crit_a234_seq OWNER TO pg_user
+ALTER TABLE referentiels.crit_a234_id_crit_a234_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.crit_a234_id_crit_a234_seq OWNED BY crit_a234.id_crit_a234
@@ -1280,7 +1285,7 @@ CREATE TABLE crit_c1 (
     lib_crit_c1 character varying
 )
 
-ALTER TABLE referentiels.crit_c1 OWNER TO pg_user
+ALTER TABLE referentiels.crit_c1 OWNER TO codex_admin
 
 
 COMMENT ON TABLE crit_c1 IS 'Eval - C1'
@@ -1296,7 +1301,7 @@ CREATE SEQUENCE referentiels.crit_c1_id_crit_c1_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.crit_c1_id_crit_c1_seq OWNER TO pg_user
+ALTER TABLE referentiels.crit_c1_id_crit_c1_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.crit_c1_id_crit_c1_seq OWNED BY crit_c1.id_crit_c1
@@ -1308,7 +1313,7 @@ CREATE TABLE crit_c2 (
     lib_crit_c2 character varying
 )
 
-ALTER TABLE referentiels.crit_c2 OWNER TO pg_user
+ALTER TABLE referentiels.crit_c2 OWNER TO codex_admin
 
 
 COMMENT ON TABLE crit_c2 IS 'Eval - C2'
@@ -1324,7 +1329,7 @@ CREATE SEQUENCE referentiels.crit_c2_id_crit_c2_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.crit_c2_id_crit_c2_seq OWNER TO pg_user
+ALTER TABLE referentiels.crit_c2_id_crit_c2_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.crit_c2_id_crit_c2_seq OWNED BY crit_c2.id_crit_c2
@@ -1336,7 +1341,7 @@ CREATE TABLE droit (
     lib character varying
 )
 
-ALTER TABLE referentiels.droit OWNER TO pg_user
+ALTER TABLE referentiels.droit OWNER TO codex_admin
 
 
 CREATE TABLE etape (
@@ -1345,7 +1350,7 @@ CREATE TABLE etape (
     lib character varying
 )
 
-ALTER TABLE referentiels.etape OWNER TO pg_user
+ALTER TABLE referentiels.etape OWNER TO codex_admin
 
 
 CREATE TABLE indigenat (
@@ -1354,7 +1359,7 @@ CREATE TABLE indigenat (
     lib_indi character varying
 )
 
-ALTER TABLE referentiels.indigenat OWNER TO pg_user
+ALTER TABLE referentiels.indigenat OWNER TO codex_admin
 
 
 COMMENT ON TABLE indigenat IS 'Indigénat'
@@ -1370,7 +1375,7 @@ CREATE SEQUENCE referentiels.indigenat_id_indi_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.indigenat_id_indi_seq OWNER TO pg_user
+ALTER TABLE referentiels.indigenat_id_indi_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.indigenat_id_indi_seq OWNED BY indigenat.id_indi
@@ -1391,7 +1396,7 @@ CREATE TABLE nbindiv (
     lib_nbindiv character varying
 )
 
-ALTER TABLE referentiels.nbindiv OWNER TO pg_user
+ALTER TABLE referentiels.nbindiv OWNER TO codex_admin
 
 
 COMMENT ON TABLE nbindiv IS 'Effectifs'
@@ -1407,7 +1412,7 @@ CREATE SEQUENCE referentiels.nbindiv_id_nbindiv_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.nbindiv_id_nbindiv_seq OWNER TO pg_user
+ALTER TABLE referentiels.nbindiv_id_nbindiv_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.nbindiv_id_nbindiv_seq OWNED BY nbindiv.id_nbindiv
@@ -1419,7 +1424,7 @@ CREATE TABLE nbloc (
     lib_nbloc character varying
 )
 
-ALTER TABLE referentiels.nbloc OWNER TO pg_user
+ALTER TABLE referentiels.nbloc OWNER TO codex_admin
 
 
 COMMENT ON TABLE nbloc IS 'Nb de localités'
@@ -1435,7 +1440,7 @@ CREATE SEQUENCE referentiels.nbloc_id_nbloc_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.nbloc_id_nbloc_seq OWNER TO pg_user
+ALTER TABLE referentiels.nbloc_id_nbloc_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.nbloc_id_nbloc_seq OWNED BY nbloc.id_nbloc
@@ -1447,7 +1452,7 @@ CREATE TABLE raison_ajust (
     lib_raison_ajust character varying
 )
 
-ALTER TABLE referentiels.raison_ajust OWNER TO pg_user
+ALTER TABLE referentiels.raison_ajust OWNER TO codex_admin
 
 
 COMMENT ON TABLE raison_ajust IS 'Changement de Catégorie'
@@ -1463,7 +1468,7 @@ CREATE SEQUENCE referentiels.raison_ajust_id_raison_ajust_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.raison_ajust_id_raison_ajust_seq OWNER TO pg_user
+ALTER TABLE referentiels.raison_ajust_id_raison_ajust_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.raison_ajust_id_raison_ajust_seq OWNED BY raison_ajust.id_raison_ajust
@@ -1475,7 +1480,7 @@ CREATE TABLE rang (
     lib_rang character varying
 )
 
-ALTER TABLE referentiels.rang OWNER TO pg_user
+ALTER TABLE referentiels.rang OWNER TO codex_admin
 
 
 COMMENT ON TABLE rang IS 'Taxonomie - Rangs'
@@ -1491,7 +1496,7 @@ CREATE SEQUENCE referentiels.rang_id_rang_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.rang_id_rang_seq OWNER TO pg_user
+ALTER TABLE referentiels.rang_id_rang_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.rang_id_rang_seq OWNED BY rang.id_rang
@@ -1503,7 +1508,7 @@ CREATE TABLE reduc_eff (
     lib_reduc_eff character varying
 )
 
-ALTER TABLE referentiels.reduc_eff OWNER TO pg_user
+ALTER TABLE referentiels.reduc_eff OWNER TO codex_admin
 
 
 COMMENT ON TABLE reduc_eff IS 'Réduction effectif'
@@ -1519,7 +1524,7 @@ CREATE SEQUENCE referentiels.reduc_eff_id_reduc_eff_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.reduc_eff_id_reduc_eff_seq OWNER TO pg_user
+ALTER TABLE referentiels.reduc_eff_id_reduc_eff_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.reduc_eff_id_reduc_eff_seq OWNED BY reduc_eff.id_reduc_eff
@@ -1581,7 +1586,7 @@ CREATE TABLE tendance_pop (
     lib_tendance_pop character varying
 )
 
-ALTER TABLE referentiels.tendance_pop OWNER TO pg_user
+ALTER TABLE referentiels.tendance_pop OWNER TO codex_admin
 
 
 COMMENT ON TABLE tendance_pop IS 'Eval - Tendance actuelle d évolution'
@@ -1597,7 +1602,7 @@ CREATE SEQUENCE referentiels.tendance_pop_id_tendance_pop_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE referentiels.tendance_pop_id_tendance_pop_seq OWNER TO pg_user
+ALTER TABLE referentiels.tendance_pop_id_tendance_pop_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE referentiels.tendance_pop_id_tendance_pop_seq OWNED BY tendance_pop.id_tendance_pop
@@ -1638,7 +1643,7 @@ CREATE TABLE discussion (
     datetime timestamp without time zone
 )
 
-ALTER TABLE refnat.discussion OWNER TO pg_user
+ALTER TABLE refnat.discussion OWNER TO codex_admin
 
 
 CREATE SEQUENCE refnat.discussion_id_discussion_seq
@@ -1648,7 +1653,7 @@ CREATE SEQUENCE refnat.discussion_id_discussion_seq
     NO MAXVALUE
     CACHE 1
 
-ALTER TABLE refnat.discussion_id_discussion_seq OWNER TO pg_user
+ALTER TABLE refnat.discussion_id_discussion_seq OWNER TO codex_admin
 
 
 ALTER SEQUENCE refnat.discussion_id_discussion_seq OWNED BY discussion.id_discussion
@@ -3098,26 +3103,26 @@ ALTER TABLE ONLY taxref_5
 
 
 REVOKE ALL ON SCHEMA applications FROM PUBLIC
-REVOKE ALL ON SCHEMA applications FROM pg_user
-GRANT ALL ON SCHEMA applications TO pg_user
+REVOKE ALL ON SCHEMA applications FROM codex_admin
+GRANT ALL ON SCHEMA applications TO codex_admin
 
 
 REVOKE ALL ON SCHEMA catnat FROM PUBLIC
 REVOKE ALL ON SCHEMA catnat FROM postgres
 GRANT ALL ON SCHEMA catnat TO postgres
-GRANT ALL ON SCHEMA catnat TO pg_user
+GRANT ALL ON SCHEMA catnat TO codex_admin
 
 
 REVOKE ALL ON SCHEMA liste_rouge FROM PUBLIC
-REVOKE ALL ON SCHEMA liste_rouge FROM pg_user
-GRANT ALL ON SCHEMA liste_rouge TO pg_user
+REVOKE ALL ON SCHEMA liste_rouge FROM codex_admin
+GRANT ALL ON SCHEMA liste_rouge TO codex_admin
 
 
 REVOKE ALL ON SCHEMA lsi FROM PUBLIC
 REVOKE ALL ON SCHEMA lsi FROM postgres
 GRANT ALL ON SCHEMA lsi TO postgres
 GRANT ALL ON SCHEMA lsi TO PUBLIC
-GRANT ALL ON SCHEMA lsi TO pg_user
+GRANT ALL ON SCHEMA lsi TO codex_admin
 
 
 REVOKE ALL ON SCHEMA public FROM PUBLIC
@@ -3127,8 +3132,8 @@ GRANT ALL ON SCHEMA public TO PUBLIC
 
 
 REVOKE ALL ON SCHEMA referentiels FROM PUBLIC
-REVOKE ALL ON SCHEMA referentiels FROM pg_user
-GRANT ALL ON SCHEMA referentiels TO pg_user
+REVOKE ALL ON SCHEMA referentiels FROM codex_admin
+GRANT ALL ON SCHEMA referentiels TO codex_admin
 
 
 REVOKE ALL ON SCHEMA refnat FROM PUBLIC
@@ -3140,50 +3145,50 @@ SET search_path = applications, pg_catalog
 
 
 REVOKE ALL ON TABLE bug FROM PUBLIC
-REVOKE ALL ON TABLE bug FROM pg_user
-GRANT ALL ON TABLE bug TO pg_user
+REVOKE ALL ON TABLE bug FROM codex_admin
+GRANT ALL ON TABLE bug TO codex_admin
 GRANT ALL ON TABLE bug TO postgres
 
 
 REVOKE ALL ON TABLE log FROM PUBLIC
-REVOKE ALL ON TABLE log FROM pg_user
-GRANT ALL ON TABLE log TO pg_user
+REVOKE ALL ON TABLE log FROM codex_admin
+GRANT ALL ON TABLE log TO codex_admin
 GRANT ALL ON TABLE log TO postgres
 
 
 REVOKE ALL ON TABLE pres FROM PUBLIC
-REVOKE ALL ON TABLE pres FROM pg_user
-GRANT ALL ON TABLE pres TO pg_user
+REVOKE ALL ON TABLE pres FROM codex_admin
+GRANT ALL ON TABLE pres TO codex_admin
 GRANT ALL ON TABLE pres TO postgres
 
 
 REVOKE ALL ON TABLE rubrique FROM PUBLIC
-REVOKE ALL ON TABLE rubrique FROM pg_user
-GRANT ALL ON TABLE rubrique TO pg_user
+REVOKE ALL ON TABLE rubrique FROM codex_admin
+GRANT ALL ON TABLE rubrique TO codex_admin
 GRANT ALL ON TABLE rubrique TO postgres
 
 
 REVOKE ALL ON TABLE suivi FROM PUBLIC
-REVOKE ALL ON TABLE suivi FROM pg_user
-GRANT ALL ON TABLE suivi TO pg_user
+REVOKE ALL ON TABLE suivi FROM codex_admin
+GRANT ALL ON TABLE suivi TO codex_admin
 GRANT ALL ON TABLE suivi TO postgres
 
 
 REVOKE ALL ON TABLE taxons FROM PUBLIC
 REVOKE ALL ON TABLE taxons FROM postgres
 GRANT ALL ON TABLE taxons TO postgres
-GRANT ALL ON TABLE taxons TO pg_user
+GRANT ALL ON TABLE taxons TO codex_admin
 
 
 REVOKE ALL ON SEQUENCE taxons_uid_seq FROM PUBLIC
 REVOKE ALL ON SEQUENCE taxons_uid_seq FROM postgres
 GRANT ALL ON SEQUENCE taxons_uid_seq TO postgres
-GRANT ALL ON SEQUENCE taxons_uid_seq TO pg_user
+GRANT ALL ON SEQUENCE taxons_uid_seq TO codex_admin
 
 
 REVOKE ALL ON TABLE utilisateur FROM PUBLIC
-REVOKE ALL ON TABLE utilisateur FROM pg_user
-GRANT ALL ON TABLE utilisateur TO pg_user
+REVOKE ALL ON TABLE utilisateur FROM codex_admin
+GRANT ALL ON TABLE utilisateur TO codex_admin
 GRANT ALL ON TABLE utilisateur TO postgres
 
 SET search_path = catnat, pg_catalog
@@ -3192,38 +3197,38 @@ SET search_path = catnat, pg_catalog
 REVOKE ALL ON TABLE statut_nat FROM PUBLIC
 REVOKE ALL ON TABLE statut_nat FROM postgres
 GRANT ALL ON TABLE statut_nat TO postgres
-GRANT ALL ON TABLE statut_nat TO pg_user
+GRANT ALL ON TABLE statut_nat TO codex_admin
 
 
 REVOKE ALL ON TABLE statut_reg FROM PUBLIC
 REVOKE ALL ON TABLE statut_reg FROM postgres
 GRANT ALL ON TABLE statut_reg TO postgres
-GRANT ALL ON TABLE statut_reg TO pg_user
+GRANT ALL ON TABLE statut_reg TO codex_admin
 
 
 REVOKE ALL ON TABLE taxons_nat FROM PUBLIC
-REVOKE ALL ON TABLE taxons_nat FROM pg_user
-GRANT ALL ON TABLE taxons_nat TO pg_user
+REVOKE ALL ON TABLE taxons_nat FROM codex_admin
+GRANT ALL ON TABLE taxons_nat TO codex_admin
 GRANT ALL ON TABLE taxons_nat TO postgres
 
 SET search_path = liste_rouge, pg_catalog
 
 
 REVOKE ALL ON TABLE chorologie FROM PUBLIC
-REVOKE ALL ON TABLE chorologie FROM pg_user
-GRANT ALL ON TABLE chorologie TO pg_user
+REVOKE ALL ON TABLE chorologie FROM codex_admin
+GRANT ALL ON TABLE chorologie TO codex_admin
 GRANT ALL ON TABLE chorologie TO postgres
 
 
 REVOKE ALL ON TABLE evaluation FROM PUBLIC
-REVOKE ALL ON TABLE evaluation FROM pg_user
-GRANT ALL ON TABLE evaluation TO pg_user
+REVOKE ALL ON TABLE evaluation FROM codex_admin
+GRANT ALL ON TABLE evaluation TO codex_admin
 GRANT ALL ON TABLE evaluation TO postgres
 
 
 REVOKE ALL ON TABLE taxons FROM PUBLIC
-REVOKE ALL ON TABLE taxons FROM pg_user
-GRANT ALL ON TABLE taxons TO pg_user
+REVOKE ALL ON TABLE taxons FROM codex_admin
+GRANT ALL ON TABLE taxons TO codex_admin
 GRANT ALL ON TABLE taxons TO postgres
 
 SET search_path = lsi, pg_catalog
@@ -3232,260 +3237,260 @@ SET search_path = lsi, pg_catalog
 REVOKE ALL ON TABLE coor_news_tag FROM PUBLIC
 REVOKE ALL ON TABLE coor_news_tag FROM postgres
 GRANT ALL ON TABLE coor_news_tag TO postgres
-GRANT ALL ON TABLE coor_news_tag TO pg_user
+GRANT ALL ON TABLE coor_news_tag TO codex_admin
 
 
 REVOKE ALL ON TABLE news FROM PUBLIC
 REVOKE ALL ON TABLE news FROM postgres
 GRANT ALL ON TABLE news TO postgres
-GRANT ALL ON TABLE news TO pg_user
+GRANT ALL ON TABLE news TO codex_admin
 
 
 REVOKE ALL ON SEQUENCE news_id_news_seq FROM PUBLIC
 REVOKE ALL ON SEQUENCE news_id_news_seq FROM postgres
 GRANT ALL ON SEQUENCE news_id_news_seq TO postgres
-GRANT ALL ON SEQUENCE news_id_news_seq TO pg_user
+GRANT ALL ON SEQUENCE news_id_news_seq TO codex_admin
 
 
 REVOKE ALL ON TABLE subject FROM PUBLIC
 REVOKE ALL ON TABLE subject FROM postgres
 GRANT ALL ON TABLE subject TO postgres
-GRANT ALL ON TABLE subject TO pg_user
+GRANT ALL ON TABLE subject TO codex_admin
 
 
 REVOKE ALL ON SEQUENCE subject_id_subject_seq FROM PUBLIC
 REVOKE ALL ON SEQUENCE subject_id_subject_seq FROM postgres
 GRANT ALL ON SEQUENCE subject_id_subject_seq TO postgres
-GRANT ALL ON SEQUENCE subject_id_subject_seq TO pg_user
+GRANT ALL ON SEQUENCE subject_id_subject_seq TO codex_admin
 
 
 REVOKE ALL ON TABLE tag FROM PUBLIC
 REVOKE ALL ON TABLE tag FROM postgres
 GRANT ALL ON TABLE tag TO postgres
-GRANT ALL ON TABLE tag TO pg_user
+GRANT ALL ON TABLE tag TO codex_admin
 
 
 REVOKE ALL ON SEQUENCE tag_id_tag_seq FROM PUBLIC
 REVOKE ALL ON SEQUENCE tag_id_tag_seq FROM postgres
 GRANT ALL ON SEQUENCE tag_id_tag_seq TO postgres
-GRANT ALL ON SEQUENCE tag_id_tag_seq TO pg_user
+GRANT ALL ON SEQUENCE tag_id_tag_seq TO codex_admin
 
 SET search_path = referentiels, pg_catalog
 
 
 REVOKE ALL ON TABLE ajustmt FROM PUBLIC
-REVOKE ALL ON TABLE ajustmt FROM pg_user
-GRANT ALL ON TABLE ajustmt TO pg_user
+REVOKE ALL ON TABLE ajustmt FROM codex_admin
+GRANT ALL ON TABLE ajustmt TO codex_admin
 GRANT ALL ON TABLE ajustmt TO postgres
 
 
 REVOKE ALL ON TABLE aoo FROM PUBLIC
-REVOKE ALL ON TABLE aoo FROM pg_user
-GRANT ALL ON TABLE aoo TO pg_user
+REVOKE ALL ON TABLE aoo FROM codex_admin
+GRANT ALL ON TABLE aoo TO codex_admin
 GRANT ALL ON TABLE aoo TO postgres
 
 
 REVOKE ALL ON TABLE cat_a FROM PUBLIC
-REVOKE ALL ON TABLE cat_a FROM pg_user
-GRANT ALL ON TABLE cat_a TO pg_user
+REVOKE ALL ON TABLE cat_a FROM codex_admin
+GRANT ALL ON TABLE cat_a TO codex_admin
 GRANT ALL ON TABLE cat_a TO postgres
 
 
 REVOKE ALL ON TABLE categorie FROM PUBLIC
-REVOKE ALL ON TABLE categorie FROM pg_user
-GRANT ALL ON TABLE categorie TO pg_user
+REVOKE ALL ON TABLE categorie FROM codex_admin
+GRANT ALL ON TABLE categorie TO codex_admin
 GRANT ALL ON TABLE categorie TO postgres
 
 
 REVOKE ALL ON TABLE categorie_final FROM PUBLIC
-REVOKE ALL ON TABLE categorie_final FROM pg_user
-GRANT ALL ON TABLE categorie_final TO pg_user
+REVOKE ALL ON TABLE categorie_final FROM codex_admin
+GRANT ALL ON TABLE categorie_final TO codex_admin
 GRANT ALL ON TABLE categorie_final TO postgres
 
 
 REVOKE ALL ON TABLE cbn FROM PUBLIC
-REVOKE ALL ON TABLE cbn FROM pg_user
-GRANT ALL ON TABLE cbn TO pg_user
+REVOKE ALL ON TABLE cbn FROM codex_admin
+GRANT ALL ON TABLE cbn TO codex_admin
 GRANT ALL ON TABLE cbn TO postgres
 
 
 REVOKE ALL ON TABLE champs FROM PUBLIC
 REVOKE ALL ON TABLE champs FROM postgres
 GRANT ALL ON TABLE champs TO postgres
-GRANT ALL ON TABLE champs TO pg_user
+GRANT ALL ON TABLE champs TO codex_admin
 
 
 REVOKE ALL ON TABLE champs_ref FROM PUBLIC
 REVOKE ALL ON TABLE champs_ref FROM postgres
 GRANT ALL ON TABLE champs_ref TO postgres
-GRANT ALL ON TABLE champs_ref TO pg_user
+GRANT ALL ON TABLE champs_ref TO codex_admin
 
 
 REVOKE ALL ON TABLE chgt_cat FROM PUBLIC
-REVOKE ALL ON TABLE chgt_cat FROM pg_user
-GRANT ALL ON TABLE chgt_cat TO pg_user
+REVOKE ALL ON TABLE chgt_cat FROM codex_admin
+GRANT ALL ON TABLE chgt_cat TO codex_admin
 GRANT ALL ON TABLE chgt_cat TO postgres
 
 
 REVOKE ALL ON TABLE crit_a1 FROM PUBLIC
-REVOKE ALL ON TABLE crit_a1 FROM pg_user
-GRANT ALL ON TABLE crit_a1 TO pg_user
+REVOKE ALL ON TABLE crit_a1 FROM codex_admin
+GRANT ALL ON TABLE crit_a1 TO codex_admin
 GRANT ALL ON TABLE crit_a1 TO postgres
 
 
 REVOKE ALL ON TABLE crit_a234 FROM PUBLIC
-REVOKE ALL ON TABLE crit_a234 FROM pg_user
-GRANT ALL ON TABLE crit_a234 TO pg_user
+REVOKE ALL ON TABLE crit_a234 FROM codex_admin
+GRANT ALL ON TABLE crit_a234 TO codex_admin
 GRANT ALL ON TABLE crit_a234 TO postgres
 
 
 REVOKE ALL ON TABLE crit_c1 FROM PUBLIC
-REVOKE ALL ON TABLE crit_c1 FROM pg_user
-GRANT ALL ON TABLE crit_c1 TO pg_user
+REVOKE ALL ON TABLE crit_c1 FROM codex_admin
+GRANT ALL ON TABLE crit_c1 TO codex_admin
 GRANT ALL ON TABLE crit_c1 TO postgres
 
 
 REVOKE ALL ON TABLE crit_c2 FROM PUBLIC
-REVOKE ALL ON TABLE crit_c2 FROM pg_user
-GRANT ALL ON TABLE crit_c2 TO pg_user
+REVOKE ALL ON TABLE crit_c2 FROM codex_admin
+GRANT ALL ON TABLE crit_c2 TO codex_admin
 GRANT ALL ON TABLE crit_c2 TO postgres
 
 
 REVOKE ALL ON TABLE indigenat FROM PUBLIC
-REVOKE ALL ON TABLE indigenat FROM pg_user
-GRANT ALL ON TABLE indigenat TO pg_user
+REVOKE ALL ON TABLE indigenat FROM codex_admin
+GRANT ALL ON TABLE indigenat TO codex_admin
 GRANT ALL ON TABLE indigenat TO postgres
 
 
 REVOKE ALL ON TABLE liste_rouge FROM PUBLIC
 REVOKE ALL ON TABLE liste_rouge FROM postgres
 GRANT ALL ON TABLE liste_rouge TO postgres
-GRANT ALL ON TABLE liste_rouge TO pg_user
+GRANT ALL ON TABLE liste_rouge TO codex_admin
 
 
 REVOKE ALL ON TABLE nbindiv FROM PUBLIC
-REVOKE ALL ON TABLE nbindiv FROM pg_user
-GRANT ALL ON TABLE nbindiv TO pg_user
+REVOKE ALL ON TABLE nbindiv FROM codex_admin
+GRANT ALL ON TABLE nbindiv TO codex_admin
 GRANT ALL ON TABLE nbindiv TO postgres
 
 
 REVOKE ALL ON TABLE nbloc FROM PUBLIC
-REVOKE ALL ON TABLE nbloc FROM pg_user
-GRANT ALL ON TABLE nbloc TO pg_user
+REVOKE ALL ON TABLE nbloc FROM codex_admin
+GRANT ALL ON TABLE nbloc TO codex_admin
 GRANT ALL ON TABLE nbloc TO postgres
 
 
 REVOKE ALL ON TABLE raison_ajust FROM PUBLIC
-REVOKE ALL ON TABLE raison_ajust FROM pg_user
-GRANT ALL ON TABLE raison_ajust TO pg_user
+REVOKE ALL ON TABLE raison_ajust FROM codex_admin
+GRANT ALL ON TABLE raison_ajust TO codex_admin
 GRANT ALL ON TABLE raison_ajust TO postgres
 
 
 REVOKE ALL ON TABLE rang FROM PUBLIC
-REVOKE ALL ON TABLE rang FROM pg_user
-GRANT ALL ON TABLE rang TO pg_user
+REVOKE ALL ON TABLE rang FROM codex_admin
+GRANT ALL ON TABLE rang TO codex_admin
 GRANT ALL ON TABLE rang TO postgres
 
 
 REVOKE ALL ON TABLE reduc_eff FROM PUBLIC
-REVOKE ALL ON TABLE reduc_eff FROM pg_user
-GRANT ALL ON TABLE reduc_eff TO pg_user
+REVOKE ALL ON TABLE reduc_eff FROM codex_admin
+GRANT ALL ON TABLE reduc_eff TO codex_admin
 GRANT ALL ON TABLE reduc_eff TO postgres
 
 
 REVOKE ALL ON TABLE statut FROM PUBLIC
 REVOKE ALL ON TABLE statut FROM postgres
 GRANT ALL ON TABLE statut TO postgres
-GRANT ALL ON TABLE statut TO pg_user
+GRANT ALL ON TABLE statut TO codex_admin
 
 
 REVOKE ALL ON TABLE tendance_pop FROM PUBLIC
-REVOKE ALL ON TABLE tendance_pop FROM pg_user
-GRANT ALL ON TABLE tendance_pop TO pg_user
+REVOKE ALL ON TABLE tendance_pop FROM codex_admin
+GRANT ALL ON TABLE tendance_pop TO codex_admin
 GRANT ALL ON TABLE tendance_pop TO postgres
 
 
 REVOKE ALL ON TABLE user_ref FROM PUBLIC
 REVOKE ALL ON TABLE user_ref FROM postgres
 GRANT ALL ON TABLE user_ref TO postgres
-GRANT ALL ON TABLE user_ref TO pg_user
+GRANT ALL ON TABLE user_ref TO codex_admin
 
 SET search_path = refnat, pg_catalog
 
 REVOKE ALL ON TABLE taxons FROM PUBLIC
 REVOKE ALL ON TABLE taxons FROM postgres
 GRANT ALL ON TABLE taxons TO postgres
-GRANT ALL ON TABLE taxons TO pg_user
+GRANT ALL ON TABLE taxons TO codex_admin
 
 REVOKE ALL ON SEQUENCE taxons_uid_seq FROM PUBLIC
 REVOKE ALL ON SEQUENCE taxons_uid_seq FROM postgres
 GRANT ALL ON SEQUENCE taxons_uid_seq TO postgres
-GRANT ALL ON SEQUENCE taxons_uid_seq TO pg_user
+GRANT ALL ON SEQUENCE taxons_uid_seq TO codex_admin
 
 REVOKE ALL ON TABLE taxref_changes_30_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxref_changes_30_utf8 FROM postgres
 GRANT ALL ON TABLE taxref_changes_30_utf8 TO postgres
-GRANT ALL ON TABLE taxref_changes_30_utf8 TO pg_user
+GRANT ALL ON TABLE taxref_changes_30_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxref_changes_40_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxref_changes_40_utf8 FROM postgres
 GRANT ALL ON TABLE taxref_changes_40_utf8 TO postgres
-GRANT ALL ON TABLE taxref_changes_40_utf8 TO pg_user
+GRANT ALL ON TABLE taxref_changes_40_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxref_changes_50_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxref_changes_50_utf8 FROM postgres
 GRANT ALL ON TABLE taxref_changes_50_utf8 TO postgres
-GRANT ALL ON TABLE taxref_changes_50_utf8 TO pg_user
+GRANT ALL ON TABLE taxref_changes_50_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxref_changes_60_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxref_changes_60_utf8 FROM postgres
 GRANT ALL ON TABLE taxref_changes_60_utf8 TO postgres
-GRANT ALL ON TABLE taxref_changes_60_utf8 TO pg_user
+GRANT ALL ON TABLE taxref_changes_60_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxref_changes_70_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxref_changes_70_utf8 FROM postgres
 GRANT ALL ON TABLE taxref_changes_70_utf8 TO postgres
-GRANT ALL ON TABLE taxref_changes_70_utf8 TO pg_user
+GRANT ALL ON TABLE taxref_changes_70_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxref_changes_80_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxref_changes_80_utf8 FROM postgres
 GRANT ALL ON TABLE taxref_changes_80_utf8 TO postgres
-GRANT ALL ON TABLE taxref_changes_80_utf8 TO pg_user
+GRANT ALL ON TABLE taxref_changes_80_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxrefv20_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxrefv20_utf8 FROM postgres
 GRANT ALL ON TABLE taxrefv20_utf8 TO postgres
-GRANT ALL ON TABLE taxrefv20_utf8 TO pg_user
+GRANT ALL ON TABLE taxrefv20_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxrefv30_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxrefv30_utf8 FROM postgres
 GRANT ALL ON TABLE taxrefv30_utf8 TO postgres
-GRANT ALL ON TABLE taxrefv30_utf8 TO pg_user
+GRANT ALL ON TABLE taxrefv30_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxrefv40_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxrefv40_utf8 FROM postgres
 GRANT ALL ON TABLE taxrefv40_utf8 TO postgres
-GRANT ALL ON TABLE taxrefv40_utf8 TO pg_user
+GRANT ALL ON TABLE taxrefv40_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxrefv50_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxrefv50_utf8 FROM postgres
 GRANT ALL ON TABLE taxrefv50_utf8 TO postgres
-GRANT ALL ON TABLE taxrefv50_utf8 TO pg_user
+GRANT ALL ON TABLE taxrefv50_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxrefv60_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxrefv60_utf8 FROM postgres
 GRANT ALL ON TABLE taxrefv60_utf8 TO postgres
-GRANT ALL ON TABLE taxrefv60_utf8 TO pg_user
+GRANT ALL ON TABLE taxrefv60_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxrefv70_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxrefv70_utf8 FROM postgres
 GRANT ALL ON TABLE taxrefv70_utf8 TO postgres
-GRANT ALL ON TABLE taxrefv70_utf8 TO pg_user
+GRANT ALL ON TABLE taxrefv70_utf8 TO codex_admin
 
 REVOKE ALL ON TABLE taxrefv80_utf8 FROM PUBLIC
 REVOKE ALL ON TABLE taxrefv80_utf8 FROM postgres
 GRANT ALL ON TABLE taxrefv80_utf8 TO postgres
-GRANT ALL ON TABLE taxrefv80_utf8 TO pg_user
+GRANT ALL ON TABLE taxrefv80_utf8 TO codex_admin
 
 INSERT INTO referentiels.ajustmt VALUES (0, '0', '')
 INSERT INTO referentiels.ajustmt VALUES (2, '-2', '(+2)')
