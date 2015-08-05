@@ -22,6 +22,12 @@ if (typeof oTable == 'undefined') {
 			"bServerSide": true,
 			"sAjaxSource": "liste.php",
 			"bStateSave": true,
+			"fnStateSave": function (oSettings, oData) {
+				sessionStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
+				},
+			"fnStateLoad": function (oSettings) {
+				return JSON.parse( sessionStorage.getItem('data_'+window.location.pathname) );
+				}, 
 			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 			switch (aData[2])                                                  // Cat A
 				{
@@ -112,6 +118,12 @@ if (typeof oTable == 'undefined') {
     	"bServerSide": true,
     	"sAjaxSource": "liste_user.php",
         "bStateSave": true,
+		"fnStateSave": function (oSettings, oData) {
+            sessionStorage.setItem( 'user_'+window.location.pathname, JSON.stringify(oData) );
+			},
+        "fnStateLoad": function (oSettings) {
+            return JSON.parse( sessionStorage.getItem('user_'+window.location.pathname) );
+			}, 
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 			// switch (aData[4])                                                  // Cat EU
             // {	
