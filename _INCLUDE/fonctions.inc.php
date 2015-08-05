@@ -959,10 +959,10 @@ function add_and_modif_taxon ($in,$mod,$uid_modif)
 {
 /*$in corresponds aux infos du taxons à enregistrer*/
 global $db;
-$range = array(""=>0,"ES"=>1,"SSES"=>2,"VAR"=>3,"SVAR"=>4,"FO"=>5,"SSFO"=>6);
+$range = array(0=>"",1=>"ES",2=>"SSES",3=>"VAR",4=>"SVAR",5=>"FO",6=>"SSFO");
 $rang_plus = str_replace ('\'', '', $in["rang"]);
-$id_rang = array_search($rang_plus,$range) ? $range[$rang_plus] : 0 ;
-echo $range[$rang_plus];
+$id_rang = array_search($rang_plus,$range) ? array_search($rang_plus,$range) : 0 ;
+// echo $range[$rang_plus];
 
 $catnat = $in["catnat"];$liste_rouge=$in["liste_rouge"];$eee = $in["eee"];
 
@@ -985,18 +985,18 @@ if ($mod == 'add')
 	$query = "";
 	if ($catnat == 'TRUE') {
 	$query .= "
-	INSERT INTO catnat.taxons_nat(uid,famille,cd_ref,nom_sci,nom_vern,cd_rang,hybride) VALUES ($uid,$famille,$cd_nom,$nom_complet,$nom_vern,$rang,$hybride);
+	INSERT INTO catnat.taxons_nat(uid,famille,cd_ref,nom_sci,nom_vern,cd_rang,hybride) VALUES ($uid,$famille,$cd_ref,$nom_complet,$nom_vern,$rang,$hybride);
 	INSERT INTO catnat.statut_nat (uid) VALUES ($uid);
 	";}
 	if ($eee == 'TRUE'){
 
 	$query .= "
-	INSERT INTO eee.taxons(uid,cd_ref,nom_sci,nom_verna,lib_rang) VALUES ($uid,$cd_nom,$nom_complet,$nom_vern,$rang);
+	INSERT INTO eee.taxons(uid,cd_ref,nom_sci,nom_verna,lib_rang) VALUES ($uid,$cd_ref,$nom_complet,$nom_vern,$rang);
 	INSERT INTO eee.evaluation(uid) VALUES ($uid);
 	";}
 	if ($liste_rouge == 'TRUE'){
 	$query .= "
-	INSERT INTO liste_rouge.taxons(uid,famille,cd_ref,nom_sci,nom_vern,id_rang,hybride) VALUES ($uid,$famille,$cd_nom,$nom_complet,$nom_vern,$id_rang,$hybride);
+	INSERT INTO liste_rouge.taxons(uid,famille,cd_ref,nom_sci,nom_vern,id_rang,hybride) VALUES ($uid,$famille,$cd_ref,$nom_complet,$nom_vern,$id_rang,$hybride);
 	INSERT INTO liste_rouge.chorologie(uid) VALUES ($uid);
 	INSERT INTO liste_rouge.evaluation(uid,etape,avancement) VALUES ($uid,1,1);
 	";}
@@ -1014,11 +1014,11 @@ else
 		
 		if ($uid != null) {
 			$query .= "
-			UPDATE catnat.taxons_nat SET famille=$famille,cd_ref=$cd_nom,nom_sci=$nom_complet,nom_vern=$nom_vern,cd_rang=$rang,hybride=$hybride WHERE uid=$uid_modif;
+			UPDATE catnat.taxons_nat SET famille=$famille,cd_ref=$cd_ref,nom_sci=$nom_complet,nom_vern=$nom_vern,cd_rang=$rang,hybride=$hybride WHERE uid=$uid_modif;
 			";
 		} else {	
 			$query .= "
-			INSERT INTO catnat.taxons_nat(uid,famille,cd_ref,nom_sci,nom_vern,cd_rang,hybride) VALUES ($uid_modif,$famille,$cd_nom,$nom_complet,$nom_vern,$rang,$hybride);
+			INSERT INTO catnat.taxons_nat(uid,famille,cd_ref,nom_sci,nom_vern,cd_rang,hybride) VALUES ($uid_modif,$famille,$cd_ref,$nom_complet,$nom_vern,$rang,$hybride);
 			INSERT INTO catnat.statut_nat (uid) VALUES ($uid_modif);
 			";
 		}
@@ -1031,11 +1031,11 @@ else
 		
 		if ($uid != null) {
 			$query .= "
-			UPDATE eee.taxons SET cd_ref=$cd_nom,nom_sci=$nom_complet,nom_verna=$nom_vern,lib_rang=$rang WHERE uid=$uid_modif;
+			UPDATE eee.taxons SET cd_ref=$cd_ref,nom_sci=$nom_complet,nom_verna=$nom_vern,lib_rang=$rang WHERE uid=$uid_modif;
 			";
 		} else {	
 			$query .= "
-			INSERT INTO eee.taxons(uid,cd_ref,nom_sci,nom_verna,lib_rang) VALUES ($uid_modif,$cd_nom,$nom_complet,$nom_vern,$rang);
+			INSERT INTO eee.taxons(uid,cd_ref,nom_sci,nom_verna,lib_rang) VALUES ($uid_modif,$cd_ref,$nom_complet,$nom_vern,$rang);
 			INSERT INTO eee.evaluation(uid) VALUES ($uid_modif);
 			";
 		}
@@ -1048,11 +1048,11 @@ else
 		
 		if ($uid != null) {
 			$query .= "
-			UPDATE liste_rouge.taxons SET famille=$famille,cd_ref=$cd_nom,nom_sci=$nom_complet,nom_vern=$nom_vern,id_rang=$id_rang,hybride=$hybride WHERE uid=$uid_modif;
+			UPDATE liste_rouge.taxons SET famille=$famille,cd_ref=$cd_ref,nom_sci=$nom_complet,nom_vern=$nom_vern,id_rang=$id_rang,hybride=$hybride WHERE uid=$uid_modif;
 			";
 		} else {	
 			$query .= "
-			INSERT INTO liste_rouge.taxons(uid,famille,cd_ref,nom_sci,nom_vern,id_rang,hybride) VALUES ($uid_modif,$famille,$cd_nom,$nom_complet,$nom_vern,$id_rang,$hybride);
+			INSERT INTO liste_rouge.taxons(uid,famille,cd_ref,nom_sci,nom_vern,id_rang,hybride) VALUES ($uid_modif,$famille,$cd_ref,$nom_complet,$nom_vern,$id_rang,$hybride);
 			INSERT INTO liste_rouge.chorologie(uid) VALUES ($uid_modif);
 			INSERT INTO liste_rouge.evaluation(uid,etape,avancement) VALUES ($uid_modif,1,1);
 			";
@@ -1061,7 +1061,7 @@ else
 
 	if ($query != "") $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 	}
-	
+	// echo $query;
 return $uid;
 }
 

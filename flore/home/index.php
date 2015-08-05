@@ -18,6 +18,7 @@ define ("DEBUG",false);
 //------------------------------------------------------------------------------ PARMS.
 $action=isset ($_POST['action']) ? $_POST['action'] : "";
 
+
 if (!isset ($_COOKIE["lang_select"])) {                                          // FR par défaut
     setcookie ("lang_select", "fr", 0,"/"); 
     $lang_select="fr";
@@ -46,6 +47,7 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL ".SQL_s
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.cookie.js"></script>
 
 <script type="text/javascript" language="javascript" src="js/home.js"></script>
+
 <?php
 //------------------------------------------------------------------------------ MAIN
 html_header ("utf-8","","");

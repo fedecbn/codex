@@ -22,6 +22,7 @@
     if (typeof oTable == 'undefined') {
         var oTable = $('#data-liste').dataTable({
    	    "bJQueryUI": true,
+   	    "iCookieDuration": 60*60*24,
         "iDisplayLength": 100,
     	"aLengthMenu": [[50,100,300],[50,100,300]],
     	"bPaginate": true,
@@ -173,7 +174,7 @@
                 "sLast":     "Dernier"
             }
         }, 
-       // "aaSorting": [[2,'asc']],                                               // Nom scientifique 
+       "aaSorting": [[2,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [
                 null,                                                           // Etape

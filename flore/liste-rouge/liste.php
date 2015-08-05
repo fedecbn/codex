@@ -84,9 +84,9 @@ $iTotal = $aResultTotal;
 		/*dernières colonnes*/
 		/*---------------*/
         if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
+            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" target=\"_blank\"><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
         else        
-            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
+            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" target=\"_blank\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
 		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
     	$sOutput .= "],";
 	}
