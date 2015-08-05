@@ -309,20 +309,23 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		foreach ($ref['statut'] as $type_stt => $lib_stt)	{
 			/*Récupération des fichiers existants*/
 			$stt = strtolower($type_stt);
-			$files = scandir("../../_GRAPH/carte/$stt");
-			foreach ($files as $key => $val){
-				if(strpos($val,'thumb')) {
-					$res = explode('_',$val);
-					$cd_ref = explode('.',$res[3]);
-					$coor_carte[$stt][$cd_ref[0]] = $val;
+			$stt_path = $path.$stt;
+			if (file_exists($stt_path))
+				{
+				$files = scandir($stt_path);
+				foreach ($files as $key => $val){
+					if(strpos($val,'thumb')) {
+						$res = explode('_',$val);
+						$cd_ref = explode('.',$res[3]);
+						$coor_carte[$stt][$cd_ref[0]] = $val;
+						}
 					}
+				$id_ref = pg_result($result,0,"cd_ref");
+				// /*var_dump($coor_carte['lr']);*/
+				$carte = $coor_carte[$stt][$id_ref];
+				$path_carte = $path.$stt."/".str_replace('_thumb','',$carte);
+				$path_carte_thumb = $path.$stt."/".$carte;
 				}
-				
-			$id_ref = pg_result($result,0,"cd_ref");
-			// /*var_dump($coor_carte['lr']);*/
-			$carte = $coor_carte[$stt][$id_ref];
-			$path_carte = $path.$stt."/".str_replace('_thumb','',$carte);
-			$path_carte_thumb = $path.$stt."/".$carte;
 			if ($carte != '')	{
 				echo ("<a href=\"$path_carte\"><img src=\"$path_carte_thumb\" alt=\"Pas de carte disponible\"></a>");
 			} else {

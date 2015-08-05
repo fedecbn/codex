@@ -143,11 +143,11 @@ switch ($mode) {
 				echo ("<br><br>");
                 echo ("<label class=\"preField\">Extrait</label><textarea name=\"abstract\" id=\"abstract\" style=\"width:75em;\" rows=\"2\" ></textarea>");
 				echo ("<br><br>");
-                metaform_sel_multi ("TAG","","multiple size=5 style=\"width: 120px;\"  OnDblClick='javascript: deplacer( this.form.tag, this.form.tag_select);'",$tag,"tag","");
-                metaform_sel_multi ("TAG Selectionné(s)","","multiple size=5 style=\"width: 120px;\"  OnDblClick='javascript: deplacer( this.form.tag_select, this.form.tag);'","","tag_select","");
+                metaform_sel_multi ("TAG","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag, this.form.tag_select);'",$tag,"tag","");
+                metaform_sel_multi ("TAG Selectionné(s)","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag_select, this.form.tag);'","","tag_select","");
 				echo ("<br><br>");
-				metaform_text ("Lien hypertexte","","","style=width:75em;","link","");
-				metaform_text ("Lien hypertexte 2","","","style=width:75em;","link_2","");
+				metaform_text ("Lien hypertexte","","","width:75em;","link","");
+				metaform_text ("Lien hypertexte 2","","","width:75em;","link_2","");
         echo ("</fieldset>");
 
       		
@@ -253,11 +253,11 @@ if (pg_num_rows ($result1)) {
 				echo ("<br><br>");
 				echo ("<label class=\"preField\">Extrait</label><textarea  name=\"abstract\" id=\"abstract\" style=\"width:75em;\" rows=\"2\" />".pg_result($result1,0,"abstract")."</textarea> ");
                 echo ("<br><br>");
-                metaform_sel_multi ("TAG","","multiple size=5 style=\"width: 120px;\" OnDblClick='javascript: deplacer( this.form.tag, this.form.tag_select);' ",$tag,"tag","");
-                metaform_sel_multi ("TAG selectionné(s)","","multiple size=5 style=\"width: 120px;\" OnDblClick='javascript: deplacer( this.form.tag_select, this.form.tag);' ",$tag_select,"tag_select","");			            			            
+                metaform_sel_multi ("TAG","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag, this.form.tag_select);' ",$tag,"tag","");
+				metaform_sel_multi ("TAG Selectionné(s)","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag_select, this.form.tag);'",$tag_select,"tag_select","");
 				echo ("<br><br>");
-                metaform_text ("Lien hypertexte","","","style=width:75em;","link",pg_result($result1,0,"link"));
-                metaform_text ("Lien hypertexte 2","","","style=width:75em;","link_2",pg_result($result1,0,"link_2"));
+                metaform_text ("Lien hypertexte","","","width:75em;","link",pg_result($result1,0,"link"));
+                metaform_text ("Lien hypertexte 2","","","width:75em;","link_2",pg_result($result1,0,"link_2"));
  
 
 		echo ("</fieldset>");

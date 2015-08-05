@@ -22,14 +22,19 @@ include_once ("commun.inc.php");
 //------------------------------------------------------------------------------ VAR.
 
 $statut = array('indi','lr');
+$path = "../../_GRAPH/carte/";
 /*Récupération des cartes*/
 foreach ($statut as $stt) {
-	$files = scandir("../../_GRAPH/carte/$stt");
-	foreach ($files as $key => $val){
-		if(strpos($val,'thumb')) {
-			$res = explode('_',$val);
-			$cd_ref = explode('.',$res[3]);
-			$coor_carte[$stt][$cd_ref[0]] = $val;
+	$stt_path = $path.$stt;
+	if (file_exists($stt_path))
+	{
+		$files = scandir($stt_path);
+		foreach ($files as $key => $val){
+			if(strpos($val,'thumb')) {
+				$res = explode('_',$val);
+				$cd_ref = explode('.',$res[3]);
+				$coor_carte[$stt][$cd_ref[0]] = $val;
+				}
 			}
 		}
 	}

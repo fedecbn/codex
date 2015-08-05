@@ -184,7 +184,7 @@ echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 	echo ("<fieldset><LEGEND>Correspondance avec TAXREF</LEGEND>");
 	foreach ($etude as $num => $length)
 		{
-		$requete = "SELECT $select_fcbn[$num] FROM refnat.taxons v8 LIMIT 1";
+		$requete = "SELECT $select_fcbn[$num]";
 		// echo "<BR>$requete";
 		$result=pg_query ($db,$requete) or die ("Erreur pgSQL : ".$requete);
 		$entete=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
