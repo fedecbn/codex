@@ -12,3 +12,5 @@ CREATE DATABASE codex WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = '
 3- connectez vous à la base codex et appliquez les modifications nécessaires à cette base de données grâce au fichier _DATA/bdd_codex.sql (fichier à plat)
 
 4- transformez config_sql.inc.example.php en config_sql.inc.php (lieu de gestion des paramètre de connexion)
+
+5- vous pouvez vous connecter avec le login admin et mdp admin
