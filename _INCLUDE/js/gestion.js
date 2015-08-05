@@ -183,12 +183,14 @@ if ( $("#mode").val() == 'liste') {
 	include("js/data.js")        
 
     $('#data-liste').on("click",".view", function ($e) {
-        window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
+        window.open('index.php?m=view&id='+$(this).attr('id'),'_blank');				
+        // window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
         return (false);
 	});
 
     $('#data-liste').on("click",".edit", function ($e) {
-        window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
+        window.open('index.php?m=edit&id='+$(this).attr('id'),'_blank');				
+        // window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
         return (false);
 	});
 
@@ -252,7 +254,8 @@ if ( $("#mode").val() == 'liste') {
                     	   },
                     		"Liste des taxons": function() {
                                 $(this).dialog("close");
-                                window.location.replace ('index.php');
+                                // window.location.replace ('index.php');
+								window.close()
                     	   }
                         }
                     });
@@ -296,7 +299,8 @@ if ( $("#mode").val() == 'liste') {
                     	   },
                     		"Liste des taxons": function() {
                                 $(this).dialog("close");
-                                window.location.replace ('index.php');
+                                // window.location.replace ('index.php');
+								window.close()
                     	   }
                         }
                     });

@@ -24,6 +24,7 @@ if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
 if (isset($_GET['o']) & !empty($_GET['o'])) $o=$_GET['o'];
 $id=$_GET['id'];
+if (isset($_GET['id'])) $title.= "- ".$_GET['id']; else $title.= "- liste";
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -50,7 +51,8 @@ ref_colonne_et_valeur ($id_page);
 
 <?php
 //------------------------------------------------------------------------------ MAIN
-html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
+// html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
+html_header_2 ("utf-8","table_eval.css","jquery-te-1.4.0.css",$title);
 //html_header ("utf-8","","");
 echo ("<body>");
 echo ("<div id=\"page_consult\" class=\"page_consult\">");

@@ -13,6 +13,9 @@ $lang = array(array());
 $lang['fr']['titre']="Outil d’aide à l’évaluation de la flore";
 $lang['it']['titre']="";
 
+$lang['fr']['titre_web']="Codex";
+$lang['it']['titre_web']="";
+
 //------------------------------------------------------------------------------ Boutons
 $lang['fr']['retour']="Retour";
 $lang['it']['retour']="Ritorno";

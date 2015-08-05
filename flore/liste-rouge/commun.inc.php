@@ -18,6 +18,8 @@ $id_page = $_SESSION['page'] = "lr";
 $id_page_2 = "droit";
 $id_rub = "liste_rouge";
 $rub[$id_rub] = 'true';
+$title = $lang['fr']['titre_web']." - ".$id_page;
+
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];

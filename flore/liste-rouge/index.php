@@ -13,8 +13,11 @@
 //  Version 2.00  29/04/15 - Généralisation                                    //
 //------------------------------------------------------------------------------//
 
-//------------------------------------------------------------------------------ INIT.
+// ------------------------------------------------------------------------------ INIT.
 session_start ();
+// var_dump($_SESSION);
+// var_dump($_COOKIE);
+// echo $_COOKIE['SpryMedia_DataTables_data-liste_'];
 include ("commun.inc.php");
 if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 
@@ -24,6 +27,8 @@ if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 //------------------------------------------------------------------------------ PARMS.
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
 if (isset($_GET['o']) & !empty($_GET['o'])) $o=$_GET['o'];
+if (isset($_GET['id'])) $title.= "- ".$_GET['id']; else $title.= "- liste";
+
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
@@ -51,7 +56,8 @@ ref_colonne_et_valeur ($id_page);
 
 <?php
 //------------------------------------------------------------------------------ MAIN
-html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
+// html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
+html_header_2 ("utf-8","table_eval.css","jquery-te-1.4.0.css",$title);
 //html_header ("utf-8","","");
 echo ("<body>");
 echo ("<div id=\"page_consult\" class=\"page_consult\">");

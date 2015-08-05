@@ -19,7 +19,7 @@
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
 
-    if (typeof oTable == 'undefined') {
+    if (typeof oTable == 'undefined' && typeof oTable2 == 'undefined' ) {
         var oTable = $('#data-liste').dataTable({
    	    "bJQueryUI": true,
    	    "iCookieDuration": 60*60*24,
@@ -263,7 +263,7 @@
 		"bProcessing": true,
     	"bServerSide": true,
     	"sAjaxSource": "liste_user.php",
-        "bStateSave": true,
+        "bStateSave": false,
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 			// switch (aData[4])                                                  // Cat EU
             // {	

@@ -14,6 +14,7 @@ require_once ("../../_INCLUDE/common.lang.php");
 require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
+$title = "Codex - LSI";
 
 
 //------------------------------------------------------------------------------ PATHS du module

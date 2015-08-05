@@ -35,6 +35,27 @@ function html_header ($charset,$css1,$css2) {
     echo ("</head>");
 }
 
+function html_header_2 ($charset,$css1,$css2,$title) {
+    echo ("<head><title>$title</title>");
+    echo ("<link rel=\"shortcut icon\" href=\"../../_GRAPH/icone.ico\" type=\"image/x-icon\" />");
+    echo ("<meta http-equiv=\"Content-type\" content=\"text/html; charset=".$charset."\" />");
+    echo ("<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />");
+    echo ("<meta http-equiv=\"Content-Style-Type\" content=\"text/css\" />");
+    echo ("<meta name=\"author\" content=\"DARIANET\" />");
+    echo ("<meta name=\"editor\" content=\"PSPad\" />");
+    echo ("<meta name=\"description\" content=\"Dispositif de partage des connaissances et d'expertises du réseau des CBN\">");
+    
+    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/eval.css\" />");
+    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/pepper-grinder/jquery-ui.min.css\" />");
+    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/pepper-grinder/jquery-ui.theme.min.css\" />");
+//    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/jquery.lightbox-0.5.css\" />");
+    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/square/aero.css\" />");
+
+    if ($css1 != "") echo ("<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../_INCLUDE/css/".$css1."\"  />");
+    if ($css2 != "") echo ("<link rel=\"stylesheet\" type=\"text/css\" media=\"screen\" href=\"../../_INCLUDE/css/".$css2."\"  />");
+    echo ("</head>");
+}
+
 function footer () {
 }
 
