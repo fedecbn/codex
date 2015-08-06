@@ -181,10 +181,10 @@ $(document).ready(function(){
         	"sAjaxSource": "text-liste.php",
             "bStateSave": true,
 			"fnStateSave": function (oSettings, oData) {
-				sessionStorage.setItem( 'text_'+window.location.pathname, JSON.stringify(oData) );
+				localStorage.setItem( 'text_'+window.location.pathname, JSON.stringify(oData) );
 				},
 			"fnStateLoad": function (oSettings) {
-				return JSON.parse( sessionStorage.getItem('text_'+window.location.pathname) );
+				return JSON.parse( localStorage.getItem('text_'+window.location.pathname) );
 				}, 
             "oLanguage": { "sProcessing":   "Traitement en cours...",
                 "sLengthMenu":   "Afficher _MENU_ éléments",
@@ -240,10 +240,10 @@ $(document).ready(function(){
         	"sAjaxSource": "user-liste.php",
             "bStateSave": true,
 			"fnStateSave": function (oSettings, oData) {
-				sessionStorage.setItem( 'user_'+window.location.pathname, JSON.stringify(oData) );
+				localStorage.setItem( 'user_'+window.location.pathname, JSON.stringify(oData) );
 				},
 			"fnStateLoad": function (oSettings) {
-				return JSON.parse( sessionStorage.getItem('user_'+window.location.pathname) );
+				return JSON.parse( localStorage.getItem('user_'+window.location.pathname) );
 				}, 
             "oLanguage": { "sProcessing":   "Traitement en cours...",
                 "sLengthMenu":   "Afficher _MENU_ éléments",
@@ -325,10 +325,10 @@ $(document).ready(function(){
         	"sAjaxSource": "suivi-liste.php",
             "bStateSave": true,
 			"fnStateSave": function (oSettings, oData) {
-				sessionStorage.setItem( 'suivi_'+window.location.pathname, JSON.stringify(oData) );
+				localStorage.setItem( 'suivi_'+window.location.pathname, JSON.stringify(oData) );
 				},
 			"fnStateLoad": function (oSettings) {
-				return JSON.parse( sessionStorage.getItem('suivi_'+window.location.pathname) );
+				return JSON.parse( localStorage.getItem('suivi_'+window.location.pathname) );
 				}, 
             "oLanguage": { "sProcessing":   "Traitement en cours...",
                 "sLengthMenu":   "Afficher _MENU_ éléments",

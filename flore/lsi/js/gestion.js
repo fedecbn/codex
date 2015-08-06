@@ -175,10 +175,10 @@ if ( $("#mode").val() == 'liste') {
     	"sAjaxSource": "lsi-liste.php",
         "bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
-            sessionStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
+            localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
 			},
         "fnStateLoad": function (oSettings) {
-            return JSON.parse( sessionStorage.getItem('data_'+window.location.pathname) );
+            return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 			}, 
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             switch (aData[1])                                                  // Cat A

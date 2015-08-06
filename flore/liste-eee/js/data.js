@@ -23,10 +23,10 @@
     	"sAjaxSource": "liste.php",
         "bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
-            sessionStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
+            localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
 			},
         "fnStateLoad": function (oSettings) {
-            return JSON.parse( sessionStorage.getItem('data_'+window.location.pathname) );
+            return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 			}, 
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             if (aData[6] > 0 && aData[6]<=5)                                                  // Risque intro
@@ -165,10 +165,10 @@
     	"sAjaxSource": "liste_user.php",
         "bStateSave": true,
  		"fnStateSave": function (oSettings, oData) {
-            sessionStorage.setItem( 'user_'+window.location.pathname, JSON.stringify(oData) );
+            localStorage.setItem( 'user_'+window.location.pathname, JSON.stringify(oData) );
 			},
         "fnStateLoad": function (oSettings) {
-            return JSON.parse( sessionStorage.getItem('user_'+window.location.pathname) );
+            return JSON.parse( localStorage.getItem('user_'+window.location.pathname) );
 			}, 
        "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 			// switch (aData[4])                                                  // Cat EU
