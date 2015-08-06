@@ -523,7 +523,9 @@ function metaform_text_area ($label,$descr,$row,$cols,$style,$champ,$val)
 
 function metaform_sel ($label,$descr,$extra,$liste,$champ,$val)
 {
-	if ($val == '1') {$class = 'oui';} elseif ($val == '2') {$class = 'non';} else {$class = $val;}
+	/*Retrouver pourquoi cette ligne*/
+	// if ($val == '1') {$class = 'oui';} elseif ($val == '2') {$class = 'non';} else {$class = $val;}
+	$class = $val;
 	
 	if (strpos($descr,"no_lab") == false)
 		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
@@ -531,7 +533,7 @@ function metaform_sel ($label,$descr,$extra,$liste,$champ,$val)
 	
 	if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";}	
 	if (strpos($descr,"bloque") != false AND $val == null) {$extra .= "background-color:#EFEFEF";}	
-	echo ("<select class=\"$class\" name=\"".$champ."\" id=\"".$champ."\" $bloc style=\"$extra\"/>");
+	echo ("<select class=\"$liste[$val]\" name=\"".$champ."\" id=\"".$champ."\" $bloc style=\"$extra\" onchange=\"this.className=this.options[this.selectedIndex].className\"/>");
 	
     foreach ($liste as $key => $value) {
         echo ("<option class=\"$value\" value=\"$key\" ".($key == $val ? "SELECTED" : "")." >".$value."</option>");

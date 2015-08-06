@@ -45,9 +45,13 @@
 		"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
             switch (aData[3])                                                  // Cat A
             {
-                default : 
-                    $('td:eq(3)', nRow).addClass('nom_taxon');
-                break;
+                default : $('td:eq(3)', nRow).addClass('nom_taxon'); break;
+            }
+            switch (aData[5])                                                  // Cat A
+            {
+                case "Indigène" : $('td:eq(5)', nRow).addClass('Indigène'); break;
+                case "Cryptogène" : $('td:eq(5)', nRow).addClass('Cryptogène'); break;
+                case "Exotique" : $('td:eq(5)', nRow).addClass('Exotique'); break;
             }
             switch (aData[11])                                                  // Cat A
             {

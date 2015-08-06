@@ -759,10 +759,10 @@ option.CR,  select.CR {
     color:white;  
     background-color:#DA1C23;  
 }
-/*option.CR*,  select.CR* {
+.CR\*, select.CR\* {
     color:white;  
     background-color:#BF181E;  
-}*/
+}
 option.RE,  select.RE {
     color:white;  
     background-color:#591B6A;  
@@ -780,7 +780,7 @@ option.NA,  select.NA {
 }
 
 option.NE,  select.NE {
-    background-color:#FFFFFF;  
+    background-color:#D5DBE5;  
 }
 
 /*
@@ -825,17 +825,17 @@ select.NA {
 }
 */
 
-option.Indigène,  select.Indigène, option.I,  select.I {
+.Indigène, option.Indigène,  select.Indigène, option.I,  select.I {
     color:white; 
     background-color:#305F2F;  
 }
-option.Cryptogène,  select.Cryptogène{
+.Cryptogène, option.Cryptogène,  select.Cryptogène{
     color:white; 
     background-color:#FEA400;  
 }
-option.Exotique,  select.Exotique,option.E,  select.E {
+.Exotique, option.Exotique,  select.Exotique,option.E,  select.E {
     color:white; 
-    background-color:#23904E;  
+    background-color:#CC0066;  
 }
 
 option.non, select.non  {
