@@ -229,12 +229,12 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					metaform_text ("Nom scientifique"," bloque",100,"","nom_sci",pg_result($result,0,"nom_sci"));
 					metaform_text ("Nom vernaculaire"," bloque",100,"","nom_vern",pg_result($result,0,"nom_vern"));
 					metaform_bout ("Taxon hybride?"," bloque","","hybride",pg_result($result,0,"hybride"));
-				echo ("</td><td>");	
+				echo ("</td><td style=\"width:300px;\">");	
 					metaform_text ("Code REF."," bloque",8,"","cd_ref",pg_result($result,0,"cd_ref"));
 					metaform_sel ("Rang"," bloque","",$ref[$champ_ref['cd_rang']],"cd_rang",pg_result($result,0,"cd_rang"));
 				echo ("</td><td>");	
 					if ($niveau >= 128)
-						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"); 
+						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
 				echo ("</td></tr></table>");
 			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo_hmtl')."</textarea><br><br>");
 			echo ("</fieldset>");

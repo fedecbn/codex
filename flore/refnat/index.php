@@ -283,10 +283,16 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			echo ("<table><tr><TD style=\"padding-right:20px;\">");
 				echo ("Le taxon appartient aux listes suivantes : <BR>");
 				metaform_bool ("Rubrique CATNAT",$desc,"catnat",pg_result($result,0,"catnat"));
+				if ($_SESSION['niveau_catnat'] >= 128 AND pg_result($result,0,"catnat") == 't') 
+					echo ("<a class=edit id=\"page_catnat\" href=\"../catnat/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Catalogue National\"></a>"); 
 				echo ("<BR>");
 				metaform_bool ("Rubrique Liste rouge",$desc,"liste_rouge",pg_result($result,0,"liste_rouge"));
+				if ($_SESSION['niveau_lr'] >= 128 AND pg_result($result,0,"liste_rouge") == 't') 
+					echo ("<a class=edit id=\"page_lr\" href=\"../liste-rouge/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Liste rouge\"></a>"); 
 				echo ("<BR>");
 				metaform_bool ("Rubrique Liste EEE",$desc,"eee",pg_result($result,0,"eee"));
+				if ($_SESSION['niveau_eee'] >= 128 AND pg_result($result,0,"eee") == 't') 
+					echo ("<a class=edit id=\"page_eee\" href=\"../liste-eee/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Liste EEE\"></a>"); 
 				echo ("<BR>");
 			echo("</td><td valign=\"top\">");
 				echo ("Informations supplémentaires sur le taxon : <BR>");
