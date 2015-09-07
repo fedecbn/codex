@@ -145,29 +145,29 @@ $langliste['fr']['droit-popup'][]="";
 
 
 //------------------------------------------------------------------------------ Module gestion LSI 
-$langliste['fr']['lsi-liste'][]="Id";
-$langliste['fr']['lsi-liste-popup'][]="Identifiant";
+$langliste['fr']['lsi'][]="Id";
+$langliste['fr']['lsi-popup'][]="Identifiant";
 
-$langliste['fr']['lsi-liste'][]="Thématique";
-$langliste['fr']['lsi-liste-popup'][]="Thématique de la news";
+$langliste['fr']['lsi'][]="Thématique";
+$langliste['fr']['lsi-popup'][]="Thématique de la news";
 
-$langliste['fr']['lsi-liste'][]="Titre";
-$langliste['fr']['lsi-liste-popup'][]="Titre de la news";
+$langliste['fr']['lsi'][]="Titre";
+$langliste['fr']['lsi-popup'][]="Titre de la news";
 
-$langliste['fr']['lsi-liste'][]="Extrait";
-$langliste['fr']['lsi-liste-popup'][]="Extrait de la news";
+$langliste['fr']['lsi'][]="Extrait";
+$langliste['fr']['lsi-popup'][]="Extrait de la news";
 
-$langliste['fr']['lsi-liste'][]="Mots clés";
-$langliste['fr']['lsi-liste-popup'][]="Mots clés";
+$langliste['fr']['lsi'][]="Mots clés";
+$langliste['fr']['lsi-popup'][]="Mots clés";
 
-$langliste['fr']['lsi-liste'][]="Lien";
-$langliste['fr']['lsi-liste-popup'][]="Lien hypertexte";
+$langliste['fr']['lsi'][]="Lien";
+$langliste['fr']['lsi-popup'][]="Lien hypertexte";
 
-$langliste['fr']['lsi-liste'][]="Lien 2";
-$langliste['fr']['lsi-liste-popup'][]="Lien hypertexte 2";
+$langliste['fr']['lsi'][]="Lien 2";
+$langliste['fr']['lsi-popup'][]="Lien hypertexte 2";
 
-$langliste['fr']['lsi-liste'][]="Date";
-$langliste['fr']['lsi-liste-popup'][]="Date de publication";
+$langliste['fr']['lsi'][]="Date";
+$langliste['fr']['lsi-popup'][]="Date de publication";
 
 //------------------------------------------------------------------------------ Module flore / _base_module
 $langliste['fr']['catnat'][]="CD REF";

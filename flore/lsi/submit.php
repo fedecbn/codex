@@ -25,9 +25,9 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 
 if (!empty ($id))                                                               // EDIT
 {
-//------------------------------------------------------------------------------ Bavkup
+//------------------------------------------------------------------------------ Backup
 
-    $query="SELECT id,title,abstract,link,link_2,id_subject,date FROM ".SQL_schema_lsi.".news AS n WHERE id=".$id.";";
+    $query="SELECT id,title,abstract,link,link_2,id_subject,date FROM lsi.news AS n WHERE id=".$id.";";
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
     $backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);                          // Old values
@@ -53,14 +53,14 @@ if (!empty ($id))                                                               
 
 
 //------------------------------------------------------------------------------ Update
-    $query="UPDATE ".SQL_schema_lsi.".news SET  
-abstract=".sql_format_quote ($_POST["abstract"],'do').",
-link=".sql_format($_POST["link"]).",
-link_2=".sql_format($_POST["link_2"]).",
-date=".sql_format($_POST["date"]).",
-title=".sql_format($_POST["title"]).",
-id_subject=".sql_format_num($_POST["id_subject"])."
-WHERE id=".$id.";";
+    $query="UPDATE lsi.news SET  
+		abstract=".sql_format_quote ($_POST["abstract"],'do').",
+		link=".sql_format_quote($_POST["link"],'do').",
+		link_2=".sql_format_quote($_POST["link_2"],'do').",
+		date=".sql_format($_POST["date"]).",
+		title=".sql_format_quote($_POST["title"],'do').",
+		id_subject=".sql_format_num($_POST["id_subject"])."
+		WHERE id=".$id.";";
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
@@ -73,14 +73,14 @@ $add = array_diff($_POST["tag_select"],$tag_base);
 if (!empty($supp))
 	{
    foreach ($supp as $field => $val)
-   $query = $query."DELETE FROM ".SQL_schema_lsi.".coor_news_tag WHERE (id,id_tag) = ($id,$val); ";
+   $query = $query."DELETE FROM lsi.coor_news_tag WHERE (id,id_tag) = ($id,$val); ";
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	}
 if (!empty($add))
 	{
    foreach ($add as $field => $val)
-   $query = $query."INSERT INTO ".SQL_schema_lsi.".coor_news_tag VALUES ($id,$val); ";
+   $query = $query."INSERT INTO lsi.coor_news_tag VALUES ($id,$val); ";
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	}
@@ -89,25 +89,28 @@ if (!empty($add))
 } else {                                                                        //  ADD
 
 //------------------------------------------------------------------------------
-    $query="INSERT INTO ".SQL_schema_lsi.".news (abstract,link,link_2,id_subject,date,title) 
-VALUES (
-".sql_format_quote ($_POST["abstract"],'do').",
-".sql_format ($_POST["link"]).",
-".sql_format ($_POST["link_2"]).",
-".sql_format_num($_POST["id_subject"]).",
-".sql_format ($_POST["date"]).",
-".sql_format ($_POST["title"]).") RETURNING id;";
-// echo $query;
+    $query="INSERT INTO lsi.news (abstract,link,link_2,id_subject,date,title) 
+		VALUES (
+		".sql_format_quote ($_POST["abstract"],'do').",
+		".sql_format_quote ($_POST["link"],'do').",
+		".sql_format_quote ($_POST["link_2"],'do').",
+		".sql_format_num ($_POST["id_subject"]).",
+		".sql_format ($_POST["date"]).",
+		".sql_format_quote ($_POST["title"],'do').") RETURNING id;";
+		// echo $query;
     if (DEBUG)echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
     $id=pg_result($result,0,"id");
 
 	$add = $_POST["tag_select"];
 	$query = '';
-	foreach ($add as $field => $val)
-		$query .= "INSERT INTO ".SQL_schema_lsi.".coor_news_tag VALUES ($id,$val); ";
-    if ($query != '')
-		$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	if (!empty($add))
+		{
+		foreach ($add as $field => $val)
+			$query .= "INSERT INTO ".SQL_schema_lsi.".coor_news_tag VALUES ($id,$val); ";
+		if ($query != '')
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+		}
 }
 
 /*
@@ -126,7 +129,7 @@ return (true);
 function add_suivi ($etape,$id_user,$id,$table,$champ,$valeur_1,$valeur_2) {
     global $db;
 
-    $query="INSERT INTO ".SQL_schema_app.".suivi (etape,id_user,uid,tables,champ,valeur_1,valeur_2,datetime) VALUES  
+    $query="INSERT INTO applications.suivi (etape,id_user,uid,tables,champ,valeur_1,valeur_2,datetime) VALUES  
     (".$etape.",'".$id_user."',".$id.",'".$table."','".$champ."',".sql_format ($valeur_1).",".sql_format ($valeur_2).",NOW());";
    // echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));

@@ -1,9 +1,8 @@
 <?php
 //------------------------------------------------------------------------------//
-//  module_gestion/index.php                                                    //
+//  index.php                                                    //
 //                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
+//  Application WEB 'Codex'                                                      //
 //                                                                              //
 //  Version 1.00  10/08/14 - DariaNet                                           //
 //  Version 1.01  12/08/14 - MaJ fonctions pgSQL                                //
@@ -18,10 +17,6 @@ include ("commun.inc.php");
 if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 
 //------------------------------------------------------------------------------ VAR.
-$niveau=$_SESSION['niveau_lsi'];
-$id_user=$_SESSION['id_user'];
-$config=$_SESSION['id_config'];
-$lang_select=$_COOKIE['lang_select'];
 
 //------------------------------------------------------------------------------ PARMS.
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
@@ -33,14 +28,14 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ REF.
-$ouinon_txt=array("Non","Oui");
-$id_page="lsi";
+global $aColumns, $ref, $champ_ref ;
+ref_colonne_et_valeur ($id_page);
+
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-ui.custom.min.js"></script>
-
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.dataTables.columnFilter.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.form.js"></script>
@@ -48,14 +43,14 @@ $id_page="lsi";
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 
-<script type="text/javascript" language="javascript" src="js/gestion.js"></script>
+<!--<script type="text/javascript" language="javascript" src="js/gestion.js"></script>-->
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
 <script type="text/javascript" language="javascript" src="js/liste.js"></script>
 
 <?php
 //------------------------------------------------------------------------------ MAIN
 // html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
 html_header_2 ("utf-8","table_eval.css","jquery-te-1.4.0.css",$title);
-
 //html_header ("utf-8","","");
 echo ("<body>");
 echo ("<div id=\"page_consult\" class=\"page_consult\">");
@@ -70,40 +65,38 @@ echo ("</div>");
 
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
 echo ("<ul>");
-echo ("<li><a href=\"#lsi\">".$lang[$lang_select]['lsi']."</a></li>");
-// echo ("<li><a href=\"#evee\">".$lang[$lang_select]['evee']."</a></li>");
+echo ("<li><a href=\"#".$id_page."\">".$lang[$lang_select][$id_page]."</a></li>");
+echo ("<li><a href=\"#".$id_page_2."\">".$lang[$lang_select][$id_page_2]."</a></li>");
 echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
 echo ("</ul>");
 
 echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
 
 switch ($mode) {
-//------------------------------------------------------------------------------ #LR
     default:
+/*------------------------------------------------------------------------------------------------------- */
+/*------------------------------------------------------------------------------ #CAS TABLEAU DE SYNTHESE */
+/*------------------------------------------------------------------------------------------------------- */
 	case "liste" : {
         echo ("<div id=\"$id_page\" >");
             echo ("<div id=\"titre2\">");
                 echo ($lang[$lang_select]["liste_$id_page"]);
             echo ("</div>");
-            echo ("<input type=\"hidden\" id=\"".$id_page."-export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
-            echo ("<input type=\"hidden\" id=\"".$id_page."-export-TXT-query-id\" value=\"t.uid\" />");
-            echo ("<input type=\"hidden\" id=\"".$id_page."-export-TXT-query\" value=\" SELECT id,libelle_subjet,title,abstract,libelle_tag,link,date
-				FROM ".SQL_schema_lsi.".news AS n 
-				LEFT JOIN ".SQL_schema_lsi.".coor_news_tag nt ON n.id=nt.id
-				LEFT JOIN ".SQL_schema_lsi.".tag t ON nt.id_tag=t.id_tag  
-				LEFT JOIN ".SQL_schema_lsi.".subject s ON n.id_subject=s.id_subject \" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
                 if ($niveau >= 128) 
-                    echo ("<button id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-                echo ("<button id=\"".$id_page."-export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                    echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+                echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
                 if ($niveau >= 255) 
-                    echo ("<button id=\"".$id_page."-del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                    echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
-            echo ("<div id=\"".$id_page."-dialog\"></div>");
-            aff_table ($id_page."-liste",true,true);
+            echo ("<div id=\"dialog\"></div>");
+            aff_table_new ($id_page,true,true);
         echo ("</div>");
 //------------------------------------------------------------------------------ #fiche
-        echo ("<div id=\"fiche_lsi\" >");
+        echo ("<div id=\"fiche\" >");
         echo ("</div>");
     }
     break;
@@ -111,14 +104,14 @@ switch ($mode) {
     case "add" : {
 //------------------------------------------------------------------------------ REF.
         //$subject[0]="";
-        $query="SELECT * FROM ".SQL_schema_lsi.".subject ORDER BY id_subject;";
+        $query="SELECT * FROM lsi.subject ORDER BY id_subject;";
         $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
         while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
             $subject[$row["id_subject"]]=$row["libelle_subject"];
         pg_free_result ($result);
 
         //$tag[0]="";
-        $query="SELECT * FROM ".SQL_schema_lsi.".tag ORDER BY libelle_tag;";
+        $query="SELECT * FROM lsi.tag ORDER BY libelle_tag;";
         $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
         while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
             $tag[$row["id_tag"]]=$row["libelle_tag"];
@@ -127,7 +120,7 @@ switch ($mode) {
 //------------------------------------------------------------------------------ ADD
         echo ("<div id=\"liste\" >");
         echo ("</div>");
-        echo ("<div id=\"fiche_lsi\" >");
+        echo ("<div id=\"fiche\" >");
         echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
 
         echo ("<div style=\"float:left;\">");
@@ -135,29 +128,31 @@ switch ($mode) {
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
             echo ("<button id=\"enregistrer1-add-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-            echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_lsi']."</button> ");
+            echo ("<button id=\"retour1-button\">".$lang[$lang_select]['lsi']."</button> ");
         echo ("</div><br><br>");
 
 //------------------------------------------------------------------------------ GRP 1
          echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_lsi_1']."</LEGEND>");
-                echo ("<label class=\"preField\">Titre</label><input type=\"text\" name=\"title\" id=\"title\" size=\"70\" />  ");
-                echo ("<label class=\"preField\">Date</label><input type=\"text\" name=\"date\" id=\"date\" size=\"20\" value=\"".date("Y-m-d")."\" />  ");
+                // echo ("<label class=\"preField\">Titre</label><input type=\"text\" name=\"title\" id=\"title\" size=\"70\" />  ");
+				metaform_text ("Titre",null,70,null,"title",null);
+				metaform_text ("Date",null,20,null,"date",date("Y-m-d"));
+                // echo ("<label class=\"preField\">Date</label><input type=\"text\" name=\"date\" id=\"date\" size=\"20\" value=\"".."\" />  ");
                 metaform_sel ("Sujet","","",$subject,"id_subject","");
 				echo ("<br><br>");
-                echo ("<label class=\"preField\">Extrait</label><textarea name=\"abstract\" id=\"abstract\" style=\"width:75em;\" rows=\"2\" ></textarea>");
+                echo ("<label class=\"preField\">Extrait</label><textarea name=\"abstract\" id=\"abstract\" cols=\"150\" rows=\"2\" ></textarea>");
 				echo ("<br><br>");
                 metaform_sel_multi ("TAG","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag, this.form.tag_select);'",$tag,"tag","");
                 metaform_sel_multi ("TAG Selectionné(s)","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag_select, this.form.tag);'","","tag_select","");
 				echo ("<br><br>");
-				metaform_text ("Lien hypertexte","","","width:75em;","link","");
-				metaform_text ("Lien hypertexte 2","","","width:75em;","link_2","");
+				metaform_text ("Lien hypertexte",null,150,null,"link",null);
+				metaform_text ("Lien hypertexte 2",null,150,null,"link_2",null);
         echo ("</fieldset>");
 
       		
 //------------------------------------------------------------------------------
         echo ("<div style=\"float:right;\"><br>");
             echo ("<button id=\"enregistrer2-add-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-            echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_lsi']."</button> ");
+            echo ("<button id=\"retour2-button\">".$lang[$lang_select]['lsi']."</button> ");
         echo ("</div>");
         echo ("</form>");
         
@@ -174,7 +169,7 @@ switch ($mode) {
 
 		//------------------------------------------------------------------------------ GRP 2
 
-		echo ("<div id=\"fiche_lsi2\" >");
+		echo ("<div id=\"fiche\" >");
 		echo ("<fieldset><LEGEND>Ajouter un tag</LEGEND>");
 				echo ("<form method=\"POST\" id=\"form_add\" class=\"form_add\" name=\"edit_add\" action=\"\">");
 				echo ("<label class=\"preField\">ajout d'un tag</label><input type=\"text\" name=\"tag_plus\" id=\"tag_plus\" size=\"70\" />  ");
@@ -194,8 +189,12 @@ switch ($mode) {
     case "view" : 
     case "edit" : {
 //------------------------------------------------------------------------------ REF.
+/*Gestion des niveau de droit*/
+if ($niveau <= 64) $desc = " bloque";
+if ($niveau <= 64) $disa = "disabled"; else $disa = null;
+
         //$subject[0]="";
-        $query="SELECT * FROM ".SQL_schema_lsi.".subject ORDER BY id_subject;";
+        $query="SELECT * FROM lsi.subject ORDER BY id_subject;";
         $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
         while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
             $subject[$row["id_subject"]]=$row["libelle_subject"];
@@ -204,7 +203,7 @@ switch ($mode) {
 //------------------------------------------------------------------------------ EDIT
         echo ("<div id=\"liste\" >");
         echo ("</div>");
-        echo ("<div id=\"fiche_lsi\" >");
+        echo ("<div id=\"fiche\" >");
         echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\">");
 
         echo ("<div style=\"float:left;\">");
@@ -213,7 +212,7 @@ switch ($mode) {
         echo ("<div style=\"float:right;\">");
             if ($mode == "edit") {
                 echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-                echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_lsi']."</button> ");
+                echo ("<button id=\"retour1-button\">".$lang[$lang_select]['lsi']."</button> ");
             } else {
                 echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
             }
@@ -222,18 +221,15 @@ switch ($mode) {
             $id=$_GET['id'];
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
             $query1="SELECT title,abstract,date,link,link_2,n.id_subject as sub,libelle_subject
-			FROM ".SQL_schema_lsi.".news n
-			LEFT OUTER JOIN ".SQL_schema_lsi.".subject s ON s.id_subject = n.id_subject
+			FROM lsi.news n LEFT OUTER JOIN lsi.subject s ON s.id_subject = n.id_subject
 			WHERE n.id =  ".$id.";";
             $query2="SELECT cnt.id_tag, t.libelle_tag
-			FROM ".SQL_schema_lsi.".coor_news_tag cnt JOIN ".SQL_schema_lsi.".tag t ON cnt.id_tag = t.id_tag
+			FROM lsi.coor_news_tag cnt JOIN lsi.tag t ON cnt.id_tag = t.id_tag
 			WHERE cnt.id =  ".$id."
 			ORDER BY libelle_tag;";
             $query3="SELECT id_tag, libelle_tag
-			FROM ".SQL_schema_lsi.".tag t
-			WHERE id_tag NOT IN (SELECT id_tag
-			FROM ".SQL_schema_lsi.".coor_news_tag cnt
-			WHERE cnt.id =  ".$id.")
+			FROM lsi.tag t
+			WHERE id_tag NOT IN (SELECT id_tag FROM lsi.coor_news_tag cnt WHERE cnt.id =  ".$id.")
 			ORDER BY libelle_tag;";
 			// echo $query2."<BR>".$query3;
 			$result1=pg_query ($db,$query1) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result1),false);
@@ -250,19 +246,17 @@ if (pg_num_rows ($result1)) {
 
 //------------------------------------------------------------------------------
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_lsi_1']."</LEGEND>");
-                echo ("<label class=\"preField\">Titre</label><input type=\"text\" name=\"title\" id=\"title\" size=\"70\" value=\"".pg_result($result1,0,"title")."\" />  ");
-                echo ("<label class=\"preField\">Date</label><input type=\"text\" name=\"date\" id=\"date\" size=\"20\" value=\"".pg_result($result1,0,"date")."\" />  ");
+ 				metaform_text ("Titre",null,70,null,"title",sql_format_quote(pg_result($result1,0,"title"),'undo_text'));
+				metaform_text ("Date",null,20,null,"date",sql_format_quote(pg_result($result1,0,"date"),'undo_text'));
                 metaform_sel ("Sujet","","",$subject,"id_subject",pg_result($result1,0,"sub"));
-				echo ("<br><br>");
-				echo ("<label class=\"preField\">Extrait</label><textarea  name=\"abstract\" id=\"abstract\" style=\"width:75em;\" rows=\"2\" />".pg_result($result1,0,"abstract")."</textarea> ");
+				echo ("<br>");
+				echo ("<label class=\"preField\">Extrait</label><textarea  name=\"abstract\" id=\"abstract\" cols=\"150\" rows=\"2\" />".sql_format_quote(pg_result($result1,0,"abstract"),'undo')."</textarea> ");
                 echo ("<br><br>");
                 metaform_sel_multi ("TAG","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag, this.form.tag_select);' ",$tag,"tag","");
 				metaform_sel_multi ("TAG Selectionné(s)","",5,"width: 120px;","OnDblClick='javascript: deplacer( this.form.tag_select, this.form.tag);'",$tag_select,"tag_select","");
 				echo ("<br><br>");
-                metaform_text ("Lien hypertexte","","","width:75em;","link",pg_result($result1,0,"link"));
-                metaform_text ("Lien hypertexte 2","","","width:75em;","link_2",pg_result($result1,0,"link_2"));
- 
-
+                metaform_text ("Lien hypertexte",null,150,null,"link",sql_format_quote(pg_result($result1,0,"link"),'undo_text'));
+                metaform_text ("Lien hypertexte 2",null,150,null,"link_2",sql_format_quote(pg_result($result1,0,"link_2"),'undo_text'));
 		echo ("</fieldset>");
 
 //------------------------------------------------------------------------------
@@ -270,14 +264,14 @@ if (pg_num_rows ($result1)) {
                 echo ("<div style=\"float:right;\">");
                     if ($mode == "edit") {
                         echo ("<button id=\"enregistrer2-edit-button\";>".$lang[$lang_select]['enregistrer']."</button> ");
-                        echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_lsi']."</button> ");
+                        echo ("<button id=\"retour2-button\">".$lang[$lang_select]['lsi']."</button> ");
                     } else {
                         echo ("<button id=\"retour4-button\">".$lang[$lang_select]['retour']."</button> ");
                     }
                 echo ("</div>");
                 echo ("</form>");
             
-		echo ("<div id=\"fiche_lsi\" >");
+		echo ("<div id=\"fiche\" >");
 		echo ("<fieldset><LEGEND>Ajouter un tag</LEGEND>");
 				echo ("<form method=\"POST\" id=\"form_add\" class=\"form_add\" name=\"edit\" action=\"\">");
 				echo ("<label class=\"preField\">ajout d'un tag</label><input type=\"text\" name=\"tag_plus\" id=\"tag_plus\" size=\"70\" />  ");

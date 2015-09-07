@@ -739,7 +739,7 @@ function sql_format_quote ($value,$do) {
 				$value = str_replace("'","\'",$value);
 				// echo "sans quote : $value ";
 				}
-			else if ($do == 'undo' OR $do == 'undo_hmtl')	{
+			else if ($do == 'undo' OR $do == 'undo_hmtl' OR $do == 'undo_table' OR $do == 'undo_text')	{
 				$value = str_replace("\'","'",$value);
 				// echo "avec quote : $value ";
 				}
@@ -754,12 +754,15 @@ function sql_format_quote ($value,$do) {
 				$value = str_replace('\"','"',$value);
 				// echo "avec quote : $value ";
 				}
+			else if ($do == 'undo_text')	{
+				$value = str_replace('\"','&quot;',$value);
+				}
 		}
 		if ($do == 'do')	{
 			$value = "'" . pg_escape_string ($value) . "'";
 			$value = str_replace ("<BR>","\n",$value);
 		}
-		else if ($do == 'undo_hmtl') {
+		else if ($do == 'undo_hmtl' OR $do == 'undo_table') {
 			$value = str_replace ("\n","<BR>",$value);
 			$value = str_replace (CHR(13).CHR(10),"<BR>",$value);
 		}
@@ -935,10 +938,13 @@ if ( isset( $_GET['iSortCol_0'] ) )                                             
 	}
 if ($sOrder=="ORDER BY ") $sOrder="";
 
-$sWhere = ""; 																  // FILTRE
+$sWhere = "";$sHaving = "";															  // FILTRE
 foreach ($colonne as $key => $val )                                       // columnFilter v2.1
 {
-    if ( $_GET['bSearchable_'.$val['pos']] == "true" && $_GET['sSearch_'.$val['pos']] != '' )
+	/*cas particulier*/
+	if ($val['nom_champ_synthese'] == 'libelle_tag' AND $_GET['sSearch_'.$val['pos']] != null)
+		$sHaving = "HAVING string_agg(libelle_tag,' / ') ::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
+    elseif ( $_GET['bSearchable_'.$val['pos']] == "true" && $_GET['sSearch_'.$val['pos']] != '' )
 	{
 	if (!empty($val['table_bd'])) $table = $val['table_bd']."."; else $table ="";
 		if (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'not_null') {
@@ -973,7 +979,7 @@ foreach ($colonne as $key => $val )                                       // col
     	}
 	}
 }
-$output = array('sLimit'=>$sLimit,'sOrder'=>$sOrder,'sWhere'=>$sWhere);
+$output = array('sLimit'=>$sLimit,'sOrder'=>$sOrder,'sWhere'=>$sWhere,'sHaving'=>$sHaving);
 return $output;
 }
 
