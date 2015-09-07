@@ -70,7 +70,7 @@ $iTotal = $aResultTotal;
 		/*cas général sans référentiel*/
 		/*---------------*/
 			else
-				$sOutput .= '"'.$row[$key].'",';
+				$sOutput .= '"'.sql_format_quote($row[$key],'undo_table').'",';
 			}
 		/*---------------*/
 		/*dernières colonnes*/

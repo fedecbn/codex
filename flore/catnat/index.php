@@ -226,11 +226,11 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_lr_1']."</LEGEND>");
 				echo ("<table border=0 width=\"100%\"><tr valign=top >");
 				echo ("<td style=\"width: 800px;\">");
-					metaform_text ("Nom scientifique"," bloque",100,"","nom_sci",pg_result($result,0,"nom_sci"));
-					metaform_text ("Nom vernaculaire"," bloque",100,"","nom_vern",pg_result($result,0,"nom_vern"));
+					metaform_text ("Nom scientifique"," bloque",100,"","nom_sci",sql_format_quote(pg_result($result,0,"nom_sci"),'undo_text'));
+					metaform_text ("Nom vernaculaire"," bloque",100,"","nom_vern",sql_format_quote(pg_result($result,0,"nom_vern"),'undo_text'));
 					metaform_bout ("Taxon hybride?"," bloque","","hybride",pg_result($result,0,"hybride"));
 				echo ("</td><td style=\"width:300px;\">");	
-					metaform_text ("Code REF."," bloque",8,"","cd_ref",pg_result($result,0,"cd_ref"));
+					metaform_text ("Code REF."," bloque",8,"","cd_ref",sql_format_quote(pg_result($result,0,"cd_ref"),'undo_text'));
 					metaform_sel ("Rang"," bloque","",$ref[$champ_ref['cd_rang']],"cd_rang",pg_result($result,0,"cd_rang"));
 				echo ("</td><td>");	
 					if ($niveau >= 128)
@@ -257,17 +257,17 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				echo ("<td style=\" text-align: center;	vertical-align: center;\">$lib_stt</td>");
 				/*Statut national*/
 				echo ("<td>");
-				if ($type_stt == 'RAR') {metaform_text (""," no_lab $desc","","width:5.5em;",$type_stt,$res_stt_fr[$type_stt]);}
+				if ($type_stt == 'RAR') {metaform_text (""," no_lab $desc","","width:5.5em;",$type_stt,sql_format_quote($res_stt_fr[$type_stt],'undo_text'));}
 				else {metaform_sel (""," no_lab $desc","width:5em;",$liste_statut[$type_stt],$type_stt,$res_stt_fr[$type_stt]);}
 				echo ("</td>");
 				/*Statut ,ational Calculé*/
 				echo ("<td>");
-				if ($type_stt == 'RAR' OR $type_stt == 'INDI') {metaform_text (""," no_lab bloque","","width:5.5em;",$type_stt,$res_stt_fr_cal[$type_stt]);}
+				if ($type_stt == 'RAR' OR $type_stt == 'INDI') {metaform_text (""," no_lab bloque","","width:5.5em;",$type_stt,sql_format_quote($res_stt_fr_cal[$type_stt],'undo_text'));}
 				else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt,$res_stt_fr_cal[$type_stt]);}
 				echo ("</td>");
 				/*Statut national expert déterminé dans la rubrique Liste rouge*/
 				echo ("<td>");
-				if ($type_stt == 'INDI' OR $type_stt == 'PRES' OR $type_stt == 'RAR') {metaform_text (""," no_lab bloque","","width:5.5em;",$type_stt,$res_stt_fr_lr[$type_stt]);}
+				if ($type_stt == 'INDI' OR $type_stt == 'PRES' OR $type_stt == 'RAR') {metaform_text (""," no_lab bloque","","width:5.5em;",$type_stt,sql_format_quote($res_stt_fr_lr[$type_stt],'undo_text'));}
 				else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt,$res_stt_fr_lr[$type_stt]);}
 				echo ("</td>");
 				echo("</tr>");
@@ -295,7 +295,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						echo ("</td>");
 					} else {
 						echo ("<td>");
-						if ($type_stt == 'RAR') {metaform_text ("Rar"," no_lab bloque","","width:5.5em;","rar",$res_stt[$type_stt][$id_reg]);}
+						if ($type_stt == 'RAR') {metaform_text ("Rar"," no_lab bloque","","width:5.5em;","rar",sql_format_quote($res_stt[$type_stt][$id_reg],'undo_text'));}
 						else {metaform_sel (""," no_lab bloque","width:5em;",$liste_statut[$type_stt],$type_stt."_".$id_reg,$res_stt[$type_stt][$id_reg]);}
 						echo ("</td>");
 						}
