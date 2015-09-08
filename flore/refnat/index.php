@@ -205,7 +205,7 @@ echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 				{
 					echo ("<td style=\"text-align: center;\">");
 					$field_inteface = $field;
-					metaform_text ($field," no_lab",""," width:".$length."em;",$field_inteface,$val);
+					metaform_text ($field," no_lab",""," width:".$length."em;",$field_inteface,sql_format_quote($val,'undo_text'));
 					echo ("</td>");
 				}
 				$row_plus = $entete;
@@ -349,7 +349,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						{
 						$field_inteface = $field;
 						echo ("<input type=\"hidden\" id=\"version\" value=\"vRéseauCBN\" />");
-						if ($field_inteface == 'version') {echo $val;} else {metaform_text ($field," no_lab $desc","","width:".$length."em; ",$field_inteface,$val);}
+						if ($field_inteface == 'version') {echo $val;} else {metaform_text ($field," no_lab $desc","","width:".$length."em; ",$field_inteface,sql_format_quote($val,'undo_text'));}
 						} else {
 						$field_inteface = $field."_taxref";
 						echo $val;
@@ -373,7 +373,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						{
 						$field_inteface = $field;
 						echo ("<input type=\"hidden\" id=\"version\" value=\"vRéseauCBN\" />");
-						if ($field_inteface == 'version') {echo $row[$field];} else {metaform_text ($field," no_lab $desc","","width:".$length."em;$diff ",$field_inteface,$row[$field]);}
+						if ($field_inteface == 'version') {echo $row[$field];} else {metaform_text ($field," no_lab $desc","","width:".$length."em;$diff ",$field_inteface,sql_format_quote($row[$field],'undo_text'));}
 						} else {
 						$field_inteface = $field."_taxref";
 						echo $row[$field];
