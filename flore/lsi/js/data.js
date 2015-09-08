@@ -83,7 +83,7 @@
                 { "sClass": "sujet", "sWidth": "120px" },                                        // sujet
                 { "sWidth": "300px" },                                        // title
                 { "sWidth": "500px" },                                        // Extrait
-                { "sWidth": "120px" },                                        // tag
+                { "sWidth": "120px" ,"bSortable": false},                                        // tag
 				{  
 				"mRender": function ( data, display, full, meta ) {return '<a target="_blank" href="'+data+'">'+data.substr(0,30)+'...</a>';},
 				"sWidth": "10px"
@@ -108,7 +108,8 @@
                 { type: "text" },                                               //  
                 { type: "text" }                                              //
 			]
-		});   
+		}); 
+	oTable.fnSort( [ [7,'desc'] ] );		
 	} else {
 		oTable.fnClearTable (false);
 		oTable.fnDraw ();
