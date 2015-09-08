@@ -69,7 +69,7 @@ $iTotal = $aResultTotal;
 			if 	($key == 'gbif_url')	
 				if (!empty($row['gbif_url'])) {$sOutput .= '"<a href=\"'.$row['gbif_url'].'\" id=\"gbif\"  target=\"_blank\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"lien gbif\" ></a>",';} else {$sOutput .= '"",';}
 			else if ($key == 'eval_expert')
-				if ($row['eval_expert'] != '') {$sOutput .= '"<a class=lr-view id=\"'.$row['eval_expert'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.$row['eval_expert'].'\" ></a>",';} else {$sOutput .= '"",';}
+				if ($row['eval_expert'] != '') {$sOutput .= '"<a class=lr-view id=\"'.sql_format_quote($row['eval_expert'],'undo_table').'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['eval_expert'],'undo_table').'\" ></a>",';} else {$sOutput .= '"",';}
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
@@ -79,7 +79,7 @@ $iTotal = $aResultTotal;
 		/*cas général sans référentiel*/
 		/*---------------*/
 			else
-				$sOutput .= '"'.$row[$key].'",';
+				$sOutput .= '"'.sql_format_quote($row[$key],'undo_table').'",';
 			}
 		/*---------------*/
 		/*dernières colonnes*/
