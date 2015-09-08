@@ -187,39 +187,30 @@
        "aaSorting": [[2,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [
-                null,                                                           // Etape
-                null,                                                           // famille
-            	{ "sWidth": "50px" },                                           // CD_REF
-            	{ "sWidth": "500px", "sClass": "nom_taxon" },                     // Nom scientifique 
-                null,                                                           // Rang
-                // null,                                                           // Nom vern.
-                { "sWidth": "40px" },                                                       
-                { "sWidth": "40px" },                                                            
-                null,                                                           // AOO4
-                null,                                                           // AOO precis+plage
-                null,                                                           // Nb loc.
-                null,                                                           // Nb mailles
-//                null,
-//                null,
-//                null,
-        		{ "sClass": "uicn","sWidth": "30px" },                          // cat_A
-                // null, 
-        		{ "sClass": "uicn","sWidth": "30px" },                          // cat_B
-                // null,
-        		{ "sClass": "uicn","sWidth": "30px" },                          // cat_C
-                // null,
-        		{ "sClass": "uicn","sWidth": "30px" },                          // cat_D
-                // null,
-                // null,
-        		{ "sClass": "uicn","sWidth": "30px" },                          // cat_fin
-                null,
-        		{ "sClass": "uicn","sWidth": "30px" },                          // cat_EU
-        		{ "sClass": "uicn","sWidth": "30px" },                          // cat_synt_reg
-        		null,                         									// nb_reg_eval
-        		null,                         									// notes
-    			{ "sClass": "valid" },                                           // UID
-    			{ "sClass": "center","sWidth": "50px","bSortable": false },     // Actions
-        		{ "sClass": "center","sWidth": "20px","bSortable": false }      // Sélect.
+                { "sWidth": "5%" },                                                           // Etape
+                { "sWidth": "9%" },                                                           // famille
+            	{ "sWidth": "4%" },                                           // CD_REF
+            	{ "sWidth": "15%", "sClass": "nom_taxon" },                     // Nom scientifique 
+                { "sWidth": "5%" },                                                           // Rang
+                { "sWidth": "4%" },                                                       
+                { "sWidth": "2%" },                                                            
+                { "sWidth": "3%" },                                                           // AOO4
+                { "sWidth": "3%" },                                                           // AOO precis+plage
+                { "sWidth": "3%" },                                                           // Nb loc.
+                { "sWidth": "3%" },                                                           // Nb mailles
+        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_A
+        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_B
+        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_C
+        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_D
+        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_fin
+                { "sWidth": "4%" },
+        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_EU
+        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_synt_reg
+        		{ "sWidth": "2%" },                         									// nb_reg_eval
+        		{ "sWidth": "2%" },                         									// notes
+    			{ "sClass": "valid", "sWidth": "5%"  },                                           // UID
+    			{ "sClass": "center","sWidth": "3%","bSortable": false },     // Actions
+        		{ "sClass": "center","sWidth": "3%","bSortable": false }      // Sélect.
         ]
         }).columnFilter({
             sPlaceHolder: "head:after",

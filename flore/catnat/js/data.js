@@ -29,31 +29,16 @@ if (typeof oTable == 'undefined') {
 				return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 				}, 
 			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			switch (aData[2])                                                  // Cat A
-				{
-					default : 
-						$('td:eq(2)', nRow).addClass('nom_taxon');
-					break;
+			switch (aData[2]){default :$('td:eq(2)', nRow).addClass('nom_taxon');break;}
+			switch (aData[5]){
+				case "oui" : $('td:eq(5)', nRow).addClass('hyb_oui');break;
+				case "non" : $('td:eq(5)', nRow).addClass('hyb_non');break;
 				}
-				switch (aData[5])                                                  // Cat A
-				{
-					case "oui" : 
-						$('td:eq(5)', nRow).addClass('hyb_oui');
-					break;
-					case "non" : 
-						$('td:eq(5)', nRow).addClass('hyb_non');
-					break;
+			switch (aData[10]){
+				case "oui" :$('td:eq(10)', nRow).addClass('end_oui');break;
+				case "non" :$('td:eq(10)', nRow).addClass('end_non');break;
 				}
-				switch (aData[10])                                                  // Cat A
-				{
-					case "oui" : 
-						$('td:eq(10)', nRow).addClass('end_oui');
-					break;
-					case "non" : 
-						$('td:eq(10)', nRow).addClass('end_non');
-					break;
-				}
-	},
+			},
 			"oLanguage": { "sProcessing":   "Traitement en cours...",
 				"sLengthMenu":   "Afficher _MENU_ taxons",
 				"sZeroRecords":  "Aucun taxon à afficher",
@@ -73,19 +58,18 @@ if (typeof oTable == 'undefined') {
 		   // "aaSorting": [[3,'asc']],                                               // Nom scientifique 
 			"sDom": '<"top"fl>rt<"bottom"ip>',
 				"aoColumns": [                                                        // 
-					null,                                                           // 
-					null,                                          					//   
-					{ "sWidth": "300px" },                                          // 
-					null,                                          					//   
-					null,                                                           //  .
-					null,                                                       
-					null,                                                           
-					null,                                                           // 
-					// null,                                                           // 
-					null,                                                           // 
-					null,                                                           // 
-					{ "sClass": "center","sWidth": "50px","bSortable": false },     // 
-					{ "sClass": "center","sWidth": "20px","bSortable": false }      // .
+					{ "sWidth": "7%" },
+					{ "sWidth": "10%" },
+					{ "sWidth": "25%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "10%" },
+					{ "sWidth": "4%" },
+					{ "sWidth": "10%" },
+					{ "sWidth": "10%" },
+					{ "sWidth": "10%" },
+					{ "sWidth": "4%" },
+					{ "sClass": "center","sWidth": "3%","bSortable": false },     // 
+					{ "sClass": "center","sWidth": "3%","bSortable": false }      // .
 			]
 			}).columnFilter({
 				sPlaceHolder: "head:after",

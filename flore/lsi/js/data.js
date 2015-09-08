@@ -1,5 +1,5 @@
 //*******************************************************************************/
-//   module_gestion/js/gestion.js                                               //
+//   data.js                                              						 //
 //                                                                              //
 //  Application WEB 'EVAL'                                                      //
 //  Outil d’aide à l’évaluation de la flore                                     //
@@ -35,6 +35,7 @@
     	"bServerSide": true,
     	"sAjaxSource": "liste.php",
         "bStateSave": true,
+		// "sScrollX": "100%",
 		"fnStateSave": function (oSettings, oData) {
             localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
 			},
@@ -42,24 +43,14 @@
             return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 			}, 
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            switch (aData[1])                                                  // Cat A
-            {
-                case "Les actus du réseau" : 
-                    $('td:eq(1)', nRow).addClass('SUJET_1');
-                break;
-                case "Des technologies, logiciels et matériels" : 
-                    $('td:eq(1)', nRow).addClass('SUJET_2');
-                break;
-                case "Des coups de pouce" : 
-                    $('td:eq(1)', nRow).addClass('SUJET_3');
-                break;
-                case "Des données et des cartes" : 
-                    $('td:eq(1)', nRow).addClass('SUJET_4');
-                break;
-                case "Des évènements et formations" : 
-                    $('td:eq(1)', nRow).addClass('SUJET_5');
-                break;
-            }return nRow;
+            switch (aData[1])
+				{
+                case "Les actus du réseau" : $('td:eq(1)', nRow).addClass('SUJET_1'); break;
+                case "Des technologies, logiciels et matériels" : $('td:eq(1)', nRow).addClass('SUJET_2');break;
+                case "Des coups de pouce" : $('td:eq(1)', nRow).addClass('SUJET_3'); break;
+                case "Des données et des cartes" : $('td:eq(1)', nRow).addClass('SUJET_4'); break;
+                case "Des évènements et formations" : $('td:eq(1)', nRow).addClass('SUJET_5');  break;
+				}return nRow;
 			},
 			"oLanguage": { "sProcessing":   "Traitement en cours...",
             "sLengthMenu":   "Afficher _MENU_ taxons",
@@ -79,22 +70,22 @@
 			}, 
 			"sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [
-                { "sWidth": "50px" },                                         // id
-                { "sClass": "sujet", "sWidth": "120px" },                                        // sujet
-                { "sWidth": "300px" },                                        // title
-                { "sWidth": "500px" },                                        // Extrait
-                { "sWidth": "120px" ,"bSortable": false},                                        // tag
+                { "sWidth": "3%" },                                        					 // id
+                { "sClass": "sujet", "sWidth": "10%" },                                        // sujet
+                { "sWidth": "10%" },                                        					// title
+                { "sWidth": "30%" },                                       					 // Extrait
+                { "sWidth": "7%" ,"bSortable": false},                                        // tag
 				{  
 				"mRender": function ( data, display, full, meta ) {return '<a target="_blank" href="'+data+'">'+data.substr(0,30)+'...</a>';},
-				"sWidth": "10px"
+				"sWidth": "10%"
 				},                                        				// link
 				{  
 				"mRender": function ( data, display, full, meta ) {return '<a target="_blank" href="'+data+'">'+data.substr(0,30)+'...</a>';},
-				"sWidth": "10px"
+				"sWidth": "10%"
 				},                                        				// link_2
-                { "sWidth": "100px" },                                        // date
-    			{ "sClass": "center","sWidth": "50px","bSortable": false },     // Actions
-        		{ "sClass": "center","sWidth": "20px","bSortable": false }      // Sélect.
+                { "sWidth": "10%" },                                        // date
+    			{ "sClass": "center","sWidth": "3%","bSortable": false },     // Actions
+        		{ "sClass": "center","sWidth": "3%","bSortable": false }      // Sélect.
         ]
         }).columnFilter({
             sPlaceHolder: "head:after",

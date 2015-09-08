@@ -329,13 +329,16 @@ $langliste['fr']['refnat-popup'][]="modif";
 
 //------------------------------------------------------------------------------ Module admin / textes
 $langliste['fr']['admin-text-liste'][]="Code";
-$langliste['fr']['admin-text-liste-popup'][]="popup 1";
+$langliste['fr']['admin-text-liste-popup'][]="Code";
 
-$langliste['fr']['admin-text-liste'][]="Titre de la zone de texte";
-$langliste['fr']['admin-text-liste-popup'][]="popup 2";
+$langliste['fr']['admin-text-liste'][]="Titre";
+$langliste['fr']['admin-text-liste-popup'][]="Titre de la zone de texte";
+
+$langliste['fr']['admin-text-liste'][]="Extrait";
+$langliste['fr']['admin-text-liste-popup'][]="Extrait de la zone de texte";
 
 $langliste['fr']['admin-text-liste'][]="Langue";
-$langliste['fr']['admin-text-liste-popup'][]="popup 3";
+$langliste['fr']['admin-text-liste-popup'][]="Langue";
 
 //------------------------------------------------------------------------------ Module admin / Users
 $langliste['fr']['admin-user-liste'][]="Code";

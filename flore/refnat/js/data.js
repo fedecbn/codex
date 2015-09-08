@@ -78,23 +78,23 @@
        // "aaSorting": [[3,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [                                                        // 
-                null,                                                           // 
-                null,                                                           // 
-            	{ "sWidth": "300px" },                                          // 
-            	null,                                          					//   
-                null,                                                           //                                                             //  
-                null,                                                           //  
-                null,                                                           //  
-                null,                                                           //  
-                null,                                                           //  
-                null,                                                           //  
-                null,                                                           //  
-                null,                                                           //  
-                null,                                                           //  
-                null,                                                           //  
-                null,
-    			{ "sClass": "center","sWidth": "50px","bSortable": false },     // 
-        		{ "sClass": "center","sWidth": "20px","bSortable": false }      // .
+            	{ "sWidth": "7%" },
+            	{ "sWidth": "7%" },
+            	{ "sWidth": "25%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "13%" },
+            	{ "sWidth": "12%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+            	{ "sWidth": "3%" },
+    			{ "sClass": "center","sWidth": "3%","bSortable": false },     // 
+        		{ "sClass": "center","sWidth": "3%","bSortable": false }      // .
         ]
         }).columnFilter({
             sPlaceHolder: "head:after",
@@ -175,7 +175,7 @@
                 "sLast":     "Dernier"
             }
         }, 
-		"aaSorting": [[2,'asc']],                                               // Nom scientifique 
+		// "aaSorting": [[2,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [
                 null,                                                           
@@ -196,7 +196,7 @@
                 { type: "text" }                                               //  
 			]
 		});		
-
+		oTable.fnSort( [ [2,'desc'] ] );		
 		} else {
 		oTable.fnClearTable (false);
 		oTable.fnDraw ();

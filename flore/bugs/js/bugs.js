@@ -110,16 +110,16 @@ $(document).ready(function(){
             }, 
             "aaSorting": [[0,'DESC']],                                          // id_bug
     		"aoColumns": [
-    			{ "sWidth": "30px" },                                           // id_bug
-    			{ "sClass": "center","sWidth": "70px","bSortable": true },      // Type
-    			{ "sClass": "center","sWidth": "90px","bSortable": true },      // Date
-    			null,                                                           // Auteur 
-    			null,                                                           // Rubrique 
-    			{ "sWidth": "400px" },                                          // Descr.
-    			{ "sClass": "center","sWidth": "70px","bSortable": true },      // Statut TXT
-        		null,                                                           // Comment
+    			{ "sWidth": "3%" },                                           // id_bug
+    			{ "sClass": "center","sWidth": "5%","bSortable": true },      // Type
+    			{ "sClass": "center","sWidth": "8%","bSortable": true },      // Date
+    			{ "sWidth": "8%" },                                                           // Auteur 
+    			{ "sWidth": "8%" },                                                           // Rubrique 
+    			{ "sWidth": "28%" },                                          // Descr.
+    			{ "sClass": "center","sWidth": "8%","bSortable": true },      // Statut TXT
+        		{ "sWidth": "28%" },                                                           // Comment
     			{ "bVisible": false },                                          // Statut
-    			{ "sClass": "center","sWidth": "60px","bSortable": false }      // Actions
+    			{ "sClass": "center","sWidth": "9%","bSortable": false }      // Actions
         ]
         }).columnFilter({
             sPlaceHolder: "head:after",
@@ -207,22 +207,22 @@ $(document).ready(function(){
             }, 
             "aaSorting": [[0,'DESC']],                                          // id_bug
     		"aoColumns": [
-    			{ "sWidth": "30px" },                                           // id_bug
-    			{ "sClass": "center","sWidth": "70px","bSortable": true },      // Type
-    			{ "sClass": "center","sWidth": "90px","bSortable": true },      // Date
-    			null,                                                           // Auteur 
-    			null,                                                           // Rubrique 
-    			{ "sWidth": "400px" },                                          // Descr.
-    			{ "sClass": "center","sWidth": "70px","bSortable": true },      // Statut TXT
-        		null,                                                           // Comment
+    			{ "sWidth": "3%" },                                           // id_bug
+    			{ "sClass": "center","sWidth": "5%","bSortable": true },      // Type
+    			{ "sClass": "center","sWidth": "8%","bSortable": true },      // Date
+    			{ "sWidth": "8%" },                                           // Auteur 
+    			{ "sWidth": "8%" },                                           // Rubrique 
+    			{ "sWidth": "29%" },                                          // Descr.
+    			{ "sClass": "center","sWidth": "5%","bSortable": true },      // Statut TXT
+        		{ "sWidth": "29%" },                                          // Comment
     			{ "bVisible": false },                                          // Statut
-    			{ "sClass": "center","sWidth": "60px","bSortable": false }      // Actions
+    			{ "sClass": "center","sWidth": "5%","bSortable": false }      // Actions
         ]
         }).columnFilter({
             sPlaceHolder: "head:after",
             aoColumns: [ 
                 { type: "text" },                                               // id_bug
-                { type: "select", values: [{ value:'1',label:'Bug'},{ value:'2',label:'Remarque'},{ value:'3',label:'Demande'}]},// Type
+                { sWidth: "70px", type: "select", values: [{ value:'1',label:'Bug'},{ value:'2',label:'Remarque'},{ value:'3',label:'Demande'}]},// Type
                 null,                                                           // Date
                 null,                                                           // Auteur
                 null,                                                           // Rubrique

@@ -205,10 +205,11 @@ $(document).ready(function(){
             "aaSorting": [[0,'asc']],
             "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [
-        		{ "sWidth": "100px"},                                           // Code
-    			null,
-        		{ "sClass": "center","sWidth": "30px" },                        // Langue
-        		{ "sClass": "center","sWidth": "50px","bSortable": false }      // Actions
+        		{ "sWidth": "5%"},                                           // Code
+    			{ "sWidth": "10%"},
+    			{ "sWidth": "75%"},
+        		{ "sClass": "center","sWidth": "5%" },                        // Langue
+        		{ "sClass": "center","sWidth": "5%","bSortable": false }      // Actions
     		]
     	});
 	} else {
@@ -245,7 +246,21 @@ $(document).ready(function(){
 			"fnStateLoad": function (oSettings) {
 				return JSON.parse( localStorage.getItem('user_'+window.location.pathname) );
 				}, 
-            "oLanguage": { "sProcessing":   "Traitement en cours...",
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			switch (aData[5]){
+			case 'Pas d\'accès' :$('td:eq(5)', nRow).addClass('avancement_1');break;
+			case 'Lecteur' : $('td:eq(5)', nRow).addClass('avancement_2'); break;
+			case 'Participant' : $('td:eq(5)', nRow).addClass('avancement_3');break;
+			case 'Evaluateur' : $('td:eq(5)', nRow).addClass('avancement_4');break;
+			case 'Référent' : $('td:eq(5)', nRow).addClass('avancement_5');break;
+			}
+			switch (aData[6]){case 'Pas d\'accès' :$('td:eq(6)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(6)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(6)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(6)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(6)', nRow).addClass('avancement_5');break;}
+			switch (aData[7]){case 'Pas d\'accès' :$('td:eq(7)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(7)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(7)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(7)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(7)', nRow).addClass('avancement_5');break;}
+			switch (aData[8]){case 'Pas d\'accès' :$('td:eq(8)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(8)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(8)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(8)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(8)', nRow).addClass('avancement_5');break;}
+			switch (aData[9]){case 'Pas d\'accès' :$('td:eq(9)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(9)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(9)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(9)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(9)', nRow).addClass('avancement_5');break;}
+			return nRow;
+			},
+			"oLanguage": { "sProcessing":   "Traitement en cours...",
                 "sLengthMenu":   "Afficher _MENU_ éléments",
                 "sZeroRecords":  "Aucun élément à afficher",
                 "sInfo": "Affichage de l'élement _START_ à _END_ sur _TOTAL_ éléments",
@@ -260,21 +275,22 @@ $(document).ready(function(){
                     "sNext":     "Suivant",
                     "sLast":     "Dernier"
                 }
-            }, 
+            },
+	
             "aaSorting": [[1,'asc']],
             "sDom": '<"top"fl>rt<"bottom"ip>',
         	"aoColumns": [
-        		{ "sWidth": "70px"},                                            // Code
-        		null,
-        		null,
-        		null,
-        		null,
-        		null,
-        		null,
-        		null,
-        		{ "sWidth": "70px"},                                            // Login
-        		{ "sWidth": "70px"},                                            // Niveau
-        		{ "sClass": "center","sWidth": "70px","bSortable": false }      // Actions
+        		{ "sWidth": "5%"},                                            // Code
+        		{ "sWidth": "15%"},
+        		{ "sWidth": "15%"},
+        		{ "sWidth": "15%"},
+        		{ "sWidth": "15%"},
+        		{ "sWidth": "6%"},
+        		{ "sWidth": "6%"},
+        		{ "sWidth": "6%"},
+        		{ "sWidth": "6%"},                                            // Login
+        		{ "sWidth": "6%"},                                            // Niveau
+        		{ "sClass": "center","sWidth": "5%","bSortable": false }      // Actions
             ]
             }).columnFilter({
                 sPlaceHolder: "head:after",
@@ -284,11 +300,11 @@ $(document).ready(function(){
                     { type: "text" },                                           // Prénom
                     { type: "text" },                                           // CBN
                     { type: "text" },                                           // Login
-                    { type: "text" },                                           // Login
-                    { type: "text" },                                           // Login
-                    { type: "text" },                                           // Login
-                    { type: "text" },                                            // Niveau
-                    { type: "text" }                                            // Niveau
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
     			]
     		});      
 	} else {

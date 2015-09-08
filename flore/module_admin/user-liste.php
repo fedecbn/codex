@@ -53,7 +53,7 @@ if ( $_GET['sSearch'] != "" )
 		                "u.nom LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
 		                "c.lib_cbn LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
 		                "u.login LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.niveau_lr LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                "u.niveau_lr = ".$_GET['sSearch']." OR ".
 		                "u.niveau_eee LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
 		                "u.niveau_catnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
 		                "u.niveau_refnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
@@ -63,6 +63,9 @@ For ( $i=0 ; $i<count($aColumns) ; $i++ )                                       
 {
 	if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
 	{
+	if ($i == 5 or $i == 6 or $i == 7 or $i == 8 or $i == 9)
+		$sWhere .= " AND ".$aColumns[$i]." = ".pg_escape_string($_GET['sSearch_'.$i])." ";
+	else
     	$sWhere .= " AND ".$aColumns[$i]." LIKE '%".pg_escape_string($_GET['sSearch_'.$i])."%' ";
 	}
 }

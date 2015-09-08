@@ -29,62 +29,23 @@
             return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 			}, 
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-            if (aData[6] > 0 && aData[6]<=5)                                                  // Risque intro
-				{
-                $('td:eq(6)', nRow).addClass('eval_FAIBLE');
-				}
-			else if (aData[6]> 5)                                                  
-				{
-                $('td:eq(6)', nRow).addClass('eval_FORT');
-				}
-            
-            if (aData[7] > 0 && aData[7]<=7)                                                  // Risque propagation
-				{
-                $('td:eq(7)', nRow).addClass('eval_FAIBLE');
-				}
-			else if (aData[7]> 7)                                                  
-				{
-                $('td:eq(7)', nRow).addClass('eval_FORT');
-				}
+            if (aData[6] > 0 && aData[6]<=5)  {$('td:eq(6)', nRow).addClass('eval_FAIBLE');}
+			else if (aData[6]> 5) {$('td:eq(6)', nRow).addClass('eval_FORT');}
+            // Risque propagation
+            if (aData[7] > 0 && aData[7]<=7)  {$('td:eq(7)', nRow).addClass('eval_FAIBLE');}
+			else if (aData[7]> 7){$('td:eq(7)', nRow).addClass('eval_FORT');}
 				
-            if (aData[8] > 0 && aData[8]<=6)                                                  // Risque d'impact
-				{
-                $('td:eq(8)', nRow).addClass('eval_FAIBLE');
-				}
-			else if (aData[8]> 7)                                                  
-				{
-                $('td:eq(8)', nRow).addClass('eval_FORT');
-				}
+            if (aData[8] > 0 && aData[8]<=6){$('td:eq(8)', nRow).addClass('eval_FAIBLE');}
+			else if (aData[8]> 7) {$('td:eq(8)', nRow).addClass('eval_FORT');}
+			// Score de Weber	
+            if (aData[9] > 0 && aData[9]<=20) {$('td:eq(9)', nRow).addClass('eval_FAIBLE');}
+            else if (aData[9] > 20 && aData[9]<=27) { $('td:eq(9)', nRow).addClass('eval_INTER');}
+			else if (aData[9]> 27){$('td:eq(9)', nRow).addClass('eval_FORT');}
 				
-            if (aData[9] > 0 && aData[9]<=20)                                                  // Score de Weber
-				{
-                $('td:eq(9)', nRow).addClass('eval_FAIBLE');
-				}
-            else if (aData[9] > 20 && aData[9]<=27)                                                  // Score de Weber
-				{
-                $('td:eq(9)', nRow).addClass('eval_INTER');
-				}
-			else if (aData[9]> 27)                                                  
-				{
-                $('td:eq(9)', nRow).addClass('eval_FORT');
-				}
-				
-            if (aData[10] == 'FAIBLE')                                                  // Score de Weber
-				{
-                $('td:eq(10)', nRow).addClass('eval_FAIBLE');
-				}
-            else if (aData[10] == 'INTERMEDIAIRE')                                                  // Score de Weber
-				{
-                $('td:eq(10)', nRow).addClass('eval_INTER');
-				}
-			else if (aData[10] == 'FORT')                                                  
-				{
-                $('td:eq(10)', nRow).addClass('eval_FORT');
-				}
-			else if (aData[10] == 'Insuffisamment documenté')                                                  
-				{
-                $('td:eq(10)', nRow).addClass('eval_NE');
-				}
+            if (aData[10] == 'FAIBLE'){$('td:eq(10)', nRow).addClass('eval_FAIBLE');}
+            else if (aData[10] == 'INTERMEDIAIRE') {$('td:eq(10)', nRow).addClass('eval_INTER');}
+			else if (aData[10] == 'FORT') {$('td:eq(10)', nRow).addClass('eval_FORT');}
+			else if (aData[10] == 'Insuffisamment documenté'){$('td:eq(10)', nRow).addClass('eval_NE');}
 				
             return nRow;
         },
@@ -106,26 +67,26 @@
         }, 
        // "aaSorting": [[3,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"fl>rt<"bottom"ip>',
-            "aoColumns": [                                                        // 
-                null,                                                           // 
-            	{ "sWidth": "300px" },                                          // 
-            	null,                                          					//   
-            	null,                                          					//   
-                null,                                                           //  .
-                null,                                                       
-                null,                                                           
-                null,                                                           // 
-                null,                                                           // 
-                { "sClass": "eval" }, 	                        									// 
-				{ "sClass": "eval" }, 				// 
-    			null,                                           // 
-                null,                                                           // 
-                null,                                                           // 
-                null,                                                           // 
-    			null,                                           // 
-        		{ "sClass": "center","sWidth": "50px","bSortable": false },     // 
-    			{ "sClass": "center","sWidth": "50px","bSortable": false },     // 
-        		{ "sClass": "center","sWidth": "20px","bSortable": false }      // .
+            "aoColumns": [                                                        
+                { "sWidth": "6%" },
+            	{ "sWidth": "20%" },
+            	{ "sWidth": "5%" },
+            	{ "sWidth": "4%" },
+                { "sWidth": "4%" },
+                { "sWidth": "4%" },
+                { "sWidth": "4%" },
+                { "sWidth": "4%" },
+                { "sWidth": "4%" },
+                { "sClass": "eval","sWidth": "6%"},
+				{ "sClass": "eval","sWidth": "8%" },
+    			{ "sWidth": "6%" },
+                { "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "3%" },
+    			{ "sWidth": "3%" },
+        		{ "sClass": "center","sWidth": "3%","bSortable": false },
+    			{ "sClass": "center","sWidth": "3%","bSortable": false },
+        		{ "sClass": "center","sWidth": "3%","bSortable": false }
         ]
         }).columnFilter({
             sPlaceHolder: "head:after",

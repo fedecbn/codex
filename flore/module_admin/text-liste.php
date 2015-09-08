@@ -71,8 +71,9 @@ $iTotal = $aResultTotal;
     while ($row=pg_fetch_array ($rResult,NULL,PGSQL_ASSOC)) 
 	{
 		$sOutput .= "[";
-		$sOutput .= '"'.str_replace('"', '\"', $row['id_module']).'",';
+		$sOutput .= '"'.str_replace('"', '\"', $row['id_pres']).'",';
 		$sOutput .= '"'.str_replace('"', '\"', $row['titre']).'",';
+		$sOutput .= '"'.str_replace('"', '\"', $row['pres']).'",';
 		$sOutput .= '"<img src=\"../../_GRAPH/'.$lang_ico[$row['lang']].'\" >",';
         $sOutput .= '"<a class=admin-text-edit id=\"'.$row['id_pres'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
 		$sOutput .= "],";

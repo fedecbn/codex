@@ -276,6 +276,8 @@ table tr.odd,
 table tr.even th,
 table tr.even {
     text-align:left;
+	width: 100%;
+	box-sizing: border-box;
 }
 
 
@@ -338,6 +340,10 @@ td.list {
     background:#D5E9ED;
 }
 
+select.search_init {
+	width: 100%;
+	box-sizing: border-box;
+}
 /* --------------------------------------------------*/
 /* Fiches taxons                                     */
 /*---------------------------------------------------*/
@@ -949,6 +955,16 @@ Option.D,  select.D {
 .avancement_3 {
     color:white; 
     background-color:#6DC05E;
+}
+
+.avancement_4 {
+    color:white; 
+    background-color:#30871F;
+}
+
+.avancement_5 {
+    color:white; 
+    background-color:#D150D3;
 }
 
 .hyb_oui {
