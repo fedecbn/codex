@@ -101,6 +101,8 @@ table.display {
 	margin: 0 auto;
 	clear: both;
 	width: 100%;
+	table-layout:fixed;
+    min-width:1000px;
 	
 	/* Note Firefox 3.5 and before have a bug with border-collapse
 	 * ( https://bugzilla.mozilla.org/show%5Fbug.cgi?id=155955 ) 
@@ -121,8 +123,11 @@ table.display thead th {
     font:13px arial,sans-serif;    
 	border-bottom: 1px solid black;
 	font-weight: bold;
+	overflow:hidden;
+    text-overflow: ellipsis;
 	cursor: pointer;
 	* cursor: hand;
+	
 }
 
 table.display tfoot th {
@@ -130,6 +135,8 @@ table.display tfoot th {
     font:13px arial,sans-serif;    
 	border-bottom: 1px solid black;
 	font-weight: bold;
+	overflow:hidden;
+    text-overflow: ellipsis;
 	cursor: pointer;
 	* cursor: hand;
 }
@@ -147,6 +154,8 @@ table.display tr.heading2 td {
 table.display td {
 	padding: 0px 5px;
 	border: 1px dotted #818181;
+	overflow:hidden;
+    text-overflow: ellipsis;
 }
 
 table.display td.center {

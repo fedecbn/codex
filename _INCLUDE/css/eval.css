@@ -137,7 +137,7 @@ h5 {
 .page_consult{
 
 /*    width:1200px;  */
-    min-width:1500px; 
+    min-width:1000px;
 
     height:auto;
     min-height:500px;
@@ -150,7 +150,7 @@ h5 {
 }
 
 .page_liste{
-    min-width:1000px; 
+    min-width:1000px;
     height:auto;
 	margin-top: 2px;
     background-color:#fff;
@@ -158,8 +158,8 @@ h5 {
 }
 
 .page_fiche{
-    width:1000px;
-    min-width:1200px; 
+    width:500px;
+    min-width:1000px;
     height:auto;
     background-color:#fff;
 	padding: 10px;
@@ -255,7 +255,6 @@ div#bloc_img2 {
 /* --------------------------------------------------*/
 /* Tableaux de données v3                            */
 /* --------------------------------------------------*/
-
 table,td.data{
     border-collapse:collapse;
     padding:0.2em;
@@ -556,7 +555,7 @@ fieldset.meta {
 
 #init_page {
     width:1200px;
-    min-width:1200px;
+    min-width:500px;
     height:auto;
     min-height:1000px;
     border:0px;
