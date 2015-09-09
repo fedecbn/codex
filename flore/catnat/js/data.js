@@ -109,26 +109,9 @@ if (typeof oTable == 'undefined') {
             return JSON.parse( localStorage.getItem('user_'+window.location.pathname) );
 			}, 
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			// switch (aData[4])                                                  // Cat EU
-            // {	
-                // case '0' : 
-                    // $('td:eq(21)', nRow).addClass('avancement_1');
-                // break;
-                // case '1' : 
-                    // $('td:eq(21)', nRow).addClass('avancement_2');
-                // break;
-                // case '64' : 
-                    // $('td:eq(21)', nRow).addClass('avancement_3');
-                // break;
-                // case '128' : 
-                    // $('td:eq(21)', nRow).addClass('avancement_4');
-                // break;
-                // case '255' : 
-                    // $('td:eq(21)', nRow).addClass('avancement_5');
-                // break;
-            // }
-            // return nRow;
-        },
+			switch (aData[4]){case 'Pas d\'accès' :$('td:eq(4)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(4)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(4)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(4)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(4)', nRow).addClass('avancement_5');break;}
+			return nRow;
+			},        
         "oLanguage": { "sProcessing":   "Traitement en cours...",
             "sLengthMenu":   "Afficher _MENU_ taxons",
             "sZeroRecords":  "Aucun uilisateur à afficher",
@@ -148,13 +131,12 @@ if (typeof oTable == 'undefined') {
 		"aaSorting": [[2,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [
-                null,                                                           
-                null,                                                           
-        		null,                         									
-        		null,                         									
-        		null,                         									
-    			// { "sClass": "center","sWidth": "50px","bSortable": false },     // Actions
-        		{ "sClass": "center","sWidth": "20px","bSortable": false }      // Sélect.
+                { "sWidth": "10%" },                                                           
+                { "sWidth": "20%" },                                                           
+        		{ "sWidth": "20%" },                         									
+        		{ "sWidth": "20%" },                         									
+        		{ "sClass": "center","sWidth": "25%"},                         									
+        		{ "sClass": "center","sWidth": "5%","bSortable": false }      // Sélect.
         ]
         }).columnFilter({
             sPlaceHolder: "head:after",
@@ -163,10 +145,11 @@ if (typeof oTable == 'undefined') {
                 { type: "text" },                                               // CD_REF
                 { type: "text" },                                               // Nom scientifique 
                 { type: "text" },                                               //  
-                { type: "text" }                                               //  
+				{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
 			]
 		});		
-			
+	oTable.fnSort( [ [0,'desc'] ] );		
+	oTable2.fnSort( [ [2,'desc'] ] );					
 	} else {
 	oTable.fnClearTable (false);
 	oTable.fnDraw ();
