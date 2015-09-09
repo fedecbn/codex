@@ -228,7 +228,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				echo ("<td style=\"width: 800px;\">");
 					metaform_text ("Nom scientifique"," bloque",100,"","nom_sci",sql_format_quote(pg_result($result,0,"nom_sci"),'undo_text'));
 					metaform_text ("Nom vernaculaire"," bloque",100,"","nom_vern",sql_format_quote(pg_result($result,0,"nom_vern"),'undo_text'));
-					metaform_bout ("Taxon hybride?"," bloque","","hybride",pg_result($result,0,"hybride"));
+					metaform_bout ("Taxon hybride?"," bloque","hybride",pg_result($result,0,"hybride"));
 				echo ("</td><td style=\"width:300px;\">");	
 					metaform_text ("Code REF."," bloque",8,"","cd_ref",sql_format_quote(pg_result($result,0,"cd_ref"),'undo_text'));
 					metaform_sel ("Rang"," bloque","",$ref[$champ_ref['cd_rang']],"cd_rang",pg_result($result,0,"cd_rang"));

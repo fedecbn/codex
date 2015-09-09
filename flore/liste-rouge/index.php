@@ -139,7 +139,7 @@ include ("../commun/add_fiche.php");
 /*Récupération des référentiels ==> ref_champ ($table,$index,$valeur,$orderby)*/
 // include ("./lr-ref.php");		
 /*Gestion des niveau de droit*/
-if ($niveau <= 64) $desc = " bloque";
+if ($niveau <= 64) $desc = " bloque"; else $disa = $desc;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
 //------------------------------------------------------------------------------ EDIT LR EN TETE
@@ -170,10 +170,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
             if (pg_num_rows ($result)) {
 			$hybride = pg_result($result,0,"hybride");
 			$exotique = pg_result($result,0,"id_indi");
-			if ($hybride == 't' or $exotique == '3')		/*Gestion des hybrides et exotiques*/
-			{$extra = "disabled";}
-		else
-			{$extra = "";}
+			if ($hybride == 't' or $exotique == 3)		/*Gestion des hybrides et exotiques*/
+				{$desc2 .= " bloque";} else	{$desc2 .= $desc;}
 
 		if (pg_result($result,0,"etape") == null) {$etape = 1;}
 		else {$etape =pg_result($result,0,"etape");}
@@ -209,7 +207,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				echo ("<td style=\"width: 800px;\">");
 					metaform_text ("Nom scientifique"," bloque",100,"","nom_sci",pg_result($result,0,"nom_sci"));
 					metaform_text ("Nom vernaculaire"," bloque",100,"","nom_vern",pg_result($result,0,"nom_vern"));
-					metaform_bout ("Taxon hybride?"," bloque","","hybride",pg_result($result,0,"hybride"));
+					metaform_bout ("Taxon hybride?"," bloque","hybride",pg_result($result,0,"hybride"));
 				echo ("</td><td style=\"width:300px;\">");	
 					metaform_text ("Code REF."," bloque",8,"","cd_ref",pg_result($result,0,"cd_ref"));
 					metaform_sel ("Rang"," bloque","",$ref[$champ_ref['id_rang']],"id_rang",pg_result($result,0,"id_rang"));
@@ -274,43 +272,43 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_4']."</LEGEND>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
                 echo ("<br>");
-                metaform_sel ("Catégorie A",$desc,$extra,$ref[$champ_ref['cat_a']],"cat_a",pg_result($result,0,"cat_a"));
-                metaform_text ("Justification du critère A",$desc,10,$extra,"just_a",pg_result($result,0,"just_a"));
-                metaform_sel ("Catégorie A1",$desc,$extra,$ref[$champ_ref['cat_a1']],"cat_a1",pg_result($result,0,"cat_a1"));
-                metaform_sel ("Justification du critère A1",$desc,$extra,$ref[$champ_ref['crit_a1']],"crit_a1",pg_result($result,0,"crit_a1"));
+                metaform_sel ("Catégorie A",$desc2,null,$ref[$champ_ref['cat_a']],"cat_a",pg_result($result,0,"cat_a"));
+                metaform_text ("Justification du critère A",$desc2,10,null,"just_a",pg_result($result,0,"just_a"));
+                metaform_sel ("Catégorie A1",$desc2,null,$ref[$champ_ref['cat_a1']],"cat_a1",pg_result($result,0,"cat_a1"));
+                metaform_sel ("Justification du critère A1",$desc2,null,$ref[$champ_ref['crit_a1']],"crit_a1",pg_result($result,0,"crit_a1"));
                 echo ("<br>");
-                metaform_sel ("Catégorie A2, A3 ou A4",$desc,$extra,$ref[$champ_ref['cat_a234']],"cat_a234",pg_result($result,0,"cat_a234"));
-                metaform_sel ("Justification du critère A2",$desc,$extra,$ref[$champ_ref['crit_a2']],"crit_a2",pg_result($result,0,"crit_a2"));
-                metaform_sel ("Justification du critère A3",$desc,$extra,$ref[$champ_ref['crit_a3']],"crit_a3",pg_result($result,0,"crit_a3"));
-                metaform_sel ("Justification du critère A4",$desc,$extra,$ref[$champ_ref['crit_a4']],"crit_a4",pg_result($result,0,"crit_a4"));
+                metaform_sel ("Catégorie A2, A3 ou A4",$desc2,null,$ref[$champ_ref['cat_a234']],"cat_a234",pg_result($result,0,"cat_a234"));
+                metaform_sel ("Justification du critère A2",$desc2,null,$ref[$champ_ref['crit_a2']],"crit_a2",pg_result($result,0,"crit_a2"));
+                metaform_sel ("Justification du critère A3",$desc2,null,$ref[$champ_ref['crit_a3']],"crit_a3",pg_result($result,0,"crit_a3"));
+                metaform_sel ("Justification du critère A4",$desc2,null,$ref[$champ_ref['crit_a4']],"crit_a4",pg_result($result,0,"crit_a4"));
             echo ("</td><td width=250>");
                 echo ("<br>");
-                metaform_sel ("Catégorie B2",$desc,$extra,$ref[$champ_ref['cat_b']],"cat_b",pg_result($result,0,"cat_b"));
-                metaform_text ("Justification du critère B2",$desc,10,$extra,"just_b",pg_result($result,0,"just_b"));
+                metaform_sel ("Catégorie B2",$desc2,null,$ref[$champ_ref['cat_b']],"cat_b",pg_result($result,0,"cat_b"));
+                metaform_text ("Justification du critère B2",$desc2,10,null,"just_b",pg_result($result,0,"just_b"));
             echo ("</td><td width=250>");
                 echo ("<br>");
-                metaform_sel ("Catégorie C",$desc,$extra,$ref[$champ_ref['cat_c']],"cat_c",pg_result($result,0,"cat_c"));
-                metaform_text ("Justification du critère C",$desc,10,$extra,"just_c",pg_result($result,0,"just_c"));
-                metaform_sel ("Catégorie C1",$desc,$extra,$ref[$champ_ref['cat_c1']],"cat_c1",pg_result($result,0,"cat_c1"));
-                metaform_sel ("Justification du critère C1",$desc,$extra,$ref[$champ_ref['crit_c1']],"crit_c1",pg_result($result,0,"crit_c1"));
+                metaform_sel ("Catégorie C",$desc2,null,$ref[$champ_ref['cat_c']],"cat_c",pg_result($result,0,"cat_c"));
+                metaform_text ("Justification du critère C",$desc2,10,null,"just_c",pg_result($result,0,"just_c"));
+                metaform_sel ("Catégorie C1",$desc2,null,$ref[$champ_ref['cat_c1']],"cat_c1",pg_result($result,0,"cat_c1"));
+                metaform_sel ("Justification du critère C1",$desc2,null,$ref[$champ_ref['crit_c1']],"crit_c1",pg_result($result,0,"crit_c1"));
                 echo ("<br>");
-                metaform_sel ("Catégorie C2",$desc,$extra,$ref[$champ_ref['cat_c2']],"cat_c2",pg_result($result,0,"cat_c2"));
-                metaform_sel ("Justification du critère C2",$desc,$extra,$ref[$champ_ref['crit_c2']],"crit_c2",pg_result($result,0,"crit_c2"));
+                metaform_sel ("Catégorie C2",$desc2,null,$ref[$champ_ref['cat_c2']],"cat_c2",pg_result($result,0,"cat_c2"));
+                metaform_sel ("Justification du critère C2",$desc2,null,$ref[$champ_ref['crit_c2']],"crit_c2",pg_result($result,0,"crit_c2"));
             echo ("</td><td width=290>");
                 echo ("<br>");
-                metaform_sel ("Catégorie D",$desc,$extra,$ref[$champ_ref['cat_d']],"cat_d",pg_result($result,0,"cat_d"));
-                metaform_text ("Justification du critère D",$desc,10,$extra,"just_d",pg_result($result,0,"just_d"));
+                metaform_sel ("Catégorie D",$desc2,null,$ref[$champ_ref['cat_d']],"cat_d",pg_result($result,0,"cat_d"));
+                metaform_text ("Justification du critère D",$desc2,10,null,"just_d",pg_result($result,0,"just_d"));
                 echo ("<br>");
-                metaform_sel ("Catégorie D1",$desc,$extra,$ref[$champ_ref['cat_d1']],"cat_d1",pg_result($result,0,"cat_d1"));
-                metaform_text ("Justification du critère D1",$desc,10,$extra,"crit_d1",pg_result($result,0,"crit_d1"));
+                metaform_sel ("Catégorie D1",$desc2,null,$ref[$champ_ref['cat_d1']],"cat_d1",pg_result($result,0,"cat_d1"));
+                metaform_text ("Justification du critère D1",$desc2,10,null,"crit_d1",pg_result($result,0,"crit_d1"));
                 echo ("<br>");
-                metaform_sel ("Catégorie D2",$desc,$extra,$ref[$champ_ref['cat_d2']],"cat_d2",pg_result($result,0,"cat_d2"));
-                metaform_text ("Justification du critère D1",$desc,26,$extra,"crit_d2",pg_result($result,0,"crit_d2"));
-				metaform_bout ("Menace directe",$desc,"menace",pg_result($result,0,"menace"));
+                metaform_sel ("Catégorie D2",$desc2,null,$ref[$champ_ref['cat_d2']],"cat_d2",pg_result($result,0,"cat_d2"));
+                metaform_text ("Justification du critère D1",$desc2,26,null,"crit_d2",pg_result($result,0,"crit_d2"));
+				metaform_bout ("Menace directe",$desc2,"menace",pg_result($result,0,"menace"));
             echo ("</td><td width=250>");
                 echo ("<br>");
-                metaform_sel ("Catégorie E",$desc,$extra,$ref[$champ_ref['cat_e']],"cat_e",pg_result($result,0,"cat_e"));
-                metaform_text ("Justification du critère E",$desc,10,$extra,"just_e",pg_result($result,0,"just_e"));
+                metaform_sel ("Catégorie E",$desc2,null,$ref[$champ_ref['cat_e']],"cat_e",pg_result($result,0,"cat_e"));
+                metaform_text ("Justification du critère E",$desc2,10,null,"just_e",pg_result($result,0,"just_e"));
             echo ("</td></tr></table>");
             echo ("<hr>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
@@ -331,20 +329,20 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 	            metaform_text ("Nb région(s) taxon présent"," bloque",10,"","nb_reg_presence",pg_result($result,0,"nb_reg_presence"));
 	            metaform_text ("Nb région(s) taxon évalué"," bloque",10,"","nb_reg_evalue",pg_result($result,0,"nb_reg_evalue"));
             echo ("</td></tr><tr valign=top ><td width=250>");
-                metaform_sel ("<b>Catégorie initiale</b>",$desc,$extra,$ref[$champ_ref['cat_ini']],"cat_ini",pg_result($result,0,"cat_ini"));
-                metaform_text ("Critère(s) initiale",$desc,10,$extra,"just_ini",pg_result($result,0,"just_ini"));
+                metaform_sel ("<b>Catégorie initiale</b>",$desc2,null,$ref[$champ_ref['cat_ini']],"cat_ini",pg_result($result,0,"cat_ini"));
+                metaform_text ("Critère(s) initiale",$desc2,10,null,"just_ini",pg_result($result,0,"just_ini"));
             echo ("</td><td width=250>");
-                metaform_sel ("<b>Catégorie fin</b>",$desc,$extra,$ref[$champ_ref['cat_fin']],"cat_fin",pg_result($result,0,"cat_fin"));
-                metaform_text ("Critère(s) fin",$desc,10,$extra,"just_fin",pg_result($result,0,"just_fin"));
+                metaform_sel ("<b>Catégorie fin</b>",$desc2,null,$ref[$champ_ref['cat_fin']],"cat_fin",pg_result($result,0,"cat_fin"));
+                metaform_text ("Critère(s) fin",$desc2,10,null,"just_fin",pg_result($result,0,"just_fin"));
             echo ("</td><td width=250>");
 				if ($niveau <= 64) echo ("<label class=\"preField_calc\">Explication eval</label>"); else echo ("<label class=\"preField\">Explication eval</label>");
 				if ($niveau <= 64) echo ("<textarea name=\"notes\" $disa style=\"width:30em;background-color: #EFEFEF;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"notes"),'undo')."</textarea><br><br>");
 				else echo ("<textarea name=\"notes\" $disa style=\"width:30em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"notes"),'undo')."</textarea><br><br>");
             echo ("</td></tr></table><br>");
             echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=250>");
-                metaform_sel ("Ajustement",$desc,$extra,$ref[$champ_ref['cd_ajustmt']],"cd_ajustmt",pg_result($result,0,"cd_ajustmt"));
+                metaform_sel ("Ajustement",$desc2,null,$ref[$champ_ref['cd_ajustmt']],"cd_ajustmt",pg_result($result,0,"cd_ajustmt"));
             echo ("</td><td width=250>");
-                metaform_sel ("Changement de Catégorie",$desc,$extra,$ref[$champ_ref['id_raison_ajust']],"id_raison_ajust",pg_result($result,0,"id_raison_ajust"));
+                metaform_sel ("Changement de Catégorie",$desc2,null,$ref[$champ_ref['id_raison_ajust']],"id_raison_ajust",pg_result($result,0,"id_raison_ajust"));
             echo ("</td></tr></table><br>");
         echo ("</fieldset>");
 //------------------------------------------------------------------------------ EDIT LR GRP5

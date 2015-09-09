@@ -596,7 +596,7 @@ function metaform_bout ($label,$descr,$champ,$val)
 		echo ("<label class=\"preField\">".$label."</label>");
 		
 	if (strpos($descr,'bloque')) {
-		echo ("<input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
+	echo ("<input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
         <input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>
         <input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."3\" value=\"\" ".($val==null ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">?</label><br>");
 	} else {
