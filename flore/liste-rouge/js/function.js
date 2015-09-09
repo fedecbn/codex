@@ -43,17 +43,15 @@
 // }
 
 function eval () {
-	// var hybride_oui=$("input[id=hybride1]:checked").val();						
+	var hybride_oui=$("input[id=hybride1]:checked").val();						
 	var indi=$("#id_indi").val();
 	var tbl_eval = ["cat_a","just_a","cat_a1","crit_a1","cat_a234","crit_a2","crit_a3","crit_a4","cat_b","just_b","cat_c","just_c","cat_c1","crit_c1","cat_c2","crit_c2","cat_d","just_d","cat_d1","crit_d1",
 	"cat_d2","crit_d2","cat_e","just_e","cat_ini","just_ini","cat_fin","just_fin","cd_ajustmt","id_raison_ajust","menace1","menace2","menace3"];
-	// alert ('hybride_what='+hybride_what);
-	// if (hybride_oui == 'TRUE' || indi == '3')	{	
-	if (indi == '3')	{
+	alert ('hybride_oui='+hybride_oui);
+	if (hybride_oui == 'TRUE' || indi == '3')	{	
 		/*Rendre l'évaluation disabled*/
 		for (i = 0; i < tbl_eval.length; i++){
 		   document.getElementById(tbl_eval[i]).disabled = true;
-		   // document.getElementById(tbl_eval[i]).readOnly = true;
 		   document.getElementById(tbl_eval[i]).className= "";
 		   
 			if (document.getElementById(tbl_eval[i]).type == "text")					document.getElementById(tbl_eval[i]).value='';
@@ -71,7 +69,6 @@ function eval () {
 		// alert(tbl_eval);
 		for (i = 0; i < tbl_eval.length; i++){
 			document.getElementById(tbl_eval[i]).disabled = false;
-			// document.getElementById(tbl_eval[i]).readOnly = false;
 			} 
 			/*tous les calculs d'évaluation*/
 			crita2 () ;					
@@ -90,7 +87,7 @@ function eval () {
 	}
 	// $("#hybride1").change (eval);$("#hybride2").change (eval);$("#hybride3").change (eval);
 	$("#id_indi").change (eval);
-	// $("#id_indi").keyup (eval);
+	$("#id_indi").keyup (eval);
 
 //------------------------------------------------------------------------------ FORM / Plages	
 // function precision () {
