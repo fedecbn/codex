@@ -497,15 +497,16 @@ function aff_table_new ($id_liste,$actions,$check) {
 }
 //------------------------------------------------------------------------------ MétaForm
 
-function metaform_text ($label,$descr,$long,$extra,$champ,$val)
+function metaform_text ($label,$descr,$long,$style,$champ,$val)
 {
 	
 	if (strpos($descr,"no_lab") == false)
 		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
 		else echo ("<label class=\"preField\">".$label."</label>");
 		
-	if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
-	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\" size=\"".$long."\" value=\"".$val."\" $bloc style=\"$extra\"/>");
+	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
+	if (strpos($descr,"bloque") != false) {$extra .= " disabled class=\"bloque\"";}
+	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\" size=\"".$long."\" value=\"".$val."\" $extra style=\"$style\"/>");
     echo ("<br>");
 }
 
@@ -516,12 +517,13 @@ function metaform_text_area ($label,$descr,$row,$cols,$style,$champ,$val)
 		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
 		else echo ("<label class=\"preField\">".$label."</label>");
 	
-	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	// if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	if (strpos($descr,"bloque") != false) {$extra .= " disabled class=\"bloque\"";}	
     echo ("<textarea name=\"".$champ."\" id=\"".$champ."\" row=\"".$row."\" cols=\"".$cols."\" value=\"".$val."\" $extra style=\"$style\" />".$val."</textarea>");
     echo ("<br>");
 }
 
-function metaform_sel ($label,$descr,$extra,$liste,$champ,$val)
+function metaform_sel ($label,$descr,$style,$liste,$champ,$val)
 {
 	/*Retrouver pourquoi cette ligne*/
 	// if ($val == '1') {$class = 'oui';} elseif ($val == '2') {$class = 'non';} else {$class = $val;}
@@ -531,9 +533,10 @@ function metaform_sel ($label,$descr,$extra,$liste,$champ,$val)
 		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
 		else echo ("<label class=\"preField\">".$label."</label>");
 	
-	if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";}	
-	if (strpos($descr,"bloque") != false AND $val == null) {$extra .= "background-color:#EFEFEF";}	
-	echo ("<select class=\"$liste[$val]\" name=\"".$champ."\" id=\"".$champ."\" $bloc style=\"$extra\" onchange=\"this.className=this.options[this.selectedIndex].className\"/>");
+	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";}	
+	if (strpos($descr,"bloque") != false) {$extra .= " disabled ";}	
+	if (strpos($descr,"bloque") != false AND $val == null) {$extra .= " class=\"bloque\"";}	
+	echo ("<select class=\"$liste[$val]\" name=\"".$champ."\" id=\"".$champ."\" $extra style=\"$style\" onchange=\"this.className=this.options[this.selectedIndex].className\"/>");
 	
     foreach ($liste as $key => $value) {
         echo ("<option class=\"$value\" value=\"$key\" ".($key == $val ? "SELECTED" : "")." >".$value."</option>");
@@ -549,7 +552,8 @@ function metaform_sel_multi ($label,$descr,$size,$style,$extra,$liste,$champ,$va
 		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
 		else echo ("<label class=\"preField\">".$label."</label>");
 	
-	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	// if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	if (strpos($descr,"bloque") != false) {$extra .= " disabled class=\"bloque\"";}	
 	echo ("<select name=\"".$champ."[]\" id=\"".$champ."\" size = $size multiple  $extra style=\"$style\" />");
     if ($liste != "")
 		{
@@ -580,30 +584,22 @@ function metaform_bout_new ($label,$descr,$extra,$champ,$val)
 	}
 }
 
-// function metaform_bout_calc ($label,$descr,$extra,$champ,$val)
-// {
-    // if ($descr != 'no_lab') {echo ("<label class=\"preField_calc\">".$label."</label>");}
-    // echo ("<input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
-        // <input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>
-        // <input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."3\" value=\"\" ".($val==null ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">?</label><br>");
-// }
-
 function metaform_bout ($label,$descr,$champ,$val)
 {
-	if (!strpos($descr,'no_lab') AND strpos($descr,'bloque'))
-		echo ("<label class=\"preField_calc\">".$label."</label>");
-	elseif (!strpos($descr,'no_lab'))
-		echo ("<label class=\"preField\">".$label."</label>");
+	if (!strpos($descr,'no_lab') AND strpos($descr,'bloque'))	$entete = "<label class=\"preField_calc\">$label</label>";
+	elseif (!strpos($descr,'no_lab'))							$entete = "<label class=\"preField\">$label</label>";
+	else														$entete = "";
 		
-	if (strpos($descr,'bloque')) {
-	echo ("<input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
-        <input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>
-        <input type=\"radio\" $extra disabled name=\"".$champ."\" id=\"".$champ."3\" value=\"\" ".($val==null ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">?</label><br>");
-	} else {
-    echo ("<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>
-        <input type=\"radio\" name=\"".$champ."\" id=\"".$champ."3\" value=\"\" ".($val==null ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">?</label><br>");
-	}
+	if (strpos($descr,'bloque')) $extra = ' disabled ';
+	else 						 $extra = '';
+	
+	echo ("
+		$entete
+		<input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."1\" value=\"TRUE\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
+        <input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."2\" value=\"FALSE\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>
+        <input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."3\" value=\"\" ".($val==null ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">?</label><br>
+		");
+
 }
 
 function metaform_bool ($label,$descr,$champ,$val)
@@ -612,7 +608,8 @@ function metaform_bool ($label,$descr,$champ,$val)
 		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
 		else echo ("<label class=\"preField\">".$label."</label>");
 	
-	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	// if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	if (strpos($descr,"bloque") != false) {$extra .= " disabled class=\"bloque\"";}	
 	echo ("	<input type=\"radio\" $extra name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" style=\"$style\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
 			<input type=\"radio\" $extra name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" style=\"$style\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>");
 }
@@ -624,7 +621,8 @@ function metaform_bout_plus ($label,$descr,$champ,$val)
 		if (strpos($descr,"bloque") != false) echo ("<label class=\"preField_calc\">".$label."</label>");
 		else echo ("<label class=\"preField\">".$label."</label>");
 	
-	if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	// if (strpos($descr,"bloque") != false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	if (strpos($descr,"bloque") != false) {$extra .= " disabled class=\"bloque\"";}	
     echo (" <input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."1\" value=\"-1\" style=\"$style\" ".($val== -1 ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">-</label>
 			<input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."2\" value=\"\" style=\"$style\" ".($val== null ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">0</label>
 			<input type=\"radio\" $extra name=\"$champ\" id=\"".$champ."3\" value=\"1\" style=\"$style\" ".($val== 1 ? "checked=\"true\"" : "")."><label for=\"".$champ."3\">+</label>");
@@ -641,7 +639,8 @@ function metaform_precis_plage ($label,$descr,$long,$liste,$champ_pr,$champ_pl,$
 	if (strpos($descr,"bloque") != false)
 		{
 		echo ("<label class=\"preField_calc\">".$label."</label>");
-		echo ("<input type=\"text\" name=\"".$champ_pr."\" id=\"".$champ_pr."\" size=\"".$long."\" value=\"".$val_pr."\" readonly disabled style=\"background-color:#EFEFEF\"/> 
+		// echo ("<input type=\"text\" name=\"".$champ_pr."\" id=\"".$champ_pr."\" size=\"".$long."\" value=\"".$val_pr."\" readonly disabled style=\"background-color:#EFEFEF\"/> 
+		echo ("<input type=\"text\" name=\"".$champ_pr."\" id=\"".$champ_pr."\" size=\"".$long."\" value=\"".$val_pr."\" class=\"bloque\" disabled style=\"background-color:#EFEFEF\"/> 
 			<select name=\"".$champ_pl."\" id=\"".$champ_pl."\" disabled>");
 		foreach ($liste as $key => $value) 
 			echo ("<option value=\"$key\" ".($key == $val_pl ? "SELECTED" : "").">".$value."</option>");

@@ -213,6 +213,7 @@ h5 {
 /* --------------------------------------------------*/
 /* Fiche taxon                                       */
 /* --------------------------------------------------*/
+
 .bloc_txt {
 /*    width:500px; */
     overflow: auto;
@@ -499,6 +500,13 @@ fieldset.meta {
 	font-size: 12px;
 	background: #f8dbdb;
 	border: 2px solid #e77776;
+}
+
+#form1 input.bloque,#form2 input.bloque{
+	padding: 3px;
+	font-size: 12px;
+	background: #EFEFEF;
+    border: 3px solid #CFCFCF; 
 }
 
 #form1 select,#form2 select{
