@@ -1,6 +1,6 @@
 <?php
 //------------------------------------------------------------------------------//
-//  liste.php                                                 //
+//  module_gestion/lr-liste.php                                                 //
 //                                                                              //
 //  Application WEB 'EVAL'                                                      //
 //  Outil d’aide à l’évaluation de la flore                                     //
@@ -17,7 +17,7 @@
 
 //------------------------------------------------------------------------------ INIT.
 session_start();
-include_once ("commun.inc.php");
+include ("commun.inc.php");
 
 //------------------------------------------------------------------------------ VAR.
 
@@ -29,20 +29,16 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 
 //------------------------------------------------------------------------------ REF.
 global $aColumns, $ref, $champ_ref ;
-ref_colonne_et_valeur ($id_page);
+ref_colonne_et_valeur ("droit_$id_page");
 		
 //------------------------------------------------------------------------------ MAIN
-$filters = filter_column($aColumns[$id_page]);
+$filters = filter_column($aColumns["droit_$id_page"]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
-$sHaving = $filters['sHaving']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query=$query_liste." ".$sWhere." ".$group_by." ".$sHaving." ".$sOrder." ".$sLimit;
-
-//------------------------------------------------------------------------------ QUERY
-
+$query=$query_user." ".$sWhere." ".$sOrder." ".$sLimit;
 
 // echo "<br>".$query;
 
@@ -61,7 +57,10 @@ $iTotal = $aResultTotal;
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
 	{
 		$sOutput .= "[";
-		foreach ($aColumns[$id_page] as $key => $value) {
+		foreach ($aColumns["droit_$id_page"] as $key => $value) {
+		/*---------------*/
+		/*cas paticuliers*/
+		/*---------------*/
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
@@ -71,16 +70,16 @@ $iTotal = $aResultTotal;
 		/*cas général sans référentiel*/
 		/*---------------*/
 			else
-				$sOutput .= '"'.sql_format_quote($row[$key],'undo_table').'",';
+				$sOutput .= '"'.$row[$key].'",';
 			}
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-        if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['id'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
-        else        
-            $sOutput .= '"<a class=edit id=\"'.$row['id'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['id'].'\" >"';
+        // if ($niveau == 1)                                                       // Lecteur
+            // $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
+        // else        
+            // $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
+		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
     	$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );

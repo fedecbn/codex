@@ -46,7 +46,13 @@ $query_export =  "SELECT id,libelle_subjet,title,abstract,libelle_tag,link,date
 				FROM lsi.news AS n 
 				LEFT JOIN lsi.coor_news_tag nt ON n.id=nt.id
 				LEFT JOIN lsi.tag t ON nt.id_tag=t.id_tag  
-				LEFT JOIN lsi.subject s ON n.id_subject=s.id_subject"
+				LEFT JOIN lsi.subject s ON n.id_subject=s.id_subject";
+				
+$query_user = "
+	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
+	FROM applications.utilisateur
+	WHERE utilisateur.niveau_".$id_page." <> 0";
+
 //------------------------------------------------------------------------------ PATHS du module
 
 //------------------------------------------------------------------------------ FONCTIONS du module
