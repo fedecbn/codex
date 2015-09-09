@@ -19,3 +19,61 @@
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
 
+	function valid_cdnom () {
+        var variable = $("#cd_nom");
+		var pr = variable.val();
+		if (isNaN (pr)){
+			variable.addClass("error");
+            // document.getElementById('cd_nom').value='';
+			return (false);
+		} else {
+			variable.removeClass("error");
+            document.getElementById('cd_nom').value=pr;
+			return (true);
+		}
+	}
+	function valid_cdref () {
+        var variable = $("#cd_ref");
+		var pr = variable.val();
+		if (isNaN (pr)){
+			variable.addClass("error");
+            // document.getElementById('cd_ref').value='';
+			return (false);
+		} else {
+			variable.removeClass("error");
+            document.getElementById('cd_ref').value=pr;
+			return (true);
+		}
+	}
+	function valid_cdtaxsup () {
+        var variable = $("#cd_taxsup");
+		var pr = variable.val();
+		if (isNaN (pr)){
+			variable.addClass("error");
+            // document.getElementById('cd_taxsup').value='';
+			return (false);
+		} else {
+			variable.removeClass("error");
+            document.getElementById('cd_taxsup').value=pr;
+			return (true);
+		}
+	}
+	function valid_habitat () {
+        var variable = $("#habitat");
+		var pr = variable.val();
+		if (isNaN (pr)){
+			variable.addClass("error");
+            // document.getElementById('habitat').value='';
+			return (false);
+		} else {
+			variable.removeClass("error");
+            document.getElementById('habitat').value=pr;
+			return (true);
+		}
+	}
+	
+	
+	$("#cd_nom").keyup (valid_cdnom);
+	$("#cd_ref").keyup (valid_cdref);
+	$("#cd_taxsup").keyup (valid_cdtaxsup);
+	$("#habitat").keyup (valid_habitat);

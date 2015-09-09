@@ -56,6 +56,7 @@ ref_colonne_et_valeur ($id_page);
 
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
 <script type="text/javascript" language="javascript" src="js/liste.js"></script>
+<script type="text/javascript" language="javascript" src="js/function.js"></script>
 <script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
 
 <?php
