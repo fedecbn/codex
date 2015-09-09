@@ -247,13 +247,7 @@ $(document).ready(function(){
 				return JSON.parse( localStorage.getItem('user_'+window.location.pathname) );
 				}, 
             "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			switch (aData[5]){
-			case 'Pas d\'accès' :$('td:eq(5)', nRow).addClass('avancement_1');break;
-			case 'Lecteur' : $('td:eq(5)', nRow).addClass('avancement_2'); break;
-			case 'Participant' : $('td:eq(5)', nRow).addClass('avancement_3');break;
-			case 'Evaluateur' : $('td:eq(5)', nRow).addClass('avancement_4');break;
-			case 'Référent' : $('td:eq(5)', nRow).addClass('avancement_5');break;
-			}
+			switch (aData[5]){case 'Pas d\'accès' :$('td:eq(5)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(5)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(5)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(5)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(5)', nRow).addClass('avancement_5');break;}
 			switch (aData[6]){case 'Pas d\'accès' :$('td:eq(6)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(6)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(6)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(6)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(6)', nRow).addClass('avancement_5');break;}
 			switch (aData[7]){case 'Pas d\'accès' :$('td:eq(7)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(7)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(7)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(7)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(7)', nRow).addClass('avancement_5');break;}
 			switch (aData[8]){case 'Pas d\'accès' :$('td:eq(8)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(8)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(8)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(8)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(8)', nRow).addClass('avancement_5');break;}
