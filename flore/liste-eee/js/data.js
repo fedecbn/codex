@@ -153,7 +153,8 @@
         }, 
 		"aaSorting": [[2,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"fl>rt<"bottom"ip>',
-                { "sWidth": "10%" },                                                           
+            "aoColumns": [ 
+				{ "sWidth": "10%" },                                                           
                 { "sWidth": "20%" },                                                           
         		{ "sWidth": "20%" },                         									
         		{ "sWidth": "20%" },                         									
