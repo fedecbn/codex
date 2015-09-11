@@ -15,6 +15,7 @@ require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "refnat";
+$titre = "REFNAT";
 $id_page_2 = "droit";
 $title = $lang['fr']['titre_web']." - ".$id_page;
 

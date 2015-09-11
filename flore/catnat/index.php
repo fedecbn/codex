@@ -65,7 +65,7 @@ echo ("<div id=\"header2\">");
     echo ("<div style=\"float:left;\">");
     echo ("<button id=\"home-button\">".$lang[$lang_select]['Retour_menu']."</button>");
     echo ("</div>");
-    echo ("<font size=5>".$lang[$lang_select]['titre']."</font>");
+    echo ("<font size=5>".$lang[$lang_select]['titre']." - Rubrique $titre</font>");
 echo ("</div>");
 
 /*Deuxième bandeau : les onglets*/

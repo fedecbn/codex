@@ -25,6 +25,7 @@ if (isset($_GET['id'])) $title.= "- ".$_GET['id']; else $title.= "- liste";
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
+$db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ REF.
@@ -60,7 +61,7 @@ echo ("<div id=\"header2\">");
     echo ("<div style=\"float:left;\">");
     echo ("<button id=\"home-button\">".$lang[$lang_select]['Retour_menu']."</button>");
     echo ("</div>");
-    echo ("<font size=5>".$lang[$lang_select]['titre']."</font>");
+    echo ("<font size=5>".$lang[$lang_select]['titre']." - Rubrique $titre</font>");
 echo ("</div>");
 
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");

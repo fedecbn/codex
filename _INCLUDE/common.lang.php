@@ -10,7 +10,7 @@
 global $lang;
 $lang = array(array());
 
-$lang['fr']['titre']="Outil d’aide à l’évaluation de la flore";
+$lang['fr']['titre']="Codex";
 $lang['it']['titre']="";
 
 $lang['fr']['titre_web']="Codex";

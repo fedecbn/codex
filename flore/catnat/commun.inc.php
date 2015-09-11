@@ -17,6 +17,7 @@ require_once ("../commun/module.lang.php");
 $id_page = $_SESSION['page'] = "catnat";
 $id_page_2 = "droit";
 $title = $lang['fr']['titre_web']." - ".$id_page;
+$titre = "Catalogue National";
 
 
 $niveau=$_SESSION['niveau_'.$id_page];
