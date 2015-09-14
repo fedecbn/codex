@@ -201,8 +201,8 @@ echo ("</div>");
 			
 			<br><br> <b> Droit d'accès</b>
 			<table cellpadding=\"5\" border =\"solid 1px black\">
-			<tr><td> Rôle pour la rubrique \"Référentiel nationale\" </td><td>".$row['refnat']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Catalogue nationale\" </td><td>".$row['catnat']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Référentiel national\" </td><td>".$row['refnat']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Catalogue national\" </td><td>".$row['catnat']."</td></tr>
 			<tr><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$row['lr']."</td></tr>
 			<tr><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$row['eee']."</td></tr>
 			<tr><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$row['lsi']."</td></tr>
