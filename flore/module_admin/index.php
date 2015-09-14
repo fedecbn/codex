@@ -154,7 +154,9 @@ echo ("</div>");
 		JOIN (SELECT id_user, lib as eee FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_eee = cd) as qsd ON qsd.id_user = a.id_user
 		JOIN (SELECT id_user, lib as refnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_refnat = cd) as wxc ON wxc.id_user = a.id_user
 		JOIN (SELECT id_user, lib as catnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_catnat = cd) as zer ON zer.id_user = a.id_user
-		JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user';
+		JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user
+		WHERE nom= 'Milon'
+		;
 		";
 	 
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
@@ -187,10 +189,10 @@ echo ("</div>");
 			<tr><td> MdP </td><td>".$row['pw']."</td></tr>
 			</table>
 			
-			<br><br> <b>Informations professionelles</b>
+			<br><br> <b>Informations professionnelles</b>
 			<table cellpadding=\"5\" border =\"solid 1px black\">
 			<tr><td> Nom </td><td>".$row['nom']."</td></tr>
-			<tr><td> Prenom </td><td>".$row['prenom']."</td></tr>
+			<tr><td> Prénom </td><td>".$row['prenom']."</td></tr>
 			<tr><td> CBN </td><td>".$row['lib_cbn']."</td></tr>
 			<tr><td> Tel bureau </td><td>".$row['tel_bur']."</td></tr>
 			<tr><td> Tel portable </td><td>".$row['tel_port']."</td></tr>
@@ -200,8 +202,8 @@ echo ("</div>");
 			
 			<br><br> <b> Droit d'accès</b>
 			<table cellpadding=\"5\" border =\"solid 1px black\">
-			<tr><td> Rôle pour la rubrique \"Référentiel Nationale\" </td><td>".$row['refnat']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Catalogue Nationale\" </td><td>".$row['catnat']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Référentiel nationale\" </td><td>".$row['refnat']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Catalogue nationale\" </td><td>".$row['catnat']."</td></tr>
 			<tr><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$row['lr']."</td></tr>
 			<tr><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$row['eee']."</td></tr>
 			<tr><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$row['lsi']."</td></tr>
