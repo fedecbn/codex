@@ -176,11 +176,15 @@ echo ("</div>");
 		$row['eee'] = $row['eee'] == null? $row['eee']= "<i>--vide--</i>":$row['eee'];
 		$row['lsi'] = $row['lsi'] == null? $row['lsi']= "<i>--vide--</i>":$row['lsi'];
 		
-		$message_html = "<html><head></head><body>Bonjour,
-			<br><br> Voici vos identifiants de connexion personnalisés pour accéder à l'outil Codex, ainsi que la description des informations de votre profil.
+		$message_html = "<html><head></head><body>
+			---CECI EST UN MAIL AUTOMATIQUE---
+			----MERCI DE NE PAS Y REPONDRE----
+			
+			<br>Bonjour,
+			<br><br> Vous trouverez ci-joint vos identifiants personnalisés de connexion pour accéder à l'outil Codex, ainsi que la description des informations de votre profil.
 			<br> Pour accéder directement à l'outil, veuillez suivre ce lien : <a href=\"codex.fcbn.fr\">codex.fcbn.fr</a>
 			<br> Retrouvez également la liste des outils de la FCBN à l'adresse suivante : <a href=\"services.fcbn.fr\">services.fcbn.fr</a>
-			<br> Si vous notez une erreur dans ces informations, merci d'envoyer un mail à <a href=\"mailto:informatique@fcbn.fr\">informatique@fcbn.fr</a> à ce sujet.
+			<br> Si vous notez une erreur dans vos informations personnelles, merci d'envoyer un mail à <a href=\"mailto:informatique@fcbn.fr\">informatique@fcbn.fr</a> à ce sujet.
 
 			<br><br><b>Identifiants de connexion</b>
 			<table cellpadding=\"5\" border =\"solid 1px black\">

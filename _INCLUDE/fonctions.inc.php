@@ -1107,7 +1107,7 @@ function envoi_mail($destinataires, $sujet_mail, $contenu_mail, $options="")
 
 	////	EXPEDITEUR
 /**/if(isset($_SESSION["user"]["nom"]) and $options["expediteur_noreply"]=="non")	{ $expediteur_nom = auteur($_SESSION["user"]);	$expediteur_adresse = $_SESSION["user"]["mail"]; }
-	else																			{ $expediteur_nom = "Thomas Milon";			$expediteur_adresse = "noreply@".str_replace("www.","",$_SERVER["SERVER_NAME"]); }
+	else																			{ $expediteur_nom = "no-reply";			$expediteur_adresse = "noreply@".str_replace("www.","",$_SERVER["SERVER_NAME"]); }
 
 	////	DESTINATAIRES
 	if(is_array($destinataires)==false)		$destinataires = array($destinataires);
