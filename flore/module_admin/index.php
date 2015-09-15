@@ -178,9 +178,8 @@ echo ("</div>");
 		
 		$message_html = "<html><head></head><body>
 			---CECI EST UN MAIL AUTOMATIQUE---
-			----MERCI DE NE PAS Y REPONDRE----
-			
-			<br>Bonjour,
+			<br>----MERCI DE NE PAS Y REPONDRE----
+			<br><br>Bonjour,
 			<br><br> Vous trouverez ci-joint vos identifiants personnalisés de connexion pour accéder à l'outil Codex, ainsi que la description des informations de votre profil.
 			<br> Pour accéder directement à l'outil, veuillez suivre ce lien : <a href=\"codex.fcbn.fr\">codex.fcbn.fr</a>
 			<br> Retrouvez également la liste des outils de la FCBN à l'adresse suivante : <a href=\"services.fcbn.fr\">services.fcbn.fr</a>
