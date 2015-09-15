@@ -178,13 +178,15 @@ echo ("</div>");
 		
 		$message_html = "<html><head></head><body>
 			---CECI EST UN MAIL AUTOMATIQUE---
-			<br>----MERCI DE NE PAS Y REPONDRE----
+		<br>----MERCI DE NE PAS Y REPONDRE----
 			<br><br>Bonjour,
 			<br><br> Vous trouverez ci-joint vos identifiants personnalisés de connexion pour accéder à l'outil Codex, ainsi que la description des informations de votre profil.
 			<br> Pour accéder directement à l'outil, veuillez suivre ce lien : <a href=\"codex.fcbn.fr\">codex.fcbn.fr</a>
 			<br> Retrouvez également la liste des outils de la FCBN à l'adresse suivante : <a href=\"services.fcbn.fr\">services.fcbn.fr</a>
 			<br> Si vous notez une erreur dans vos informations personnelles, merci d'envoyer un mail à <a href=\"mailto:informatique@fcbn.fr\">informatique@fcbn.fr</a> à ce sujet.
-
+			
+			<br><br>Retrouvez la note d’information qui présente l'outil au lien suivant : <a href = \"".str_replace("www.","",$_SERVER["SERVER_NAME"]."/_DATA/150915_Note_ouverture_Codex.pdf\"></a>
+			
 			<br><br><b>Identifiants de connexion</b>
 			<table cellpadding=\"5\" border =\"solid 1px black\">
 			<tr><td> Login </td><td>".$row['login']."</td></tr>
