@@ -15,11 +15,12 @@ session_start();
 require_once ("../../_INCLUDE/config_sql.inc.php");
 require_once ("../../_INCLUDE/fonctions.inc.php");
 require_once ("../../_INCLUDE/constants.inc.php");
+include_once ("commun.inc.php");
 
 //------------------------------------------------------------------------------ VAR.
-$niveau=$_SESSION['niveau'];
+// $niveau=$_SESSION['niveau'];
 $table="utilisateur";
-$aColumns = array('id_user','prenom','nom','lib_cbn','login','niveau_lr','niveau_eee');
+$aColumns = array('id_user','prenom','nom','lib_cbn','login','niveau_lr','niveau_eee','niveau_catnat','niveau_refnat','niveau_lsi','ref_lr','ref_eee','ref_catnat','ref_refnat','ref_lsi');
 $sIndexColumn = "id_user";
 $ouinon_txt=array("","<b>X</b>");
 
@@ -57,7 +58,13 @@ if ( $_GET['sSearch'] != "" )
 		                "u.niveau_eee LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
 		                "u.niveau_catnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
 		                "u.niveau_refnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.niveau_lsi LIKE '%".pg_escape_string( $_GET['sSearch'] )."%')";
+		                "u.niveau_lsi LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                "u.ref_lr = ".$_GET['sSearch']." OR ".
+		                "u.ref_eee LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                "u.ref_catnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                "u.ref_refnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                "u.ref_lsi LIKE '%".pg_escape_string( $_GET['sSearch'] )."%'
+						)";
 }
 For ( $i=0 ; $i<count($aColumns) ; $i++ )                                       // columnFilter v2
 {
@@ -70,7 +77,7 @@ For ( $i=0 ; $i<count($aColumns) ; $i++ )                                       
 	}
 }
 //------------------------------------------------------------------------------ QUERY
-$query="SELECT count(*) OVER() AS total_count,u.id_user,u.prenom,u.nom,c.lib_cbn,u.login,u.niveau_lr,u.niveau_eee,u.niveau_catnat,u.niveau_refnat,u.niveau_lsi
+$query="SELECT count(*) OVER() AS total_count,u.id_user,u.prenom,u.nom,c.lib_cbn,u.login,u.niveau_lr,u.niveau_eee,u.niveau_catnat,u.niveau_refnat,u.niveau_lsi,u.ref_lr,u.ref_eee,u.ref_catnat,u.ref_refnat,u.ref_lsi
 FROM ".SQL_schema_app.".utilisateur AS u
 LEFT JOIN ".SQL_schema_ref.".cbn AS c ON c.id_cbn=u.id_cbn
 WHERE 1=1 ".$sWhere." ".$sOrder." ".$sLimit;
@@ -101,12 +108,22 @@ $iTotal = $aResultTotal;
 		$sOutput .= '"'.$user_level[$row['niveau_catnat']].'",';
 		$sOutput .= '"'.$user_level[$row['niveau_refnat']].'",';
 		$sOutput .= '"'.$user_level[$row['niveau_lsi']].'",';
+			if ($row['ref_lr'] == 't') $row['ref_lr'] = 'oui'; else $row['ref_lr'] = 'non';
+		$sOutput .= '"'.$row['ref_lr'].'",';
+			if ($row['ref_eee'] == 't') $row['ref_eee'] = 'oui'; else $row['ref_eee'] = 'non';
+		$sOutput .= '"'.$row['ref_eee'].'",';
+			if ($row['ref_catnat'] == 't') $row['ref_catnat'] = 'oui'; else $row['ref_catnat'] = 'non';
+		$sOutput .= '"'.$row['ref_catnat'].'",';
+			if ($row['ref_refnat'] == 't') $row['ref_refnat'] = 'oui'; else $row['ref_refnat'] = 'non';
+		$sOutput .= '"'.$row['ref_refnat'].'",';
+			if ($row['ref_lsi'] == 't') $row['ref_lsi'] = 'oui'; else $row['ref_lsi'] = 'non';
+		$sOutput .= '"'.$row['ref_lsi'].'",';
 /*
         if ($row['niveau'] == 255) $sOutput .= '"<img src=\"../../_GRAPH/admin.png\" border=\"0\" title=\"Admin.\" />",';
 		else $sOutput .= '"'.str_replace('"', '\"', $row['niveau']).'",';
 */
-        if ($niveau < 255 ) $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
-        else $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" ><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>"'; 
+        if ($niveau['all'] < 255 or $ref['all'] != 't') $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
+        else $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>"'; 
 		$sOutput .= "],";
 	}
 	$sOutput = substr_replace ($sOutput,"",-1);

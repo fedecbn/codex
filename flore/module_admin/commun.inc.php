@@ -14,7 +14,24 @@ require_once ("../../_INCLUDE/common.lang.php");
 require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
+/*référents*/
+$ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
+$ref['lr']=isset ($_SESSION['ref_lr']) ? $_SESSION['ref_lr'] : 0;
+$ref['eee']=isset ($_SESSION['ref_eee']) ? $_SESSION['ref_eee'] : 0;
+$ref['lsi']=isset ($_SESSION['ref_lsi']) ? $_SESSION['ref_lsi'] : 0;
+$ref['refnat']=isset ($_SESSION['ref_refnat']) ? $_SESSION['ref_refnat'] : 0;
+$ref['catnat']=isset ($_SESSION['ref_catnat']) ? $_SESSION['ref_catnat'] : 0;
+$niveau['all']=isset ($_SESSION['niveau']) ? $_SESSION['niveau'] : 0;
+$niveau['lr']=isset ($_SESSION['niveau_lr']) ? $_SESSION['niveau_lr'] : 0;
+$niveau['eee']=isset ($_SESSION['niveau_eee']) ? $_SESSION['niveau_eee'] : 0;
+$niveau['lsi']=isset ($_SESSION['niveau_lsi']) ? $_SESSION['niveau_lsi'] : 0;
+$niveau['refnat']=isset ($_SESSION['niveau_refnat']) ? $_SESSION['niveau_refnat'] : 0;
+$niveau['catnat']=isset ($_SESSION['niveau_catnat']) ? $_SESSION['niveau_catnat'] : 0;
+$id_user = $_SESSION['id_user'];
+// echo $id_user;
 
+// var_dump($ref);
+// var_dump($niveau);
 //------------------------------------------------------------------------------ PATHS du module
 
 //------------------------------------------------------------------------------ FONCTIONS du module

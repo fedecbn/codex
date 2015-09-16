@@ -33,7 +33,14 @@ $niveau_eee=isset ($_SESSION['niveau_eee']) ? $_SESSION['niveau_eee'] : 0;
 $niveau_lsi=isset ($_SESSION['niveau_lsi']) ? $_SESSION['niveau_lsi'] : 0;
 $niveau_refnat=isset ($_SESSION['niveau_refnat']) ? $_SESSION['niveau_refnat'] : 0;
 $niveau_catnat=isset ($_SESSION['niveau_catnat']) ? $_SESSION['niveau_catnat'] : 0;
+$ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
+$ref['lr']=isset ($_SESSION['ref_lr']) ? $_SESSION['ref_lr'] : 0;
+$ref['eee']=isset ($_SESSION['ref_eee']) ? $_SESSION['ref_eee'] : 0;
+$ref['lsi']=isset ($_SESSION['ref_lsi']) ? $_SESSION['ref_lsi'] : 0;
+$ref['refnat']=isset ($_SESSION['ref_refnat']) ? $_SESSION['ref_refnat'] : 0;
+$ref['catnat']=isset ($_SESSION['ref_catnat']) ? $_SESSION['ref_catnat'] : 0;
 $id_user=$_SESSION['id_user'];
+
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -104,7 +111,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
             }
             echo ("<br><center>");
 //            echo ("<img src=\"../../_GRAPH/theme/home3.png\" width=20 height=600 border=\"0\" align=left >");
-            if ($niveau >=128 )  {
+            if ($niveau >=128 OR $ref['all'] == 't')  {
                 echo ("<br><a href=\"../module_admin/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/admin.png\" border=\"0\" /><br>".$lang['fr']['Admin']."</a></p>");
             }
             if ($niveau >=1 )  {
@@ -133,18 +140,27 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
         $user_login=$_POST['user_login'];
         $user_pw=$_POST['user_pw'];
         if (!empty ($user_login) && !empty ($user_pw)) {
-            $query="SELECT id_user,niveau_lr,niveau_eee,niveau_lsi,niveau_catnat,niveau_refnat FROM ".SQL_schema_app.".utilisateur WHERE login=".sql_format ($user_login)." AND pw=".sql_format ($user_pw).";";
+            $query="SELECT id_user,niveau_lr,niveau_eee,niveau_lsi,niveau_catnat,niveau_refnat,ref_lr,ref_eee,ref_lsi,ref_catnat,ref_refnat FROM ".SQL_schema_app.".utilisateur WHERE login=".sql_format ($user_login)." AND pw=".sql_format ($user_pw).";";
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
             if (pg_num_rows ($result)) {
                 $_SESSION['EVAL_FLORE']="ok";
-                $_SESSION['niveau_lr']=pg_result ($result,0,"niveau_lr");
+                /*niveau de droit*/
+				$_SESSION['niveau_lr']=pg_result ($result,0,"niveau_lr");
                 $_SESSION['niveau_eee']=pg_result ($result,0,"niveau_eee");
                 $_SESSION['niveau_lsi']=pg_result ($result,0,"niveau_lsi");
                 $_SESSION['niveau_catnat']=pg_result ($result,0,"niveau_catnat");
                 $_SESSION['niveau_refnat']=pg_result ($result,0,"niveau_refnat");
 				$_SESSION['niveau'] = max($_SESSION['niveau_lr'],$_SESSION['niveau_eee'],$_SESSION['niveau_lsi'],$_SESSION['niveau_catnat'],$_SESSION['niveau_refnat']);
-                $_SESSION['id_user']=pg_result ($result,0,"id_user");
-                add_log ("log",3,pg_result($result,0,"id_user"),getenv("REMOTE_ADDR"),"Login",$user_login,"");
+				/*niveau référents*/
+				$_SESSION['ref_lr']=pg_result ($result,0,"ref_lr");
+                $_SESSION['ref_eee']=pg_result ($result,0,"ref_eee");
+                $_SESSION['ref_lsi']=pg_result ($result,0,"ref_lsi");
+                $_SESSION['ref_catnat']=pg_result ($result,0,"ref_catnat");
+                $_SESSION['ref_refnat']=pg_result ($result,0,"ref_refnat");
+				if (($_SESSION['ref_lr'] == 't') OR ($_SESSION['ref_eee'] == 't') OR ($_SESSION['ref_lsi'] == 't') OR ($_SESSION['ref_catnat'] == 't') OR ($_SESSION['ref_refnat'] == 't')) $_SESSION['ref']= 't'; else $_SESSION['ref']= 'f';
+			   /*id user*/
+				$_SESSION['id_user']=pg_result ($result,0,"id_user");
+				add_log ("log",3,pg_result($result,0,"id_user"),getenv("REMOTE_ADDR"),"Login",$user_login,"");
                 die ("<meta HTTP-equiv=\"refresh\" content=0;url=index.php />");
             } else {
                 echo ("<div id=\"page\"><div id=\"page2\">");

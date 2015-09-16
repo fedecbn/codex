@@ -42,6 +42,11 @@ niveau_eee=".sql_format_num ($_POST["niveau_eee"]).",
 niveau_catnat=".sql_format_num ($_POST["niveau_catnat"]).",
 niveau_refnat=".sql_format_num ($_POST["niveau_refnat"]).",
 niveau_lsi=".sql_format_num ($_POST["niveau_lsi"]).",
+ref_lr=".sql_format_bool ($_POST["ref_lr"]).",
+ref_eee=".sql_format_bool ($_POST["ref_eee"]).",
+ref_catnat=".sql_format_bool ($_POST["ref_catnat"]).",
+ref_refnat=".sql_format_bool ($_POST["ref_refnat"]).",
+ref_lsi=".sql_format_bool ($_POST["ref_lsi"]).",
 descr=".sql_format ($_POST["descr"])." 
 WHERE id_user='".$id."';";
 //echo $query;
@@ -49,7 +54,7 @@ WHERE id_user='".$id."';";
     add_log ("log",4,$id_user,getenv("REMOTE_ADDR"),"Admin. edit user",$id,"utilisateur");
 } else {                                                                        //  ADD
     $id=strtoupper(substr(stripAccents($_POST['prenom']),0,2).substr(stripAccents($_POST['nom']),0,2)).mt_rand(1,9);
-    $query="INSERT INTO ".SQL_schema_app.".utilisateur (id_user, id_cbn,nom,prenom,login,pw,tel_bur,tel_port,tel_int,email,web,niveau_lr,niveau_eee,niveau_catnat,niveau_refnat,niveau_lsi,descr)
+    $query="INSERT INTO ".SQL_schema_app.".utilisateur (id_user, id_cbn,nom,prenom,login,pw,tel_bur,tel_port,tel_int,email,web,niveau_lr,niveau_eee,niveau_catnat,niveau_refnat,niveau_lsi,ref_lr,ref_eee,ref_catnat,ref_refnat,ref_lsi,descr)
 	VALUES (
 '".$id."',
 ".sql_format_num ($_POST["id_cbn"]).",
@@ -67,6 +72,11 @@ WHERE id_user='".$id."';";
 ".sql_format_num ($_POST["niveau_catnat"]).",
 ".sql_format_num ($_POST["niveau_refnat"]).",
 ".sql_format_num ($_POST["niveau_lsi"]).",
+".sql_format_bool ($_POST["ref_lr"]).",
+".sql_format_bool ($_POST["ref_eee"]).",
+".sql_format_bool ($_POST["ref_catnat"]).",
+".sql_format_bool ($_POST["ref_refnat"]).",
+".sql_format_bool ($_POST["ref_lsi"]).",
 ".sql_format ($_POST["descr"]).");";
 echo $query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));

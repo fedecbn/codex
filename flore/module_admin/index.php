@@ -15,7 +15,7 @@ include("commun.inc.php");
 if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 
 //------------------------------------------------------------------------------ VAR.
-$niveau=$_SESSION['niveau'];
+// $niveau=$_SESSION['niveau'];
 $id_user=$_SESSION['id_user'];
 $config=$_SESSION['id_config'];
 $lang_select=$_COOKIE['lang_select'];
@@ -64,12 +64,12 @@ echo ("</div>");
 
 echo ("<div id=\"tabs\" style=\"min-height:800px;\">");
 echo ("<ul>");
-if ($niveau >= 255) { echo ("<li><a href=\"#text\">".$lang[$lang_select]['text']."</a></li>");}
-if ($niveau >= 255) { echo ("<li><a href=\"#user\">".$lang[$lang_select]['user']."</a></li>");}     // SU
-if ($niveau >= 128) { echo ("<li><a href=\"#suivi\">".$lang[$lang_select]['suivi']."</a></li>");}
-if ($niveau >= 255) { echo ("<li><a href=\"#log\">".$lang[$lang_select]['log']."</a></li>");  }      // SU
+if ($niveau['all'] >= 255) { echo ("<li><a href=\"#text\">".$lang[$lang_select]['text']."</a></li>");}
+if ($niveau['all'] >= 255 OR $ref['all'] == 't') { echo ("<li><a href=\"#user\">".$lang[$lang_select]['user']."</a></li>");}     // SU
+if ($niveau['all'] >= 128) { echo ("<li><a href=\"#suivi\">".$lang[$lang_select]['suivi']."</a></li>");}
+if ($niveau['all'] >= 255) { echo ("<li><a href=\"#log\">".$lang[$lang_select]['log']."</a></li>");  }      // SU
 echo ("</ul>");
-echo ("<input type=\"hidden\" id=\"niveau\" value=\"".$niveau."\" />");
+echo ("<input type=\"hidden\" id=\"niveau\" value=\"".$niveau['all']."\" />");
 echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
 
 switch ($mode) {
@@ -77,7 +77,7 @@ switch ($mode) {
 
 //------------------------------------------------------------------------------ #Text
 echo ("<div id=\"text\">");
-    if ($niveau >= 255) {
+    if ($niveau['all'] >= 255) {
     $id_page="admin-text";
     echo ("<div id=\"titre2\">");
         echo ($lang[$lang_select]["titre_".$id_page]);
@@ -88,19 +88,19 @@ echo ("<div id=\"text\">");
 echo ("</div>");
 //------------------------------------------------------------------------------ #Stat
 echo ("<div id=\"stat\">");
-    if ($niveau >= 255) {
+    if ($niveau['all'] >= 255) {
     } 
 echo ("</div>");
 //------------------------------------------------------------------------------ #Utilisateur
 echo ("<div id=\"user\">");
-    if ($niveau >= 255) {
+    if ($niveau['all'] >= 255 OR $ref['all'] == 't') {
         $id_page="admin-user";
         echo ("<div id=\"titre2\">");
             echo ($lang[$lang_select]["titre_".$id_page]);
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
         echo ("<button id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button> ");
-        if ($niveau >= 512) echo ("<button id=\"mdp-button\">".$lang[$lang_select]['mdp']."</button> ");
+        if ($niveau['all'] >= 512) echo ("<button id=\"mdp-button\">".$lang[$lang_select]['mdp']."</button> ");
 		echo ("</div>");
         echo ("<div id=\"".$id_page."-dialog\"></div>");
         aff_table ($id_page."-liste",true,false);
@@ -108,7 +108,7 @@ echo ("<div id=\"user\">");
 echo ("</div>");
 //------------------------------------------------------------------------------ #Suivi des modifications
 echo ("<div id=\"suivi\">");
-    if ($niveau >= 128) {
+    if ($niveau['all'] >= 128) {
         $id_page="admin-suivi";
         echo ("<div id=\"titre2\">");
             echo ($lang[$lang_select]["titre_".$id_page]);
@@ -131,7 +131,7 @@ echo ("<div id=\"suivi\">");
 echo ("</div>");
 //------------------------------------------------------------------------------ #Log
 echo ("<div id=\"log\">");
-    if ($niveau >= 255) {
+    if ($niveau['all'] >= 255) {
         $id_page="admin-log";
         echo ("<div id=\"titre2\">");
             echo ($lang[$lang_select]["titre_".$id_page]);

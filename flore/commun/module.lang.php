@@ -371,6 +371,21 @@ $langliste['fr']['admin-user-liste-popup'][]="";
 $langliste['fr']['admin-user-liste'][]="Niveau LSI";
 $langliste['fr']['admin-user-liste-popup'][]="";
 
+$langliste['fr']['admin-user-liste'][]="ref LR";
+$langliste['fr']['admin-user-liste-popup'][]="Référent rubrique LR";
+
+$langliste['fr']['admin-user-liste'][]="ref EEE";
+$langliste['fr']['admin-user-liste-popup'][]="Référent rubrique EEE";
+
+$langliste['fr']['admin-user-liste'][]="ref CATNAT";
+$langliste['fr']['admin-user-liste-popup'][]="Référent rubrique CATNAT";
+
+$langliste['fr']['admin-user-liste'][]="ref REFNAT";
+$langliste['fr']['admin-user-liste-popup'][]="Référent rubrique REFNAT";
+
+$langliste['fr']['admin-user-liste'][]="ref LSI";
+$langliste['fr']['admin-user-liste-popup'][]="Référent rubrique LSI";
+
 //------------------------------------------------------------------------------ Module admin / Suivi
 $langliste['fr']['admin-suivi-liste'][]="UID";
 $langliste['fr']['admin-suivi-liste-popup']['1-popup']="Identifiant unique";

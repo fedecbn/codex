@@ -851,11 +851,11 @@ select.NA {
     background-color:#CC0066;  
 }
 
-option.non, select.non  {
+option.non, select.non , td.non {
     color:white;  
     background-color:#DA1C23;  
 }
-option.oui, select.oui  {
+option.oui, select.oui, td.oui  {
     color:white;  
     background-color:#4ACC83;  
 }
