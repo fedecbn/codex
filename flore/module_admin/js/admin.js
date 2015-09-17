@@ -27,7 +27,7 @@ $(document).ready(function(){
 //------------------------------------------------------------------------------ UI / Tabs
 
     var $tabs = $("#tabs").tabs();
-    if ( $("#niveau").val() < 255) {
+    if ( $("#niveau").val() < 1) {
         $tabs.tabs ('disable',3);                                               // Stats
         $tabs.tabs ('disable',4);                                               // Users
         $tabs.tabs ('disable',5);                                               // Logs

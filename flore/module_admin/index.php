@@ -64,10 +64,10 @@ echo ("</div>");
 
 echo ("<div id=\"tabs\" style=\"min-height:800px;\">");
 echo ("<ul>");
-if ($niveau['all'] >= 255) { echo ("<li><a href=\"#text\">".$lang[$lang_select]['text']."</a></li>");}
-if ($niveau['all'] >= 255 OR $ref['all'] == 't') { echo ("<li><a href=\"#user\">".$lang[$lang_select]['user']."</a></li>");}     // SU
-if ($niveau['all'] >= 128) { echo ("<li><a href=\"#suivi\">".$lang[$lang_select]['suivi']."</a></li>");}
-if ($niveau['all'] >= 255) { echo ("<li><a href=\"#log\">".$lang[$lang_select]['log']."</a></li>");  }      // SU
+if ($niveau['all'] >= 255) 	{ echo ("<li><a href=\"#text\">".$lang[$lang_select]['text']."</a></li>");}
+if ($niveau['all'] >= 1) 	{ echo ("<li><a href=\"#user\">".$lang[$lang_select]['user']."</a></li>");}
+if ($niveau['all'] >= 128) 	{ echo ("<li><a href=\"#suivi\">".$lang[$lang_select]['suivi']."</a></li>");}
+if ($niveau['all'] >= 255) 	{ echo ("<li><a href=\"#log\">".$lang[$lang_select]['log']."</a></li>");  }
 echo ("</ul>");
 echo ("<input type=\"hidden\" id=\"niveau\" value=\"".$niveau['all']."\" />");
 echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
@@ -93,7 +93,7 @@ echo ("<div id=\"stat\">");
 echo ("</div>");
 //------------------------------------------------------------------------------ #Utilisateur
 echo ("<div id=\"user\">");
-    // if ($niveau['all'] >= 255 OR $ref['all'] == 't') {
+    if ($niveau['all'] >= 1) {
         $id_page="admin-user";
         echo ("<div id=\"titre2\">");
             echo ($lang[$lang_select]["titre_".$id_page]);
@@ -104,7 +104,7 @@ echo ("<div id=\"user\">");
 		echo ("</div>");
         echo ("<div id=\"".$id_page."-dialog\"></div>");
         aff_table ($id_page."-liste",true,false);
-    // } 
+    } 
 echo ("</div>");
 //------------------------------------------------------------------------------ #Suivi des modifications
 echo ("<div id=\"suivi\">");
@@ -145,6 +145,7 @@ echo ("<div id=\"log\">");
 echo ("</div>");
 	}
 	break;
+//------------------------------------------------------------------------------ #Envoi des mots de passes (Super Admin)
 	 case "mdp" : {
 	
 	$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi
