@@ -113,21 +113,12 @@ $iTotal = $aResultTotal;
 		$sOutput .= '"'.str_replace('"', '\"', $row['nom']).'",';
 		$sOutput .= '"'.$row['lib_cbn'].'",';
 		$sOutput .= '"'.str_replace('"', '\"', $row['login']).'",';
-		$sOutput .= '"'.$user_level[$row['niveau_lr']].'",';
-		$sOutput .= '"'.$user_level[$row['niveau_eee']].'",';
-		$sOutput .= '"'.$user_level[$row['niveau_catnat']].'",';
-		$sOutput .= '"'.$user_level[$row['niveau_refnat']].'",';
-		$sOutput .= '"'.$user_level[$row['niveau_lsi']].'",';
-			if ($row['ref_lr'] == 't') $row['ref_lr'] = 'oui'; else $row['ref_lr'] = 'non';
-		$sOutput .= '"'.$row['ref_lr'].'",';
-			if ($row['ref_eee'] == 't') $row['ref_eee'] = 'oui'; else $row['ref_eee'] = 'non';
-		$sOutput .= '"'.$row['ref_eee'].'",';
-			if ($row['ref_catnat'] == 't') $row['ref_catnat'] = 'oui'; else $row['ref_catnat'] = 'non';
-		$sOutput .= '"'.$row['ref_catnat'].'",';
-			if ($row['ref_refnat'] == 't') $row['ref_refnat'] = 'oui'; else $row['ref_refnat'] = 'non';
-		$sOutput .= '"'.$row['ref_refnat'].'",';
-			if ($row['ref_lsi'] == 't') $row['ref_lsi'] = 'oui'; else $row['ref_lsi'] = 'non';
-		$sOutput .= '"'.$row['ref_lsi'].'",';
+		foreach ($rub as $key => $val)
+			$sOutput .= '"'.$user_level[$row['niveau_'.$key]].'",';
+		foreach ($rub as $key => $val)	{
+			if ($row['ref_'.$key] === 't') $row['ref_'.$key] = 'oui'; else $row['ref_'.$key] = 'non';
+			$sOutput .= '"'.$row['ref_'.$key].'",';
+			}
 /*
         if ($row['niveau'] == 255) $sOutput .= '"<img src=\"../../_GRAPH/admin.png\" border=\"0\" title=\"Admin.\" />",';
 		else $sOutput .= '"'.str_replace('"', '\"', $row['niveau']).'",';

@@ -30,6 +30,9 @@ $niveau['catnat']=isset ($_SESSION['niveau_catnat']) ? $_SESSION['niveau_catnat'
 $id_user = $_SESSION['id_user'];
 // echo $id_user;
 
+$rub = array('lr' => 'Niveau LR','eee' => 'Niveau EEE','catnat' => 'Niveau CATNAT','refnat' => 'Niveau REF NAT','lsi' => 'Niveau LSI');	
+
+
 // var_dump($ref);
 // var_dump($niveau);
 //------------------------------------------------------------------------------ PATHS du module

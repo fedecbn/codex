@@ -127,7 +127,6 @@ $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result
 $row = pg_fetch_row($result);
 $id_cbn = $row[0];
 
-$rub = array('lr' => 'Niveau LR','eee' => 'Niveau EEE','catnat' => 'Niveau CATNAT','refnat' => 'Niveau REF NAT','lsi' => 'Niveau LSI');	
 
 
 //------------------------------------------------------------------------------ MAIN
