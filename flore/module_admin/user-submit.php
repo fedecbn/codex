@@ -25,15 +25,35 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ MAIN
+$query="SELECT id_user,niveau_lr,niveau_eee,niveau_lsi,niveau_catnat,niveau_refnat,ref_lr,ref_eee,ref_lsi,ref_catnat,ref_refnat 
+FROM applications.utilisateur WHERE id_user= '$id_user';";
+// echo $query;
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
+if (pg_num_rows ($result)) {
+	/*niveau de droit*/
+	$niveau['lr']=pg_result ($result,0,"niveau_lr");
+	$niveau['eee']=pg_result ($result,0,"niveau_eee");
+	$niveau['lsi']=pg_result ($result,0,"niveau_lsi");
+	$niveau['catnat']=pg_result ($result,0,"niveau_catnat");
+	$niveau['refnat']=pg_result ($result,0,"niveau_refnat");
+	$niveau['all'] = max($niveau['lr'],$niveau['eee'],$niveau['lsi'],$niveau['catnat'],$niveau['refnat']);
+	/*niveau référents*/
+	$ref['lr']=pg_result ($result,0,"ref_lr");
+	$ref['eee']=pg_result ($result,0,"ref_eee");
+	$ref['lsi']=pg_result ($result,0,"ref_lsi");
+	$ref['catnat']=pg_result ($result,0,"ref_catnat");
+	$ref['refnat']=pg_result ($result,0,"ref_refnat");
+	if (($ref['lr'] == 't') OR ($ref['eee'] == 't') OR ($ref['lsi'] == 't') OR ($ref['catnat'] == 't') OR ($ref['refnat'] == 't')) $ref['all']= 't'; else $ref['all']= 'f';
+}
 //------------------------------------------------------------------------------ EDIT
 if (!empty($id))                                                                
 {
 $query_niveau = "";$query_ref = "";
 foreach ($rub as $key => $val)	{
-	$query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
-	$query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
+	if (!empty($ref[$key])) $query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
+	if (!empty($ref[$key])) $query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
 	}
-
+var_dump($ref);
 
     $query="UPDATE ".SQL_schema_app.".utilisateur SET 
 id_cbn=".sql_format_num ($_POST["id_cbn"]).",
@@ -50,7 +70,7 @@ web=".sql_format ($_POST["web"]).",
 ".$query_ref."
 descr=".sql_format ($_POST["descr"])." 
 WHERE id_user='".$id."';";
-//echo $query;
+echo $query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
     add_log ("log",4,$id_user,getenv("REMOTE_ADDR"),"Admin. edit user",$id,"utilisateur");
 } else { 
