@@ -69,7 +69,7 @@ $query_export = "
 	";
 
 $query_user = "
-	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
+	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.",utilisateur.ref_".$id_page."
 	FROM applications.utilisateur
 	WHERE utilisateur.niveau_".$id_page." <> 0";
 

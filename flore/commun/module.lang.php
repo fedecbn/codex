@@ -143,6 +143,9 @@ $langliste['fr']['droit-popup'][]="";
 $langliste['fr']['droit'][]="Niveau de droit";
 $langliste['fr']['droit-popup'][]="";
 
+$langliste['fr']['droit'][]="Référent";
+$langliste['fr']['droit-popup'][]="";
+
 
 //------------------------------------------------------------------------------ Module gestion LSI 
 $langliste['fr']['lsi'][]="Id";

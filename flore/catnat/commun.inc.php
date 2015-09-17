@@ -49,10 +49,10 @@ $query_export = "
 	WHERE a.catnat = TRUE ";
 
 $query_user = "
-	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page."
+	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."
 	FROM applications.utilisateur
 	WHERE utilisateur.niveau_".$id_page." <> 0";
-
+	
 $query_discussion = "
 	SELECT prenom||' '||nom||' ('||cd_cbn||') le '||to_char(datetime, 'dd/MM/YYYY')||' à '||to_char(datetime, 'HH24')||'h'||to_char(datetime, 'MI'), commentaire_eval 
 	FROM catnat.discussion a JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn 

@@ -962,6 +962,9 @@ foreach ($colonne as $key => $val )                                       // col
 		elseif ($val['type'] == 'string') {
         	$sWhere .= " AND ".$table.$val['nom_champ_synthese']."::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
 		}
+		elseif ($val['type'] == 'bool') {
+        	$sWhere .= " AND ".$table.$val['nom_champ_synthese']." = ".pg_escape_string($_GET['sSearch_'.$val['pos']])." ";
+		}
 		elseif ($val['type'] == 'int') {
 			if (pg_escape_string($_GET['sSearch_'.$val['pos']]) == '>' OR pg_escape_string($_GET['sSearch_'.$val['pos']]) == '<' OR pg_escape_string($_GET['sSearch_'.$val['pos']]) == '=' ) {
 				$sWhere .= "";

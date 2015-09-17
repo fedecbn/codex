@@ -116,70 +116,10 @@
                 { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] }                                               //  
 			]
 		});        
-
-		var oTable2 = $('#user-liste').dataTable({
-   	    "bJQueryUI": true,
-        "iDisplayLength": 100,
-    	"aLengthMenu": [[50,100,300],[50,100,300]],
-    	"bPaginate": true,
-        "sPaginationType": "full_numbers",
-    	"bLengthChange": true,
-    	"bFilter": true,
-    	"bSort": true,
-    	"bInfo": true,
-    	"bAutoWidth": false,
-		"bProcessing": true,
-    	"bServerSide": true,
-    	"sAjaxSource": "liste_user.php",
-        "bStateSave": true,
-		"fnStateSave": function (oSettings, oData) {
-            localStorage.setItem( 'user_'+window.location.pathname, JSON.stringify(oData) );
-			},
-        "fnStateLoad": function (oSettings) {
-            return JSON.parse( localStorage.getItem('user_'+window.location.pathname) );
-			}, 
-            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			switch (aData[4]){case 'Pas d\'accès' :$('td:eq(4)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(4)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(4)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(4)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(4)', nRow).addClass('avancement_5');break;}
-			return nRow;
-			},        
-			"oLanguage": { "sProcessing":   "Traitement en cours...",
-            "sLengthMenu":   "Afficher _MENU_ taxons",
-            "sZeroRecords":  "Aucun uilisateur à afficher",
-            "sInfo": "Affichage de l'utilisateur _START_ à _END_",
-            "sInfoEmpty": "Affichage de l'utilisateur 0 à 0 sur 0 ",
-            "sInfoFiltered": "",
-            "sInfoPostFix":  "",
-            "sSearch":       "Rechercher ",
-            "sUrl":          "",
-            "oPaginate": {
-                "sFirst":    "Premier",
-                "sPrevious": "Précédent",
-                "sNext":     "Suivant",
-                "sLast":     "Dernier"
-            }
-        }, 
-		// "aaSorting": [[2,'asc']],                                               // Nom scientifique 
-        "sDom": '<"top"fl>rt<"bottom"ip>',
-            "aoColumns": [
-                { "sWidth": "10%" },                                                           
-                { "sWidth": "20%" },                                                           
-        		{ "sWidth": "20%" },                         									
-        		{ "sWidth": "20%" },                         									
-        		{ "sClass": "center","sWidth": "25%"},                         									
-        		{ "sClass": "center","sWidth": "5%","bSortable": false }      // Sélect.
-        ]
-        }).columnFilter({
-            sPlaceHolder: "head:after",
-            aoColumns: [ 
-                { type: "text" },                                               // Famille
-                { type: "text" },                                               // CD_REF
-                { type: "text" },                                               // Nom scientifique 
-                { type: "text" },                                               //  
-				{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
-			]
-		});		
 		oTable.fnSort( [ [2,'desc'] ] );		
-		oTable2.fnSort( [ [2,'desc'] ] );		
+
+		include("js/user.js");
+				
 		} else {
 		oTable.fnClearTable (false);
 		oTable.fnDraw ();
