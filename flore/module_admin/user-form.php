@@ -144,9 +144,9 @@ if (isset($_GET['id']) & !empty($_GET['id']))                                   
         echo ("<label class=\"preField\">Prénom*, Nom*</label><input type=\"text\" name=\"prenom\" id=\"prenom\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"prenom")."\" /> <input type=\"text\" name=\"nom\" id=\"nom\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"nom")."\" /><br>");
         echo ("<label class=\"preField\">Login*, Mot de passe* </label>");
 		
-		if ($id == $_GET["id_user"]) echo ("<input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"40\" value=\"".pg_result($result,0,"login")."\" /> ");
+		if ($id == $_GET["id_user"] OR $niveau['all'] >= 255) echo ("<input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"40\" value=\"".pg_result($result,0,"login")."\" /> ");
 			else echo ("<input disabled style=\"background-color:F0F0F0;\" type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"40\" value=\"".pg_result($result,0,"login")."\" /> ");
-		if ($id == $_GET["id_user"]) echo ("<input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"pw")."\" /><br>");
+		if ($id == $_GET["id_user"] OR $niveau['all'] >= 255) echo ("<input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"pw")."\" /><br>");
 			else echo("<input disabled style=\"background-color:F0F0F0;\" type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" value=\"---privé---\" /><br>");
         echo ("<label class=\"preField\">Email</label><input type=\"text\" name=\"email\" id=\"email\" style=\"width:30em;\" maxlength=\"70\" value=\"".pg_result($result,0,"email")."\" /><br>");
         echo ("<label class=\"preField\">Site WEB</label><input type=\"text\" name=\"web\" id=\"web\" style=\"width:30em;\" maxlength=\"55\" value=\"".pg_result($result,0,"web")."\" /><br>");

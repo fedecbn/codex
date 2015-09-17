@@ -279,11 +279,12 @@ $(document).ready(function(){
             "aaSorting": [[1,'asc']],
             "sDom": '<"top"fl>rt<"bottom"ip>',
         	"aoColumns": [
-        		{ "sWidth": "5%"},                                            // Code
-        		{ "sWidth": "11%"},
-        		{ "sWidth": "11%"},
-        		{ "sWidth": "11%"},
+        		{ "sWidth": "6%"},                                            // Code
+        		{ "sWidth": "7%"},
+        		{ "sWidth": "7%"},
         		{ "sWidth": "12%"},
+        		{ "sWidth": "12%"},
+        		{ "sWidth": "6%"},
         		{ "sWidth": "6%"},                                            // Niveau
         		{ "sWidth": "6%"},                                            // Niveau
         		{ "sWidth": "6%"},                                            // Niveau
@@ -303,6 +304,7 @@ $(document).ready(function(){
                     { type: "text" },                                           // Nom
                     { type: "text" },                                           // Prénom
                     { type: "text" },                                           // CBN
+                    { type: "text" },                                           // Login
                     { type: "text" },                                           // Login
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },

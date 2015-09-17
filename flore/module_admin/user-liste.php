@@ -20,7 +20,7 @@ include_once ("commun.inc.php");
 //------------------------------------------------------------------------------ VAR.
 // $niveau=$_SESSION['niveau'];
 $table="utilisateur";
-$aColumns = array('id_user','prenom','nom','lib_cbn','login','niveau_lr','niveau_eee','niveau_catnat','niveau_refnat','niveau_lsi','ref_lr','ref_eee','ref_catnat','ref_refnat','ref_lsi');
+$aColumns = array('id_user','prenom','nom','lib_cbn','email','tel_bur','niveau_lr','niveau_eee','niveau_catnat','niveau_refnat','niveau_lsi','ref_lr','ref_eee','ref_catnat','ref_refnat','ref_lsi');
 $sIndexColumn = "id_user";
 $ouinon_txt=array("","<b>X</b>");
 
@@ -87,7 +87,7 @@ if ($ref['all'] === 'f' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_
 elseif ($ref['all'] === 't' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
 else $where1="WHERE 1=1" ;
 
-$query="SELECT count(*) OVER() AS total_count,u.id_user,u.prenom,u.nom,c.lib_cbn,u.login,u.niveau_lr,u.niveau_eee,u.niveau_catnat,u.niveau_refnat,u.niveau_lsi,u.ref_lr,u.ref_eee,u.ref_catnat,u.ref_refnat,u.ref_lsi
+$query="SELECT count(*) OVER() AS total_count,u.id_user,u.prenom,u.nom,c.lib_cbn,u.email,u.tel_bur,u.niveau_lr,u.niveau_eee,u.niveau_catnat,u.niveau_refnat,u.niveau_lsi,u.ref_lr,u.ref_eee,u.ref_catnat,u.ref_refnat,u.ref_lsi
 FROM applications.utilisateur AS u
 LEFT JOIN referentiels.cbn AS c ON c.id_cbn=u.id_cbn
 $where1 ".$sWhere." ".$sOrder." ".$sLimit;
@@ -112,7 +112,8 @@ $iTotal = $aResultTotal;
 		$sOutput .= '"'.str_replace('"', '\"', $row['prenom']).'",';
 		$sOutput .= '"'.str_replace('"', '\"', $row['nom']).'",';
 		$sOutput .= '"'.$row['lib_cbn'].'",';
-		$sOutput .= '"'.str_replace('"', '\"', $row['login']).'",';
+		$sOutput .= '"'.str_replace('"', '\"', $row['email']).'",';
+		$sOutput .= '"'.str_replace('"', '\"', $row['tel_bur']).'",';
 		foreach ($rub as $key => $val)
 			$sOutput .= '"'.$user_level[$row['niveau_'.$key]].'",';
 		foreach ($rub as $key => $val)	{

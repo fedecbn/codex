@@ -356,7 +356,10 @@ $langliste['fr']['admin-user-liste-popup'][]="";
 $langliste['fr']['admin-user-liste'][]="Institution";
 $langliste['fr']['admin-user-liste-popup'][]="";
 
-$langliste['fr']['admin-user-liste'][]="Login";
+$langliste['fr']['admin-user-liste'][]="Email";
+$langliste['fr']['admin-user-liste-popup'][]="";
+
+$langliste['fr']['admin-user-liste'][]="Téléphone fixe";
 $langliste['fr']['admin-user-liste-popup'][]="";
 
 $langliste['fr']['admin-user-liste'][]="Niveau LR";

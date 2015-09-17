@@ -50,11 +50,13 @@ if (!empty($id))
 {
 $query_niveau = "";$query_ref = "";
 foreach ($rub as $key => $val)	{
-	if (!empty($ref[$key])) $query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
-	if (!empty($ref[$key])) $query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
+	if ($ref[$key] === 't' OR $niveau['all'] >= 255) $query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
+	if ($ref[$key] === 't' OR $niveau['all'] >= 255) $query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
 	}
+var_dump($ref);
+
 /*cas des modif de référent sur d'autres users*/
-if ($id == $id_user) $code = "login=".sql_format ($_POST["login"]).",pw=".sql_format ($_POST["pw"]).","; else $code = "";
+if ($id == $id_user OR $niveau['all'] >= 255) $code = "login=".sql_format ($_POST["login"]).",pw=".sql_format ($_POST["pw"]).","; else $code = "";
 	
 $query="UPDATE ".SQL_schema_app.".utilisateur SET 
 	id_cbn=".sql_format_num ($_POST["id_cbn"]).",
