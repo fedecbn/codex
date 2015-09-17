@@ -83,7 +83,7 @@ For ( $i=0 ; $i<count($aColumns) ; $i++ )                                       
 	}
 }
 //------------------------------------------------------------------------------ QUERY
-if ($ref['all'] === 'f' AND $niveau['all'] < 255) $where1="WHERE u.id_user = '$id_user'";
+if ($ref['all'] === 'f' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
 elseif ($ref['all'] === 't' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
 else $where1="WHERE 1=1" ;
 
@@ -124,7 +124,8 @@ $iTotal = $aResultTotal;
 		else $sOutput .= '"'.str_replace('"', '\"', $row['niveau']).'",';
 */
         // if ($niveau['all'] < 255 AND $ref['all'] == 'f') $sOutput .= '""';
-        if ($niveau['all'] < 255) $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
+        if ($niveau['all'] < 255 AND $row['id_user'] != $id_user AND $ref['all'] === 'f') $sOutput .= '""';
+        elseif (($niveau['all'] < 255 AND $row['id_user'] == $id_user) OR ($niveau['all'] < 255 AND $ref['all'] === 't')) $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
         else $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>"'; 
 		$sOutput .= "],";
 	}
