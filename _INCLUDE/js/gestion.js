@@ -394,6 +394,8 @@ if ( $("#mode").val() == 'liste') {
 	$( "#enregistrer-dialog" ).hide();
 
 }
+
+
 //------------------------------------------------------------------------------ Suppression (v3)
 
     function deleteFunc (titre,dialog,dataTable,delUrl,id,sData,mode) {

@@ -220,32 +220,22 @@
                 { type: "text" },                                               // CD_REF
                 { type: "text" },                                               // Nom scientifique 
                 { type: "select", values: ['ES','SSES','VAR','SVAR','FO','SSFO']}, // Rang
-                // { type: "text" },                                               //  
                 { type: "select", values: [{ value: 1, label: 'Indigène'},{ value: 2, label: 'Cryptogène'},{ value: 3, label: 'Exotique'}] },                                               //  
-//                { type: "text" },                                               //  
-//                { type: "text" },                                               //  
-//                { type: "text" },                                               //  
                 { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
                 { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                // { type: "text" },                                               //  
                 { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                // { type: "text" },                                               //  
                 { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                // { type: "text" },                                               //  
                 { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                // { type: "text" },                                               //  
-                // { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                    //  
                 { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
                 { type: "text" },                                               //  
                 { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
                 { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
                 { type: "text" },
                 { type: "text" },
-//              { type: "select", values: ['EX','EW','RE','CR','CR*','EN','VU','NT','LC','DD','NA','NE']}, // cat_fin
                 { type: "select", values: [{ value: 1, label: 'à réaliser'},{ value: 2, label: 'en cours'},{ value: 3, label: 'réalisée'}]}                                               //  
 			]
 		});        

@@ -17,6 +17,7 @@ if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 //------------------------------------------------------------------------------ VAR.
 // $niveau=$_SESSION['niveau'];
 $id_user=$_SESSION['id_user'];
+$id=$_SESSION['id'];
 $config=$_SESSION['id_config'];
 $lang_select=$_COOKIE['lang_select'];
 $mode = isset($_GET['m']) ? $_GET['m'] : "general";
@@ -147,7 +148,12 @@ echo ("</div>");
 	break;
 //------------------------------------------------------------------------------ #Envoi des mots de passes (Super Admin)
 	 case "mdp" : {
+
+	$sujet = "[FCBN] Accès à la plateforme CODEX";
+	$select = $_GET['select'];
 	
+	if (!empty ($select) AND strpos($select,'&') == null) 
+	{
 	$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi
 	    FROM applications.utilisateur a
 		JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
@@ -156,72 +162,45 @@ echo ("</div>");
 		JOIN (SELECT id_user, lib as refnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_refnat = cd) as wxc ON wxc.id_user = a.id_user
 		JOIN (SELECT id_user, lib as catnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_catnat = cd) as zer ON zer.id_user = a.id_user
 		JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user
-		;
+		WHERE a.id_user = '$select';
 		";
-	 
+		
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	$row = pg_fetch_array($result);
+	$message_html = msg_pw($row);	
+	// echo $message_html;
+	// echo $row['email'];
+	envoi_mail($row['email'], $sujet, $message_html, "");
 	
-	$sujet = "[FCBN] Accès à la plateforme CODEX";
-	while ($row = pg_fetch_array($result))
-		{
-		$row['nom'] = $row['nom'] == null? $row['nom']= "<i>--vide--</i>":$row['nom'];
-		$row['prenom'] = $row['prenom'] == null? $row['prenom']= "<i>--vide--</i>":$row['prenom'];
-		$row['lib_cbn'] = $row['lib_cbn'] == null? $row['lib_cbn']= "<i>--vide--</i>":$row['lib_cbn'];
-		$row['tel_bur'] = $row['tel_bur'] == null? $row['tel_bur']= "<i>--vide--</i>":$row['tel_bur'];
-		$row['tel_port'] = $row['tel_port'] == null? $row['tel_port']= "<i>--vide--</i>":$row['tel_port'];
-		$row['descr'] = $row['descr'] == null? $row['descr']= "<i>--vide--</i>":$row['descr'];
-		$row['email'] = $row['email'] == null? $row['email']= "<i>--vide--</i>":$row['email'];
-		$row['refnat'] = $row['refnat'] == null? $row['refnat']= "<i>--vide--</i>":$row['refnat'];
-		$row['catnat'] = $row['catnat'] == null? $row['catnat']= "<i>--vide--</i>":$row['catnat'];
-		$row['lr'] = $row['lr'] == null? $row['lr']= "<i>--vide--</i>":$row['lr'];
-		$row['eee'] = $row['eee'] == null? $row['eee']= "<i>--vide--</i>":$row['eee'];
-		$row['lsi'] = $row['lsi'] == null? $row['lsi']= "<i>--vide--</i>":$row['lsi'];
+	} elseif (strlen($select) > 0) {
+		$pairs=explode ("&",$select);
+		foreach ($pairs as $key=>$value){
+			$id = ltrim ($value,"id=");
+			$where .= "a.id_user='".$id."' OR ";
+			}
+		$where=rtrim ($where,"OR ");
+
+		$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi
+			FROM applications.utilisateur a
+			JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
+			JOIN (SELECT id_user, lib as lr FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lr = cd) as aze ON aze.id_user = a.id_user
+			JOIN (SELECT id_user, lib as eee FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_eee = cd) as qsd ON qsd.id_user = a.id_user
+			JOIN (SELECT id_user, lib as refnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_refnat = cd) as wxc ON wxc.id_user = a.id_user
+			JOIN (SELECT id_user, lib as catnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_catnat = cd) as zer ON zer.id_user = a.id_user
+			JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user
+			WHERE $where;
+			";
+		$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 		
-		$message_html = "<html><head></head><body>
-			---CECI EST UN MAIL AUTOMATIQUE---
-		<br>----MERCI DE NE PAS Y REPONDRE----
-			<br><br>Bonjour,
-			<br><br> Vous trouverez ci-joint vos identifiants personnalisés de connexion pour accéder à l'outil Codex, ainsi que la description des informations de votre profil.
-			<br> Pour accéder directement à l'outil, veuillez suivre ce lien : <a href=\"codex.fcbn.fr\">codex.fcbn.fr</a>
-			<br> Retrouvez également la liste des outils de la FCBN à l'adresse suivante : <a href=\"services.fcbn.fr\">services.fcbn.fr</a>
-			<br> Si vous notez une erreur dans vos informations personnelles, merci d'envoyer un mail à <a href=\"mailto:informatique@fcbn.fr\">informatique@fcbn.fr</a> à ce sujet.
-			
-			<br><br>Retrouvez la note d’information qui présente l'outil au lien suivant : <a href = \"".str_replace("www.","",$_SERVER["SERVER_NAME"])."/flore/home/150915_Note_ouverture_Codex.pdf\">".str_replace("www.","",$_SERVER["SERVER_NAME"])."/flore/home/150915_Note_ouverture_Codex.pdf</a>
-			
-			<br><br><b>Identifiants de connexion</b>
-			<table cellpadding=\"5\" border =\"solid 1px black\">
-			<tr><td> Login </td><td>".$row['login']."</td></tr>
-			<tr><td> MdP </td><td>".$row['pw']."</td></tr>
-			</table>
-			
-			<br><br> <b>Informations professionnelles</b>
-			<table cellpadding=\"5\" border =\"solid 1px black\">
-			<tr><td> Nom </td><td>".$row['nom']."</td></tr>
-			<tr><td> Prénom </td><td>".$row['prenom']."</td></tr>
-			<tr><td> CBN </td><td>".$row['lib_cbn']."</td></tr>
-			<tr><td> Tel bureau </td><td>".$row['tel_bur']."</td></tr>
-			<tr><td> Tel portable </td><td>".$row['tel_port']."</td></tr>
-			<tr><td> Email </td><td>".$row['email']."</td></tr>
-			<tr><td> Description </td><td>".$row['descr']."</td></tr>
-			</table>
-			
-			<br><br> <b> Droit d'accès</b>
-			<table cellpadding=\"5\" border =\"solid 1px black\">
-			<tr><td> Rôle pour la rubrique \"Référentiel national\" </td><td>".$row['refnat']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Catalogue national\" </td><td>".$row['catnat']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$row['lr']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$row['eee']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$row['lsi']."</td></tr>
-			</table>
-			<br><br> Cordialement,
-			<br><br> Thomas Milon
-			
-			</body></html>";
-		
-		// echo $message_html;
-		envoi_mail($row['email'], $sujet, $message_html, "");
+		while ($row = pg_fetch_array($result))
+			{
+			$message_html = msg_pw($row);
+			echo $message_html;
+			echo $row['email'];
+			// envoi_mail($row['email'], $sujet, $message_html, "");
+			}
 		}
-	 }
+	}
 	 break;
 }
 echo ("</div>");

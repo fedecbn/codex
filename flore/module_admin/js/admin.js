@@ -120,12 +120,14 @@ $(document).ready(function(){
 		});
 
 	$( "#mdp-button" )
-        .button({
-            text: true
-        })
-        .click(function() {
-            window.location.replace ('index.php?m=mdp');				
-		});
+		.button({	
+			text: true 
+		})
+	.click(function() {
+		var sData = user_oTable.$('input').serialize();
+		mdpFunc ("Envoyer les mots de passe",'#admin-user-dialog',user_oTable,"index.php","",sData,"mdp");
+	});
+
 
 //------------------------------------------------------------------------------ UI / Boutons / LOG
 
@@ -279,23 +281,24 @@ $(document).ready(function(){
             "aaSorting": [[1,'asc']],
             "sDom": '<"top"fl>rt<"bottom"ip>',
         	"aoColumns": [
-        		{ "sWidth": "6%"},                                            // Code
+        		{ "sWidth": "4%"},                                            // Code
         		{ "sWidth": "7%"},
         		{ "sWidth": "7%"},
-        		{ "sWidth": "12%"},
-        		{ "sWidth": "12%"},
+        		{ "sWidth": "10%"},
+        		{ "sWidth": "13%"},
         		{ "sWidth": "6%"},
         		{ "sWidth": "6%"},                                            // Niveau
         		{ "sWidth": "6%"},                                            // Niveau
         		{ "sWidth": "6%"},                                            // Niveau
         		{ "sWidth": "6%"},                                            // Niveau
         		{ "sWidth": "6%"},                                            // Niveau
-        		{ "sWidth": "3%"},                                            // ref
-        		{ "sWidth": "3%"},                                            // ref
-        		{ "sWidth": "3%"},                                            // ref
-        		{ "sWidth": "3%"},                                            // ref
-        		{ "sWidth": "3%"},                                            // ref
-        		{ "sClass": "center","sWidth": "5%","bSortable": false }      // Actions
+        		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "2%"},                                            // ref
+        		{ "sClass": "center","sWidth": "5%","bSortable": false },      // Actions
+        		{ "sClass": "center","sWidth": "3%","bSortable": false }      // Actions
             ]
             }).columnFilter({
                 sPlaceHolder: "head:after",
@@ -332,6 +335,12 @@ $(document).ready(function(){
         deleteFunc ("Supprimer un utilisateur",'#admin-user-dialog',user_oTable,"user-del.php",$(this).attr('id'));  
 		return (false);
 	});
+
+    $('#admin-user-liste').on("click",".admin-user-mdp", function ($e) {
+        mdpFunc ("Envoyer le mdp",'#admin-user-dialog',user_oTable,"index.php","",$(this).attr('id'),"mdp");  
+		return (false);
+	});
+
 
 //------------------------------------------------------------------------------ LISTE / suivis
 
@@ -602,6 +611,48 @@ $(document).ready(function(){
         }
     }
 
+	//------------------------------------------------------------------------------ mot de passe (v3)
+
+    function mdpFunc (titre,dialog,dataTable,mdpUrl,id,sData,mode) {
+    	$(dialog).dialog({
+            open: function ()
+            {
+                if (id != '' )
+                    $(this).html("<br><center>ID = "+id+"<br><b>Confirmer l'envoie ?<b></center>");
+                else
+                    $(this).html("<br><center><b>Confirmer l'envoie ?<b></center>");
+            },         
+            title: titre,
+            modal: true,
+            position:['middle',200],
+        	width: 300,
+    		height: 160,
+        	resizable: false,
+			buttons: {
+        		"Annuler": function() {
+        			$(this).dialog( "close" );
+        		},
+        		"Envoyer": function() {
+                    $.ajax({
+                        url: mdpUrl, 
+                        type: "GET",
+                        data: {
+                            select : sData,    
+                            id: id,    
+                            m: mode    
+                        },       
+                        error: function() {
+                            alert("mdpFunc > Erreur AJAX");
+                        },
+                        success: function(msg) {
+                            if (dataTable != '' ) dataTable.fnDraw();
+                        }
+                    });
+        			$(this).dialog( "close" );
+            	}
+        	}
+        });
+    }
 //------------------------------------------------------------------------------ Suppression (v2)
 
     function deleteFunc (titre,dialog,dataTable,delUrl,id) {

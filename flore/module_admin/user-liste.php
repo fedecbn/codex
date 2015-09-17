@@ -125,9 +125,13 @@ $iTotal = $aResultTotal;
 		else $sOutput .= '"'.str_replace('"', '\"', $row['niveau']).'",';
 */
         // if ($niveau['all'] < 255 AND $ref['all'] == 'f') $sOutput .= '""';
-        if ($niveau['all'] < 255 AND $row['id_user'] != $id_user AND $ref['all'] === 'f') $sOutput .= '""';
-        elseif (($niveau['all'] < 255 AND $row['id_user'] == $id_user) OR ($niveau['all'] < 255 AND $ref['all'] === 't')) $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
-        else $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>"'; 
+        if ($niveau['all'] < 255 AND $row['id_user'] != $id_user AND $ref['all'] === 'f') 
+			$sOutput .= '"",';
+        elseif (($niveau['all'] < 255 AND $row['id_user'] == $id_user) OR ($niveau['all'] < 255 AND $ref['all'] === 't')) 
+			$sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",';
+        else 
+			$sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a><a class=admin-user-mdp id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/email1.png\" title=\"Envoyer\" ></a>",'; 
+		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['id_user'].'\" >"';
 		$sOutput .= "],";
 	}
 	$sOutput = substr_replace ($sOutput,"",-1);
