@@ -168,8 +168,6 @@ echo ("</div>");
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	$row = pg_fetch_array($result);
 	$message_html = msg_pw($row);	
-	// echo $message_html;
-	// echo $row['email'];
 	envoi_mail($row['email'], $sujet, $message_html, "");
 	
 	} elseif (strlen($select) > 0) {
@@ -195,9 +193,7 @@ echo ("</div>");
 		while ($row = pg_fetch_array($result))
 			{
 			$message_html = msg_pw($row);
-			echo $message_html;
-			echo $row['email'];
-			// envoi_mail($row['email'], $sujet, $message_html, "");
+			envoi_mail($row['email'], $sujet, $message_html, "");
 			}
 		}
 	}
