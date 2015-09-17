@@ -28,6 +28,12 @@ $ouinon_txt=array("","<b>X</b>");
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
+/*id_cbn du USER*/
+$query="SELECT id_cbn FROM applications.utilisateur WHERE id_user = '$id_user'";
+$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+$row = pg_fetch_row($result);
+$id_cbn = $row[0];
+
 //------------------------------------------------------------------------------ MAIN
 	
 $sLimit = "";                                                                   // Paging
@@ -77,10 +83,14 @@ For ( $i=0 ; $i<count($aColumns) ; $i++ )                                       
 	}
 }
 //------------------------------------------------------------------------------ QUERY
+if ($ref['all'] === 'f' AND $niveau['all'] < 255) $where1="WHERE u.id_user = '$id_user'";
+elseif ($ref['all'] === 't' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
+else $where1="WHERE 1=1" ;
+
 $query="SELECT count(*) OVER() AS total_count,u.id_user,u.prenom,u.nom,c.lib_cbn,u.login,u.niveau_lr,u.niveau_eee,u.niveau_catnat,u.niveau_refnat,u.niveau_lsi,u.ref_lr,u.ref_eee,u.ref_catnat,u.ref_refnat,u.ref_lsi
-FROM ".SQL_schema_app.".utilisateur AS u
-LEFT JOIN ".SQL_schema_ref.".cbn AS c ON c.id_cbn=u.id_cbn
-WHERE 1=1 ".$sWhere." ".$sOrder." ".$sLimit;
+FROM applications.utilisateur AS u
+LEFT JOIN referentiels.cbn AS c ON c.id_cbn=u.id_cbn
+$where1 ".$sWhere." ".$sOrder." ".$sLimit;
 
 // echo  $query;
 
@@ -122,7 +132,8 @@ $iTotal = $aResultTotal;
         if ($row['niveau'] == 255) $sOutput .= '"<img src=\"../../_GRAPH/admin.png\" border=\"0\" title=\"Admin.\" />",';
 		else $sOutput .= '"'.str_replace('"', '\"', $row['niveau']).'",';
 */
-        if ($niveau['all'] < 255 or $ref['all'] != 't') $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
+        // if ($niveau['all'] < 255 AND $ref['all'] == 'f') $sOutput .= '""';
+        if ($niveau['all'] < 255) $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>"';
         else $sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>"'; 
 		$sOutput .= "],";
 	}
@@ -131,6 +142,7 @@ $iTotal = $aResultTotal;
 
 	echo $sOutput;
 
+	// var_dump($ref);
 //------------------------------------------------------------------------------ FONCTIONS
 
 ?>

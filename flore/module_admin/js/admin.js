@@ -116,7 +116,7 @@ $(document).ready(function(){
             text: true
         })
         .click(function() {
-            metaForm ("Ajouter un utilisateur",670,390,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,"","");
+            metaForm ("Ajouter un utilisateur",670,390,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,"",$(this).attr('name'));
 		});
 
 	$( "#mdp-button" )

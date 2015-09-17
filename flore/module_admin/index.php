@@ -93,18 +93,18 @@ echo ("<div id=\"stat\">");
 echo ("</div>");
 //------------------------------------------------------------------------------ #Utilisateur
 echo ("<div id=\"user\">");
-    if ($niveau['all'] >= 255 OR $ref['all'] == 't') {
+    // if ($niveau['all'] >= 255 OR $ref['all'] == 't') {
         $id_page="admin-user";
         echo ("<div id=\"titre2\">");
             echo ($lang[$lang_select]["titre_".$id_page]);
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
-        echo ("<button id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button> ");
+		if ($ref['all'] === 't' OR $niveau['all'] > 255) echo ("<button name = \"$id_user\" id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button> ");
         if ($niveau['all'] >= 512) echo ("<button id=\"mdp-button\">".$lang[$lang_select]['mdp']."</button> ");
 		echo ("</div>");
         echo ("<div id=\"".$id_page."-dialog\"></div>");
         aff_table ($id_page."-liste",true,false);
-    } 
+    // } 
 echo ("</div>");
 //------------------------------------------------------------------------------ #Suivi des modifications
 echo ("<div id=\"suivi\">");

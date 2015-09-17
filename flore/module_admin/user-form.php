@@ -54,6 +54,8 @@ if (pg_num_rows ($result)) {
 	$blocked['refnat']= ($ref['refnat'] == 't' OR $niveau['refnat'] >= 255) ? "" : "disabled";
 	}
 
+// var_dump($niveau);
+// var_dump($ref);
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
 <script type="text/javascript" language="javascript" >
@@ -113,11 +115,19 @@ $(document).ready(function(){
 <?php
 //------------------------------------------------------------------------------ REF.
 $cbn[0]="";
-$query="SELECT * FROM ".SQL_schema_ref.".cbn;";
+$query="SELECT * FROM referentiels.cbn;";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
     $cbn[$row["id_cbn"]]=$row["lib_cbn"];
 pg_free_result ($result);
+
+/*id_cbn du USER*/
+$query="SELECT id_cbn FROM applications.utilisateur WHERE id_user = '".$_GET["id_user"]."'";
+$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+$row = pg_fetch_row($result);
+$id_cbn = $row[0];
+
+$rub = array('lr' => 'Niveau LR','eee' => 'Niveau EEE','catnat' => 'Niveau CATNAT','refnat' => 'Niveau REF NAT','lsi' => 'Niveau LSI');	
 
 
 //------------------------------------------------------------------------------ MAIN
@@ -132,52 +142,34 @@ if (isset($_GET['id']) & !empty($_GET['id']))                                   
         echo ("<fieldset><LEGEND> Utilisateur </LEGEND>");
         echo ("<label class=\"preField\">Code</label><input type=\"text\" size=\"7\" maxlength=\"6\" value=\"".$id."\" readonly/><br>");
         echo ("<label class=\"preField\">Prénom*, Nom*</label><input type=\"text\" name=\"prenom\" id=\"prenom\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"prenom")."\" /> <input type=\"text\" name=\"nom\" id=\"nom\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"nom")."\" /><br>");
-        echo ("<label class=\"preField\">Login*, Mot de passe* </label><input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"login")."\" /> <input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"pw")."\" /><br>");
+        echo ("<label class=\"preField\">Login*, Mot de passe* </label><input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"40\" value=\"".pg_result($result,0,"login")."\" /> <input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"pw")."\" /><br>");
         echo ("<label class=\"preField\">Email</label><input type=\"text\" name=\"email\" id=\"email\" style=\"width:30em;\" maxlength=\"70\" value=\"".pg_result($result,0,"email")."\" /><br>");
         echo ("<label class=\"preField\">Site WEB</label><input type=\"text\" name=\"web\" id=\"web\" style=\"width:30em;\" maxlength=\"55\" value=\"".pg_result($result,0,"web")."\" /><br>");
         echo ("<label class=\"preField\">Tél. fixe, portable</label><input type=\"text\" name=\"tel_bur\" id=\"tel_bur\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"tel_bur")."\" /> <input type=\"text\" name=\"tel_port\" id=\"tel_port\" size=\"20\" maxlength=\"20\"  value=\"".pg_result($result,0,"tel_port")."\" /><br>");
-        echo ("<label class=\"preField\">Institution</label><select name=\"id_cbn\" >");
-        foreach ($cbn as $key => $value) 
-            echo ("<option value=\"$key\" ".($key == pg_result($result,0,"id_cbn") ? "SELECTED" : "").">".$value."</option>");
+        
+		echo ("<label class=\"preField\">Institution</label><select name=\"id_cbn\" >");
+		if ($id_cbn == 16)	{
+			foreach ($cbn as $key => $value) echo ("<option value=\"$key\" ".($key == pg_result($result,0,"id_cbn") ? "SELECTED" : "").">".$value."</option>");
+			} else {echo ("<option value=\"$id_cbn\" SELECTED>".$cbn[$id_cbn]."</option>");}
         echo ("</select><br>");
-		
-		
-		
-        echo ("<label class=\"preField\">Niveau LR</label><select ".$blocked['lr']." name=\"niveau_lr\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" ".($key == pg_result($result,0,"niveau_lr") ? "SELECTED" : "").">".$value."</option>");
-        echo ("</select>");
-        if ($ref['lr'] == 't' OR $niveau['lr'] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_lr\" id=\"ref_lr\" value=\"true\" "); if (pg_result($result,0,"ref_lr") == "t") echo "checked/>"; else echo "/>";}
-        echo ("<br>");
-        echo ("<label class=\"preField\">Niveau EEE</label><select ".$blocked['eee']." name=\"niveau_eee\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" ".($key == pg_result($result,0,"niveau_eee") ? "SELECTED" : "").">".$value."</option>");
-        echo ("</select>");
-        if ($ref['eee'] == 't' OR $niveau['eee'] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_eee\" id=\"ref_eee\" value=\"true\" "); if (pg_result($result,0,"ref_eee") == "t") echo "checked/>"; else echo "/>";}
-        echo ("<br>");
-        echo ("<label class=\"preField\">Niveau CAT_NAT</label><select ".$blocked['catnat']." name=\"niveau_catnat\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" ".($key == pg_result($result,0,"niveau_catnat") ? "SELECTED" : "").">".$value."</option>");
-        echo ("</select>");
-        if ($ref['catnat'] == 't' OR $niveau['catnat'] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_catnat\" id=\"ref_catnat\" value=\"true\" "); if (pg_result($result,0,"ref_catnat") == "t") echo "checked/>"; else echo "/>";}
-        echo ("<br>");
-        echo ("<label class=\"preField\">Niveau REF NAT</label><select ".$blocked['refnat']." name=\"niveau_refnat\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" ".($key == pg_result($result,0,"niveau_refnat") ? "SELECTED" : "").">".$value."</option>");
-        echo ("</select>");
-		if ($ref['refnat'] == 't' OR $niveau['refnat'] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_refnat\" id=\"ref_refnat\" value=\"true\" "); if (pg_result($result,0,"ref_refnat") == "t") echo "checked/>"; else echo "/>";}
-        echo ("<br>");
-        echo ("<label class=\"preField\">Niveau LSI</label><select ".$blocked['lsi']." name=\"niveau_lsi\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" ".($key == pg_result($result,0,"niveau_lsi") ? "SELECTED" : "").">".$value."</option>");
-        echo ("</select>");
-        if ($ref['lsi'] == 't' OR $niveau['lsi'] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_lsi\" id=\"ref_lsi\" value=\"true\" "); if (pg_result($result,0,"ref_lsi") == "t") echo "checked/>"; else echo "/>";}
-        echo ("<br>");
+
+	   /*Gestion des droits*/		
+		foreach ($rub as $id_rub => $nom_rub) {
+			echo ("<label class=\"preField\">$nom_rub</label><select ".$blocked[$id_rub]." name=\"niveau_".$id_rub."\" >");
+			foreach ($user_level as $key => $value) 
+				echo ("<option ".($niveau[$id_rub] >= $key ? "" : "disabled")." value=\"$key\" ".($key == pg_result($result,0,"niveau_".$id_rub."") ? "SELECTED" : "").">".$value."</option>");
+			echo ("</select>");
+			if ($ref[$id_rub] == 't' OR $niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\" "); if (pg_result($result,0,"ref_".$id_rub."") == "t") echo "checked/>"; else echo "/>";}
+			echo ("<br>");
+			}
+				
         echo ("<label class=\"preField\">Description</label><textarea name=\"descr\" id=\"descr\" style=\"width:30em;\" rows=\"1\">".pg_result($result,0,"descr")."</textarea>");
         echo ("</fieldset>");
     }
     else die ("ID ".$id." > Pas de résultats !");
-} else {                                                                        // ADD
+} 
+else 
+{                                                                        // ADD
         echo ("<fieldset><LEGEND> Utilisateur </LEGEND>");
         echo ("<label class=\"preField\">Prénom*, Nom*</label><input type=\"text\" name=\"prenom\" id=\"prenom\" size=\"20\" maxlength=\"20\" /> <input type=\"text\" name=\"nom\" id=\"nom\" size=\"20\" maxlength=\"20\" /><br>");
         echo ("<label class=\"preField\">Login*, Mot de passe* </label><input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"20\" /> <input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" /><br>");
@@ -185,29 +177,21 @@ if (isset($_GET['id']) & !empty($_GET['id']))                                   
         echo ("<label class=\"preField\">Site WEB</label><input type=\"text\" name=\"web\" id=\"web\" style=\"width:30em;\" maxlength=\"55\" /><br>");
         echo ("<label class=\"preField\">Tél. fixe, portable</label><input type=\"text\" name=\"tel_bur\" id=\"tel_bur\" size=\"20\" maxlength=\"20\" /> <input type=\"text\" name=\"tel_port\" id=\"tel_port\" size=\"20\" maxlength=\"20\" /><br>");
         echo ("<label class=\"preField\">Institution</label><select name=\"id_cbn\" >");
-        foreach ($cbn as $key => $value) 
-            echo ("<option value=\"$key\" >".$value."</option>");
+		if ($id_cbn == 16)	{
+			foreach ($cbn as $key => $value) echo ("<option value=\"$key\">".$value."</option>");
+			} else {echo ("<option value=\"$id_cbn\" SELECTED>".$cbn[$id_cbn]."</option>");}
         echo ("</select><br>");
-        echo ("<label class=\"preField\">Niveau LR</label><select name=\"niveau_lr\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" >".$value."</option>");
-        echo ("</select><br>");
-        echo ("<label class=\"preField\">Niveau EEE</label><select name=\"niveau_eee\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" >".$value."</option>");
-        echo ("</select><br>");
-        echo ("<label class=\"preField\">Niveau CAT NAT</label><select name=\"niveau_catnat\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" >".$value."</option>");
-        echo ("</select><br>");
-        echo ("<label class=\"preField\">Niveau REF NAT</label><select name=\"niveau_refnat\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" >".$value."</option>");
-        echo ("</select><br>");
-        echo ("<label class=\"preField\">Niveau LSI</label><select name=\"niveau_lsi\" >");
-        foreach ($user_level as $key => $value) 
-            echo ("<option value=\"$key\" >".$value."</option>");
-        echo ("</select><br>");
+       
+	   /*Gestion des droits*/
+		foreach ($rub as $id_rub => $nom_rub) {
+			echo ("<label class=\"preField\">$nom_rub</label><select ".$blocked[$id_rub]." name=\"niveau_".$id_rub."\" >");
+			foreach ($user_level as $key => $value) 
+				echo ("<option ".($niveau[$id_rub] >= $key ? "" : "disabled")." value=\"$key\" >".$value."</option>");
+			echo ("</select>");
+			if ($ref[$id_rub] == 't' OR $niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\"/>");}
+			echo ("<br>");
+			}
+
         echo ("<label class=\"preField\">Description</label><textarea name=\"descr\" id=\"descr\" style=\"width:30em;\" rows=\"1\" ></textarea>");
         echo ("</fieldset>");
 }
