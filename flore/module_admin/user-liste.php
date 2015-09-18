@@ -76,8 +76,12 @@ For ( $i=0 ; $i<count($aColumns) ; $i++ )                                       
 {
 	if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
 	{
-	if ($i == 5 or $i == 6 or $i == 7 or $i == 8 or $i == 9)
+	if ($i == 10 or $i == 6 or $i == 7 or $i == 8 or $i == 9)
 		$sWhere .= " AND ".$aColumns[$i]." = ".pg_escape_string($_GET['sSearch_'.$i])." ";
+	elseif ($i == 11 or $i == 12 or $i == 13 or $i == 14 or $i == 15) {
+		if (pg_escape_string($_GET['sSearch_'.$i]) == 'oui') $recherche = 'TRUE'; elseif (pg_escape_string($_GET['sSearch_'.$i]) == 'non') $recherche = 'FALSE';
+		$sWhere .= " AND ".$aColumns[$i]." = $recherche ";
+		}
 	else
     	$sWhere .= " AND ".$aColumns[$i]." LIKE '%".pg_escape_string($_GET['sSearch_'.$i])."%' ";
 	}
