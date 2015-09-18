@@ -1198,7 +1198,11 @@ function msg_pw($variable)
 {
 	foreach ($variable as $key => $val)
 		if ($val == null) $variable[$key] = "<i>--vide--</i>";
-		
+	
+	$tab_ref = array ('ref_lr','ref_eee','ref_lsi','ref_catnat','ref_refnat');
+	foreach ($tab_ref as $key => $value)
+		if ($variable[$value] === 't') $variable[$value] = "<td> Vous êtes référent sur cette rubrique </td>"; else $variable[$value] = "";
+	
 	$message = "<html><head></head><body>
 			---CECI EST UN MAIL AUTOMATIQUE---
 		<br>----MERCI DE NE PAS Y REPONDRE----
@@ -1229,16 +1233,18 @@ function msg_pw($variable)
 			
 			<br><br> <b> Droit d'accès</b>
 			<table cellpadding=\"5\" border =\"solid 1px black\">
-			<tr><td> Rôle pour la rubrique \"Référentiel national\" </td><td>".$variable['refnat']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Catalogue national\" </td><td>".$variable['catnat']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$variable['lr']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$variable['eee']."</td></tr>
-			<tr><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$variable['lsi']."</td></tr>
+			<tr><td> Rôle pour la rubrique \"Référentiel national\" </td><td>".$variable['refnat']."</td>".$variable['ref_refnat']."</tr>
+			<tr><td> Rôle pour la rubrique \"Catalogue national\" </td><td>".$variable['catnat']."</td>".$variable['ref_catnat']."</tr>
+			<tr><td> Rôle pour la rubrique \"Liste rouge\" </td><td>".$variable['lr']."</td>".$variable['ref_lr']."</tr>
+			<tr><td> Rôle pour la rubrique \"Liste EEE\" </td><td>".$variable['eee']."</td>".$variable['ref_eee']."</tr>
+			<tr><td> Rôle pour la rubrique \"Lettre Système d'information et géomatique\" </td><td>".$variable['lsi']."</td>".$variable['ref_lsi']."</tr>
 			</table>
 			<br><br> Cordialement,
 			<br><br> Thomas Milon
 			
 			</body></html>";
+			
+			echo $message;
 			
 			return $message;
 			

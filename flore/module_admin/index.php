@@ -154,7 +154,7 @@ echo ("</div>");
 	
 	if (!empty ($select) AND strpos($select,'&') == null) 
 	{
-	$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi
+	$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi,ref_lr, ref_eee, ref_lsi, ref_catnat, ref_refnat
 	    FROM applications.utilisateur a
 		JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
 		JOIN (SELECT id_user, lib as lr FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lr = cd) as aze ON aze.id_user = a.id_user
@@ -178,7 +178,7 @@ echo ("</div>");
 			}
 		$where=rtrim ($where,"OR ");
 
-		$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi
+		$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi,ref_lr, ref_eee, ref_lsi, ref_catnat, ref_refnat
 			FROM applications.utilisateur a
 			JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
 			JOIN (SELECT id_user, lib as lr FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lr = cd) as aze ON aze.id_user = a.id_user
