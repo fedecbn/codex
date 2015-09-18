@@ -118,7 +118,7 @@
 		});        
 		oTable.fnSort( [ [2,'desc'] ] );		
 
-		include("js/user.js");
+		include("../commun/js/user.js");
 				
 		} else {
 		oTable.fnClearTable (false);

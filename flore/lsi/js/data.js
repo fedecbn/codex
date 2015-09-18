@@ -102,8 +102,7 @@
 		}); 
 		oTable.fnSort( [ [7,'desc'] ] );
 		
-	include("js/user.js");
-			
+		include("../commun/js/user.js");			
 			
 	} else {
 		oTable.fnClearTable (false);
