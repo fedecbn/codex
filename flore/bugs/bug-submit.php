@@ -28,7 +28,6 @@ if (!empty ($id))                                                               
         if ($field!="id" ) $query.=$field."=".sql_format ($val).",";
         if ($field!="descr" ) $query.=$field."=".sql_format_quote ($val,'do').",";
         if ($field!="statut_descr" ) $query.=$field."=".sql_format_quote ($val,'do').",";
-        if ($field!="id" ) $query.=$field."=".sql_format ($val).",";
 		}
 	$query=rtrim ($query,",");
     $query.=" WHERE id_bug=".$id;
