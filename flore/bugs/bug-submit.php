@@ -32,8 +32,8 @@ if (!empty ($id))                                                               
 		}
 	$query=rtrim ($query,",");
     $query.=" WHERE id_bug=".$id;
-    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	echo $query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 }
 
 //------------------------------------------------------------------------------ FONCTIONS
