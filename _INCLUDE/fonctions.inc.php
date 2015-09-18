@@ -1243,11 +1243,8 @@ function msg_pw($variable)
 			<br><br> Thomas Milon
 			
 			</body></html>";
-			
-			echo $message;
-			
+				
 			return $message;
-			
 			}
 
 
