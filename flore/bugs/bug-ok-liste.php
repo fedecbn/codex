@@ -84,11 +84,11 @@ $iTotal = $aResultTotal;
         $sOutput .= '"'.date("d/m/Y", strtotime($row['date_bug'])).'",';
 		$sOutput .= '"'.str_replace('"', '\"', $row['auteur']).'",';
 		$sOutput .= '"<b>'.$rubriques_txt[$row['id_rubrique']].'</b>",';
-		$sOutput .= ''.json_encode($row['descr']).',';
+		$sOutput .= '"'.sql_format_quote($row['descr'],"undo_text").'",';
 		$sOutput .= '"<b>'.$statut_txt[$row['statut']].'</b>",';
 
 		if (strlen($row['statut_descr'])>1 ) 
-    		$sOutput .= ''.json_encode($row['statut_descr']).',';
+    		$sOutput .= '"'.sql_format_quote($row['statut_descr'],"undo_text").'",';
 		else 
 		    $sOutput .= '"",';
 		$sOutput .= '"'.$row['statut'].'",';
