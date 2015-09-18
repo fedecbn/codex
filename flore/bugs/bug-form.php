@@ -75,14 +75,14 @@ if (isset($_GET['id']) & !empty($_GET['id']))                                   
         for ($i=0;$i<sizeof ($rubriques_txt);$i++)
             echo ("<option value=\"$i\" ".($i == pg_result($result,0,"id_rubrique") ? "SELECTED" : "").">".$rubriques_txt[$i]."</option>");
         echo ("</select><br>");
-        echo ("<label class=\"preField\">Description</label><textarea name=\"descr\" id=\"descr\" style=\"width:30em;\" rows=\"2\">".pg_result($result,0,"descr")."</textarea><br>");
+        echo ("<label class=\"preField\">Description</label><textarea name=\"descr\" id=\"descr\" style=\"width:30em;\" rows=\"2\">".sql_format_quote(pg_result($result,0,"descr"),'undo_html')."</textarea><br>");
         echo ("</fieldset>");
         echo ("<fieldset><LEGEND> Gestion (ADMIN.)</LEGEND>");
         echo ("<label class=\"preField\">Statut</label><select id=\"statut\" name=\"statut\" >");
         for ($i=0;$i<sizeof ($statut_txt);$i++)
             echo ("<option value=\"$i\" ".($i == pg_result($result,0,"statut") ? "SELECTED" : "").">".$statut_txt[$i]."</option>");
         echo ("</select><br>");
-        echo ("<label class=\"preField\">Commentaire</label><textarea name=\"statut_descr\" id=\"statut_descr\" style=\"width:30em;\" rows=\"2\" >".pg_result($result,0,"statut_descr")."</textarea><br>");
+        echo ("<label class=\"preField\">Commentaire</label><textarea name=\"statut_descr\" id=\"statut_descr\" style=\"width:30em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"statut_descr"),'undo_html')."</textarea><br>");
         echo ("</fieldset>");
     }
     else die ("ID ".$id." > Pas de résultats !");
