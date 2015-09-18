@@ -128,6 +128,15 @@ $(document).ready(function(){
 		mdpFunc ("Envoyer les mots de passe",'#admin-user-dialog',user_oTable,"index.php","",sData,"mdp");
 	});
 
+	$( "#msg-button" )
+		.button({	
+			text: true 
+		})
+	.click(function() {
+		var sData = user_oTable.$('input').serialize();
+		metaForm ("Envoyer un message",670,390,'#admin-user-dialog',"user-msg.php","user-msg-submit.php",user_oTable,sData,$(this).attr('name'));
+	});
+
 
 //------------------------------------------------------------------------------ UI / Boutons / LOG
 

@@ -101,7 +101,8 @@ echo ("<div id=\"user\">");
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
 		if ($ref['all'] === 't' OR $niveau['all'] > 255) echo ("<button name = \"$id_user\" id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button> ");
-        if ($niveau['all'] >= 512) echo ("<button id=\"mdp-button\">".$lang[$lang_select]['mdp']."</button> ");
+        if ($niveau['all'] >= 255) echo ("<button id=\"mdp-button\">Envoi mot de passe</button> ");
+        if ($niveau['all'] >= 255) echo ("<button id=\"msg-button\">Envoi message</button> ");
 		echo ("</div>");
         echo ("<div id=\"".$id_page."-dialog\"></div>");
         aff_table ($id_page."-liste",true,false);
@@ -198,6 +199,7 @@ echo ("</div>");
 		}
 	}
 	 break;
+	
 }
 echo ("</div>");
 //------------------------------------------------------------------------------
