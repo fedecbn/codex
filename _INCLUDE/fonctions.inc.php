@@ -738,7 +738,7 @@ function sql_format_quote ($value,$do) {
 				$value = str_replace("'","\'",$value);
 				// echo "sans quote : $value ";
 				}
-			else if ($do == 'undo' OR $do == 'undo_hmtl' OR $do == 'undo_table' OR $do == 'undo_text')	{
+			else if ($do == 'undo' OR $do == 'undo_hmtl' OR $do == 'undo_table' OR $do == 'undo_text' OR $do == 'undo_list')	{
 				$value = str_replace("\'","'",$value);
 				// echo "avec quote : $value ";
 				}
@@ -753,7 +753,7 @@ function sql_format_quote ($value,$do) {
 				$value = str_replace('\"','"',$value);
 				// echo "avec quote : $value ";
 				}
-			else if ($do == 'undo_text')	{
+			else if ($do == 'undo_text' OR $do == 'undo_list')	{
 				$value = str_replace('\"','&quot;',$value);
 				}
 		}
@@ -761,7 +761,7 @@ function sql_format_quote ($value,$do) {
 			$value = "'" . pg_escape_string ($value) . "'";
 			$value = str_replace ("<BR>","\n",$value);
 		}
-		else if ($do == 'undo_hmtl' OR $do == 'undo_table') {
+		else if ($do == 'undo_hmtl' OR $do == 'undo_table' OR $do == 'undo_list') {
 			$value = str_replace ("\n","<BR>",$value);
 			$value = str_replace (CHR(13).CHR(10),"<BR>",$value);
 		}
