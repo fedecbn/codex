@@ -103,8 +103,20 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
                 echo ($lang['fr']['pass']."<input type=\"password\" name=\"user_pw\" id=\"pw\" size=\"20\" maxlength=\"100\" class=\"required\" /><br><br>");
                 echo ("<button id=\"valider_fr\">Login</button></center>");
                 echo ("</form>");
-            }  else {                                                           // Session OK
-    			echo ("<br><center>");
+				echo ("<center><br>Contacts :<br>");
+				echo ("<br>");
+				echo ("<b>Fédération des Conservatoires botaniques nationaux</b><br><br>");
+				echo ("<a href=\"http://www.fcbn.fr/\" target=\"_blank\">www.fcbn.fr</a><br>");
+				echo ("<br>");
+					echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
+					echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp\" />");
+					// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
+					echo ("<button id=\"envoi-mdp\" style = \"font-size:10px;\">récuperer mon mot de passe</button></center>");
+					echo ("</form>");
+				echo ("</center>");
+				echo ("<br>");            
+			}  else {                                                           // Session OK
+    			echo ("<center>");
                 if ($nom != "") echo ("<b>".$prenom." ".$nom."</b><br>");
     			echo ("<br>".$lang['fr']['login']."</center>");
                 echo ("<br><center><a href=\"logout.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/logout.png\" border=\"0\" /><br>".$lang['fr']['logout']."</a></center>");
@@ -117,18 +129,9 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
             }
             if ($niveau >=1)  {
                 echo ("<br><a href=\"../bugs/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/bugs.png\" border=\"0\" /><br>".$lang['fr']['bugs']."</a></p>");
+				echo ("<br>");
 			}
-            echo ("<br>Contacts :<br><br>");
-            echo ("<br>");
-				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
-				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp\" />");
-				// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
-                echo ("<button id=\"envoi-mdp\" style = \"font-size:10px;\">récuperer mon mot de passe</button></center>");
-				echo ("</form>");
-            echo ("<br>");
-            echo ("<b>Fédération des Conservatoires botaniques nationaux</b><br><br>");
-            echo ("<a href=\"http://www.fcbn.fr/\" target=\"_blank\">www.fcbn.fr</a><br>");
-            echo ("</center>");
+			
             echo ("</div>");                                                    // sidebar
             // echo ("<div class=\"whidecolumn\">");
             echo ("</form>");
