@@ -15,8 +15,13 @@ function suivi_affMasqBtn(){
             console.log (n);
     if(n == 0) {
         $("#admin-suivi-export-TXT-button").button('disable');
+        $("#mdp-button").button('disable');
+        $("#msg-button").button('disable');
     } else {
         $("#admin-suivi-export-TXT-button").button('enable');
+		$("#mdp-button").button('enable');
+        $("#msg-button").button('enable');
+
     }
 }
 
@@ -134,7 +139,7 @@ $(document).ready(function(){
 		})
 	.click(function() {
 		var sData = user_oTable.$('input').serialize();
-		metaForm ("Envoyer un message",670,390,'#admin-user-dialog',"user-msg.php","user-msg-submit.php",user_oTable,sData,$(this).attr('name'));
+		metaSend ("Envoyer un message",670,390,'#admin-user-dialog',"user-msg.php","user-msg-submit.php",user_oTable,sData,$(this).attr('name'));
 	});
 
 
@@ -148,6 +153,22 @@ $(document).ready(function(){
             deleteFunc ("Effacer toutes les données",'#admin-log-dialog',log_oTable,"log-del.php","");  
         	return (false);
 	   });
+
+	   
+//------------------------------------------------------------------------------ CHECKBOX
+
+    suivi_affMasqBtn ();
+
+    $('.admin-user-liste-all').click(function () {
+        console.log ('liste-all');
+        $('.liste-one').not(this).attr('checked', this.checked);
+        suivi_affMasqBtn();
+    });
+
+    $('#data-liste').on("click",".liste-one", function ($e) {
+        console.log ('liste-one');
+        suivi_affMasqBtn();
+	});
 
 //------------------------------------------------------------------------------ LISTES
 
@@ -588,6 +609,67 @@ $(document).ready(function(){
             		      $(dialogId).dialog( "close" );
                     }},
                     { text: "Enregistrer", click: function() {
+                        if ($("#form1").valid()) {
+                            $("#form1",this).ajaxSubmit({
+                                url: submitUrl,
+                                type: "post",
+                                data: { id: params},
+                                clearForm: true,
+                                error: function(){
+                                    alert ("Erreur AJAX");
+                                },
+                                success: function(e) {
+                                    $(dialogId).dialog().dialog('close');
+                                    tableId.fnStandingRedraw();
+                                }
+                            });
+                        }
+                    }}
+                ]
+            });
+        } else {                                                                // View
+        	$(dialogId).dialog({
+                open: function ()
+                {
+                    $(dialogId).load (formUrl+"?id="+params+"&id_user="+params2);
+                },
+                title: titre,
+                modal: true,
+                position:['middle',100],
+        		width: larg,
+        		height : haut,
+            	resizable: false,
+    			buttons: [
+                    { text: "Fermer", click: function() {
+            		      $(dialogId).dialog( "close" );
+                    }}
+                ]
+            });
+        }
+    }
+
+	function metaSend (titre,larg,haut,dialogId,formUrl,submitUrl,tableId,params,params2) {
+        if (submitUrl != "") {
+        	$(dialogId).dialog({
+                open: function ()
+                {
+                    originalContent = $(dialogId).html();
+                    $(dialogId).load (formUrl+"?id="+params+"&id_user="+params2);
+                },
+                close : function(event, ui) {
+                    $(dialogId).html(originalContent);
+                },
+                title: titre,
+                modal: true,
+                position:['middle',100],
+        		width: larg,
+        		height : haut,
+            	resizable: false,
+    			buttons: [
+                    { text: "Annuler", click: function() {
+            		      $(dialogId).dialog( "close" );
+                    }},
+                    { text: "Envoyer", click: function() {
                         if ($("#form1").valid()) {
                             $("#form1",this).ajaxSubmit({
                                 url: submitUrl,

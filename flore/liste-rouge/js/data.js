@@ -242,6 +242,7 @@
 	oTable.fnSort( [ [0,'desc'] ] );		
 
 		include("../commun/js/user.js");
+		
 	} else {
 		oTable.fnClearTable (false);
 		oTable.fnDraw ();

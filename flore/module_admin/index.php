@@ -105,7 +105,7 @@ echo ("<div id=\"user\">");
         if ($niveau['all'] >= 255) echo ("<button id=\"msg-button\">Envoi message</button> ");
 		echo ("</div>");
         echo ("<div id=\"".$id_page."-dialog\"></div>");
-        aff_table ($id_page."-liste",true,false);
+        aff_table ($id_page."-liste",true,true);
     } 
 echo ("</div>");
 //------------------------------------------------------------------------------ #Suivi des modifications
