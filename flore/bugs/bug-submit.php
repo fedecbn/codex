@@ -25,7 +25,7 @@ if (!empty ($id))                                                               
 {
     $query="UPDATE ".SQL_schema_app.".bug SET ";
     foreach ($_POST as $field => $val) {
-        if ($field!="id" ) $query.=$field."=".sql_format ($val).",";
+        if ($field!="id" ) $query.="id_bug=".sql_format ($val).",";
         elseif ($field!="descr" ) $query.=$field."=".sql_format_quote ($val,'do').",";
         elseif ($field!="statut_descr" ) $query.=$field."=".sql_format_quote ($val,'do').",";
 		else $query.=$field."=".$val.",";
