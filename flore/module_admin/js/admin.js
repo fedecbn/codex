@@ -174,7 +174,7 @@ $(document).ready(function(){
     		"bJQueryUI": true,
     		"bPaginate": false,
     		"bLengthChange": true,
-    		"bFilter": false,
+    		"bFilter": true,
     		"bSort": true,
     		"bInfo": true,
         	"bAutoWidth": false,
@@ -204,16 +204,24 @@ $(document).ready(function(){
                     "sLast":     "Dernier"
                 }
             },
-            "aaSorting": [[0,'asc']],
+            // "aaSorting": [[0,'asc']],
             "sDom": '<"top"fl>rt<"bottom"ip>',
-            "aoColumns": [
-        		{ "sWidth": "5%"},                                           // Code
-    			{ "sWidth": "10%"},
-    			{ "sWidth": "75%"},
-        		{ "sClass": "center","sWidth": "5%" },                        // Langue
+				"aoColumns": [
+        		{ "sWidth": "5%"},                                            // Code
+        		{ "sWidth": "10%"},
+        		{ "sWidth": "75%"},
+        		{ "sWidth": "5%"},
         		{ "sClass": "center","sWidth": "5%","bSortable": false }      // Actions
-    		]
-    	});
+            ]
+			}).columnFilter({
+                sPlaceHolder: "head:after",
+                aoColumns: [ 
+                    { type: "text" },                                           // Code
+                    { type: "text" },                                           // Nom
+                    { type: "text" },                                           // Prénom
+                    { type: "text" },                                           // Login
+    			]
+    		}); 
 	} else {
 		text_oTable.fnClearTable (false);
 		text_oTable.fnDraw();
@@ -306,14 +314,13 @@ $(document).ready(function(){
                     { type: "text" },                                           // Code
                     { type: "text" },                                           // Nom
                     { type: "text" },                                           // Prénom
-                    { type: "text" },                                           // CBN
+{ type: "select", values:['CBN Alpin','CBN de Bailleul','CBN de Brest','CBN de Corse','CBN de Franche-Comté','CBN des Pyrénées et de Midi-Pyrénées','CBN du Bassin Parisien','CBN du Massif central','[Guyane]','[Grand Est]','[Guadeloupe]','[Martinique]','FCBN','inconnu','CBN Méditerranéen de Porquerolles','CBN Sud-Atlantique','CBN Mascarin']},                    { type: "text" },                                           // Login
                     { type: "text" },                                           // Login
-                    { type: "text" },                                           // Login
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 129, label: 'Référent' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
 					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
 					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
