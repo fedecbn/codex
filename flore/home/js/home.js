@@ -110,6 +110,17 @@ $("#lang_it").click(function (event) {
 	$("#valider_fr,#valider_it")
         .button({
             text: true
+        });	
+		
+	
+	$("#envoi-mdp")
+        .button({
+            text: true
+        });
+
+	$("#accueil")
+        .button({
+            text: true
         });
 
 	$("#retour")
@@ -213,6 +224,8 @@ $("#lang_it").click(function (event) {
         	}
         });
     }
+	
+
 //------------------------------------------------------------------------------ INT Page
 
     $("#init_page").hide();

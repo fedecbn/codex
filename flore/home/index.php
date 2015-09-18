@@ -119,7 +119,13 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
                 echo ("<br><a href=\"../bugs/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/bugs.png\" border=\"0\" /><br>".$lang['fr']['bugs']."</a></p>");
 			}
             echo ("<br>Contacts :<br><br>");
-            echo ("<br><br>");
+            echo ("<br>");
+				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
+				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp\" />");
+				// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
+                echo ("<button id=\"envoi-mdp\" style = \"font-size:10px;\">récuperer mon mot de passe</button></center>");
+				echo ("</form>");
+            echo ("<br>");
             echo ("<b>Fédération des Conservatoires botaniques nationaux</b><br><br>");
             echo ("<a href=\"http://www.fcbn.fr/\" target=\"_blank\">www.fcbn.fr</a><br>");
             echo ("</center>");
@@ -223,9 +229,95 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau." ");
             echo ("<center><a href=\"index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/retour.png\" border=\"0\" /><br>".$lang['it']['retour']."</a></center><br><br>");
         echo ("</div>");                                                        // whidecolumn
         echo ("</div>");                                                        // whidecolumn
-   
 	}
 	 break;
+	 
+    case "mdp" : {
+	echo ("<div id=\"page\">");
+        echo ("<div lang=\"fr\">");
+        echo ("<div class=\"narrowcolumn\">");
+			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
+				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
+				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp-ok\" />");
+				echo ("<input type=\"text\" name=\"mail\" id=\"mail\" size = \"40\" value=\"\" />");
+				// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
+				echo ("<BR>");
+				echo ("<button id=\"envoi-mdp\" >Renvoyer les mot de passe</button></center>");
+				echo ("</form>");
+
+				// echo("<a class=admin-user-mdp id=\"\" name=\"\"><img src=\"../../_GRAPH/mini/email1.png\" title=\"Envoyer\" ></a>");            
+				echo ("</div>");                                                    // post
+            echo ("</div>");                                                    // narrowcolumn
+		echo ("<div class=\"whidecolumn\">");
+		echo ("</div>");
+   echo ("</div>");
+   }
+	break;
+	
+    case "mdp-ok" : {
+	echo ("<div id=\"page\">");
+        echo ("<div lang=\"fr\">");
+        echo ("<div class=\"narrowcolumn\">");
+			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
+	
+			$sujet = "[FCBN] Accès à la plateforme CODEX";
+			$mail = $_POST['mail'];
+			if (!empty ($mail)) 
+				{
+				$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi
+					FROM applications.utilisateur a
+					JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
+					JOIN (SELECT id_user, lib as lr FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lr = cd) as aze ON aze.id_user = a.id_user
+					JOIN (SELECT id_user, lib as eee FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_eee = cd) as qsd ON qsd.id_user = a.id_user
+					JOIN (SELECT id_user, lib as refnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_refnat = cd) as wxc ON wxc.id_user = a.id_user
+					JOIN (SELECT id_user, lib as catnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_catnat = cd) as zer ON zer.id_user = a.id_user
+					JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user
+					WHERE a.email = '$mail';
+					";
+				
+				$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+				$row = pg_fetch_array($result);
+				if (count($row['id_user']) == 1)
+					{
+					$message_html = msg_pw($row);	
+					envoi_mail($row['email'], $sujet, $message_html, "");
+					echo ("Un mail vous a été envoyé à cette adresse avec vos identifiants");
+					echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
+					echo ("<button id=\"accueil\" >Retour à l'accueil</button></center>");
+					echo ("</form>");
+					}
+				else
+					{
+					echo ("Adresse mail erronée");
+					echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
+					echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp-ok\" />");
+					echo ("<input type=\"text\" name=\"mail\" id=\"mail\" size = \"40\" value=\"\" />");
+					// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
+					echo ("<BR>");
+					echo ("<button id=\"envoi-mdp\" >Renvoyer les mot de passe</button></center>");
+					echo ("</form>");
+					}
+				}
+			else
+				{
+				echo ("Veuillez rentrer une adresse mail");
+				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
+				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp-ok\" />");
+				echo ("<input type=\"text\" name=\"mail\" id=\"mail\" size = \"40\" value=\"\" />");
+				// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
+				echo ("<BR>");
+				echo ("<button id=\"envoi-mdp\" >Renvoyer les mot de passe</button></center>");
+				echo ("</form>");
+				}
+
+				echo ("</div>");                                                    // post
+            echo ("</div>");                                                    // narrowcolumn
+		echo ("<div class=\"whidecolumn\">");
+		echo ("</div>");
+   echo ("</div>");
+   }
+	break;
+	
 }
 echo ("<table width=\"100%\"><tr>");
 echo ("<td align=center><img src=\"../../_GRAPH/logos/logo_FCBN.gif\" border=\"0\" /></td>");
