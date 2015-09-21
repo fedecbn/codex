@@ -109,9 +109,12 @@ echo ("<div id=\"tab-new\" style=\"margin:0;padding:5;min-height:700px;\">");
                 if ($field!="action" ) $query.=$field.",";
             $query.="date_bug) VALUES (";
             foreach ($_POST as $field => $val) 
-                if ($field!="action" ) $query.=sql_format ($val).",";
+				{
+				if ($field == "descr" ) $query.=sql_format_quote ($val,'do').",";
+                elseif ($field!="action" ) $query.=sql_format ($val).",";
+				}
             $query.="NOW())";                            
-//echo $query;
+// echo $query;
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
         }
         break;
