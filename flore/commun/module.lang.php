@@ -284,50 +284,50 @@ $langliste['fr']['eee-popup'][]="Carte GBIF – distribution modélisée";
 // $langliste['fr']['eee-popup'][]="identifiant unique";
 
 //------------------------------------------------------------------------------ Module flore / _base_module
-$langliste['fr']['refnat'][]="cd_nom";
+$langliste['fr']['refnat'][]="Cdnom";
 $langliste['fr']['refnat-popup'][]="CD NOM";
 
-$langliste['fr']['refnat'][]="cd_ref";
+$langliste['fr']['refnat'][]="Cdref";
 $langliste['fr']['refnat-popup'][]="CD REF";
 
-$langliste['fr']['refnat'][]="nom_complet";
-$langliste['fr']['refnat-popup'][]="nom_complet";
+$langliste['fr']['refnat'][]="Nom complet";
+$langliste['fr']['refnat-popup'][]="Nom complet";
 
-$langliste['fr']['refnat'][]="rang";
-$langliste['fr']['refnat-popup'][]="rang";
+$langliste['fr']['refnat'][]="Rang";
+$langliste['fr']['refnat-popup'][]="Rang";
 
-$langliste['fr']['refnat'][]="famille";
-$langliste['fr']['refnat-popup'][]="famille";
+$langliste['fr']['refnat'][]="Famille";
+$langliste['fr']['refnat-popup'][]="Famille";
 
-$langliste['fr']['refnat'][]="group2_inpn";
-$langliste['fr']['refnat-popup'][]="group2_inpn";
+$langliste['fr']['refnat'][]="Groupe taxo";
+$langliste['fr']['refnat-popup'][]="Groupe taxonomique systématique / fonctionnel";
 
-$langliste['fr']['refnat'][]="fr";
-$langliste['fr']['refnat-popup'][]="fr";
+$langliste['fr']['refnat'][]="Biogéo";
+$langliste['fr']['refnat-popup'][]="Statut biogéographique en France métropolitaine";
 
 $langliste['fr']['refnat'][]="v2";
-$langliste['fr']['refnat-popup'][]="v2";
+$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v2";
 
 $langliste['fr']['refnat'][]="v3";
-$langliste['fr']['refnat-popup'][]="v3";
+$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v3";
 
 $langliste['fr']['refnat'][]="v4";
-$langliste['fr']['refnat-popup'][]="v4";
+$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v4";
 
 $langliste['fr']['refnat'][]="v5";
-$langliste['fr']['refnat-popup'][]="v5";
+$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v5";
 
 $langliste['fr']['refnat'][]="v6";
-$langliste['fr']['refnat-popup'][]="v6";
+$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v6";
 
 $langliste['fr']['refnat'][]="v7";
-$langliste['fr']['refnat-popup'][]="v7";
+$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v7";
 
 $langliste['fr']['refnat'][]="v8";
-$langliste['fr']['refnat-popup'][]="v8";
+$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v8";
 
-$langliste['fr']['refnat'][]="modif";
-$langliste['fr']['refnat-popup'][]="modif";
+$langliste['fr']['refnat'][]="Modif";
+$langliste['fr']['refnat-popup'][]="Proposition de modifications réalisée";
 
 
 //------------------------------------------------------------------------------ Module admin / textes
