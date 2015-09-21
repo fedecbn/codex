@@ -165,7 +165,8 @@ if (isset($_GET['id']) & !empty($_GET['id']))                                   
 			foreach ($user_level as $key => $value) 
 				echo ("<option ".($niveau[$id_rub] >= $key ? "" : "disabled")." value=\"$key\" ".($key == pg_result($result,0,"niveau_".$id_rub."") ? "SELECTED" : "").">".$value."</option>");
 			echo ("</select>");
-			if ($ref[$id_rub] == 't' OR $niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\" "); if (pg_result($result,0,"ref_".$id_rub."") == "t") echo "checked/>"; else echo "/>";}
+			// if ($ref[$id_rub] == 't' OR $niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\" "); if (pg_result($result,0,"ref_".$id_rub."") == "t") echo "checked/>"; else echo "/>";}
+			if ($niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\" "); if (pg_result($result,0,"ref_".$id_rub."") == "t") echo "checked/>"; else echo "/>";}
 			echo ("<br>");
 			}
 				
@@ -194,7 +195,8 @@ else
 			foreach ($user_level as $key => $value) 
 				echo ("<option ".($niveau[$id_rub] >= $key ? "" : "disabled")." value=\"$key\" >".$value."</option>");
 			echo ("</select>");
-			if ($ref[$id_rub] == 't' OR $niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\"/>");}
+			// if ($ref[$id_rub] == 't' OR $niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\"/>");}
+			if ($niveau[$id_rub] >= 255) {echo (" Référent? <input type=\"checkbox\" name=\"ref_".$id_rub."\" id=\"ref_".$id_rub."\" value=\"true\"/>");}
 			echo ("<br>");
 			}
 
