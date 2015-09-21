@@ -37,11 +37,11 @@ $query_module = "
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.$id_rub = TRUE AND t.uid=";
 
-	
+	// CASE taxons.endemisme WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as endemisme,
 $query_liste = "
 	SELECT count(*) OVER() AS total_count,
 	taxons.uid,taxons.famille,taxons.cd_ref,taxons.nom_sci,taxons.id_rang,taxons.id_indi,
-	CASE taxons.endemisme WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as endemisme,
+	taxons.endemisme,
 	chorologie.aoo4,chorologie.aoo_precis,chorologie.id_aoo,chorologie.nbloc_precis,chorologie.id_nbloc,chorologie.nbm5_post1990_est,chorologie.nbm5_post1990,chorologie.nbm5_post2000,chorologie.nbm5_total,chorologie.nbcommune,
 	evaluation.etape,evaluation.cat_a,evaluation.just_a,evaluation.cat_b,evaluation.just_b,evaluation.cat_c,evaluation.just_c,evaluation.cat_d,evaluation.just_d,evaluation.menace,evaluation.cat_fin,evaluation.just_fin,evaluation.cat_euro , evaluation.cat_synt_reg,evaluation.nb_reg_presence,evaluation.nb_reg_evalue,evaluation.notes,
 	evaluation.avancement

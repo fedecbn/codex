@@ -53,6 +53,11 @@
                 case "Cryptogène" : $('td:eq(5)', nRow).addClass('Cryptogène'); break;
                 case "Exotique" : $('td:eq(5)', nRow).addClass('Exotique'); break;
             }
+            switch (aData[6])                                                  // Cat A
+            {
+                case "oui" : $('td:eq(6)', nRow).addClass('oui'); break;
+                case "non" : $('td:eq(6)', nRow).addClass('non'); break;
+            }
             switch (aData[11])                                                  // Cat A
             {
                 case "DD" : $('td:eq(11)', nRow).addClass('UICN_DD'); break;
@@ -221,7 +226,7 @@
                 { type: "text" },                                               // Nom scientifique 
                 { type: "select", values: ['ES','SSES','VAR','SVAR','FO','SSFO']}, // Rang
                 { type: "select", values: [{ value: 1, label: 'Indigène'},{ value: 2, label: 'Cryptogène'},{ value: 3, label: 'Exotique'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  

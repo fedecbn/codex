@@ -33,11 +33,14 @@ $query_module = "
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.catnat = TRUE AND t.uid=";
 
+	// CASE  WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as hybride, 
+	// CASE  WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as endemisme, 
 $query_liste = "
 	SELECT count(*) OVER() AS total_count, taxons_nat.cd_ref , taxons_nat.famille, taxons_nat.nom_sci, taxons_nat.nom_vern, 
-	CASE taxons_nat.hybride WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as hybride, 
+	taxons_nat.hybride,
 	taxons_nat.cd_rang, statut_nat.indi, statut_nat.lr, statut_nat.just_lr, statut_nat.rarete, 
-	CASE statut_nat.endemisme WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as endemisme, taxons_nat.uid
+	statut_nat.endemisme,
+	taxons_nat.uid
 	FROM catnat.taxons_nat
 	LEFT JOIN catnat.statut_nat ON taxons_nat.uid = statut_nat.uid
 	JOIN refnat.taxons a ON a.uid = taxons_nat.uid 

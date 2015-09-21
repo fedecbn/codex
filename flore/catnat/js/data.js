@@ -34,9 +34,9 @@ if (typeof oTable == 'undefined') {
 				case "oui" : $('td:eq(5)', nRow).addClass('hyb_oui');break;
 				case "non" : $('td:eq(5)', nRow).addClass('hyb_non');break;
 				}
-			switch (aData[10]){
-				case "oui" :$('td:eq(10)', nRow).addClass('end_oui');break;
-				case "non" :$('td:eq(10)', nRow).addClass('end_non');break;
+			switch (aData[9]){
+				case "oui" :$('td:eq(9)', nRow).addClass('oui');break;
+				case "non" :$('td:eq(9)', nRow).addClass('non');break;
 				}
 			},
 			"oLanguage": { "sProcessing":   "Traitement en cours...",
@@ -79,11 +79,11 @@ if (typeof oTable == 'undefined') {
 					{ type: "text" },                                               //  
 					{ type: "select", values: ['ES','SSES','VAR','SVAR','FO','SSFO']}, // 
 					{ type: "text" },                                               //  
-					{ type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },  
+					{ type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },  
 					{ type: "select", values: [{ value: 'Indigène', label: 'Indigène'},{ value: 'Cryptogène', label: 'Cryptogène'},{ value: 'Exotique', label: 'Exotique'}] },  
 					{ type: "select", values: [{ value: 'not_null', label: 'évalué'},{ value: '', label: 'non évalué'},{ value: 'RE', label: 'RE'},{ value: 'CR*', label: 'CR*'},{ value: 'CR', label: 'CR'},{ value: 'EN', label: 'EN'},{ value: 'VU', label: 'VU'},{ value: 'NT', label: 'NT'},{ value: 'LC', label: 'LC'},{ value: 'DD', label: 'DD'},{ value: 'NE', label: 'NE'},{value: 'NA', label: 'NA'}]},
 					{ type: "text" },                                               //  
-					{ type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },  
+					{ type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },  
 				]
 			});
 	oTable.fnSort( [ [0,'desc'] ] );		

@@ -77,6 +77,8 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*cas général sans référentiel*/
 		/*---------------*/
+			elseif ($value["type"] == "bool")
+				{if ($row[$key] == 't') $sOutput .= '"oui",'; elseif ($row[$key] == 'f') $sOutput .= '"non",'; else $sOutput .= '"'.$row[$key].'",';}
 			else
 				$sOutput .= '"'.$row[$key].'",';
 			}

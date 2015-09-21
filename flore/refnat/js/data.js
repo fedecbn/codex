@@ -49,14 +49,14 @@
                     $('td:eq(2)', nRow).addClass('nom_taxon');
                 break;
             }
-		if (aData[7] == 't'){$('td:eq(7)', nRow).addClass('taxref_true');}else if (aData[7] == 'f'){$('td:eq(7)', nRow).addClass('taxref_false');}
-		if (aData[8] == 't'){$('td:eq(8)', nRow).addClass('taxref_true');}else if (aData[8] == 'f'){$('td:eq(8)', nRow).addClass('taxref_false');}
-		if (aData[9] == 't'){$('td:eq(9)', nRow).addClass('taxref_true');}else if (aData[9] == 'f'){$('td:eq(9)', nRow).addClass('taxref_false');}
-		if (aData[10] == 't'){$('td:eq(10)', nRow).addClass('taxref_true');}else if (aData[10] == 'f'){$('td:eq(10)', nRow).addClass('taxref_false');}
-		if (aData[11] == 't'){$('td:eq(11)', nRow).addClass('taxref_true');}else if (aData[11] == 'f'){$('td:eq(11)', nRow).addClass('taxref_false');}
-		if (aData[12] == 't'){$('td:eq(12)', nRow).addClass('taxref_true');}else if (aData[12] == 'f'){$('td:eq(12)', nRow).addClass('taxref_false');}
-		if (aData[13] == 't'){$('td:eq(13)', nRow).addClass('taxref_true');}else if (aData[13] == 'f'){$('td:eq(13)', nRow).addClass('taxref_false');}
-		if (aData[14] == 't'){$('td:eq(14)', nRow).addClass('taxref_true');}else if (aData[14] == 'f'){$('td:eq(14)', nRow).addClass('taxref_false');}
+		if (aData[7] == 'oui'){$('td:eq(7)', nRow).addClass('taxref_true');}else if (aData[7] == 'non'){$('td:eq(7)', nRow).addClass('taxref_false');}
+		if (aData[8] == 'oui'){$('td:eq(8)', nRow).addClass('taxref_true');}else if (aData[8] == 'non'){$('td:eq(8)', nRow).addClass('taxref_false');}
+		if (aData[9] == 'oui'){$('td:eq(9)', nRow).addClass('taxref_true');}else if (aData[9] == 'non'){$('td:eq(9)', nRow).addClass('taxref_false');}
+		if (aData[10] == 'oui'){$('td:eq(10)', nRow).addClass('taxref_true');}else if (aData[10] == 'non'){$('td:eq(10)', nRow).addClass('taxref_false');}
+		if (aData[11] == 'oui'){$('td:eq(11)', nRow).addClass('taxref_true');}else if (aData[11] == 'non'){$('td:eq(11)', nRow).addClass('taxref_false');}
+		if (aData[12] == 'oui'){$('td:eq(12)', nRow).addClass('taxref_true');}else if (aData[12] == 'non'){$('td:eq(12)', nRow).addClass('taxref_false');}
+		if (aData[13] == 'oui'){$('td:eq(13)', nRow).addClass('taxref_true');}else if (aData[13] == 'non'){$('td:eq(13)', nRow).addClass('taxref_false');}
+		if (aData[14] == 'oui'){$('td:eq(14)', nRow).addClass('taxref_true');}else if (aData[14] == 'non'){$('td:eq(14)', nRow).addClass('taxref_false');}
 		return nRow;
 		},
 		"oLanguage": { "sProcessing":   "Traitement en cours...",
@@ -106,14 +106,14 @@
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] },                                               //  
-                { type: "select", values: [{ value: 't', label: 'Oui'},{ value: 'f', label: 'Non'}] }                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
+                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] }                                               //  
 			]
 		});        
 		oTable.fnSort( [ [2,'desc'] ] );		
