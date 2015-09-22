@@ -1212,7 +1212,7 @@ function msg_pw($variable)
 			<br> Retrouvez également la liste des outils de la FCBN à l'adresse suivante : <a href=\"services.fcbn.fr\">services.fcbn.fr</a>
 			<br> Si vous notez une erreur dans vos informations personnelles, merci d'envoyer un mail à <a href=\"mailto:informatique@fcbn.fr\">informatique@fcbn.fr</a> à ce sujet.
 			
-			<br><br>Retrouvez la note d’information qui présente l'outil au lien suivant : <a href = \"".str_replace("www.","",$_SERVER["SERVER_NAME"])."/flore/home/150915_Note_ouverture_Codex.pdf\">".str_replace("www.","",$_SERVER["SERVER_NAME"])."/flore/home/150915_Note_ouverture_Codex.pdf</a>
+			<br><br>Retrouvez la note d’information qui présente l'outil au lien suivant : <a href = \"".str_replace("www.","",$_SERVER["SERVER_NAME"])."/flore/home/210915_Note_Codex.pdf\">".str_replace("www.","",$_SERVER["SERVER_NAME"])."/flore/home/150915_Note_ouverture_Codex.pdf</a>
 			
 			<br><br><b>Identifiants de connexion</b>
 			<table cellpadding=\"5\" border =\"solid 1px black\">
