@@ -121,7 +121,7 @@ $(document).ready(function(){
             text: true
         })
         .click(function() {
-            metaForm ("Ajouter un utilisateur",670,390,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,"",$(this).attr('name'));
+            metaForm ("Ajouter un utilisateur",670,620,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,"",$(this).attr('name'));
 		});
 
 	$( "#mdp-button" )
@@ -364,7 +364,7 @@ $(document).ready(function(){
 	}	
 
     $('#admin-user-liste').on("click",".admin-user-edit", function ($e) {
-        metaForm ("Modifier un utilisateur",670,410,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,$(this).attr('id'),$(this).attr('name'));
+        metaForm ("Modifier un utilisateur",670,620,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,$(this).attr('id'),$(this).attr('name'));
         return (false);
 	});
 		
