@@ -130,8 +130,9 @@ $id_cbn = $row[0];
 
 
 //------------------------------------------------------------------------------ MAIN
+//------------------------------------------------------------------------------ EDIT
 echo ("<form method=\"POST\" id=\"form1\" name=\"add\" action=\"#\" >");
-if (isset($_GET['id']) & !empty($_GET['id']))                                   // EDIT
+if (isset($_GET['id']) & !empty($_GET['id']))                                  
 {
     $id=$_GET['id'];
     $query="SELECT * FROM ".SQL_schema_app.".".$table." WHERE id_user='".$id."'";
@@ -175,11 +176,13 @@ if (isset($_GET['id']) & !empty($_GET['id']))                                   
     }
     else die ("ID ".$id." > Pas de résultats !");
 } 
+//------------------------------------------------------------------------------ MAIN
+//------------------------------------------------------------------------------ ADD
 else 
-{                                                                        // ADD
+{                                                                    
         echo ("<fieldset><LEGEND> Utilisateur </LEGEND>");
-        echo ("<label class=\"preField\">Prénom*, Nom*</label><input type=\"text\" name=\"prenom\" id=\"prenom\" size=\"20\" maxlength=\"20\" /> <input type=\"text\" name=\"nom\" id=\"nom\" size=\"20\" maxlength=\"20\" /><br>");
-        echo ("<label class=\"preField\">Login*, Mot de passe* </label><input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"20\" /> <input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" /><br>");
+        echo ("<label class=\"preField\">Prénom*, Nom*</label><input type=\"text\" name=\"prenom\" id=\"prenom\" size=\"20\" maxlength=\"40\" /> <input type=\"text\" name=\"nom\" id=\"nom\" size=\"20\" maxlength=\"20\" /><br>");
+        echo ("<label class=\"preField\">Login*, Mot de passe* </label><input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"70\" /> <input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" /><br>");
         echo ("<label class=\"preField\">Email</label><input type=\"text\" name=\"email\" id=\"email\" style=\"width:30em;\" maxlength=\"70\" /><br>");
         echo ("<label class=\"preField\">Site WEB</label><input type=\"text\" name=\"web\" id=\"web\" style=\"width:30em;\" maxlength=\"55\" /><br>");
         echo ("<label class=\"preField\">Tél. fixe, portable</label><input type=\"text\" name=\"tel_bur\" id=\"tel_bur\" size=\"20\" maxlength=\"20\" /> <input type=\"text\" name=\"tel_port\" id=\"tel_port\" size=\"20\" maxlength=\"20\" /><br>");
