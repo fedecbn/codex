@@ -135,7 +135,7 @@ $iTotal = $aResultTotal;
 			$sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",';
         else 
 			$sOutput .= '"<a class=admin-user-edit id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a> <a class=admin-user-del id=\"'.$row['id_user'].'\" name=\"'.$id_user.'\"><img src=\"../../_GRAPH/mini/del-icon.png\" title=\"Supprimer\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['id_user'].'\" >"';
+		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=\"id\" value=\"'.$row['id_user'].'\" >"';
 		$sOutput .= "],";
 	}
 	$sOutput = substr_replace ($sOutput,"",-1);
