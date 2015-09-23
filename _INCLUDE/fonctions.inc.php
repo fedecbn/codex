@@ -1203,8 +1203,8 @@ function msg_pw($variable)
 	foreach ($tab_ref as $key => $value)
 		if ($variable[$value] === 't') $variable[$value] = "<td> Vous êtes référent sur cette rubrique </td>"; else $variable[$value] = "";
 	
-	// $note = "150921_Note_Codex.pdf";
-	$note = "150915_Note_ouverture_Codex.pdf";
+	$note = "150921_Note_Codex.pdf";
+	// $note = "150915_Note_ouverture_Codex.pdf";
 	
 	$message = "<html><head></head><body>
 			---CECI EST UN MAIL AUTOMATIQUE---
