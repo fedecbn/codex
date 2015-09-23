@@ -141,11 +141,11 @@ if (isset($_GET['id']) & !empty($_GET['id']))                                   
     if (pg_num_rows ($result)) {
         echo ("<fieldset><LEGEND> Utilisateur </LEGEND>");
         echo ("<label class=\"preField\">Code</label><input type=\"text\" size=\"7\" maxlength=\"6\" value=\"".$id."\" readonly disabled style=\"background-color:F0F0F0;\"/><br>");
-        echo ("<label class=\"preField\">Prénom*, Nom*</label><input type=\"text\" name=\"prenom\" id=\"prenom\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"prenom")."\" /> <input type=\"text\" name=\"nom\" id=\"nom\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"nom")."\" /><br>");
+        echo ("<label class=\"preField\">Prénom*, Nom*</label><input type=\"text\" name=\"prenom\" id=\"prenom\" size=\"20\" maxlength=\"60\" value=\"".pg_result($result,0,"prenom")."\" /> <input type=\"text\" name=\"nom\" id=\"nom\" size=\"20\" maxlength=\"60\" value=\"".pg_result($result,0,"nom")."\" /><br>");
         echo ("<label class=\"preField\">Login*, Mot de passe* </label>");
 		
-		if ($id == $_GET["id_user"] OR $niveau['all'] >= 255) echo ("<input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"40\" value=\"".pg_result($result,0,"login")."\" /> ");
-			else echo ("<input disabled style=\"background-color:F0F0F0;\" type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"40\" value=\"".pg_result($result,0,"login")."\" /> ");
+		if ($id == $_GET["id_user"] OR $niveau['all'] >= 255) echo ("<input type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"70\" value=\"".pg_result($result,0,"login")."\" /> ");
+			else echo ("<input disabled style=\"background-color:F0F0F0;\" type=\"text\" name=\"login\" id=\"login\" size=\"20\" maxlength=\"70\" value=\"".pg_result($result,0,"login")."\" /> ");
 		if ($id == $_GET["id_user"] OR $niveau['all'] >= 255) echo ("<input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"pw")."\" /><br>");
 			else echo("<input disabled style=\"background-color:F0F0F0;\" type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" value=\"---privé---\" /><br>");
        		
