@@ -94,7 +94,7 @@ case "install-param":	{
 	
 	/*--------------------------------------*/
 	/*Renseignement des valeurs du formulaire*/
-	if (file_exists("../../_INCLUDE/install-ok.txt"))
+	if (file_exists("../../_INCLUDE/config_sql.inc.php"))
 		{
 		require_once ("../../_INCLUDE/config_sql.inc.php");		
 		$host = SQL_server;$port = SQL_port;$user = SQL_user;$mdp = SQL_pass;$dbname = SQL_base;
@@ -225,16 +225,16 @@ case "install-set":	{
 		
 		/*----------------------------*/
 		/*Intégration des référentiels*/
-		$result = pg_query($conn_codex,"SELECT cd_ref FROM refnat.taxrefv80_utf8 LIMIT 1");
-		$row = pg_fetch_row($result);			
-		if (empty($row))
-			{
+		// $result = pg_query($conn_codex,"SELECT cd_ref FROM refnat.taxrefv80_utf8 LIMIT 1");
+		// $row = pg_fetch_row($result);			
+		// if (empty($row))
+			// {
 			// $query = create_data($user_codex);
 			// $result = pg_query($conn_codex,$query);
-			echo ("Les référentiels de la base de données $dbname ont été implémentés<BR>"); 
-			}
-		else
-			echo ("Les référentiels de la base de données $dbname avaient déjà été implémentés<BR>"); 
+			// echo ("Les référentiels de la base de données $dbname ont été implémentés<BR>"); 
+			// }
+		// else
+			// echo ("Les référentiels de la base de données $dbname avaient déjà été implémentés<BR>"); 
 			
 			
 		/*------------------------------------------*/
@@ -242,7 +242,7 @@ case "install-set":	{
 		if (!file_exists("../../_INCLUDE/config_sql.inc.php"))
 			{
 			copy ("../../_INCLUDE/config_sql.inc.example.php","../../_INCLUDE/config_sql.inc.php");
-			$sql_file = file_get_contents("../../config_sql.inc.php");
+			$sql_file = file_get_contents("../../_INCLUDE/config_sql.inc.php");
 			$sql_file = str_replace("localhost",$host,$sql_file);
 			$sql_file = str_replace("5432",$port,$sql_file);
 			$sql_file = str_replace("user_codex",$user_codex,$sql_file);
