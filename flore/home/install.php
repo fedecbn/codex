@@ -216,10 +216,10 @@ case "install-set":	{
 				$sql = "../../_DATA/bdd_codex_archi_$key.sql";
 				$query = create_schema($sql,$user_codex);
 				// $result = pg_query($conn_codex,$query);
-				echo ("L'architecture de la $valeur a été implémentée<BR>"); 
+				echo ("L'architecture de la $val a été implémentée<BR>"); 
 				}
 			else
-				echo ("L'architecture de la $valeur existait déjà ou n'a pas été selectionnée<BR>"); 
+				echo ("L'architecture de la $val existait déjà ou n'a pas été selectionnée<BR>"); 
 			}
 		
 		
@@ -239,9 +239,9 @@ case "install-set":	{
 			
 		/*------------------------------------------*/
 		/*parametrage du ficher de conf sql_connect*/
-		if (!file_exists("../../config_sql.inc.php"))
+		if (!file_exists("../../_INCLUDE/config_sql.inc.php"))
 			{
-			copy ("../../config_sql.inc.example.php","../../config_sql.inc.php");
+			copy ("../../_INCLUDE/config_sql.inc.example.php","../../_INCLUDE/config_sql.inc.php");
 			$sql_file = file_get_contents("../../config_sql.inc.php");
 			$sql_file = str_replace("localhost",$host,$sql_file);
 			$sql_file = str_replace("5432",$port,$sql_file);
@@ -269,7 +269,7 @@ case "install-set":	{
 	break;	
 
 case "install-finish":	{
-	fopen("../../_INCLUDE/install-ok.txt","w+");
+	// fopen("../../_INCLUDE/install-ok.txt","w+");
 	header("Location: ../../index.php");
 	}
 	break;
