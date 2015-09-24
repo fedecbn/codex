@@ -131,7 +131,7 @@ case "install-param":	{
 						metaform_text ("Hôte","",50,"","host","localhost");
 						metaform_text ("Port","",25,"","port","5432");
 						metaform_text ("Utilisateur admin","",50,"","user","postgres");
-						metaform_pw ("Mot de passe admin","",50,"","mdp","admin_si_flore_2013");
+						metaform_pw ("Mot de passe admin","",50,"","mdp","");
 					echo ("</td></tr></table>");	
 				echo ("</fieldset>");
 	//------------------------------------------------------------------------------ EDIT LR GRP2 
@@ -147,7 +147,8 @@ case "install-param":	{
 			echo ("<fieldset style=\"width: 50%;\"><LEGEND> Choix des rubriques à installer </LEGEND>");
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 800px;\">");
-						foreach ($rub as $key => $val)
+					$rub_ok["applications"] = 't';
+					foreach ($rub as $key => $val)
 						{
 						metaform_bool ($val,$desc[$key],$key,$rub_ok[$key]);
 						// metaform_bool ($val,$desc[$key],$key."_data",$rub_ok[$key]);
