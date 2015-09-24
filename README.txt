@@ -1,6 +1,6 @@
 Pour installer le CODEX sur un poste en local.
 Pré-requis : 
-- serveur web (ex. wampserver 2.5 avec php5)
+- serveur web (ex. wampserver 2.5 avec php5 - extension php_pgsql.dll et php_pdo_pgsql.dll)
 - base de donnée postgres (9.1 ou plus)
 
 1- clonez le depot git
@@ -14,3 +14,8 @@ CREATE DATABASE codex WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = '
 4- transformez config_sql.inc.example.php en config_sql.inc.php (lieu de gestion des paramètre de connexion)
 
 5- vous pouvez vous connecter avec le login admin et mdp admin
+
+
+todo : 
+inserer l'install dans le php (install.php)
+mettre à jour l'architecture de la base de donnée.
