@@ -14,13 +14,13 @@
     define ("ON_Server", "no");
     define ("SQL_server", "localhost");
     define ("SQL_port", "5432");
-    define ("SQL_user", "codex_admin");
-    define ("SQL_pass", "codex_admin");
+    define ("SQL_user", "user_codex");
+    define ("SQL_pass", "codex_user");
     define ("SQL_base", "codex");
 
-	define ("SQL_admin_user", "localhost");
-    define ("SQL_admin_pass", "pg_user");
-	define ("SQL_taxa", "pg_user");
+	define ("SQL_admin_user", "postgres");
+    define ("SQL_admin_pass", "");
+	define ("SQL_taxa", "taxa");
 	
     define ("SQL_schema_app", "applications");
     define ("SQL_schema_lr", "liste_rouge");
