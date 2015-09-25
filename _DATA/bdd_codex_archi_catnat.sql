@@ -10,11 +10,13 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: catnat; Type: SCHEMA; Schema: -; Owner: -
+-- Name: catnat; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
 CREATE SCHEMA catnat;
 
+
+ALTER SCHEMA catnat OWNER TO postgres;
 
 SET search_path = catnat, pg_catalog;
 
@@ -23,7 +25,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: discussion; Type: TABLE; Schema: catnat; Owner: -; Tablespace: 
+-- Name: discussion; Type: TABLE; Schema: catnat; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE discussion (
@@ -38,8 +40,10 @@ CREATE TABLE discussion (
 );
 
 
+ALTER TABLE catnat.discussion OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: catnat; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: catnat; Owner: pg_user
 --
 
 CREATE SEQUENCE discussion_id_discussion_seq
@@ -50,15 +54,17 @@ CREATE SEQUENCE discussion_id_discussion_seq
     CACHE 1;
 
 
+ALTER TABLE catnat.discussion_id_discussion_seq OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: catnat; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: catnat; Owner: pg_user
 --
 
 ALTER SEQUENCE discussion_id_discussion_seq OWNED BY discussion.id_discussion;
 
 
 --
--- Name: statut_nat; Type: TABLE; Schema: catnat; Owner: -; Tablespace: 
+-- Name: statut_nat; Type: TABLE; Schema: catnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE statut_nat (
@@ -70,17 +76,20 @@ CREATE TABLE statut_nat (
     presence character varying,
     uid integer NOT NULL,
     indi_cal character varying,
-    indi_lr character varying,
     lr_cal character varying,
+    just_lr_cal character varying,
     rarete_cal character varying,
     endemisme_cal character varying,
     presence_cal character varying,
+    indi_lr character varying,
     lr_lr character varying
 );
 
 
+ALTER TABLE catnat.statut_nat OWNER TO postgres;
+
 --
--- Name: statut_reg; Type: TABLE; Schema: catnat; Owner: -; Tablespace: 
+-- Name: statut_reg; Type: TABLE; Schema: catnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE statut_reg (
@@ -93,8 +102,10 @@ CREATE TABLE statut_reg (
 );
 
 
+ALTER TABLE catnat.statut_reg OWNER TO postgres;
+
 --
--- Name: taxons_nat; Type: TABLE; Schema: catnat; Owner: -; Tablespace: 
+-- Name: taxons_nat; Type: TABLE; Schema: catnat; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE taxons_nat (
@@ -109,15 +120,17 @@ CREATE TABLE taxons_nat (
 );
 
 
+ALTER TABLE catnat.taxons_nat OWNER TO pg_user;
+
 --
--- Name: id_discussion; Type: DEFAULT; Schema: catnat; Owner: -
+-- Name: id_discussion; Type: DEFAULT; Schema: catnat; Owner: pg_user
 --
 
 ALTER TABLE ONLY discussion ALTER COLUMN id_discussion SET DEFAULT nextval('discussion_id_discussion_seq'::regclass);
 
 
 --
--- Name: PK_coor_statut; Type: CONSTRAINT; Schema: catnat; Owner: -; Tablespace: 
+-- Name: PK_coor_statut; Type: CONSTRAINT; Schema: catnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY statut_reg
@@ -125,7 +138,7 @@ ALTER TABLE ONLY statut_reg
 
 
 --
--- Name: PK_coor_statut_nat; Type: CONSTRAINT; Schema: catnat; Owner: -; Tablespace: 
+-- Name: PK_coor_statut_nat; Type: CONSTRAINT; Schema: catnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY statut_nat
@@ -133,7 +146,7 @@ ALTER TABLE ONLY statut_nat
 
 
 --
--- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: catnat; Owner: -; Tablespace: 
+-- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: catnat; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY discussion
@@ -141,7 +154,7 @@ ALTER TABLE ONLY discussion
 
 
 --
--- Name: pk_taxon; Type: CONSTRAINT; Schema: catnat; Owner: -; Tablespace: 
+-- Name: pk_taxon; Type: CONSTRAINT; Schema: catnat; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY taxons_nat
@@ -149,7 +162,7 @@ ALTER TABLE ONLY taxons_nat
 
 
 --
--- Name: taxons_cd_ref_idx; Type: INDEX; Schema: catnat; Owner: -; Tablespace: 
+-- Name: taxons_cd_ref_idx; Type: INDEX; Schema: catnat; Owner: pg_user; Tablespace: 
 --
 
 CREATE INDEX taxons_cd_ref_idx ON taxons_nat USING btree (cd_ref);

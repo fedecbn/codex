@@ -163,7 +163,7 @@ echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 				echo ("Le taxon appartient aux listes suivantes : <BR>");
 				metaform_bool ("Rubrique CATNAT",null,"catnat",'f');
 				echo ("<BR>");
-				metaform_bool ("Rubrique Liste rouge",null,"liste_rouge",'f');
+				metaform_bool ("Rubrique Liste rouge",null,"lr",'f');
 				echo ("<BR>");
 				metaform_bool ("Rubrique Liste EEE",null,"eee",'f');
 				echo ("<BR>");
@@ -287,13 +287,13 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				if ($_SESSION['niveau_catnat'] >= 128 AND pg_result($result,0,"catnat") == 't') 
 					echo ("<a class=edit id=\"page_catnat\" href=\"../catnat/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Catalogue National\"></a>"); 
 				echo ("<BR>");
-				metaform_bool ("Rubrique Liste rouge",$desc,"liste_rouge",pg_result($result,0,"liste_rouge"));
-				if ($_SESSION['niveau_lr'] >= 128 AND pg_result($result,0,"liste_rouge") == 't') 
-					echo ("<a class=edit id=\"page_lr\" href=\"../liste-rouge/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Liste rouge\"></a>"); 
+				metaform_bool ("Rubrique Liste rouge",$desc,"lr",pg_result($result,0,"lr"));
+				if ($_SESSION['niveau_lr'] >= 128 AND pg_result($result,0,"lr") == 't') 
+					echo ("<a class=edit id=\"page_lr\" href=\"../lr/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Liste rouge\"></a>"); 
 				echo ("<BR>");
 				metaform_bool ("Rubrique Liste EEE",$desc,"eee",pg_result($result,0,"eee"));
 				if ($_SESSION['niveau_eee'] >= 128 AND pg_result($result,0,"eee") == 't') 
-					echo ("<a class=edit id=\"page_eee\" href=\"../liste-eee/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Liste EEE\"></a>"); 
+					echo ("<a class=edit id=\"page_eee\" href=\"../eee/index.php?m=edit&id=$id\"><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Liste EEE\"></a>"); 
 				echo ("<BR>");
 			echo("</td><td valign=\"top\">");
 				echo ("Informations supplémentaires sur le taxon : <BR>");

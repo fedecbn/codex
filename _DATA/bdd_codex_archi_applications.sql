@@ -120,20 +120,6 @@ ALTER SEQUENCE bug_id_bug_seq OWNED BY bug.id_bug;
 
 
 --
--- Name: liste_taxon; Type: TABLE; Schema: applications; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE liste_taxon (
-    uid integer NOT NULL,
-    rubrique_taxon character varying NOT NULL,
-    nom_scien character varying,
-    cd_ref integer
-);
-
-
-ALTER TABLE applications.liste_taxon OWNER TO postgres;
-
---
 -- Name: log; Type: TABLE; Schema: applications; Owner: pg_user; Tablespace: 
 --
 
@@ -358,10 +344,11 @@ CREATE TABLE taxons (
     uid integer NOT NULL,
     cd_ref integer,
     nom character varying,
-    liste_rouge boolean DEFAULT true,
-    catnat boolean DEFAULT true,
-    eee boolean DEFAULT true,
-    refnat boolean DEFAULT true,
+    liste_rouge boolean DEFAULT false,
+    catnat boolean DEFAULT false,
+    eee boolean DEFAULT false,
+    refnat boolean DEFAULT false,
+    defaut boolean DEFAULT false,
     famille character varying,
     cd_rang character varying,
     hybride boolean,
@@ -370,14 +357,6 @@ CREATE TABLE taxons (
 
 
 ALTER TABLE applications.taxons OWNER TO postgres;
-
---
--- Name: TABLE taxons; Type: COMMENT; Schema: applications; Owner: postgres
---
-
-COMMENT ON TABLE taxons IS 'Vérifier l''obsolescence de cete table (à supprimer?)
-Remplacé par la table refnat.taxons';
-
 
 --
 -- Name: taxons_uid_seq; Type: SEQUENCE; Schema: applications; Owner: postgres
@@ -1740,14 +1719,6 @@ ALTER TABLE ONLY bug
 
 
 --
--- Name: liste_taxon_pkey; Type: CONSTRAINT; Schema: applications; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY liste_taxon
-    ADD CONSTRAINT liste_taxon_pkey PRIMARY KEY (uid, rubrique_taxon);
-
-
---
 -- Name: log_pkey; Type: CONSTRAINT; Schema: applications; Owner: pg_user; Tablespace: 
 --
 
@@ -2455,16 +2426,6 @@ GRANT ALL ON TABLE bug TO postgres;
 
 
 --
--- Name: liste_taxon; Type: ACL; Schema: applications; Owner: postgres
---
-
-REVOKE ALL ON TABLE liste_taxon FROM PUBLIC;
-REVOKE ALL ON TABLE liste_taxon FROM postgres;
-GRANT ALL ON TABLE liste_taxon TO postgres;
-GRANT ALL ON TABLE liste_taxon TO pg_user;
-
-
---
 -- Name: log; Type: ACL; Schema: applications; Owner: pg_user
 --
 
@@ -2512,6 +2473,16 @@ REVOKE ALL ON TABLE taxons FROM PUBLIC;
 REVOKE ALL ON TABLE taxons FROM postgres;
 GRANT ALL ON TABLE taxons TO postgres;
 GRANT ALL ON TABLE taxons TO pg_user;
+
+
+--
+-- Name: taxons_uid_seq; Type: ACL; Schema: applications; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE taxons_uid_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE taxons_uid_seq FROM postgres;
+GRANT ALL ON SEQUENCE taxons_uid_seq TO postgres;
+GRANT ALL ON SEQUENCE taxons_uid_seq TO pg_user;
 
 
 --

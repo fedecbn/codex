@@ -10,27 +10,29 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: liste_rouge; Type: SCHEMA; Schema: -; Owner: -
+-- Name: lr; Type: SCHEMA; Schema: -; Owner: pg_user
 --
 
-CREATE SCHEMA liste_rouge;
+CREATE SCHEMA lr;
 
+
+ALTER SCHEMA lr OWNER TO pg_user;
 
 --
--- Name: SCHEMA liste_rouge; Type: COMMENT; Schema: -; Owner: -
+-- Name: SCHEMA lr; Type: COMMENT; Schema: -; Owner: pg_user
 --
 
-COMMENT ON SCHEMA liste_rouge IS 'Liste Rouge';
+COMMENT ON SCHEMA lr IS 'Liste Rouge';
 
 
-SET search_path = liste_rouge, pg_catalog;
+SET search_path = lr, pg_catalog;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: chorologie; Type: TABLE; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: chorologie; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE chorologie (
@@ -66,15 +68,17 @@ CREATE TABLE chorologie (
 );
 
 
+ALTER TABLE lr.chorologie OWNER TO pg_user;
+
 --
--- Name: TABLE chorologie; Type: COMMENT; Schema: liste_rouge; Owner: -
+-- Name: TABLE chorologie; Type: COMMENT; Schema: lr; Owner: pg_user
 --
 
 COMMENT ON TABLE chorologie IS 'Taxons chorologie';
 
 
 --
--- Name: discussion; Type: TABLE; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: discussion; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE discussion (
@@ -89,8 +93,10 @@ CREATE TABLE discussion (
 );
 
 
+ALTER TABLE lr.discussion OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: liste_rouge; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: lr; Owner: pg_user
 --
 
 CREATE SEQUENCE discussion_id_discussion_seq
@@ -101,15 +107,17 @@ CREATE SEQUENCE discussion_id_discussion_seq
     CACHE 1;
 
 
+ALTER TABLE lr.discussion_id_discussion_seq OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: liste_rouge; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: lr; Owner: pg_user
 --
 
 ALTER SEQUENCE discussion_id_discussion_seq OWNED BY discussion.id_discussion;
 
 
 --
--- Name: evaluation; Type: TABLE; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: evaluation; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE evaluation (
@@ -161,15 +169,17 @@ CREATE TABLE evaluation (
 );
 
 
+ALTER TABLE lr.evaluation OWNER TO pg_user;
+
 --
--- Name: TABLE evaluation; Type: COMMENT; Schema: liste_rouge; Owner: -
+-- Name: TABLE evaluation; Type: COMMENT; Schema: lr; Owner: pg_user
 --
 
 COMMENT ON TABLE evaluation IS 'Taxons évaluation';
 
 
 --
--- Name: taxons; Type: TABLE; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: taxons; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE taxons (
@@ -188,22 +198,24 @@ CREATE TABLE taxons (
 );
 
 
+ALTER TABLE lr.taxons OWNER TO pg_user;
+
 --
--- Name: TABLE taxons; Type: COMMENT; Schema: liste_rouge; Owner: -
+-- Name: TABLE taxons; Type: COMMENT; Schema: lr; Owner: pg_user
 --
 
 COMMENT ON TABLE taxons IS 'Taxons liste rouge';
 
 
 --
--- Name: id_discussion; Type: DEFAULT; Schema: liste_rouge; Owner: -
+-- Name: id_discussion; Type: DEFAULT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY discussion ALTER COLUMN id_discussion SET DEFAULT nextval('discussion_id_discussion_seq'::regclass);
 
 
 --
--- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY discussion
@@ -211,7 +223,7 @@ ALTER TABLE ONLY discussion
 
 
 --
--- Name: pk_chorologie; Type: CONSTRAINT; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: pk_chorologie; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY chorologie
@@ -219,7 +231,7 @@ ALTER TABLE ONLY chorologie
 
 
 --
--- Name: pk_evaluation; Type: CONSTRAINT; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: pk_evaluation; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY evaluation
@@ -227,7 +239,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: pk_taxon; Type: CONSTRAINT; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: pk_taxon; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY taxons
@@ -235,21 +247,21 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: evaluation_etape_idx; Type: INDEX; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: evaluation_etape_idx; Type: INDEX; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 CREATE INDEX evaluation_etape_idx ON evaluation USING btree (etape);
 
 
 --
--- Name: taxons_cd_ref_idx; Type: INDEX; Schema: liste_rouge; Owner: -; Tablespace: 
+-- Name: taxons_cd_ref_idx; Type: INDEX; Schema: lr; Owner: pg_user; Tablespace: 
 --
 
 CREATE INDEX taxons_cd_ref_idx ON taxons USING btree (cd_ref);
 
 
 --
--- Name: FK_indi; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: FK_indi; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY taxons
@@ -257,7 +269,7 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: FK_nbindiv; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: FK_nbindiv; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY chorologie
@@ -265,7 +277,7 @@ ALTER TABLE ONLY chorologie
 
 
 --
--- Name: FK_nbloc; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: FK_nbloc; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY chorologie
@@ -273,7 +285,7 @@ ALTER TABLE ONLY chorologie
 
 
 --
--- Name: FK_rang; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: FK_rang; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY taxons
@@ -281,7 +293,7 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: ajtm; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: ajtm; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -289,7 +301,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cat1; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: cat1; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -297,7 +309,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cat234; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: cat234; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -305,7 +317,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cata; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: cata; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -313,7 +325,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catb; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: catb; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -321,7 +333,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catd; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: catd; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -329,7 +341,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cate; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: cate; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -337,7 +349,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cateuro; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: cateuro; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -345,7 +357,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catfin; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: catfin; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -353,7 +365,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catini; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: catini; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -361,7 +373,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catpreced; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: catpreced; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -369,7 +381,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita1; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: crita1; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -377,7 +389,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita2; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: crita2; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -385,7 +397,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita3; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: crita3; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -393,7 +405,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita4; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: crita4; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -401,7 +413,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: critc1; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: critc1; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
@@ -409,11 +421,50 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: critc2; Type: FK CONSTRAINT; Schema: liste_rouge; Owner: -
+-- Name: critc2; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
 --
 
 ALTER TABLE ONLY evaluation
     ADD CONSTRAINT critc2 FOREIGN KEY (crit_c2) REFERENCES referentiels.crit_c2(id_crit_c2) MATCH FULL;
+
+
+--
+-- Name: lr; Type: ACL; Schema: -; Owner: pg_user
+--
+
+REVOKE ALL ON SCHEMA lr FROM PUBLIC;
+REVOKE ALL ON SCHEMA lr FROM pg_user;
+GRANT ALL ON SCHEMA lr TO pg_user;
+
+
+--
+-- Name: chorologie; Type: ACL; Schema: lr; Owner: pg_user
+--
+
+REVOKE ALL ON TABLE chorologie FROM PUBLIC;
+REVOKE ALL ON TABLE chorologie FROM pg_user;
+GRANT ALL ON TABLE chorologie TO pg_user;
+GRANT ALL ON TABLE chorologie TO postgres;
+
+
+--
+-- Name: evaluation; Type: ACL; Schema: lr; Owner: pg_user
+--
+
+REVOKE ALL ON TABLE evaluation FROM PUBLIC;
+REVOKE ALL ON TABLE evaluation FROM pg_user;
+GRANT ALL ON TABLE evaluation TO pg_user;
+GRANT ALL ON TABLE evaluation TO postgres;
+
+
+--
+-- Name: taxons; Type: ACL; Schema: lr; Owner: pg_user
+--
+
+REVOKE ALL ON TABLE taxons FROM PUBLIC;
+REVOKE ALL ON TABLE taxons FROM pg_user;
+GRANT ALL ON TABLE taxons TO pg_user;
+GRANT ALL ON TABLE taxons TO postgres;
 
 
 --

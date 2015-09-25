@@ -10,14 +10,16 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: refnat; Type: SCHEMA; Schema: -; Owner: -
+-- Name: refnat; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
 CREATE SCHEMA refnat;
 
 
+ALTER SCHEMA refnat OWNER TO postgres;
+
 --
--- Name: SCHEMA refnat; Type: COMMENT; Schema: -; Owner: -
+-- Name: SCHEMA refnat; Type: COMMENT; Schema: -; Owner: postgres
 --
 
 COMMENT ON SCHEMA refnat IS 'standard public schema';
@@ -30,7 +32,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: discussion; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: discussion; Type: TABLE; Schema: refnat; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE discussion (
@@ -45,8 +47,10 @@ CREATE TABLE discussion (
 );
 
 
+ALTER TABLE refnat.discussion OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: refnat; Owner: pg_user
 --
 
 CREATE SEQUENCE discussion_id_discussion_seq
@@ -57,15 +61,17 @@ CREATE SEQUENCE discussion_id_discussion_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.discussion_id_discussion_seq OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: pg_user
 --
 
 ALTER SEQUENCE discussion_id_discussion_seq OWNED BY discussion.id_discussion;
 
 
 --
--- Name: taxons; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxons; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxons (
@@ -105,7 +111,7 @@ CREATE TABLE taxons (
     cli character varying,
     url character varying,
     hybride boolean,
-    liste_rouge boolean DEFAULT false,
+    lr boolean DEFAULT false,
     catnat boolean DEFAULT false,
     eee boolean DEFAULT false,
     pres_v2 boolean,
@@ -120,8 +126,10 @@ CREATE TABLE taxons (
 );
 
 
+ALTER TABLE refnat.taxons OWNER TO postgres;
+
 --
--- Name: taxons_uid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxons_uid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxons_uid_seq
@@ -132,15 +140,17 @@ CREATE SEQUENCE taxons_uid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxons_uid_seq OWNER TO postgres;
+
 --
--- Name: taxons_uid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxons_uid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxons_uid_seq OWNED BY taxons.uid;
 
 
 --
--- Name: taxref_changes_30_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_30_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxref_changes_30_utf8 (
@@ -155,8 +165,10 @@ CREATE TABLE taxref_changes_30_utf8 (
 );
 
 
+ALTER TABLE refnat.taxref_changes_30_utf8 OWNER TO postgres;
+
 --
--- Name: taxref_changes_30_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxref_changes_30_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxref_changes_30_utf8_ogc_fid_seq
@@ -167,15 +179,17 @@ CREATE SEQUENCE taxref_changes_30_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxref_changes_30_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxref_changes_30_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxref_changes_30_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxref_changes_30_utf8_ogc_fid_seq OWNED BY taxref_changes_30_utf8.ogc_fid;
 
 
 --
--- Name: taxref_changes_40_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_40_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxref_changes_40_utf8 (
@@ -190,8 +204,10 @@ CREATE TABLE taxref_changes_40_utf8 (
 );
 
 
+ALTER TABLE refnat.taxref_changes_40_utf8 OWNER TO postgres;
+
 --
--- Name: taxref_changes_40_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxref_changes_40_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxref_changes_40_utf8_ogc_fid_seq
@@ -202,15 +218,17 @@ CREATE SEQUENCE taxref_changes_40_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxref_changes_40_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxref_changes_40_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxref_changes_40_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxref_changes_40_utf8_ogc_fid_seq OWNED BY taxref_changes_40_utf8.ogc_fid;
 
 
 --
--- Name: taxref_changes_50_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_50_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxref_changes_50_utf8 (
@@ -225,8 +243,10 @@ CREATE TABLE taxref_changes_50_utf8 (
 );
 
 
+ALTER TABLE refnat.taxref_changes_50_utf8 OWNER TO postgres;
+
 --
--- Name: taxref_changes_50_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxref_changes_50_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxref_changes_50_utf8_ogc_fid_seq
@@ -237,15 +257,17 @@ CREATE SEQUENCE taxref_changes_50_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxref_changes_50_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxref_changes_50_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxref_changes_50_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxref_changes_50_utf8_ogc_fid_seq OWNED BY taxref_changes_50_utf8.ogc_fid;
 
 
 --
--- Name: taxref_changes_60_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_60_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxref_changes_60_utf8 (
@@ -260,8 +282,10 @@ CREATE TABLE taxref_changes_60_utf8 (
 );
 
 
+ALTER TABLE refnat.taxref_changes_60_utf8 OWNER TO postgres;
+
 --
--- Name: taxref_changes_60_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxref_changes_60_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxref_changes_60_utf8_ogc_fid_seq
@@ -272,15 +296,17 @@ CREATE SEQUENCE taxref_changes_60_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxref_changes_60_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxref_changes_60_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxref_changes_60_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxref_changes_60_utf8_ogc_fid_seq OWNED BY taxref_changes_60_utf8.ogc_fid;
 
 
 --
--- Name: taxref_changes_70_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_70_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxref_changes_70_utf8 (
@@ -295,8 +321,10 @@ CREATE TABLE taxref_changes_70_utf8 (
 );
 
 
+ALTER TABLE refnat.taxref_changes_70_utf8 OWNER TO postgres;
+
 --
--- Name: taxref_changes_70_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxref_changes_70_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxref_changes_70_utf8_ogc_fid_seq
@@ -307,15 +335,17 @@ CREATE SEQUENCE taxref_changes_70_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxref_changes_70_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxref_changes_70_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxref_changes_70_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxref_changes_70_utf8_ogc_fid_seq OWNED BY taxref_changes_70_utf8.ogc_fid;
 
 
 --
--- Name: taxref_changes_80_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_80_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxref_changes_80_utf8 (
@@ -330,8 +360,10 @@ CREATE TABLE taxref_changes_80_utf8 (
 );
 
 
+ALTER TABLE refnat.taxref_changes_80_utf8 OWNER TO postgres;
+
 --
--- Name: taxref_changes_80_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxref_changes_80_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxref_changes_80_utf8_ogc_fid_seq
@@ -342,15 +374,17 @@ CREATE SEQUENCE taxref_changes_80_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxref_changes_80_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxref_changes_80_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxref_changes_80_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxref_changes_80_utf8_ogc_fid_seq OWNED BY taxref_changes_80_utf8.ogc_fid;
 
 
 --
--- Name: taxrefv20_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv20_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxrefv20_utf8 (
@@ -381,8 +415,10 @@ CREATE TABLE taxrefv20_utf8 (
 );
 
 
+ALTER TABLE refnat.taxrefv20_utf8 OWNER TO postgres;
+
 --
--- Name: taxrefv20_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxrefv20_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxrefv20_utf8_ogc_fid_seq
@@ -393,15 +429,17 @@ CREATE SEQUENCE taxrefv20_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxrefv20_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxrefv20_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxrefv20_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxrefv20_utf8_ogc_fid_seq OWNED BY taxrefv20_utf8.ogc_fid;
 
 
 --
--- Name: taxrefv30_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv30_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxrefv30_utf8 (
@@ -439,8 +477,10 @@ CREATE TABLE taxrefv30_utf8 (
 );
 
 
+ALTER TABLE refnat.taxrefv30_utf8 OWNER TO postgres;
+
 --
--- Name: taxrefv30_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxrefv30_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxrefv30_utf8_ogc_fid_seq
@@ -451,15 +491,17 @@ CREATE SEQUENCE taxrefv30_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxrefv30_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxrefv30_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxrefv30_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxrefv30_utf8_ogc_fid_seq OWNED BY taxrefv30_utf8.ogc_fid;
 
 
 --
--- Name: taxrefv40_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv40_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxrefv40_utf8 (
@@ -499,8 +541,10 @@ CREATE TABLE taxrefv40_utf8 (
 );
 
 
+ALTER TABLE refnat.taxrefv40_utf8 OWNER TO postgres;
+
 --
--- Name: taxrefv40_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxrefv40_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxrefv40_utf8_ogc_fid_seq
@@ -511,15 +555,17 @@ CREATE SEQUENCE taxrefv40_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxrefv40_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxrefv40_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxrefv40_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxrefv40_utf8_ogc_fid_seq OWNED BY taxrefv40_utf8.ogc_fid;
 
 
 --
--- Name: taxrefv50_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv50_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxrefv50_utf8 (
@@ -559,8 +605,10 @@ CREATE TABLE taxrefv50_utf8 (
 );
 
 
+ALTER TABLE refnat.taxrefv50_utf8 OWNER TO postgres;
+
 --
--- Name: taxrefv50_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxrefv50_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxrefv50_utf8_ogc_fid_seq
@@ -571,15 +619,17 @@ CREATE SEQUENCE taxrefv50_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxrefv50_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxrefv50_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxrefv50_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxrefv50_utf8_ogc_fid_seq OWNED BY taxrefv50_utf8.ogc_fid;
 
 
 --
--- Name: taxrefv60_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv60_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxrefv60_utf8 (
@@ -619,8 +669,10 @@ CREATE TABLE taxrefv60_utf8 (
 );
 
 
+ALTER TABLE refnat.taxrefv60_utf8 OWNER TO postgres;
+
 --
--- Name: taxrefv60_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxrefv60_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxrefv60_utf8_ogc_fid_seq
@@ -631,15 +683,17 @@ CREATE SEQUENCE taxrefv60_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxrefv60_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxrefv60_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxrefv60_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxrefv60_utf8_ogc_fid_seq OWNED BY taxrefv60_utf8.ogc_fid;
 
 
 --
--- Name: taxrefv70_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv70_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxrefv70_utf8 (
@@ -681,8 +735,10 @@ CREATE TABLE taxrefv70_utf8 (
 );
 
 
+ALTER TABLE refnat.taxrefv70_utf8 OWNER TO postgres;
+
 --
--- Name: taxrefv70_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxrefv70_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxrefv70_utf8_ogc_fid_seq
@@ -693,15 +749,17 @@ CREATE SEQUENCE taxrefv70_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxrefv70_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxrefv70_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxrefv70_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxrefv70_utf8_ogc_fid_seq OWNED BY taxrefv70_utf8.ogc_fid;
 
 
 --
--- Name: taxrefv80_utf8; Type: TABLE; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv80_utf8; Type: TABLE; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE taxrefv80_utf8 (
@@ -744,8 +802,10 @@ CREATE TABLE taxrefv80_utf8 (
 );
 
 
+ALTER TABLE refnat.taxrefv80_utf8 OWNER TO postgres;
+
 --
--- Name: taxrefv80_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: -
+-- Name: taxrefv80_utf8_ogc_fid_seq; Type: SEQUENCE; Schema: refnat; Owner: postgres
 --
 
 CREATE SEQUENCE taxrefv80_utf8_ogc_fid_seq
@@ -756,120 +816,122 @@ CREATE SEQUENCE taxrefv80_utf8_ogc_fid_seq
     CACHE 1;
 
 
+ALTER TABLE refnat.taxrefv80_utf8_ogc_fid_seq OWNER TO postgres;
+
 --
--- Name: taxrefv80_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: -
+-- Name: taxrefv80_utf8_ogc_fid_seq; Type: SEQUENCE OWNED BY; Schema: refnat; Owner: postgres
 --
 
 ALTER SEQUENCE taxrefv80_utf8_ogc_fid_seq OWNED BY taxrefv80_utf8.ogc_fid;
 
 
 --
--- Name: id_discussion; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: id_discussion; Type: DEFAULT; Schema: refnat; Owner: pg_user
 --
 
 ALTER TABLE ONLY discussion ALTER COLUMN id_discussion SET DEFAULT nextval('discussion_id_discussion_seq'::regclass);
 
 
 --
--- Name: uid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: uid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxons ALTER COLUMN uid SET DEFAULT nextval('taxons_uid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxref_changes_30_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxref_changes_30_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxref_changes_40_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxref_changes_40_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxref_changes_50_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxref_changes_50_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxref_changes_60_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxref_changes_60_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxref_changes_70_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxref_changes_70_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxref_changes_80_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxref_changes_80_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxrefv20_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxrefv20_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxrefv30_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxrefv30_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxrefv40_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxrefv40_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxrefv50_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxrefv50_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxrefv60_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxrefv60_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxrefv70_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxrefv70_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: -
+-- Name: ogc_fid; Type: DEFAULT; Schema: refnat; Owner: postgres
 --
 
 ALTER TABLE ONLY taxrefv80_utf8 ALTER COLUMN ogc_fid SET DEFAULT nextval('taxrefv80_utf8_ogc_fid_seq'::regclass);
 
 
 --
--- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: refnat; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY discussion
@@ -877,7 +939,7 @@ ALTER TABLE ONLY discussion
 
 
 --
--- Name: taxons_pkey; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxons_pkey; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxons
@@ -885,7 +947,7 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: taxref_changes_30_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_30_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxref_changes_30_utf8
@@ -893,7 +955,7 @@ ALTER TABLE ONLY taxref_changes_30_utf8
 
 
 --
--- Name: taxref_changes_40_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_40_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxref_changes_40_utf8
@@ -901,7 +963,7 @@ ALTER TABLE ONLY taxref_changes_40_utf8
 
 
 --
--- Name: taxref_changes_50_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_50_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxref_changes_50_utf8
@@ -909,7 +971,7 @@ ALTER TABLE ONLY taxref_changes_50_utf8
 
 
 --
--- Name: taxref_changes_60_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_60_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxref_changes_60_utf8
@@ -917,7 +979,7 @@ ALTER TABLE ONLY taxref_changes_60_utf8
 
 
 --
--- Name: taxref_changes_70_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_70_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxref_changes_70_utf8
@@ -925,7 +987,7 @@ ALTER TABLE ONLY taxref_changes_70_utf8
 
 
 --
--- Name: taxref_changes_80_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxref_changes_80_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxref_changes_80_utf8
@@ -933,7 +995,7 @@ ALTER TABLE ONLY taxref_changes_80_utf8
 
 
 --
--- Name: taxrefv20_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv20_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxrefv20_utf8
@@ -941,7 +1003,7 @@ ALTER TABLE ONLY taxrefv20_utf8
 
 
 --
--- Name: taxrefv30_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv30_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxrefv30_utf8
@@ -949,7 +1011,7 @@ ALTER TABLE ONLY taxrefv30_utf8
 
 
 --
--- Name: taxrefv40_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv40_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxrefv40_utf8
@@ -957,7 +1019,7 @@ ALTER TABLE ONLY taxrefv40_utf8
 
 
 --
--- Name: taxrefv50_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv50_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxrefv50_utf8
@@ -965,7 +1027,7 @@ ALTER TABLE ONLY taxrefv50_utf8
 
 
 --
--- Name: taxrefv60_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv60_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxrefv60_utf8
@@ -973,7 +1035,7 @@ ALTER TABLE ONLY taxrefv60_utf8
 
 
 --
--- Name: taxrefv70_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv70_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxrefv70_utf8
@@ -981,7 +1043,7 @@ ALTER TABLE ONLY taxrefv70_utf8
 
 
 --
--- Name: taxrefv80_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: -; Tablespace: 
+-- Name: taxrefv80_utf8_pk; Type: CONSTRAINT; Schema: refnat; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY taxrefv80_utf8

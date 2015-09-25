@@ -10,11 +10,13 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: eee; Type: SCHEMA; Schema: -; Owner: -
+-- Name: eee; Type: SCHEMA; Schema: -; Owner: pg_user
 --
 
 CREATE SCHEMA eee;
 
+
+ALTER SCHEMA eee OWNER TO pg_user;
 
 SET search_path = eee, pg_catalog;
 
@@ -23,7 +25,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: argument; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: argument; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE argument (
@@ -33,8 +35,10 @@ CREATE TABLE argument (
 );
 
 
+ALTER TABLE eee.argument OWNER TO pg_user;
+
 --
--- Name: discussion; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: discussion; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE discussion (
@@ -49,8 +53,10 @@ CREATE TABLE discussion (
 );
 
 
+ALTER TABLE eee.discussion OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: eee; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: eee; Owner: pg_user
 --
 
 CREATE SEQUENCE discussion_id_discussion_seq
@@ -61,15 +67,17 @@ CREATE SEQUENCE discussion_id_discussion_seq
     CACHE 1;
 
 
+ALTER TABLE eee.discussion_id_discussion_seq OWNER TO pg_user;
+
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: -
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: pg_user
 --
 
 ALTER SEQUENCE discussion_id_discussion_seq OWNED BY discussion.id_discussion;
 
 
 --
--- Name: evaluation; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: evaluation; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE evaluation (
@@ -85,13 +93,15 @@ CREATE TABLE evaluation (
     carac_avere character varying,
     eval_expert character varying,
     uid integer NOT NULL,
-    CONSTRAINT ck_zone CHECK (((zone)::text = ANY ((ARRAY['gl'::character varying, 'za'::character varying, 'zc'::character varying, 'zm'::character varying])::text[]))),
+    CONSTRAINT ck_zone CHECK (((zone)::text = ANY (ARRAY[('gl'::character varying)::text, ('za'::character varying)::text, ('zc'::character varying)::text, ('zm'::character varying)::text]))),
     CONSTRAINT statut CHECK (((((liste_eval)::text = ANY (ARRAY[('pcpl'::character varying)::text, ('annexe'::character varying)::text, NULL::text])) AND ((carac_emerg)::text = ANY (ARRAY[('emerg'::character varying)::text, ('non_emerg'::character varying)::text, NULL::text]))) AND ((carac_avere)::text = ANY (ARRAY[('avere_local'::character varying)::text, ('avere_ailleurs'::character varying)::text, ('non_avere'::character varying)::text, NULL::text]))))
 );
 
 
+ALTER TABLE eee.evaluation OWNER TO pg_user;
+
 --
--- Name: liste_argument; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: liste_argument; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE liste_argument (
@@ -100,8 +110,10 @@ CREATE TABLE liste_argument (
 );
 
 
+ALTER TABLE eee.liste_argument OWNER TO pg_user;
+
 --
--- Name: liste_argument_ida_seq; Type: SEQUENCE; Schema: eee; Owner: -
+-- Name: liste_argument_ida_seq; Type: SEQUENCE; Schema: eee; Owner: pg_user
 --
 
 CREATE SEQUENCE liste_argument_ida_seq
@@ -112,15 +124,17 @@ CREATE SEQUENCE liste_argument_ida_seq
     CACHE 1;
 
 
+ALTER TABLE eee.liste_argument_ida_seq OWNER TO pg_user;
+
 --
--- Name: liste_argument_ida_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: -
+-- Name: liste_argument_ida_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: pg_user
 --
 
 ALTER SEQUENCE liste_argument_ida_seq OWNED BY liste_argument.ida;
 
 
 --
--- Name: liste_reponse; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: liste_reponse; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE liste_reponse (
@@ -135,8 +149,10 @@ CREATE TABLE liste_reponse (
 );
 
 
+ALTER TABLE eee.liste_reponse OWNER TO pg_user;
+
 --
--- Name: liste_reponse_idq_seq; Type: SEQUENCE; Schema: eee; Owner: -
+-- Name: liste_reponse_idq_seq; Type: SEQUENCE; Schema: eee; Owner: pg_user
 --
 
 CREATE SEQUENCE liste_reponse_idq_seq
@@ -147,15 +163,17 @@ CREATE SEQUENCE liste_reponse_idq_seq
     CACHE 1;
 
 
+ALTER TABLE eee.liste_reponse_idq_seq OWNER TO pg_user;
+
 --
--- Name: liste_reponse_idq_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: -
+-- Name: liste_reponse_idq_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: pg_user
 --
 
 ALTER SEQUENCE liste_reponse_idq_seq OWNED BY liste_reponse.idq;
 
 
 --
--- Name: liste_source; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: liste_source; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE liste_source (
@@ -164,8 +182,10 @@ CREATE TABLE liste_source (
 );
 
 
+ALTER TABLE eee.liste_source OWNER TO pg_user;
+
 --
--- Name: liste_source_ids_seq; Type: SEQUENCE; Schema: eee; Owner: -
+-- Name: liste_source_ids_seq; Type: SEQUENCE; Schema: eee; Owner: pg_user
 --
 
 CREATE SEQUENCE liste_source_ids_seq
@@ -176,15 +196,17 @@ CREATE SEQUENCE liste_source_ids_seq
     CACHE 1;
 
 
+ALTER TABLE eee.liste_source_ids_seq OWNER TO pg_user;
+
 --
--- Name: liste_source_ids_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: -
+-- Name: liste_source_ids_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: pg_user
 --
 
 ALTER SEQUENCE liste_source_ids_seq OWNED BY liste_source.ids;
 
 
 --
--- Name: pays; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: pays; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE pays (
@@ -197,12 +219,14 @@ CREATE TABLE pays (
     x_max numeric,
     y_min numeric,
     y_max numeric,
-    CONSTRAINT ck_pays CHECK (((region_biogeo)::text = ANY ((ARRAY['za'::character varying, 'zc'::character varying, 'zm'::character varying])::text[])))
+    CONSTRAINT ck_pays CHECK (((region_biogeo)::text = ANY (ARRAY[('za'::character varying)::text, ('zc'::character varying)::text, ('zm'::character varying)::text])))
 );
 
 
+ALTER TABLE eee.pays OWNER TO pg_user;
+
 --
--- Name: pays_idp_seq; Type: SEQUENCE; Schema: eee; Owner: -
+-- Name: pays_idp_seq; Type: SEQUENCE; Schema: eee; Owner: pg_user
 --
 
 CREATE SEQUENCE pays_idp_seq
@@ -213,15 +237,17 @@ CREATE SEQUENCE pays_idp_seq
     CACHE 1;
 
 
+ALTER TABLE eee.pays_idp_seq OWNER TO pg_user;
+
 --
--- Name: pays_idp_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: -
+-- Name: pays_idp_seq; Type: SEQUENCE OWNED BY; Schema: eee; Owner: pg_user
 --
 
 ALTER SEQUENCE pays_idp_seq OWNED BY pays.idp;
 
 
 --
--- Name: region; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: region; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE region (
@@ -230,24 +256,28 @@ CREATE TABLE region (
     cbn character varying,
     region character varying,
     region_biogeo character varying,
-    CONSTRAINT ck_region CHECK (((region_biogeo)::text = ANY ((ARRAY['za'::character varying, 'zc'::character varying, 'zm'::character varying])::text[])))
+    CONSTRAINT ck_region CHECK (((region_biogeo)::text = ANY (ARRAY[('za'::character varying)::text, ('zc'::character varying)::text, ('zm'::character varying)::text])))
 );
 
 
+ALTER TABLE eee.region OWNER TO pg_user;
+
 --
--- Name: reponse; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: reponse; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE reponse (
     idq integer NOT NULL,
     zone character varying NOT NULL,
     uid integer NOT NULL,
-    CONSTRAINT ck_zone_reponse CHECK (((zone)::text = ANY ((ARRAY['gl'::character varying, 'za'::character varying, 'zc'::character varying, 'zm'::character varying])::text[])))
+    CONSTRAINT ck_zone_reponse CHECK (((zone)::text = ANY (ARRAY[('gl'::character varying)::text, ('za'::character varying)::text, ('zc'::character varying)::text, ('zm'::character varying)::text])))
 );
 
 
+ALTER TABLE eee.reponse OWNER TO pg_user;
+
 --
--- Name: source; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: source; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE source (
@@ -258,32 +288,38 @@ CREATE TABLE source (
 );
 
 
+ALTER TABLE eee.source OWNER TO pg_user;
+
 --
--- Name: statut_inter; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: statut_inter; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE statut_inter (
     idp integer NOT NULL,
     statut character varying NOT NULL,
     uid integer NOT NULL,
-    CONSTRAINT ck_statut_inter CHECK (((statut)::text = ANY ((ARRAY['pres'::character varying, 'indig'::character varying, 'invav'::character varying])::text[])))
+    CONSTRAINT ck_statut_inter CHECK (((statut)::text = ANY (ARRAY[('pres'::character varying)::text, ('indig'::character varying)::text, ('invav'::character varying)::text])))
 );
 
 
+ALTER TABLE eee.statut_inter OWNER TO pg_user;
+
 --
--- Name: statut_natio; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: statut_natio; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE statut_natio (
     idr integer NOT NULL,
     statut character varying NOT NULL,
     uid integer NOT NULL,
-    CONSTRAINT ck_statut_nation CHECK (((statut)::text = ANY ((ARRAY['pres'::character varying, 'indig'::character varying, 'invav'::character varying])::text[])))
+    CONSTRAINT ck_statut_nation CHECK (((statut)::text = ANY (ARRAY[('pres'::character varying)::text, ('indig'::character varying)::text, ('invav'::character varying)::text])))
 );
 
 
+ALTER TABLE eee.statut_natio OWNER TO pg_user;
+
 --
--- Name: taxons; Type: TABLE; Schema: eee; Owner: -; Tablespace: 
+-- Name: taxons; Type: TABLE; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 CREATE TABLE taxons (
@@ -294,48 +330,49 @@ CREATE TABLE taxons (
     cd_nom integer,
     commentaire character varying,
     gbif_url character varying,
-    uid integer NOT NULL,
-    CONSTRAINT ck_lib_rang CHECK ((((((((((lib_rang)::text = ''::text) OR ((lib_rang)::text = 'ES'::text)) OR ((lib_rang)::text = 'SSES'::text)) OR ((lib_rang)::text = 'VAR'::text)) OR ((lib_rang)::text = 'SVAR'::text)) OR ((lib_rang)::text = 'FO'::text)) OR ((lib_rang)::text = 'SSFO'::text)) OR ((lib_rang)::text = 'CAR'::text)))
+    uid integer NOT NULL
 );
 
 
+ALTER TABLE eee.taxons OWNER TO pg_user;
+
 --
--- Name: id_discussion; Type: DEFAULT; Schema: eee; Owner: -
+-- Name: id_discussion; Type: DEFAULT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY discussion ALTER COLUMN id_discussion SET DEFAULT nextval('discussion_id_discussion_seq'::regclass);
 
 
 --
--- Name: ida; Type: DEFAULT; Schema: eee; Owner: -
+-- Name: ida; Type: DEFAULT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY liste_argument ALTER COLUMN ida SET DEFAULT nextval('liste_argument_ida_seq'::regclass);
 
 
 --
--- Name: idq; Type: DEFAULT; Schema: eee; Owner: -
+-- Name: idq; Type: DEFAULT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY liste_reponse ALTER COLUMN idq SET DEFAULT nextval('liste_reponse_idq_seq'::regclass);
 
 
 --
--- Name: ids; Type: DEFAULT; Schema: eee; Owner: -
+-- Name: ids; Type: DEFAULT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY liste_source ALTER COLUMN ids SET DEFAULT nextval('liste_source_ids_seq'::regclass);
 
 
 --
--- Name: idp; Type: DEFAULT; Schema: eee; Owner: -
+-- Name: idp; Type: DEFAULT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY pays ALTER COLUMN idp SET DEFAULT nextval('pays_idp_seq'::regclass);
 
 
 --
--- Name: PK_argument; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_argument; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY argument
@@ -343,7 +380,7 @@ ALTER TABLE ONLY argument
 
 
 --
--- Name: PK_eval; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_eval; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY evaluation
@@ -351,7 +388,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: PK_liste_argument; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_liste_argument; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY liste_argument
@@ -359,7 +396,7 @@ ALTER TABLE ONLY liste_argument
 
 
 --
--- Name: PK_liste_source; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_liste_source; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY liste_source
@@ -367,7 +404,7 @@ ALTER TABLE ONLY liste_source
 
 
 --
--- Name: PK_pays; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_pays; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY pays
@@ -375,7 +412,7 @@ ALTER TABLE ONLY pays
 
 
 --
--- Name: PK_question; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_question; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY liste_reponse
@@ -383,7 +420,7 @@ ALTER TABLE ONLY liste_reponse
 
 
 --
--- Name: PK_region; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_region; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY region
@@ -391,7 +428,7 @@ ALTER TABLE ONLY region
 
 
 --
--- Name: PK_reponse; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_reponse; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY reponse
@@ -399,7 +436,7 @@ ALTER TABLE ONLY reponse
 
 
 --
--- Name: PK_source; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_source; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY source
@@ -407,7 +444,7 @@ ALTER TABLE ONLY source
 
 
 --
--- Name: PK_statut_inter; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_statut_inter; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY statut_inter
@@ -415,7 +452,7 @@ ALTER TABLE ONLY statut_inter
 
 
 --
--- Name: PK_statut_natio; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_statut_natio; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY statut_natio
@@ -423,7 +460,7 @@ ALTER TABLE ONLY statut_natio
 
 
 --
--- Name: PK_taxons; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: PK_taxons; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY taxons
@@ -431,7 +468,7 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: eee; Owner: -; Tablespace: 
+-- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: eee; Owner: pg_user; Tablespace: 
 --
 
 ALTER TABLE ONLY discussion
@@ -439,7 +476,7 @@ ALTER TABLE ONLY discussion
 
 
 --
--- Name: FK_argument_liste; Type: FK CONSTRAINT; Schema: eee; Owner: -
+-- Name: FK_argument_liste; Type: FK CONSTRAINT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY argument
@@ -447,7 +484,7 @@ ALTER TABLE ONLY argument
 
 
 --
--- Name: FK_idq_liste_reponse; Type: FK CONSTRAINT; Schema: eee; Owner: -
+-- Name: FK_idq_liste_reponse; Type: FK CONSTRAINT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY reponse
@@ -455,7 +492,7 @@ ALTER TABLE ONLY reponse
 
 
 --
--- Name: FK_sources_liste; Type: FK CONSTRAINT; Schema: eee; Owner: -
+-- Name: FK_sources_liste; Type: FK CONSTRAINT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY source
@@ -463,7 +500,7 @@ ALTER TABLE ONLY source
 
 
 --
--- Name: FK_statut_inter_pays; Type: FK CONSTRAINT; Schema: eee; Owner: -
+-- Name: FK_statut_inter_pays; Type: FK CONSTRAINT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY statut_inter
@@ -471,7 +508,7 @@ ALTER TABLE ONLY statut_inter
 
 
 --
--- Name: FK_statut_natio_region; Type: FK CONSTRAINT; Schema: eee; Owner: -
+-- Name: FK_statut_natio_region; Type: FK CONSTRAINT; Schema: eee; Owner: pg_user
 --
 
 ALTER TABLE ONLY statut_natio

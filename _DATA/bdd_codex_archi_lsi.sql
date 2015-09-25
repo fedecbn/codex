@@ -10,11 +10,13 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: lsi; Type: SCHEMA; Schema: -; Owner: -
+-- Name: lsi; Type: SCHEMA; Schema: -; Owner: postgres
 --
 
 CREATE SCHEMA lsi;
 
+
+ALTER SCHEMA lsi OWNER TO postgres;
 
 SET search_path = lsi, pg_catalog;
 
@@ -23,7 +25,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: coor_news_tag; Type: TABLE; Schema: lsi; Owner: -; Tablespace: 
+-- Name: coor_news_tag; Type: TABLE; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE coor_news_tag (
@@ -32,8 +34,10 @@ CREATE TABLE coor_news_tag (
 );
 
 
+ALTER TABLE lsi.coor_news_tag OWNER TO postgres;
+
 --
--- Name: news; Type: TABLE; Schema: lsi; Owner: -; Tablespace: 
+-- Name: news; Type: TABLE; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE news (
@@ -47,8 +51,10 @@ CREATE TABLE news (
 );
 
 
+ALTER TABLE lsi.news OWNER TO postgres;
+
 --
--- Name: news_id_news_seq; Type: SEQUENCE; Schema: lsi; Owner: -
+-- Name: news_id_news_seq; Type: SEQUENCE; Schema: lsi; Owner: postgres
 --
 
 CREATE SEQUENCE news_id_news_seq
@@ -59,15 +65,17 @@ CREATE SEQUENCE news_id_news_seq
     CACHE 1;
 
 
+ALTER TABLE lsi.news_id_news_seq OWNER TO postgres;
+
 --
--- Name: news_id_news_seq; Type: SEQUENCE OWNED BY; Schema: lsi; Owner: -
+-- Name: news_id_news_seq; Type: SEQUENCE OWNED BY; Schema: lsi; Owner: postgres
 --
 
 ALTER SEQUENCE news_id_news_seq OWNED BY news.id;
 
 
 --
--- Name: subject; Type: TABLE; Schema: lsi; Owner: -; Tablespace: 
+-- Name: subject; Type: TABLE; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE subject (
@@ -76,8 +84,10 @@ CREATE TABLE subject (
 );
 
 
+ALTER TABLE lsi.subject OWNER TO postgres;
+
 --
--- Name: subject_id_subject_seq; Type: SEQUENCE; Schema: lsi; Owner: -
+-- Name: subject_id_subject_seq; Type: SEQUENCE; Schema: lsi; Owner: postgres
 --
 
 CREATE SEQUENCE subject_id_subject_seq
@@ -88,15 +98,17 @@ CREATE SEQUENCE subject_id_subject_seq
     CACHE 1;
 
 
+ALTER TABLE lsi.subject_id_subject_seq OWNER TO postgres;
+
 --
--- Name: subject_id_subject_seq; Type: SEQUENCE OWNED BY; Schema: lsi; Owner: -
+-- Name: subject_id_subject_seq; Type: SEQUENCE OWNED BY; Schema: lsi; Owner: postgres
 --
 
 ALTER SEQUENCE subject_id_subject_seq OWNED BY subject.id_subject;
 
 
 --
--- Name: tag; Type: TABLE; Schema: lsi; Owner: -; Tablespace: 
+-- Name: tag; Type: TABLE; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE tag (
@@ -105,8 +117,10 @@ CREATE TABLE tag (
 );
 
 
+ALTER TABLE lsi.tag OWNER TO postgres;
+
 --
--- Name: tag_id_tag_seq; Type: SEQUENCE; Schema: lsi; Owner: -
+-- Name: tag_id_tag_seq; Type: SEQUENCE; Schema: lsi; Owner: postgres
 --
 
 CREATE SEQUENCE tag_id_tag_seq
@@ -117,36 +131,38 @@ CREATE SEQUENCE tag_id_tag_seq
     CACHE 1;
 
 
+ALTER TABLE lsi.tag_id_tag_seq OWNER TO postgres;
+
 --
--- Name: tag_id_tag_seq; Type: SEQUENCE OWNED BY; Schema: lsi; Owner: -
+-- Name: tag_id_tag_seq; Type: SEQUENCE OWNED BY; Schema: lsi; Owner: postgres
 --
 
 ALTER SEQUENCE tag_id_tag_seq OWNED BY tag.id_tag;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: lsi; Owner: -
+-- Name: id; Type: DEFAULT; Schema: lsi; Owner: postgres
 --
 
 ALTER TABLE ONLY news ALTER COLUMN id SET DEFAULT nextval('news_id_news_seq'::regclass);
 
 
 --
--- Name: id_subject; Type: DEFAULT; Schema: lsi; Owner: -
+-- Name: id_subject; Type: DEFAULT; Schema: lsi; Owner: postgres
 --
 
 ALTER TABLE ONLY subject ALTER COLUMN id_subject SET DEFAULT nextval('subject_id_subject_seq'::regclass);
 
 
 --
--- Name: id_tag; Type: DEFAULT; Schema: lsi; Owner: -
+-- Name: id_tag; Type: DEFAULT; Schema: lsi; Owner: postgres
 --
 
 ALTER TABLE ONLY tag ALTER COLUMN id_tag SET DEFAULT nextval('tag_id_tag_seq'::regclass);
 
 
 --
--- Name: PK_coor_news_tag; Type: CONSTRAINT; Schema: lsi; Owner: -; Tablespace: 
+-- Name: PK_coor_news_tag; Type: CONSTRAINT; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY coor_news_tag
@@ -154,7 +170,7 @@ ALTER TABLE ONLY coor_news_tag
 
 
 --
--- Name: PK_news; Type: CONSTRAINT; Schema: lsi; Owner: -; Tablespace: 
+-- Name: PK_news; Type: CONSTRAINT; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY news
@@ -162,7 +178,7 @@ ALTER TABLE ONLY news
 
 
 --
--- Name: PK_subject; Type: CONSTRAINT; Schema: lsi; Owner: -; Tablespace: 
+-- Name: PK_subject; Type: CONSTRAINT; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY subject
@@ -170,7 +186,7 @@ ALTER TABLE ONLY subject
 
 
 --
--- Name: PK_tag; Type: CONSTRAINT; Schema: lsi; Owner: -; Tablespace: 
+-- Name: PK_tag; Type: CONSTRAINT; Schema: lsi; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY tag
@@ -178,7 +194,7 @@ ALTER TABLE ONLY tag
 
 
 --
--- Name: FK_coor_news; Type: FK CONSTRAINT; Schema: lsi; Owner: -
+-- Name: FK_coor_news; Type: FK CONSTRAINT; Schema: lsi; Owner: postgres
 --
 
 ALTER TABLE ONLY coor_news_tag
@@ -186,7 +202,7 @@ ALTER TABLE ONLY coor_news_tag
 
 
 --
--- Name: FK_news_subject; Type: FK CONSTRAINT; Schema: lsi; Owner: -
+-- Name: FK_news_subject; Type: FK CONSTRAINT; Schema: lsi; Owner: postgres
 --
 
 ALTER TABLE ONLY news
@@ -194,7 +210,7 @@ ALTER TABLE ONLY news
 
 
 --
--- Name: PK_coor_tag; Type: FK CONSTRAINT; Schema: lsi; Owner: -
+-- Name: PK_coor_tag; Type: FK CONSTRAINT; Schema: lsi; Owner: postgres
 --
 
 ALTER TABLE ONLY coor_news_tag

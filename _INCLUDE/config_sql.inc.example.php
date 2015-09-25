@@ -19,7 +19,7 @@
     define ("SQL_base", "codex");
 
 	define ("SQL_admin_user", "postgres");
-    define ("SQL_admin_pass", "admin_pass");
+    define ("SQL_admin_pass", "test");
 	define ("SQL_taxa", "taxa");
 	
     define ("SQL_schema_app", "applications");

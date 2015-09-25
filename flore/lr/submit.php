@@ -46,7 +46,7 @@ if (!empty ($id))
 		/*SUIVI DES MODIFICATIONS ET UPDATE*/
 		foreach ($tables as $i)	{
 			$champs = '';
-			$update ="UPDATE ".SQL_schema_lr.".$i SET ";
+			$update ="UPDATE lr.$i SET ";
 			foreach ($aColumnsTot[$id_page] as $key => $val)	{
 				if ($val['modifiable'] == 't' AND $val['table_champ'] == $i) {
 					/*récupération des champs modifiables*/
@@ -59,7 +59,7 @@ if (!empty ($id))
 					}
 				}
 			/*SUIVI AVANT UPDATE*/
-			$select="SELECT ".rtrim($champs,',')." FROM ".SQL_schema_lr.".$i AS t WHERE uid=".$id.";";
+			$select="SELECT ".rtrim($champs,',')." FROM lr.$i AS t WHERE uid=".$id.";";
 			if (DEBUG) echo "<br>".$select;
 			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);                          // Old values
@@ -81,7 +81,7 @@ if (!empty ($id))
     // if (DEBUG) echo "<br>".$query;
     // $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
-		add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Saisie edit fiche",$id,"liste_rouge");
+		add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Saisie edit fiche",$id,"lr");
 		}
 	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
 		{
@@ -89,7 +89,7 @@ if (!empty ($id))
 			if (!empty($_POST['commentaire_eval'])) {
 				$result=pg_query ($db,$query_user." AND id_user = '$id_user'") or die ("Erreur pgSQL : ".pg_result_error ($result));
 				$user=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
-				$insert = "INSERT INTO liste_rouge.discussion (uid,id_user,nom,prenom,id_cbn,commentaire_eval,datetime) 
+				$insert = "INSERT INTO lr.discussion (uid,id_user,nom,prenom,id_cbn,commentaire_eval,datetime) 
 				VALUES ($id,'$user[id_user]','$user[nom]','$user[prenom]',$user[id_cbn],".sql_format_quote($_POST[commentaire_eval],'do').",NOW())";
 				echo $insert;
 				$result=pg_query ($db,$insert) or die ("Erreur pgSQL : ".pg_result_error ($result));
