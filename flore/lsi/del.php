@@ -24,21 +24,23 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 //------------------------------------------------------------------------------ MAIN
 if (!empty ($id)) 
 {
-    $query="DELETE FROM ".SQL_schema_lsi.".coor_news_tag WHERE $id_del;";
-    $query.="DELETE FROM ".SQL_schema_lsi.".news WHERE $id_del;";
+    $query="DELETE FROM lsi.coor_news_tag WHERE $id_del;";
+    $query.="DELETE FROM lsi.news WHERE $id_del;";
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	
     add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression fiche",$id,"news");
 } elseif (strlen($_POST['select']) > 0) {
     $pairs=explode ("&",$_POST['select']);
     foreach ($pairs as $key=>$value)
-        $where .= "uid=".ltrim ($value,"id=")." OR ";
+        $where .= "id=".ltrim ($value,"id=")." OR ";
     $where=rtrim ($where,"OR ");
 
-	$query="DELETE FROM ".SQL_schema_lsi.".coor_news_tag WHERE $id_del;";
-	$query.="DELETE FROM ".SQL_schema_lsi.".news WHERE $id_del;";
-    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	$query="DELETE FROM lsi.coor_news_tag WHERE $where;";
+	$query.="DELETE FROM lsi.news WHERE $where;";
 
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+
+	
     add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression multi fiches",$where,"news");
 }
 pg_close ($db);
