@@ -13,7 +13,7 @@
 
 session_start();
 include ("commun.inc.php");
-define ("DEBUG",false);
+define ("DEBUG",TRUE);
 
 //------------------------------------------------------------------------------ PARMS.
 $id_user=$_SESSION['id_user'];
@@ -107,7 +107,7 @@ if (!empty($add))
 	if (!empty($add))
 		{
 		foreach ($add as $field => $val)
-			$query .= "INSERT INTO ".SQL_schema_lsi.".coor_news_tag VALUES ($id,$val); ";
+			$query .= "INSERT INTO lsi.coor_news_tag VALUES ($id,$val); ";
 		if ($query != '')
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 		}
