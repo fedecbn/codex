@@ -37,7 +37,7 @@ ref_colonne_et_valeur ($id_page);
 if ($niveau <= 64) $desc = " bloque"; else $disa = $desc;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
-$format = array("string"=>"string","float"=>"float","integer"=>"integer");
+$format = array("string"=>"string","float"=>"float","integer"=>"integer","date"=>"date");
 $oblig = array(""=>"","Oui"=>"Oui","Oui si"=>"Oui si","Non"=>"Non","NSP"=>"NSP");
 
 	
