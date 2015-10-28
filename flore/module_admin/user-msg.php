@@ -53,7 +53,7 @@ if (!empty ($select))
 	{
 	echo ("<form method=\"POST\" id=\"form1\" name=\"add\" action=\"#\" >");	
 	echo ("<fieldset><LEGEND> Sujet </LEGEND>");
-	echo ("<input type=\"text\" name=\"sujet\" id=\"sujet\" size=\"90\" maxlength=\"40\" value = \"[Codex] \" /><br>");
+	echo ("<input type=\"text\" name=\"sujet\" id=\"sujet\" size=\"90\" maxlength=\"90\" value = \"[Codex] \" /><br>");
 	echo ("</fieldset>");
 	echo ("<textarea name=\"msg-txt\" class=\"editor\" id=\"msg-txt\" ></textarea>");
 	echo ("</form>");	
