@@ -108,7 +108,7 @@ if (typeof oTable == 'undefined') {
 					{ type: "text" },  
 				]
 			});
-	oTable.fnSort( [ [0,'desc'] ] );		
+	oTable.fnSort( [ [0,'asc'] ] );		
 
 		include("../commun/js/user.js");
 	} else {
