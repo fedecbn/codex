@@ -335,5 +335,30 @@ $lang['it']['edit_refnat']="";
 $lang['fr']['voir_refnat']="Consulter une fiche taxon";
 $lang['it']['voir_refnat']="";
 
+//------------------------------------------------------------------------------ Form / Groupes FSD
 
+
+$lang['fr']['fsd']="Format Standard de Données";
+$lang['it']['fsd']="";
+
+$lang['fr']['liste_fsd']="Format Standard de Données";
+$lang['it']['liste_fsd']="";
+
+$lang['fr']['add_fsd']="Ajouter un champ";
+$lang['it']['add_fsd']="";
+
+$lang['fr']['edit_fsd']="Modifier un champ";
+$lang['it']['edit_fsd']="";
+
+$lang['fr']['voir_fsd']="Consulter un champ";
+$lang['it']['voir_fsd']="";
+
+$lang['fr']['groupe_fsd_1']="Description Champ";
+$lang['it']['groupe_fsd_1']="";
+
+$lang['fr']['groupe_fsd_2']="Description Champ ancienne version";
+$lang['it']['groupe_fsd_2']="";
+
+$lang['fr']['liste_champ']="Liste des champs";
+$lang['it']['liste_champ']="";
 ?>

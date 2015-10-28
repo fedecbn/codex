@@ -518,4 +518,48 @@ $langliste['fr']['bug-ok-liste-popup'][]="";
 $langliste['fr']['bug-ok-liste'][]="Statut";
 $langliste['fr']['bug-ok-liste-popup'][]="";
 
+//------------------------------------------------------------------------------ Module FSD
+$langliste['fr']['fsd'][]="Version";
+$langliste['fr']['fsd-popup'][]="Version";
+
+$langliste['fr']['fsd'][]="Module";
+$langliste['fr']['fsd-popup'][]="Module";
+
+$langliste['fr']['fsd'][]="Sous-module";
+$langliste['fr']['fsd-popup'][]="Sous-module";
+
+$langliste['fr']['fsd'][]="Code";
+$langliste['fr']['fsd-popup'][]="Code";
+
+$langliste['fr']['fsd'][]="Libellé";
+$langliste['fr']['fsd-popup'][]="Libellé";
+
+$langliste['fr']['fsd'][]="Description";
+$langliste['fr']['fsd-popup'][]="Description";
+
+$langliste['fr']['fsd'][]="Format";
+$langliste['fr']['fsd-popup'][]="Format";
+
+$langliste['fr']['fsd'][]= "oDATA";
+$langliste['fr']['fsd-popup'][]="Obligation DATA";
+
+$langliste['fr']['fsd'][]= "oTAXA";
+$langliste['fr']['fsd-popup'][]="Obligation TAXA";
+
+$langliste['fr']['fsd'][]= "oSYNDATA";
+$langliste['fr']['fsd-popup'][]="Obligation SYNDATA";
+
+$langliste['fr']['fsd'][]= "oSYNTAXA";
+$langliste['fr']['fsd-popup'][]="Obligation SYNTAXA";
+
+$langliste['fr']['fsd'][]="Voca Ctrl";
+$langliste['fr']['fsd-popup'][]="Voca Ctrl";
+
+$langliste['fr']['fsd'][]="Règle Renseignement";
+$langliste['fr']['fsd-popup'][]="Règle Renseignement";
+
+$langliste['fr']['fsd'][]="Exemple";
+$langliste['fr']['fsd-popup'][]="Exemple";
+
+
 ?>

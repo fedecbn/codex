@@ -859,6 +859,10 @@ option.oui, select.oui, td.oui  {
     color:white;  
     background-color:#4ACC83;  
 }
+option.ouisi, select.ouisi, td.ouisi  {
+    color:white;  
+    background-color:#E99C01;  
+}
 option.Pr,  select.Pr {
     color:white;  
     background-color:#4ACC83;  

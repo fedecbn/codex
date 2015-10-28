@@ -71,7 +71,7 @@ function menu_rubrique ($niveau,$module){
 		);
 	
     echo ("<div lang=\"fr\" id=\"rubriques\"><center><ul>");
-    $query="SELECT * FROM ".SQL_schema_app.".rubrique WHERE id_module='".$module."' ORDER BY pos;";
+    $query="SELECT * FROM applications.rubrique WHERE id_module='".$module."' ORDER BY pos;";
     $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) {
         if ($niveau >= $row["niveau"] ) {
@@ -495,6 +495,8 @@ function aff_table_new ($id_liste,$actions,$check) {
     if ($check) echo ("<th><a><input type=\"checkbox\" class=\"liste-all\" value=\"1\" ></a></th>");
     echo ("</tr></tfoot><tbody></tbody></table><br><br>");
 }
+
+
 //------------------------------------------------------------------------------ MétaForm
 
 function metaform_text ($label,$descr,$long,$style,$champ,$val)
@@ -750,6 +752,7 @@ function frt ($field,$value) {
 
 
 function sql_format_quote ($value,$do) {
+		if ($do == 'undo_hmtl') $do = 'undo_html';
 		$value = str_replace ("\t"," ",$value);
 		$value = rtrim($value,"'");
 		if(strpos($value,"'") !== false)	{
@@ -758,7 +761,7 @@ function sql_format_quote ($value,$do) {
 				$value = str_replace("'","\'",$value);
 				// echo "sans quote : $value ";
 				}
-			else if ($do == 'undo' OR $do == 'undo_hmtl' OR $do == 'undo_table' OR $do == 'undo_text' OR $do == 'undo_list')	{
+			else if ($do == 'undo' OR $do == 'undo_html' OR $do == 'undo_table' OR $do == 'undo_text' OR $do == 'undo_list')	{
 				$value = str_replace("\'","'",$value);
 				// echo "avec quote : $value ";
 				}
@@ -769,7 +772,7 @@ function sql_format_quote ($value,$do) {
 				$value = str_replace('"','\"',$value);
 				// echo "sans quote : $value ";
 				}
-			else if ($do == 'undo' OR $do == 'undo_hmtl')	{
+			else if ($do == 'undo' OR $do == 'undo_html')	{
 				$value = str_replace('\"','"',$value);
 				// echo "avec quote : $value ";
 				}
@@ -781,7 +784,7 @@ function sql_format_quote ($value,$do) {
 			$value = "'" . pg_escape_string ($value) . "'";
 			$value = str_replace ("<BR>","\n",$value);
 		}
-		else if ($do == 'undo_hmtl' OR $do == 'undo_table' OR $do == 'undo_list') {
+		else if ($do == 'undo_html' OR $do == 'undo_table' OR $do == 'undo_list') {
 			$value = str_replace ("\n","<BR>",$value);
 			$value = str_replace (CHR(13).CHR(10),"<BR>",$value);
 		}
@@ -948,9 +951,9 @@ if ( isset( $_GET['iSortCol_0'] ) )                                             
 	$sOrder="ORDER BY ";  
 		foreach ($colonne as $key => $val )	{
 			if	($val['pos'] == $_GET['iSortCol_0'])	{
-				if (!empty($val['table_bd'])) $table = $val['table_bd']."."; else $table ="";
+				if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
 				if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_0']) ] == "true" ) {
-					$sOrder .= $table.$val['nom_champ_synthese']." ".pg_escape_string( $_GET['sSortDir_0']);
+					$sOrder .= $table."\"".$val['nom_champ_synthese']."\" ".pg_escape_string( $_GET['sSortDir_0']);
 				}
 			}
 		}
@@ -965,39 +968,42 @@ foreach ($colonne as $key => $val )                                       // col
 		$sHaving = "HAVING string_agg(libelle_tag,' / ') ::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
     elseif ( $_GET['bSearchable_'.$val['pos']] == "true" && $_GET['sSearch_'.$val['pos']] != '' )
 	{
-	if (!empty($val['table_bd'])) $table = $val['table_bd']."."; else $table ="";
+	if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
+	
+	$champ = "\"".$val['nom_champ_synthese']."\"";
+	
 		if (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'not_null') {
-			$sWhere .= " AND ".$table.$val['nom_champ_synthese']." IS NOT NULL ";
-			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$val['nom_champ_synthese']." <> 0";
+			$sWhere .= " AND ".$table.$champ." IS NOT NULL ";
+			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$champ." <> 0";
 		}
 		elseif (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'is_null') {
-			$sWhere .= " AND ".$table.$val['nom_champ_synthese']." = IS NULL";
+			$sWhere .= " AND ".$table.$champ." = IS NULL";
 			}
 		elseif (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'not_zero') {
-			$sWhere .= " AND ".$table.$val['nom_champ_synthese']." <> 0";
+			$sWhere .= " AND ".$table.$champ." <> 0";
 		}
 		elseif ($val['type'] == 'val') {
-        	$sWhere .= " AND ".$table.$val['nom_champ_synthese']." ='".pg_escape_string($_GET['sSearch_'.$val['pos']])."' ";
+        	$sWhere .= " AND ".$table.$champ." ='".pg_escape_string($_GET['sSearch_'.$val['pos']])."' ";
      	}
 		elseif ($val['type'] == 'string') {
-        	$sWhere .= " AND ".$table.$val['nom_champ_synthese']."::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
+        	$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
 		}
 		elseif ($val['type'] == 'bool') {
-        	$sWhere .= " AND ".$table.$val['nom_champ_synthese']." = ".pg_escape_string($_GET['sSearch_'.$val['pos']])." ";
+        	$sWhere .= " AND ".$table.$champ." = ".pg_escape_string($_GET['sSearch_'.$val['pos']])." ";
 		}
 		elseif ($val['type'] == 'int') {
 			if (pg_escape_string($_GET['sSearch_'.$val['pos']]) == '>' OR pg_escape_string($_GET['sSearch_'.$val['pos']]) == '<' OR pg_escape_string($_GET['sSearch_'.$val['pos']]) == '=' ) {
 				$sWhere .= "";
 				}
 			else if ((strpos($_GET['sSearch_'.$val['pos']],"<") === 0) OR (strpos($_GET['sSearch_'.$val['pos']],">") === 0) OR (strpos($_GET['sSearch_'.$val['pos']],"=") === 0)) {
-				$sWhere .= " AND ".$table.$val['nom_champ_synthese']." ".pg_escape_string($_GET['sSearch_'.$val['pos']]);
+				$sWhere .= " AND ".$table.$champ." ".pg_escape_string($_GET['sSearch_'.$val['pos']]);
 				}
 			else	{
-			$sWhere .= " AND ".$table.$val['nom_champ_synthese']."::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
+			$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
 			}
 		}
 		else {
-        	$sWhere .= " AND ".$table.$val['nom_champ_synthese']."::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
+        	$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_GET['sSearch_'.$val['pos']])."%' ";
     	}
 	}
 }
