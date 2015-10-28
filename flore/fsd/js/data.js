@@ -29,12 +29,7 @@ if (typeof oTable == 'undefined') {
 				return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 				}, 
 			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			switch (aData[3]) {default : $('td:eq(3)', nRow).addClass('nom_taxon'); break;}
-			switch (aData[7]){
-				case "Oui" :$('td:eq(7)', nRow).addClass('oui');break;
-				case "Oui si" :$('td:eq(7)', nRow).addClass('ouisi');break;
-				case "Non" :$('td:eq(7)', nRow).addClass('non');break;
-				}
+			switch (aData[4]) {default : $('td:eq(4)', nRow).addClass('nom_taxon'); break;}
 			switch (aData[8]){
 				case "Oui" :$('td:eq(8)', nRow).addClass('oui');break;
 				case "Oui si" :$('td:eq(8)', nRow).addClass('ouisi');break;
@@ -49,6 +44,11 @@ if (typeof oTable == 'undefined') {
 				case "Oui" :$('td:eq(10)', nRow).addClass('oui');break;
 				case "Oui si" :$('td:eq(10)', nRow).addClass('ouisi');break;
 				case "Non" :$('td:eq(10)', nRow).addClass('non');break;
+				}
+			switch (aData[11]){
+				case "Oui" :$('td:eq(11)', nRow).addClass('oui');break;
+				case "Oui si" :$('td:eq(11)', nRow).addClass('ouisi');break;
+				case "Non" :$('td:eq(11)', nRow).addClass('non');break;
 				}
 			},
 			"oLanguage": { "sProcessing":   "Traitement en cours...",
@@ -71,11 +71,12 @@ if (typeof oTable == 'undefined') {
 			"sDom": '<"top"fl>rt<"bottom"ip>',
 				"aoColumns": [                                                        // 
 					{ "sWidth": "3%" },
+					{ "sWidth": "3%" },
 					{ "sWidth": "6%" },
 					{ "sWidth": "6%" },
 					{ "sWidth": "8%" },
-					{ "sWidth": "13%" },
-					{ "sWidth": "35%" },
+					{ "sWidth": "12%" },
+					{ "sWidth": "33%" },
 					{ "sWidth": "4%" },
 					{ "sWidth": "3%" },
 					{ "sWidth": "3%" },
@@ -90,6 +91,7 @@ if (typeof oTable == 'undefined') {
 			}).columnFilter({
 				sPlaceHolder: "head:after",
 				aoColumns: [ 
+					{ type: "text" },
 					{ type: "select", values: [1,2,3]}, // 
 					{ type: "text" },                                               // 
 					{ type: "text" },                                               //  

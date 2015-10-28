@@ -519,6 +519,9 @@ $langliste['fr']['bug-ok-liste'][]="Statut";
 $langliste['fr']['bug-ok-liste-popup'][]="";
 
 //------------------------------------------------------------------------------ Module FSD
+$langliste['fr']['fsd'][]="Id";
+$langliste['fr']['fsd-popup'][]="Identifiant";
+
 $langliste['fr']['fsd'][]="Version";
 $langliste['fr']['fsd-popup'][]="Version";
 
