@@ -71,9 +71,9 @@ if (typeof oTable == 'undefined') {
 			"sDom": '<"top"fl>rt<"bottom"ip>',
 				"aoColumns": [                                                        // 
 					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
-					{ "sWidth": "6%" },
-					{ "sWidth": "6%" },
+					{ "sWidth": "2%" },
+					{ "sWidth": "8%" },
+					{ "sWidth": "8%" },
 					{ "sWidth": "8%" },
 					{ "sWidth": "12%" },
 					{ "sWidth": "33%" },
@@ -82,9 +82,9 @@ if (typeof oTable == 'undefined') {
 					{ "sWidth": "3%" },
 					{ "sWidth": "3%" },
 					{ "sWidth": "3%" },
-					{ "sWidth": "8%" },
 					{ "sWidth": "3%" },
-					{ "sWidth": "8%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "10%" },
 					{ "sClass": "center","sWidth": "3%","bSortable": false },     // 
 					{ "sClass": "center","sWidth": "3%","bSortable": false }      // .
 			]
