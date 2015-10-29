@@ -781,8 +781,11 @@ function sql_format_quote ($value,$do) {
 				}
 		}
 		if ($do == 'do')	{
-			$value = "'" . pg_escape_string ($value) . "'";
-			$value = str_replace ("<BR>","\n",$value);
+			if  (pg_escape_string ($value) != null)
+				{$value = "'" . pg_escape_string ($value) . "'";
+				$value = str_replace ("<BR>","\n",$value);}
+			else
+				$value = 'null';
 		}
 		else if ($do == 'undo_html' OR $do == 'undo_table' OR $do == 'undo_list') {
 			$value = str_replace ("\n","<BR>",$value);

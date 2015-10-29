@@ -91,7 +91,7 @@ switch ($mode) {
         echo ("<div id=\"".$id_page."\" >");
             /*Troisième bandeau*/
             echo ("<div id=\"titre2\">");
-                echo ($lang[$lang_select]["liste_taxons"]);
+                echo ($lang[$lang_select]["liste_champ"]);
             echo ("</div>");
             echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
@@ -178,6 +178,7 @@ switch ($mode) {
                 echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_champ']."</button> ");
 		echo ("</div>");
 
+		echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
 
 		echo ("<br><br>");
 //------------------------------------------------------------------------------ Add ancien champ
@@ -303,6 +304,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		if (isset($_GET['id']) & !empty($_GET['id'])) {                         // Modifier
             $id=$_GET['id'];
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
+            echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
 			
 			$query = "WITH RECURSIVE hierarchie (uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj,id_from) AS (
 				SELECT a.*, z.id_from as id_from
@@ -433,37 +435,101 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
     }
     break;
 
-	case "maj"	: {
-/*------------------------------------------------------------------------------ EDIT catnat EN TETE*/
-	echo ("<div id=\"$id_page\" >");
-	echo ("</div>");
-/*------------------------------------------------------------------------------ #Onglet Fiche*/
-	echo ("<div style=\"float:right;\">");
-		echo ("<button id=\"retour3-button\">".$lang[$lang_select]['liste_champ']."</button> ");
-	echo ("</div>");
-	
-	echo ("<div id=\"maj\" >");
-		/*connexion au si_flore_national_v3 pour récupérer le taxa*/
-		$db2=sql_connect_admin (SQL_taxa);
-		if (!$db2) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
-		$result = pg_query ($db2,$recup_taxa) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		if ($result != FALSE) echo ("<BR>- Taxa exporté"); else echo ("Problème d'export");
-		pg_free_result ($result);
-		
-		/*Application du nouveau taxa*/
-		$db=sql_connect_admin (SQL_base);
-		if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
-		$result = pg_query ($db,$import_taxa) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		if ($result != FALSE) echo ("<BR>- Taxa importé"); else echo ("Problème d'import");
-		pg_free_result ($result);
-		
-		$result = pg_query ($db,$maj_from_taxa) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		if ($result != FALSE) echo ("<BR>- CATNAT mis à jour"); else echo ("Problème d'export");
-		pg_free_result ($result);
+	case "vocactrl"	: {
+/*Gestion des niveau de droit*/
+if ($niveau <= 64) $desc = " bloque"; else $desc = null;
+if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
-	echo ("</div>");
-	
-	
+/*------------------------------------------------------------------------------ EDIT  EN TETE*/
+        echo ("<div id=\"$id_page\" >");
+        echo ("</div>");
+/*------------------------------------------------------------------------------ #Onglet Fiche*/
+        echo ("<div id=\"fiche\" >");
+        echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"vocactrl\" action=\"\" >");
+
+        echo ("<div style=\"float:left;\">");
+            echo ("<font size=5 color=#008C8E >".$lang[$lang_select]['edit_fiche']."</font>");
+        echo ("</div>");
+        echo ("<div style=\"float:right;\">");
+            if ($mode == "vocactrl") {
+                echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+                echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_champ']."</button> ");
+            } else {
+                echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
+            }
+		echo ("</div>");
+		if (isset($_GET['id']) & !empty($_GET['id'])) {
+            $id=$_GET['id'];
+            echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
+            echo ("<input type=\"hidden\" name=\"type\" value=\"vocactrl\" />");
+			
+			/*voca_ctrl*/
+			$query = "SELECT * FROM fsd.voca_ctrl WHERE \"typChamp\" = '$id';";
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+			// while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+					// {$voca_ctrl[$row['typChamp']] = $row['typChamp'];$i++;}
+			
+			if (pg_num_rows ($result)) {
+			
+			echo ("<br><br>");
+
+//------------------------------------------------------------------------------ Edit
+		echo ("<div id=\"radio2\">");    
+		echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>");
+		$bloq = " no_lab";
+		$disa = "";
+		$gris = "";
+		$i=0;
+		metaform_text ("Code du champ",null,40,"","typChamp",sql_format_quote($id,"undo"));
+		
+		echo ("<table border=0 width=\"50%\">");
+		echo ("<tr valign=top ><td style=\"width: 20%;\">Code de l'attribut");
+		echo ("</td><td style=\"width:40%;\">Libellé de l'attribut");
+		echo ("</td><td style=\"width:60%;\">Description de l'attribut");
+		while ($row = pg_fetch_assoc($result))
+			{
+			echo ("<input type=\"hidden\" name=\"id_$i\" value=\"".$row["id"]."\" />");
+			echo ("<tr valign=top ><td style=\"width: 20%;\">");
+				metaform_text ("Code de l'attribut",$bloq,40,"","cdChamp_$i",sql_format_quote($row["cdChamp"],"undo"));
+			echo ("</td><td style=\"width:40%;\">");
+				metaform_text ("Libellé de l'attribut",$bloq,40,"","libChamp_$i",sql_format_quote($row["libChamp"],"undo"));
+			echo ("</td><td style=\"width:60%;\">");
+				metaform_text ("Description de l'attribut",$bloq,40,"","descChamp_$i",sql_format_quote($row["descChamp"],"undo"));
+			echo ("</td></tr>");
+			$i++;
+			}
+			echo ("<input type=\"hidden\" name=\"nb\" value=\"$i\" />");
+			/*Ligne vide suplémentaire*/			
+			echo ("<tr valign=top ><td style=\"width: 20%;\">");
+				metaform_text ("Code de l'attribut",$bloq,40,"","cdChamp",null);
+			echo ("</td><td style=\"width:40%;\">");
+				metaform_text ("Libellé de l'attribut",$bloq,40,"","libChamp",null);
+			echo ("</td><td style=\"width:60%;\">");
+				metaform_text ("Description de l'attribut",$bloq,40,"","descChamp",null);
+			echo ("</td></tr>");
+			echo ("</table></fieldset>");
+			}
+/* ------------------------------------------------------------------------------ EDIT catnat SAVE*/
+        echo ("<div style=\"float:right;\"><br>");
+			if ($mode == "vocactrl") {
+				echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+				echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_champ']."</button> ");
+			} else {
+				echo ("<button id=\"retour4-button\">".$lang[$lang_select]['retour']."</button> ");
+			}
+			echo ("</div>");
+			echo ("</form>");
+			} else fatal_error ("ID ".$id." > Vide !",false);
+		
+    
+        echo ("<div id=\"exit-confirm\" title=\"Retour\">");
+            echo ("<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>".$lang[$lang_select]['retour_dialog']."</p>");
+        echo ("</div>");
+
+        echo ("<div id=\"enregistrer-dialog\">");
+            echo ("<center><img src=\"../../_GRAPH/check.png\"  /><br>".$lang[$lang_select]['enregistrer_dialog']."</center>");
+        echo ("</div>");
+
 	}
 	break;
 

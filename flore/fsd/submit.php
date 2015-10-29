@@ -16,6 +16,7 @@ include ("commun.inc.php");
 //------------------------------------------------------------------------------ PARMS.
 define ("DEBUG",TRUE);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
+$type = isset($_POST['type']) ? $_POST['type'] : "";
 
 
 
@@ -31,9 +32,9 @@ if (!isset($_POST["etape"])) {$etape = 0;}
 else {$etape = $_POST["etape"];}
 
 //------------------------------------------------------------------------------ EDIT
-if (!empty ($id))                                                               // EDIT
+if (!empty ($id) AND !empty($type))                                                               // EDIT
 	{
-	if ($niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
+	if ($type == 'champ' AND $niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
 		{
 		/*SUIVI DES MODIFICATIONS ET UPDATE*/
 		$liste_champs = '';
@@ -103,7 +104,7 @@ if (!empty ($id))                                                               
 			pg_free_result ($result);		
 			
 		}
-	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
+	if ($type == 'champ' AND $niveau >= 64)	/*Seulement les participants et au dessus*/
 		{
 		if (isset($_POST['commentaire_eval']))	{
 			if (!empty($_POST['commentaire_eval'])) {
@@ -116,6 +117,15 @@ if (!empty ($id))                                                               
 				add_suivi2($etape,$id_user,$id,"discussion","commentaire_eval","",sql_format_quote($_POST[commentaire_eval],'do'),$id_page,'manuel',"ajout");
 				}
 			}
+		}
+	if ($type == 'vocactrl' AND $niveau >= 128)
+		{
+		for ($j=0;$j<=$_POST['nb'];$j++)
+			$query .= "UPDATE fsd.voca_ctrl SET \"cdChamp\" = ".sql_format_quote($_POST['cdChamp_'.$j],'do').", \"libChamp\" = ".sql_format_quote($_POST['libChamp_'.$j],'do').", \"descChamp\" = ".sql_format_quote($_POST['descChamp_'.$j],'do').", \"typChamp\" = ".sql_format_quote($_POST['typChamp'],'do')." WHERE id = ".sql_format_quote($_POST['id_'.$j],'do').";";
+		if (isset($_POST['cdChamp']) AND isset($_POST['libChamp']))
+			if (!empty($_POST['cdChamp']) AND !empty($_POST['libChamp']))
+				$query .= "INSERT INTO fsd.voca_ctrl (\"typChamp\",\"cdChamp\",\"libChamp\",\"descChamp\") VALUES (".sql_format_quote($_POST['typChamp'],'do').",".sql_format_quote($_POST['cdChamp'],'do').",".sql_format_quote($_POST['libChamp'],'do').",".sql_format_quote($_POST['descChamp'],'do').");";
+		$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 		}
 	} else {                                      
 //------------------------------------------------------------------------------	

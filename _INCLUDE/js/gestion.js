@@ -191,6 +191,11 @@ if ( $("#mode").val() == 'liste') {
         window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
         return (false);
 	});
+	
+    $('#data-liste').on("click",".vocactrl", function ($e) {
+        window.location.replace ('index.php?m=vocactrl&id='+$(this).attr('id'));				
+        return (false);
+	});
 
 //------------------------------------------------------------------------------ CHECKBOX
 
