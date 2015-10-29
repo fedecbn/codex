@@ -103,7 +103,7 @@ if (typeof oTable == 'undefined') {
 					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
-					{ type: "text" },                                               //  
+					{ type: "select", values: [{ value: 'not_null', label: 'present'},{ value: 'null', label: 'absent'}]},                                              //  
 					{ type: "text" },                                               //  
 					{ type: "text" },  
 				]

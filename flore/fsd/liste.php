@@ -62,7 +62,7 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 			if ($key == 'regleRens')
 				if (!empty($row['regleRens'])) {$sOutput .= '"<img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['regleRens'],'undo_table').'\" >",';} else {$sOutput .= '"",';}
-			if ($key == 'vocaCtrl')
+			elseif ($key == 'vocaCtrl')
 				if (!empty($row['vocaCtrl'])) {$sOutput .= '"<img class=\"vocactrl\" id=\"'.sql_format_quote($row['vocaCtrl'],'undo_table').'\" src=\"../../_GRAPH/mini/fiche-icon.png\" title=\"'.sql_format_quote($row['vocaCtrl'],'undo_table').'\" >",';} else {$sOutput .= '"",';}
 		/*---------------*/
 		/*cas général avec référentiel*/
