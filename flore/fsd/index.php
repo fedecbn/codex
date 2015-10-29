@@ -480,8 +480,9 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		$disa = "";
 		$gris = "";
 		$i=0;
+		echo "<BR>";
 		metaform_text ("Code du champ",null,40,"","typChamp",sql_format_quote($id,"undo"));
-		
+		echo "<BR><BR>";
 		echo ("<table border=0 width=\"50%\">");
 		echo ("<tr valign=top ><td style=\"width: 20%;\">Code de l'attribut");
 		echo ("</td><td style=\"width:40%;\">Libellé de l'attribut");
@@ -490,22 +491,23 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			{
 			echo ("<input type=\"hidden\" name=\"id_$i\" value=\"".$row["id"]."\" />");
 			echo ("<tr valign=top ><td style=\"width: 20%;\">");
-				metaform_text ("Code de l'attribut",$bloq,40,"","cdChamp_$i",sql_format_quote($row["cdChamp"],"undo"));
+				metaform_text ("Code de l'attribut",$bloq,20,"","cdChamp_$i",sql_format_quote($row["cdChamp"],"undo"));
 			echo ("</td><td style=\"width:40%;\">");
 				metaform_text ("Libellé de l'attribut",$bloq,40,"","libChamp_$i",sql_format_quote($row["libChamp"],"undo"));
 			echo ("</td><td style=\"width:60%;\">");
-				metaform_text ("Description de l'attribut",$bloq,40,"","descChamp_$i",sql_format_quote($row["descChamp"],"undo"));
+				// echo ("<label class=\"preField\">Evolutions à apporter?</label>");
+				echo ("<textarea name=\"descChamp_$i\" id=\"descChamp_$i\" $disa style=\"$gris\" rows=\"2\"  cols=\"50\" >".sql_format_quote($row["descChamp"],"undo")."</textarea><br><br>");
 			echo ("</td></tr>");
 			$i++;
 			}
 			echo ("<input type=\"hidden\" name=\"nb\" value=\"$i\" />");
 			/*Ligne vide suplémentaire*/			
 			echo ("<tr valign=top ><td style=\"width: 20%;\">");
-				metaform_text ("Code de l'attribut",$bloq,40,"","cdChamp",null);
+				metaform_text ("Code de l'attribut",$bloq,20,"","cdChamp",null);
 			echo ("</td><td style=\"width:40%;\">");
 				metaform_text ("Libellé de l'attribut",$bloq,40,"","libChamp",null);
 			echo ("</td><td style=\"width:60%;\">");
-				metaform_text ("Description de l'attribut",$bloq,40,"","descChamp",null);
+				echo ("<textarea name=\"descChamp\" $disa id=\"descChamp\" style=\"$gris\" rows=\"2\"  cols=\"50\" >".sql_format_quote($row["descChamp"],"undo")."</textarea><br><br>");
 			echo ("</td></tr>");
 			echo ("</table></fieldset>");
 			}
