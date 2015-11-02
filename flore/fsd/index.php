@@ -40,23 +40,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 $format = array("string"=>"string","float"=>"float","integer"=>"integer","date"=>"date");
 $oblig = array(""=>"","Oui"=>"Oui","Oui si"=>"Oui si","Non"=>"Non","NSP"=>"NSP");
 
-	
-//------------------------------------------------------------------------------ INIT JAVASCRIPT
-?>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-ui.custom.min.js"></script>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.dataTables.columnFilter.js"></script>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.form.js"></script>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.validate.min.js"></script>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
-
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
-<script type="text/javascript" language="javascript" src="js/liste.js"></script>
-<script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
-
-<?php
 // /*------------------------------------------------------------------------------ MAIN*/
 html_header_2 ("utf-8","table_eval.css","jquery-te-1.4.0.css",$title);
 
@@ -260,20 +243,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
             $version = $row['version'];
         pg_free_result ($result);
 		
-	/*modules*/
-	$query = "SELECT DISTINCT modl FROM fsd.ddd WHERE version = $version ORDER BY modl;";
-	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            {$modl[$row['modl']] = $row['modl'];$i++;}
-	pg_free_result ($result);
-	
-	/*SSmodules*/
-	$query = "SELECT DISTINCT ssmodl FROM fsd.ddd WHERE version = $version ORDER BY ssmodl;";
-	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            {$ssmodl[$row['ssmodl']] = $row['ssmodl'];$i++;}
-	pg_free_result ($result);
-
 	/*voca_ctrl*/
 	$query = "SELECT DISTINCT \"typChamp\" FROM fsd.voca_ctrl ORDER BY \"typChamp\";";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
@@ -329,6 +298,23 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
        
 	   while ($row = pg_fetch_assoc($result))
 			{
+			$version = $row["version"];
+			
+			/*modules*/
+			$query = "SELECT DISTINCT modl FROM fsd.ddd WHERE version = $version ORDER BY modl;";
+			$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+			while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
+					{$modl[$rowe['modl']] = $rowe['modl'];}
+			pg_free_result ($resulte);
+			
+			/*SSmodules*/
+			$query = "SELECT DISTINCT ssmodl FROM fsd.ddd WHERE version = $version ORDER BY ssmodl;";
+			$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+			while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
+					{$ssmodl[$rowe['ssmodl']] = $rowe['ssmodl'];}
+			pg_free_result ($resulte);
+			
+			
 			/*autre_champ*/
 			$autre_chp = null;
 			$query = "SELECT DISTINCT cd, uid FROM fsd.ddd WHERE version = ".$row["version"]."-1 ORDER BY cd ;";
@@ -540,6 +526,22 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 //------------------------------------------------------------------------------
 echo ("</div>");                                                                // tabs
 echo ("</div>");                                                                // page_consult
+//------------------------------------------------------------------------------ INIT JAVASCRIPT
+?>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-ui.custom.min.js"></script>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.dataTables.columnFilter.js"></script>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.form.js"></script>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.validate.min.js"></script>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
+
+<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
+<script type="text/javascript" language="javascript" src="js/liste.js"></script>
+<script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
+<?php
+
 echo ("</body></html>");
 pg_close ($db);
 
