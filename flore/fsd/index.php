@@ -286,7 +286,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				LEFT JOIN fsd.lien_champs t3 ON t1.uid = t3.uid
 				INNER JOIN hierarchie t2 ON t2.id_from = t1.uid
 				)
-			SELECT * FROM hierarchie;";
+			SELECT uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj FROM hierarchie GROUP BY uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj;";
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
 			if (pg_num_rows ($result)) {
