@@ -155,7 +155,7 @@ echo ("</div>");
 	
 	if (!empty ($select) AND strpos($select,'&') == null) 
 	{
-	$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi,ref_lr, ref_eee, ref_lsi, ref_catnat, ref_refnat
+	$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi,xcv.fsd,ref_lr, ref_eee, ref_lsi, ref_catnat, ref_refnat,ref_fsd
 	    FROM applications.utilisateur a
 		JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
 		JOIN (SELECT id_user, lib as lr FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lr = cd) as aze ON aze.id_user = a.id_user
@@ -163,6 +163,7 @@ echo ("</div>");
 		JOIN (SELECT id_user, lib as refnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_refnat = cd) as wxc ON wxc.id_user = a.id_user
 		JOIN (SELECT id_user, lib as catnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_catnat = cd) as zer ON zer.id_user = a.id_user
 		JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user
+		JOIN (SELECT id_user, lib as fsd FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_fsd = cd) as xcv ON xcv.id_user = a.id_user
 		WHERE a.id_user = '$select';
 		";
 		
@@ -179,7 +180,7 @@ echo ("</div>");
 			}
 		$where=rtrim ($where,"OR ");
 
-		$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi,ref_lr, ref_eee, ref_lsi, ref_catnat, ref_refnat
+		$query = "SELECT a.id_user, lib_cbn, nom, prenom, login, pw, tel_bur, tel_port, email, web, descr, aze.lr,qsd.eee,wxc.refnat,zer.catnat,sdf.lsi,xcv.fsd,ref_lr, ref_eee, ref_lsi, ref_catnat, ref_refnat,ref_fsd
 			FROM applications.utilisateur a
 			JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn
 			JOIN (SELECT id_user, lib as lr FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lr = cd) as aze ON aze.id_user = a.id_user
@@ -187,6 +188,7 @@ echo ("</div>");
 			JOIN (SELECT id_user, lib as refnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_refnat = cd) as wxc ON wxc.id_user = a.id_user
 			JOIN (SELECT id_user, lib as catnat FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_catnat = cd) as zer ON zer.id_user = a.id_user
 			JOIN (SELECT id_user, lib as lsi FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_lsi = cd) as sdf ON sdf.id_user = a.id_user
+			JOIN (SELECT id_user, lib as fsd FROM applications.utilisateur a JOIN referentiels.user_ref z ON niveau_fsd = cd) as xcv ON xcv.id_user = a.id_user
 			WHERE $where;
 			";
 		$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));

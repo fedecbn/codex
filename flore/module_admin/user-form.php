@@ -27,7 +27,7 @@ while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
     $ref_institut[$row["CODINSTIT"]]=$row["LIBINSTIT"];
 pg_free_result ($result);
 */
-$query="SELECT id_user,niveau_lr,niveau_eee,niveau_lsi,niveau_catnat,niveau_refnat,ref_lr,ref_eee,ref_lsi,ref_catnat,ref_refnat 
+$query="SELECT id_user,niveau_lr,niveau_eee,niveau_lsi,niveau_catnat,niveau_refnat,niveau_fsd,ref_lr,ref_eee,ref_lsi,ref_catnat,ref_refnat,ref_fsd
 FROM applications.utilisateur WHERE id_user= '".$_GET["id_user"]."';";
 // echo $query;
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
@@ -38,20 +38,23 @@ if (pg_num_rows ($result)) {
 	$niveau['lsi']=pg_result ($result,0,"niveau_lsi");
 	$niveau['catnat']=pg_result ($result,0,"niveau_catnat");
 	$niveau['refnat']=pg_result ($result,0,"niveau_refnat");
-	$niveau['all'] = max($niveau['lr'],$niveau['eee'],$niveau['lsi'],$niveau['catnat'],$niveau['refnat']);
+	$niveau['fsd']=pg_result ($result,0,"niveau_fsd");
+	$niveau['all'] = max($niveau['lr'],$niveau['eee'],$niveau['lsi'],$niveau['catnat'],$niveau['refnat'],$niveau['fsd']);
 	/*niveau référents*/
 	$ref['lr']=pg_result ($result,0,"ref_lr");
 	$ref['eee']=pg_result ($result,0,"ref_eee");
 	$ref['lsi']=pg_result ($result,0,"ref_lsi");
 	$ref['catnat']=pg_result ($result,0,"ref_catnat");
 	$ref['refnat']=pg_result ($result,0,"ref_refnat");
-	if (($ref['lr'] == 't') OR ($ref['eee'] == 't') OR ($ref['lsi'] == 't') OR ($ref['catnat'] == 't') OR ($ref['refnat'] == 't')) $ref['all']= 't'; else $ref['all']= 'f';
+	$ref['fsd']=pg_result ($result,0,"ref_fsd");
+	if (($ref['lr'] == 't') OR ($ref['eee'] == 't') OR ($ref['lsi'] == 't') OR ($ref['catnat'] == 't') OR ($ref['refnat'] == 't') OR ($ref['fsd'] == 't')) $ref['all']= 't'; else $ref['all']= 'f';
 	
 	$blocked['lr']= ($ref['lr'] == 't' OR $niveau['lr'] >= 255) ? "" : "disabled";
 	$blocked['eee']= ($ref['eee'] == 't' OR $niveau['eee'] >= 255) ? "" : "disabled";
 	$blocked['lsi']= ($ref['lsi'] == 't' OR $niveau['lsi'] >= 255) ? "" : "disabled";
 	$blocked['catnat']= ($ref['catnat'] == 't' OR $niveau['catnat'] >= 255) ? "" : "disabled";
 	$blocked['refnat']= ($ref['refnat'] == 't' OR $niveau['refnat'] >= 255) ? "" : "disabled";
+	$blocked['fsd']= ($ref['fsd'] == 't' OR $niveau['fsd'] >= 255) ? "" : "disabled";
 	}
 
 // var_dump($niveau);
@@ -95,6 +98,10 @@ $(document).ready(function(){
                 digits: true
 			},
 			niveau_lsi: {
+				required: true,
+                digits: true
+			},
+			niveau_fsd: {
 				required: true,
                 digits: true
 			},

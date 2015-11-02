@@ -345,8 +345,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				$id_from[$ligne['id_from']] = $autre_chp[$ligne['id_from']];
 			pg_free_result ($resultat);
 			
-			if ($i > 0) $bloq = " bloque"; else $bloq = "";
-			if ($i > 0) $disa = " disabled"; else $disa = "";
+			if ($i > 0 OR $niveau <= 64) $bloq = " bloque"; else $bloq = "";
+			if ($i > 0 OR $niveau <= 64) $disa = " disabled"; else $disa = "";
 			if ($i > 0) $gris = " background-color:#EFEFEF"; else $gris = "";
 			if ($i > 0) echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>"); else echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_2']."</LEGEND>");
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");

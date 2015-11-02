@@ -377,6 +377,9 @@ $langliste['fr']['admin-user-liste-popup'][]="";
 $langliste['fr']['admin-user-liste'][]="Niveau LSI";
 $langliste['fr']['admin-user-liste-popup'][]="";
 
+$langliste['fr']['admin-user-liste'][]="Niveau FSD";
+$langliste['fr']['admin-user-liste-popup'][]="";
+
 $langliste['fr']['admin-user-liste'][]="ref LR";
 $langliste['fr']['admin-user-liste-popup'][]="Référent rubrique LR";
 
@@ -391,6 +394,9 @@ $langliste['fr']['admin-user-liste-popup'][]="Référent rubrique REFNAT";
 
 $langliste['fr']['admin-user-liste'][]="ref LSI";
 $langliste['fr']['admin-user-liste-popup'][]="Référent rubrique LSI";
+
+$langliste['fr']['admin-user-liste'][]="ref FSD";
+$langliste['fr']['admin-user-liste-popup'][]="Référent rubrique FSD";
 
 //------------------------------------------------------------------------------ Module admin / Suivi
 $langliste['fr']['admin-suivi-liste'][]="UID";
