@@ -549,23 +549,26 @@ $langliste['fr']['fsd-popup'][]="Description";
 $langliste['fr']['fsd'][]="Format";
 $langliste['fr']['fsd-popup'][]="Format";
 
-$langliste['fr']['fsd'][]= "oDATA";
+$langliste['fr']['fsd'][]= "Data";
 $langliste['fr']['fsd-popup'][]="Obligation DATA";
 
-$langliste['fr']['fsd'][]= "oTAXA";
+$langliste['fr']['fsd'][]= "Taxa";
 $langliste['fr']['fsd-popup'][]="Obligation TAXA";
 
-$langliste['fr']['fsd'][]= "oSYNDATA";
+$langliste['fr']['fsd'][]= "Sdata";
 $langliste['fr']['fsd-popup'][]="Obligation SYNDATA";
 
-$langliste['fr']['fsd'][]= "oSYNTAXA";
+$langliste['fr']['fsd'][]= "Staxa";
 $langliste['fr']['fsd-popup'][]="Obligation SYNTAXA";
 
 $langliste['fr']['fsd'][]="Voca Ctrl";
 $langliste['fr']['fsd-popup'][]="Voca Ctrl";
 
-$langliste['fr']['fsd'][]="Règle Renseignement";
+$langliste['fr']['fsd'][]="Règle";
 $langliste['fr']['fsd-popup'][]="Règle Renseignement";
+
+$langliste['fr']['fsd'][]="Evol.";
+$langliste['fr']['fsd-popup'][]="Exemple";
 
 $langliste['fr']['fsd'][]="Exemple";
 $langliste['fr']['fsd-popup'][]="Exemple";

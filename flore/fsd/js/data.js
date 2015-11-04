@@ -74,7 +74,7 @@ if (typeof oTable == 'undefined') {
 					{ "sWidth": "2%" },
 					{ "sWidth": "6%" },
 					{ "sWidth": "6%" },
-					{ "sWidth": "15%" },
+					{ "sWidth": "14%" },
 					{ "sWidth": "12%" },
 					{ "sWidth": "30%" },
 					{ "sWidth": "4%" },
@@ -84,7 +84,8 @@ if (typeof oTable == 'undefined') {
 					{ "sWidth": "3%" },
 					{ "sWidth": "3%" },
 					{ "sWidth": "3%" },
-					{ "sWidth": "10%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "8%" },
 					{ "sClass": "center","sWidth": "3%","bSortable": false },     // 
 					{ "sClass": "center","sWidth": "3%","bSortable": false }      // .
 			]
@@ -104,6 +105,7 @@ if (typeof oTable == 'undefined') {
 					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'not_null', label: 'present'},{ value: 'null', label: 'absent'}]},                                              //  
+					{ type: "text" },                                               //  
 					{ type: "text" },                                               //  
 					{ type: "text" },  
 				]

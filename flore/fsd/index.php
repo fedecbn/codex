@@ -365,14 +365,19 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						if ($i > 0) echo ("<label class=\"preField_calc\">Règles de renseignement</label>"); else echo ("<label class=\"preField\">Règles de renseignement</label>");
 						echo ("<textarea name=\"regleRens\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["regleRens"],"undo")."</textarea><br><br>");
 
-						if ($i > 0) echo ("<label class=\"preField_calc\">Evolutions à apporter?</label>"); else echo ("<label class=\"preField\">Evolutions à apporter?</label>");
-						echo ("<textarea name=\"discussion\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["discussion"],"undo")."</textarea><br><br>");
 
 						if ($i == 0) $jvs1 = "OnDblClick='javascript: deplacer( this.form.id_from_to_$i, this.form.id_from_$i);'"; else $jvs1 = null;
 						if ($i == 0) $jvs2 = "OnDblClick='javascript: deplacer( this.form.id_from_$i, this.form.id_from_to_$i);'"; else $jvs2 = null;
 						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;$gris",$jvs1,$autre_chp,"id_from_to_$i",null);
 						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;$gris",$jvs2,$id_from,"id_from_$i",null);	
 
+						
+					echo ("</td></tr></table>");
+					echo ("<table border=0 width=\"100%\"><tr valign=top >");
+					echo ("<td style=\"width: 100%;\">");
+						echo "<BR>";
+						if ($i > 0) echo ("<label class=\"preField_calc\">Evolutions à apporter?</label>"); else echo ("<label class=\"preField\">Evolutions à apporter?</label>");
+						echo ("<textarea name=\"discussion\" $disa style=\"width:80%;$gris\" rows=\"4\" >".sql_format_quote($row["discussion"],"undo")."</textarea><br><br>");
 					echo ("</td></tr></table>");
 				echo ("</fieldset>");
 			$i++;
@@ -383,7 +388,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			/*requete discussion*/
 			$query= $query_discussion.$id.";";
 			$discussion=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
-			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion sur la fiche</label>"); else echo ("<label class=\"preField\">Discussion sur la fiche</label>");
+			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion sur la fiche</label>"); else echo ("<label class=\"preField\">Réactions sur le champ</label>");
 			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" ></textarea><br><br>");
 			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
 			echo "<table>";
