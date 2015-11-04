@@ -21,13 +21,13 @@ if (typeof oTable == 'undefined') {
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "liste.php",
-			"bStateSave": true,
-			"fnStateSave": function (oSettings, oData) {
-				localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
-				},
-			"fnStateLoad": function (oSettings) {
-				return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
-				}, 
+			// "bStateSave": true,
+			// "fnStateSave": function (oSettings, oData) {
+				// localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
+				// },
+			// "fnStateLoad": function (oSettings) {
+				// return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
+				// }, 
 			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 			switch (aData[4]) {default : $('td:eq(4)', nRow).addClass('nom_taxon'); break;}
 			switch (aData[8]){
