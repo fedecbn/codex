@@ -1,0 +1,47 @@
+libelle_organisme COMMUN;count;cbn;  bd_mere  ;count_distinct;
+Aucun;2;CBN-MCE_1,CBN-BPA_1; CBN-ALP_2;118;
+Biotope;2;CBN-PMP_1,CBN-SAT_1; CBN-BAL_2 ;60;
+CBFC;2;CBN-ALP_2,CBN-FRC_1; CBN-BPA_1 ;147;
+CEMAGREF;2;CBN-ALP_2,CBN-MCE_1; CBN-BRE_1;1;
+Conservatoire Botanique National Alpin;2;CBN-ALP_2,CBN-MED_1; CBN-COR_1 ;71;
+Conservatoire Botanique National de Franche-Comté;2;CBN-FRC_1,CBN-BPA_1; CBN-FRC_1;34;
+Conservatoire botanique national des Pyrénées et de Midi-Pyrénées;2;CBN-PMP_1,CBN-BPA_1; CBN-MAS_2;45;
+Conservatoire Botanique National du Bassin Parisien;3;CBN-FRC_1,CBN-MED_1,CBN-BPA_1; CBN-MCE_1;217;
+Conservatoire Botanique National du Massif Central;2;CBN-ALP_2,CBN-MED_1; CBN-MED_1;114;
+Conservatoire et Jardin Botanique de la Ville de Genève;2;CBN-COR_1,CBN-MED_1; CBN-PMP_1;99;
+CREN Rhône-Alpes;2;CBN-ALP_2,CBN-MCE_1; CBN-SAT_1;17;
+ECO-MED;2;CBN-MCE_1,CBN-PMP_1;;;
+inconnu;3;CBN-BAL_2,CBN-COR_1,CBN-PMP_1;Exemples;;Exemples
+indépendant;3;CBN-FRC_1,CBN-PMP_1,CBN-MAS_2;OFFICE NATIONAL DES FORÊTS;;CEN Allier
+Inventaire Forestier National;2;CBN-MED_1,CBN-BPA_1;Office National des Forêts;;CEN Aquitaine
+Muséum National d'Histoire Naturelle;2;CBN-ALP_2,CBN-MCE_1;ONF;;CEN Auvergne (Ex-CEPA)
+Office National de l'Eau et des Milieux Aquatiques;3;CBN-PMP_1,CBN-MED_1,CBN-BPA_1;Office national des forêts;;CEN Limousin
+Office National de la Chasse et de la Faune Sauvage;3;CBN-ALP_2,CBN-MED_1,CBN-BPA_1;Office National des forêts;;CEN PACA
+Office National des Forêts;3;CBN-FRC_1,CBN-MED_1,CBN-BPA_1;Office National des Forêts;;CEN Rhône-Alpes
+ONF;2;CBN-SAT_1,CBN-MAS_2;OFFICE NATIONAL DES FORÊTS;;Conservatoire des Espaces Naturels de la Sarthe
+Parc National de la Vanoise;2;CBN-ALP_2,CBN-MED_1;Office National des Forêts du Vaucluse;;Conservatoire des Espaces Naturels du Loir-et-Cher
+Parc National du Mercantour;2;CBN-ALP_2,CBN-MED_1;ONF;;Conservatoire des Espaces Naturels Rhône-Alpes CREN
+SBCO;3;CBN-COR_1,CBN-MCE_1,CBN-SAT_1;ONF ;;Conservatoire d'Espaces Naturels d'Aquitaine
+SBF;2;CBN-COR_1,CBN-PMP_1;ONF de la Haute-Loire;;Conservatoire d'espaces naturels de Bourgogne
+Société Botanique de France;3;CBN-MCE_1,CBN-MED_1,CBN-BPA_1;ONF de l'Allier;;Conservatoire d'Espaces Naturels de Champagne-Ardenne
+Société Botanique du Centre-Ouest;3;CBN-MCE_1,CBN-MED_1,CBN-BPA_1;ONF de l'Ardèche;;Conservatoire d'espaces naturels de la région Centre
+Société Botanique du Vaucluse;2;CBN-MED_1,CBN-BPA_1;ONF Drôme Ardèche;;Conservatoire d'espaces naturels de Loir-et-Cher
+Société Française d'Orchidophilie;2;CBN-MED_1,CBN-BPA_1;ONF du Cantal;;Conservatoire d'Espaces Naturels de Midi-Pyrénées
+Société Linnéenne de Lyon;2;CBN-MED_1,CBN-BPA_1;ONF du Puy-de-Dôme;;Conservatoire d'Espaces Naturels de PACA
+;;;ONF Limousin (DRONF Limousin);;Conservatoire d'Espaces Naturels du Languedoc-Roussillon
+Exemples;;;ONF Loire Rhône Ain;;Conservatoire d'Espaces Naturels du Limousin
+Conservatoire Botanique National de Balleuil;;CBFC;;;
+Conservatoire Botanique National de Brest;;CBNA;;;Exemples
+Conservatoire Botanique National de Corse;;CBNAGC;;;CEMAGREF
+Conservatoire Botanique National de Franche-Comté;;CBN Alpin;;;CEMAGREF de Nogent-sur-Vernisson
+Conservatoire botanique national des Pyrénées et de Midi-Pyrénées;;CBNAS;;;CEMAGREF grpt Nogent
+Conservatoire Botanique National du Bassin Parisien;;CBN Bassin parisien;;;CEMAGR
+Conservatoire botanique national du Massif central;;CBNBL;;;
+Conservatoire botanique national du Massif Central;;CBN Brest;;;
+Conservatoire Botanique National du Massif Central;;CBN-Brest;;;
+Conservatoire Botanique National Méditerranéen;;CBN Franche-Comté;;;
+Conservatoire botanique national méditerranéen de Porquerolles;;CBNM;;;
+Conservatoire Botanique National Méditerranéen de Porquerolles;;CBN Massif central;;;
+Conservatoire Botanique National Méditerranéen de Porquerolles (CBNMed);;CBNMC;;;
+;;CBN Méditerranéen de Porquerolles;;;
+;;CBNMP;;;

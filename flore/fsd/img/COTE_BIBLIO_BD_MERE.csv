@@ -1,0 +1,20 @@
+bd_mere;count;count_distinct
+CBN-ALP_2;4638879;870
+CBN-BPA_1;435226;3058
+CBN-BPA_1_bryo;1568;159
+CBN-MCE_1;590028;2372
+CBN-MED_1;2142181;1738
+CBN-PMP_1;147165;900
+;;
+;;
+Exemples;NB : tous numérique SAUF MED (M devant un numérique);
+M12;;
+14996;;
+7588;;
+5630;;
+M10666;;
+12427;;
+10252;;
+M10368;;
+5160;;
+3492;;
