@@ -1,0 +1,5 @@
+bd_mere;count;count_distinct;
+CBN-BPA_1;4451960;327362;(souvent identique)
+CBN-BPA_1_bryo;1833;1049;(souvent identique)
+CBN-MCE_1;4401341;391880;(bien différent)
+CBN-SAT_1;166163;166163;(id_flore_mere = CBNSA_...._id_flore_source)
