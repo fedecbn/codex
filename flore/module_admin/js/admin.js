@@ -327,7 +327,7 @@ $(document).ready(function(){
         		{ "sWidth": "10%"},
         		{ "sWidth": "13%"},
         		{ "sWidth": "5%"},
-        		{ "sWidth": "5%"},                                            // Niveau
+        		{ "sWidth": "5%"},                                           // Niveau
         		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "5%"},                                            // Niveau
@@ -348,7 +348,8 @@ $(document).ready(function(){
                     { type: "text" },                                           // Code
                     { type: "text" },                                           // Nom
                     { type: "text" },                                           // Prénom
-{ type: "select", values:['CBN Alpin','CBN de Bailleul','CBN de Brest','CBN de Corse','CBN de Franche-Comté','CBN des Pyrénées et de Midi-Pyrénées','CBN du Bassin Parisien','CBN du Massif central','[Guyane]','[Grand Est]','[Guadeloupe]','[Martinique]','FCBN','inconnu','CBN Méditerranéen de Porquerolles','CBN Sud-Atlantique','CBN Mascarin']},                    { type: "text" },                                           // Login
+{ type: "select", values:['CBN Alpin','CBN de Bailleul','CBN de Brest','CBN de Corse','CBN de Franche-Comté','CBN des Pyrénées et de Midi-Pyrénées','CBN du Bassin Parisien','CBN du Massif central','[Guyane]','[Grand Est]','[Guadeloupe]','[Martinique]','FCBN','inconnu','CBN Méditerranéen de Porquerolles','CBN Sud-Atlantique','CBN Mascarin']},                    
+					{ type: "text" },                                           // Login
                     { type: "text" },                                           // Login
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },

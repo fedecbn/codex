@@ -24,6 +24,8 @@ $aColumns = array('id_user','prenom','nom','lib_cbn','email','tel_bur','niveau_l
 $sIndexColumn = "id_user";
 $ouinon_txt=array("","<b>X</b>");
 
+// var_dump($aColumns);
+
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
@@ -53,41 +55,47 @@ if ( isset( $_GET['iSortCol_0'] ) )                                             
 		$sOrder = "";
 }
 $sWhere = "";                                                                   // Filtres
-if ( $_GET['sSearch'] != "" )
-{
-    $sWhere = "AND ( u.id_user LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.prenom LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.nom LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "c.lib_cbn LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.login LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.niveau_lr = ".$_GET['sSearch']." OR ".
-		                "u.niveau_eee LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.niveau_catnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.niveau_refnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.niveau_lsi LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.niveau_fsd LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.ref_lr = ".$_GET['sSearch']." OR ".
-		                "u.ref_eee LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.ref_catnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.ref_refnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.ref_fsd LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
-		                "u.ref_lsi LIKE '%".pg_escape_string( $_GET['sSearch'] )."%'
-						)";
-}
-For ( $i=0 ; $i<count($aColumns) ; $i++ )                                       // columnFilter v2
-{
-	if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
-	{
-	if ($i == 10 or $i == 6 or $i == 7 or $i == 8 or $i == 9 or $i == 11)
-		$sWhere .= " AND ".$aColumns[$i]." = ".pg_escape_string($_GET['sSearch_'.$i])." ";
-	elseif ($i == 16 or $i == 12 or $i == 13 or $i == 14 or $i == 15 or $i = 17) {
-		if (pg_escape_string($_GET['sSearch_'.$i]) == 'oui') $recherche = 'TRUE'; elseif (pg_escape_string($_GET['sSearch_'.$i]) == 'non') $recherche = 'FALSE';
-		$sWhere .= " AND ".$aColumns[$i]." = $recherche ";
-		}
-	else
-    	$sWhere .= " AND ".$aColumns[$i]." LIKE '%".pg_escape_string($_GET['sSearch_'.$i])."%' ";
-	}
-}
+// if ( $_GET['sSearch'] != "" )
+// {
+    // $sWhere = "AND ( u.id_user LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.prenom LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.nom LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "c.lib_cbn LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.login LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.niveau_lr = ".$_GET['sSearch']." OR ".
+		                // "u.niveau_eee LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.niveau_catnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.niveau_refnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.niveau_lsi LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.niveau_fsd LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.ref_lr = ".$_GET['sSearch']." OR ".
+		                // "u.ref_eee LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.ref_catnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.ref_refnat LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.ref_fsd LIKE '%".pg_escape_string( $_GET['sSearch'] )."%' OR ".
+		                // "u.ref_lsi LIKE '%".pg_escape_string( $_GET['sSearch'] )."%'
+						// )";
+// }
+// for ( $i=0 ; $i<count($aColumns) ; $i++ )                                       // columnFilter v2
+// {
+// echo "colonne : ".$aColumns[$i]." i = $i  et where = $sWhere<BR>";
+	// if ( isset($_GET['bSearchable_'.$i]) AND $_GET['bSearchable_'.$i] == "true" AND $_GET['sSearch_'.$i] != '' )
+	// {
+	// if ($i == 6 OR $i == 7 OR $i == 8 OR $i == 9 OR $i == 10 OR $i == 11)
+		// {$sWhere .= " AND ".$aColumns[$i]." = ".pg_escape_string($_GET['sSearch_'.$i])." ";}
+	// elseif ($i == 12 OR $i == 13 OR $i == 14 OR $i == 15 OR $i == 16 OR $i = 17 ) 
+		// {		
+		// if (pg_escape_string($_GET['sSearch_'.$i]) == 'oui') $recherche = 'TRUE'; 
+		// elseif (pg_escape_string($_GET['sSearch_'.$i]) == 'non') $recherche = 'FALSE';
+		// $sWhere .= " AND ".$aColumns[$i]." = $recherche ";
+		// }
+	// else
+    	// {$sWhere .= " AND ".$aColumns[$i]." LIKE '%".pg_escape_string($_GET['sSearch_'.$i])."%' ";}
+	// }
+	// $i++;
+// echo "colonne : ".$aColumns[$i]." i = $i  et where = $sWhere<BR>";
+// }
+// echo " Where $i : $sWhere<BR>";
 //------------------------------------------------------------------------------ QUERY
 if ($ref['all'] === 'f' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
 elseif ($ref['all'] === 't' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
