@@ -400,7 +400,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
 				$query = "SELECT * FROM import_temp_hub('CBN_".$_POST['cbn']."','/home/hub/".$_POST['cbn']."/import/');";
 				$result=pg_query ($db2,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 				echo ("Import réalisé");
-				echo ("<center><button id=\"return-button\">Retour à  l'installation</button></center>");				
+				echo ("<center><button id=\"home-button\">Retour à  l'installation</button></center>");				
 				echo ("</form>");
 				}		
 				echo ("</div>");                                                    // post
