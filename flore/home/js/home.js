@@ -113,6 +113,17 @@ $("#lang_it").click(function (event) {
         });	
 		
 	
+	$("#maj_data_fr,#maj_data_it")
+        .button({
+            text: true
+        });	
+		
+	$("#envoi_maj")
+        .button({
+            text: true
+        });	
+		
+	
 	$("#envoi-mdp")
         .button({
             text: true

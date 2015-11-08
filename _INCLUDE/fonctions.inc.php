@@ -698,6 +698,18 @@ function sql_connect_admin ($base) {
         return (false);
 }
 
+function sql_connect_hub ($base) {
+    global $db;
+	
+    if ($base != "") {
+        $db=pg_connect ("host=".SQL_server." port=".SQL_port_hub." user=".SQL_admin_user." password=".SQL_admin_pass." dbname=".$base);
+        return ($db);
+    }
+    else
+        return (false);
+}
+
+
 function sql_assoc ($query,$back) {
     global $db;
 	if (DEBUG) echo "<br>$query";
