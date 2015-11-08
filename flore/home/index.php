@@ -113,7 +113,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
             
 			aff_pres ("home","home_footer",FR,false);
 			
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI5')
+			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
 				{
 				echo ("<form method=\"POST\" id=\"form1\" name=\"loginform\" action=\"index.php\" >");
 					echo ("<center><input type=\"hidden\" name=\"action\" value=\"maj_data\" />");
@@ -368,7 +368,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
         echo ("<div lang=\"fr\">");
         echo ("<div class=\"narrowcolumn\">");
 			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI5')
+			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
 				{
 				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
 				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"maj_data-ok\" />");
@@ -390,7 +390,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
         echo ("<div lang=\"fr\">");
         echo ("<div class=\"narrowcolumn\">");
 			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI5')
+			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
 				{
 				// echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
 				// echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"maj_data-ok\" />");
