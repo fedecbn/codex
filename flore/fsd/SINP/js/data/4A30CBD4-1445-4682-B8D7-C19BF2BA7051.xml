@@ -1,0 +1,9 @@
+tocTab[tocTab.length] = new Array("0.1:1", "", "«dataType» Commune", "EARoot/EA1/EA9.htm", "5.png", "E6364", "0", "", "Class0","{413CD1D2-9696-4099-90E8-4AAD21523C51}");
+tocTab[tocTab.length] = new Array("0.1:2", "", "«dataType» Departement", "EARoot/EA1/EA10.htm", "5.png", "E6420", "0", "", "Class0","{933A89E7-5AB2-4794-95CE-E63970CD7358}");
+tocTab[tocTab.length] = new Array("0.1:3", "", "«dataType» EspaceNaturel", "EARoot/EA1/EA11.htm", "5.png", "E6363", "0", "", "Class0","{78516921-E131-497f-ACD3-E17B6CC0DB19}");
+tocTab[tocTab.length] = new Array("0.1:4", "", "«dataType» HabitatType", "EARoot/EA1/EA12.htm", "5.png", "E6369", "0", "", "Class0","{F55B2D05-57D1-44fb-B7DE-44C1683B7664}");
+tocTab[tocTab.length] = new Array("0.1:5", "", "«dataType» Maille10x10", "EARoot/EA1/EA13.htm", "5.png", "E6365", "0", "", "Class0","{B8E93D1A-0BBB-423e-9B8A-00169E1BE27C}");
+tocTab[tocTab.length] = new Array("0.1:6", "", "«dataType» MasseEau", "EARoot/EA1/EA14.htm", "5.png", "E6366", "0", "", "Class0","{4DE8B6AA-D95C-4b6c-8FAA-8471111CC1D2}");
+tocTab[tocTab.length] = new Array("0.1:7", "", "«dataType» Source", "EARoot/EA1/EA15.htm", "5.png", "E6355", "0", "", "Class0","{7CE9FABD-15F8-488b-85F3-553E8BE76EF1}");
+tocTab[tocTab.length] = new Array("0.1:8", "", "«featureType» SujetObservation", "EARoot/EA1/EA16.htm", "5.png", "E6336", "0", "", "Class0","{05AA75C5-92C0-4699-89DB-F56391434870}");
+tocTab[tocTab.length] = new Array("0.1.1", "1", "Types", "EARoot/EA1/EA1/EA18.htm", "4.png", "", "", "{10EB078D-A833-49ab-8796-2042844DE63D}", "Package");

@@ -1,0 +1,3 @@
+tocTab[tocTab.length] = new Array("0.2:1", "", "«dataType» AttributAdditionel", "EARoot/EA2/EA24.htm", "5.png", "E6367", "0", "", "Class0","{C3E47204-A568-4471-B3FB-A6F9EC031D5B}");
+tocTab[tocTab.length] = new Array("0.2:2", "", "«dataType» DescriptifSujet", "EARoot/EA2/EA25.htm", "5.png", "E6418", "0", "", "Class0","{8A81C6DB-DE46-4fe9-A2E8-EE49969DC2B4}");
+tocTab[tocTab.length] = new Array("0.2:3", "", "«dataType» RegroupementObservations", "EARoot/EA2/EA26.htm", "5.png", "E6397", "0", "", "Class0","{462A8BFE-41A7-41de-A88D-E8F94A263C3B}");

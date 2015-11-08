@@ -1,0 +1,5 @@
+tocTab[tocTab.length] = new Array("0:1", "", "Modèle de données occurrences de taxon", "EARoot/EA1.htm", "175.png", "3442", "0", "", "Logical diagram0","{C2C11A0C-711A-4f6a-9419-63332EB549FB}");
+tocTab[tocTab.length] = new Array("0.1", "1", "Concepts principaux", "EARoot/EA1/EA8.htm", "4.png", "", "", "{4A30CBD4-1445-4682-B8D7-C19BF2BA7051}", "Package");
+tocTab[tocTab.length] = new Array("0.2", "1", "Extensions", "EARoot/EA2/EA23.htm", "4.png", "", "", "{3794BFBE-D42F-4641-9F4A-19E3318E0373}", "Package");
+tocTab[tocTab.length] = new Array("0.3", "1", "Nomenclatures", "EARoot/EA3/EA27.htm", "4.png", "", "", "{B4430893-2FB8-4e95-BD28-29A5734AFE32}", "Package");
+tocTab[tocTab.length] = new Array("0.4", "1", "Référentiels", "EARoot/EA4/EA52.htm", "4.png", "", "", "{900A6A23-BC9D-42b5-94B6-10116FC83A01}", "Package");
