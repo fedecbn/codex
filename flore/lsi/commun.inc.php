@@ -43,11 +43,13 @@ WHERE 1=1 ";
 
 $group_by = "GROUP BY news.id,news.id_subject,title,abstract,link,link_2,date ";
 
-$query_export =  "SELECT id,libelle_subjet,title,abstract,libelle_tag,link,date
+$query_export =  "SELECT  n.id,libelle_subject,title,abstract,libelle_tag,link,date
 				FROM lsi.news AS n 
 				LEFT JOIN lsi.coor_news_tag nt ON n.id=nt.id
 				LEFT JOIN lsi.tag t ON nt.id_tag=t.id_tag  
 				LEFT JOIN lsi.subject s ON n.id_subject=s.id_subject";
+$id_export = "n.id";
+				
 				
 $query_user = "
 	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."

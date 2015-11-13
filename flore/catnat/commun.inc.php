@@ -50,6 +50,7 @@ $query_export = "
 	SELECT * FROM catnat.taxons_nat t
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.catnat = TRUE ";
+$export_id = "t.uid";
 
 $query_user = "
 	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."

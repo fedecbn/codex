@@ -87,8 +87,8 @@ switch ($mode) {
             echo ("<div id=\"titre2\">");
                 echo ($lang[$lang_select]["liste_taxons"]);
             echo ("</div>");
-            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
-            echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$id_page."_".$id_user.".csv\" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
                 if ($niveau >= 128) 

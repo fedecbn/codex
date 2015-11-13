@@ -65,8 +65,9 @@ $query_export = "
 	FROM eee.taxons AS t  
 	LEFT JOIN eee.evaluation AS e ON e.uid=t.uid 
 	JOIN refnat.taxons a ON a.uid = t.uid 
-	WHERE a.$id_page = TRUE;
+	WHERE a.$id_page = TRUE
 	";
+$export_id = "t.uid";
 
 $query_user = "
 	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.",utilisateur.ref_".$id_page."

@@ -130,15 +130,42 @@ if (!empty ($id) AND !empty($type))                                             
 	} else {                                      
 //------------------------------------------------------------------------------	
 //------------------------------------------------------------------------------ ADD.
-/*Nothing ==> go Refnat*/}
+		/*SUIVI DES MODIFICATIONS ET UPDATE*/
+		$liste_champs = '';
+		foreach ($aColumnsTot[$id_page] as $key => $val)	{
+			if ($val['modifiable'] == 't' AND $val['table_champ'] == "ddd" AND $val['nom_champ'] != "id_from") {
+				/*récupération des champs modifiables*/
+				$liste_champs .= "\"".$val['champ_interface']."\",";
+				/*construction de l'update*/
+				if ($val['type'] == 'string') $values .= sql_format_quote($_POST[$val['champ_interface']],'do').",";
+				if ($val['type'] == 'val') $values .= sql_format_quote($_POST[$val['champ_interface']],'do').",";
+				if ($val['type'] == 'bool') $values .= sql_format_bool($_POST[$val['champ_interface']]).",";
+				if ($val['type'] == 'int') $values .= sql_format_num($_POST[$val['champ_interface']]).",";
+				}
+			}
+			
+			$insert ="INSERT INTO fsd.ddd (".rtrim($liste_champs,',').") VALUES (".rtrim($values,',').") RETURNING uid";
+		
+			
+			/*INSERT*/
+			if (DEBUG) echo "<br>".$insert;
+			$result=pg_query ($db,$insert) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			$uid = pg_fetch_row($result);
+			
+			if (!empty($_POST['id_from']))
+				{
+				foreach ($_POST['id_from'] as $id_from)
+					$insert .= "INSERT INTO fsd.lien_champs VALUES (".$uid[0].",$id_from)";
+				}
+			$result=pg_query ($db,$insert) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			
+			add_suivi2($etape,$id_user,$uid[0],"fsd.ddd",$field,'','',$id_page,'manuel','add');
 
-/*
-if (!DEBUG) {
-    echo ("<script language=\"javascript\" type=\"text/javascript\">");
-    echo ("window.location.replace ( \"index.php\")");
-    echo ("</script>");
-}
-*/
+
+			/*Log*/
+			add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Saisie edit fiche",$id,"fsd");
+			pg_free_result ($result);		
+			}
 pg_close ($db);
 
 return (true);

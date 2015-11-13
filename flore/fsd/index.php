@@ -76,8 +76,8 @@ switch ($mode) {
             echo ("<div id=\"titre2\">");
                 echo ($lang[$lang_select]["liste_champ"]);
             echo ("</div>");
-            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
-            echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$id_page."_".$id_user.".csv\" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
 				if ($niveau >= 128) 
@@ -87,7 +87,7 @@ switch ($mode) {
                 if ($niveau >= 255) 
                     echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
                 if ($niveau >= 512) 
-                    echo ("<button id=\"figer-version-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");       
+                    echo ("<button id=\"figer-version-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -109,27 +109,14 @@ switch ($mode) {
 
 /*------------------------------------------------------------------------------ #CAS AJOUT D'UNE FICHE */
 	case "add" : {
-/*------------------------------------------------------------------------------ EDIT catnat GRP1*/
+/*------------------------------------------------------------------------------ REF. */
+/*Gestion des niveau de droit*/
 	$query = "SELECT max(version) as version FROM fsd.ddd;";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
             $version = $row['version'];
         pg_free_result ($result);
 		
-	/*modules*/
-	$query = "SELECT DISTINCT modl FROM fsd.ddd WHERE version = $version ORDER BY modl;";
-	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            {$modl[$row['modl']] = $row['modl'];$i++;}
-	pg_free_result ($result);
-	
-	/*SSmodules*/
-	$query = "SELECT DISTINCT ssmodl FROM fsd.ddd WHERE version = $version ORDER BY ssmodl;";
-	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            {$ssmodl[$row['ssmodl']] = $row['ssmodl'];$i++;}
-	pg_free_result ($result);
-
 	/*voca_ctrl*/
 	$query = "SELECT DISTINCT \"typChamp\" FROM fsd.voca_ctrl ORDER BY \"typChamp\";";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
@@ -137,85 +124,115 @@ switch ($mode) {
             {$voca_ctrl[$row['typChamp']] = $row['typChamp'];$i++;}
 	pg_free_result ($result);
 	
+	$i = 0;
 
-	/*autre_champ*/
-	$query = "SELECT DISTINCT cd FROM fsd.ddd WHERE version <> $version ORDER BY cd;";
-	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-	$i=0;while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            {$autre_chp[$i] = $row['cd'];$i++;}
-	pg_free_result ($result);
-	
-	
-/*------------------------------------------------------------------------------ ADD EN TETE*/
+/*------------------------------------------------------------------------------ EDIT  EN TETE*/
         echo ("<div id=\"$id_page\" >");
         echo ("</div>");
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
         echo ("<div id=\"fiche\" >");
-        echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
+        echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"add\" action=\"\" >");
 
         echo ("<div style=\"float:left;\">");
-            echo ("<font size=5 color=#008C8E >".$lang[$lang_select]['edit_fiche']."</font>");
+            echo ("<font size=5 color=#008C8E >".$lang[$lang_select]['add_fiche']."</font>");
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
-                echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+            if ($mode == "add") {
+                echo ("<button id=\"enregistrer1-add-button\">".$lang[$lang_select]['enregistrer']."</button> ");
                 echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_champ']."</button> ");
+            } else {
+                echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
+            }
 		echo ("</div>");
+            echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
+			echo ("<br><br>");
 
-		echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
-
-		echo ("<br><br>");
-//------------------------------------------------------------------------------ Add ancien champ
+//------------------------------------------------------------------------------ Edit
 		echo ("<div id=\"radio2\">");    
-        echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>");
-				echo ("<table border=0 width=\"100%\"><tr valign=top >");
-				echo ("<td style=\"width: 300px;\">");
+			/*modules*/
+			$query = "SELECT DISTINCT modl FROM fsd.ddd WHERE version = $version ORDER BY modl;";
+			$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+			while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
+					{$modl[$rowe['modl']] = $rowe['modl'];}
+			pg_free_result ($resulte);
+			
+			/*SSmodules*/
+			$query = "SELECT DISTINCT ssmodl FROM fsd.ddd WHERE version = $version ORDER BY ssmodl;";
+			$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+			while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
+					{$ssmodl[$rowe['ssmodl']] = $rowe['ssmodl'];}
+			pg_free_result ($resulte);
+			
+			
+			/*autre_champ*/
+			$autre_chp = null;
+			$query = "SELECT DISTINCT cd, uid FROM fsd.ddd WHERE version = $version - 1 ORDER BY cd ;";
+			// echo $query;
+			$resultat=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+			while ($ligne=pg_fetch_array ($resultat,NULL,PGSQL_ASSOC))
+				$autre_chp[$ligne['uid']] = $ligne['cd'];
+			pg_free_result ($resultat);
+			
+
+			echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>"); 
+					echo ("<table border=0 width=\"100%\"><tr valign=top >");
+					echo ("<td style=\"width: 40%;\">");
 						metaform_text ("Version FSD"," bloque",10,"","version",$version);
 						// echo ("<input type=\"hidden\" id=\"version\" value=\"".$row["version"]."\" />");
-						metaform_sel ("Module",$bloq,null,$modl,"modl",null);
-						metaform_sel ("Sous-module",$bloq,null,$ssmodl,"ssmodl",null);
-						metaform_text ("Code du champ",$bloq,40,"","cd",null);
-						metaform_text ("Libellé du champ",$bloq,40,"","lib",null);
+						metaform_sel ("Module",null,null,$modl,"modl",null);
+						metaform_sel ("Sous-module",null,null,$ssmodl,"ssmodl",null);
+						metaform_text ("Code du champ",null,40,"","cd",null);
+						metaform_text ("Libellé du champ",null,40,"","lib",null);
 					echo "<BR>";
-						metaform_sel ("Format",$bloq,null,$format,"format",null);
-						metaform_text ("Taille",$bloq,10,"","taille",null);
-						metaform_sel ("Vocabulaire contrôlé",$bloq,null,$voca_ctrl,"vocaCtrl",null);
+						metaform_sel ("Format",null,null,$format,"format",null);
+						metaform_text ("Taille",null,10,"","taille",null);
+						metaform_sel ("Vocabulaire contrôlé",null,null,$voca_ctrl,"vocaCtrl",null);
 					echo "<BR>";
-						metaform_sel ("Obligatoire (Data)",$bloq,null,$oblig,"oData",null);
-						metaform_sel ("Obligatoire (Taxa)",$bloq,null,$oblig,"oTaxa",null);
-						metaform_sel ("Obligatoire (Syntdata)",$bloq,null,$oblig,"oSynData",null);
-						metaform_sel ("Obligatoire (Syntaxa)",$bloq,null,$oblig,"oSynTaxa",null);
+						metaform_sel ("Obligatoire (Data)",null,null,$oblig,"oData",null);
+						metaform_sel ("Obligatoire (Taxa)",null,null,$oblig,"oTaxa",null);
+						metaform_sel ("Obligatoire (Syntdata)",null,null,$oblig,"oSynData",null);
+						metaform_sel ("Obligatoire (Syntaxa)",null,null,$oblig,"oSynTaxa",null);
 					echo "<BR>";
-						metaform_text ("Exemple 1",$bloq,20,"","ex1",null);
-						metaform_text ("Exemple 2",$bloq,20,"","ex2",null);
+						metaform_text ("Exemple 1",null,20,"","ex1",null);
+						metaform_text ("Exemple 2",null,20,"","ex2",null);
 					echo ("</td><td style=\"width:60%;\">");
 						echo ("<label class=\"preField\">Description</label>");
-						echo ("<textarea name=\"descr\" $disa style=\"width:80%;\" rows=\"3\" ></textarea><br><br>");
+						echo ("<textarea name=\"descr\" $disa style=\"width:80%;$gris\" rows=\"3\" ></textarea><br><br>");
 
 						echo ("<label class=\"preField\">Objectif du partage</label>");
-						echo ("<textarea name=\"obj\" $disa style=\"width:80%;\" rows=\"3\" ></textarea><br><br>");
+						echo ("<textarea name=\"obj\" $disa style=\"width:80%;$gris\" rows=\"3\" ></textarea><br><br>");
 						
-						echo ("<label class=\"preField\">Règles de renseignemen</label>");
-						echo ("<textarea name=\"regleRens\" $disa style=\"width:80%;\" rows=\"3\" ></textarea><br><br>");
+						echo ("<label class=\"preField\">Règles de renseignement</label>");
+						echo ("<textarea name=\"regleRens\" $disa style=\"width:80%;$gris\" rows=\"3\" ></textarea><br><br>");
 
+
+						$jvs1 = "OnDblClick='javascript: deplacer( this.form.id_from_to, this.form.id_from);'"; 
+						$jvs2 = "OnDblClick='javascript: deplacer( this.form.id_from, this.form.id_from_to);'"; 
+						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;$gris",$jvs1,$autre_chp,"id_from_to",null);
+						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;$gris",$jvs2,null,"id_from",null);	
+
+						
+					echo ("</td></tr></table>");
+					echo ("<table border=0 width=\"100%\"><tr valign=top >");
+					echo ("<td style=\"width: 100%;\">");
+						echo "<BR>";
 						echo ("<label class=\"preField\">Evolutions à apporter?</label>");
-						echo ("<textarea name=\"discussion\" $disa style=\"width:80%;\" rows=\"3\" ></textarea><br><br>");
-
-						$jvs1 = "OnDblClick='javascript: deplacer( this.form.id_from_to_0, this.form.id_from_0);'";
-						$jvs2 = "OnDblClick='javascript: deplacer( this.form.id_from_0, this.form.id_from_to_0);'";
-						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;",$jvs1,$autre_chp,"id_from_to_0",null);
-						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;",$jvs2,null,"id_from_0",null);					
-						echo ("</td></tr></table>");
-			echo ("</fieldset>");
-			echo ("</div>"); 
+						echo ("<textarea name=\"discussion\" $disa style=\"width:80%;$gris\" rows=\"4\" ></textarea><br><br>");
+					echo ("</td></tr></table>");
+				echo ("</fieldset>");
 			
-//------------------------------------------------------------------------------ Pied de page
+
+/* ------------------------------------------------------------------------------ EDIT catnat SAVE*/
         echo ("<div style=\"float:right;\"><br>");
-				echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+			if ($mode == "add") {
+				echo ("<button id=\"enregistrer2-add-button\">".$lang[$lang_select]['enregistrer']."</button> ");
 				echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_champ']."</button> ");
+			} else {
+				echo ("<button id=\"retour4-button\">".$lang[$lang_select]['retour']."</button> ");
+			}
 			echo ("</div>");
 			echo ("</form>");
 			
-
         echo ("<div id=\"exit-confirm\" title=\"Retour\">");
             echo ("<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>".$lang[$lang_select]['retour_dialog']."</p>");
         echo ("</div>");
@@ -223,8 +240,7 @@ switch ($mode) {
         echo ("<div id=\"enregistrer-dialog\">");
             echo ("<center><img src=\"../../_GRAPH/check.png\"  /><br>".$lang[$lang_select]['enregistrer_dialog']."</center>");
         echo ("</div>");
-		
-	}
+    }
     break;
 
 /*--------------------------------------------------------------------------------------------------------- */
