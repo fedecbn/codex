@@ -28,6 +28,7 @@ $config=$_SESSION['id_config'];
 
 $lang_select=$_COOKIE['lang_select'];
 
+//------------------------------------------------------------------------------ QUERY du module
 $query_module = "
 	SELECT t.*,c.*,e.*, f.indi_cal  
 	FROM lr.taxons AS t 
@@ -75,7 +76,97 @@ $query_discussion = "
 $rang= array(''=>'','ES'=>'ES','SSES'=>'SSES','VAR'=>'VAR','SVAR'=>'SVAR','FO'=>'FO','SSFO'=>'SSFO','CAR'=>'CAR');
 $tables = array ('taxons','chorologie','evaluation');
 
-//------------------------------------------------------------------------------ PATHS du module
+//------------------------------------------------------------------------------ VOCABULAIRE du module
+$lang['fr'][$id_page]="Liste rouge";
+$lang['it'][$id_page]="";
+
+$lang['fr']['titre_lr']="Liste rouge";
+$lang['it']['titre_lr']="";
+
+$lang['fr']['groupe_lr_1']="Taxonomie";
+$lang['it']['groupe_lr_1']="";
+
+$lang['fr']['groupe_lr_2']="Distribution";
+$lang['it']['groupe_lr_2']="";
+
+$lang['fr']['groupe_lr_3']="Population";
+$lang['it']['groupe_lr_3']="";
+
+$lang['fr']['groupe_lr_4']="Evaluation";
+$lang['it']['groupe_lr_4']="";
+
+$lang['fr']['groupe_lr_5']="Commentaires";
+$lang['it']['groupe_lr_5']="";
+
+//------------------------------------------------------------------------------ CHAMPS du module
+$langliste['fr'][$id_page][]="Etape";
+$langliste['fr'][$id_page.'-popup'][]="Étapes de l'évaluation";
+
+$langliste['fr'][$id_page][]="Famille";
+$langliste['fr'][$id_page.'-popup'][]="";
+
+$langliste['fr'][$id_page][]="CD_REF";
+$langliste['fr'][$id_page.'-popup'][]="Code du taxon de référence";
+
+$langliste['fr'][$id_page][]="Nom scien";
+$langliste['fr'][$id_page.'-popup'][]="Nom scientifique du taxon";
+
+$langliste['fr'][$id_page][]="Rang";
+$langliste['fr'][$id_page.'-popup'][]="Rang taxonomique du taxon";
+
+$langliste['fr'][$id_page][]="Indig.";
+$langliste['fr'][$id_page.'-popup'][]="Statut d'indigénat du taxon en métropole";
+
+$langliste['fr'][$id_page][]="Endém";
+$langliste['fr'][$id_page.'-popup'][]="Endémisme du taxon en métropole";
+
+$langliste['fr'][$id_page][]="AOO";
+$langliste['fr'][$id_page.'-popup'][]="Zone d'occupation estimée après 1990_2x2";
+
+$langliste['fr'][$id_page][]="AOO<br>tot";
+$langliste['fr'][$id_page.'-popup'][]="Zone d'occupation ajustée après 1990 pour prendre en compte Lorraine, Alsace, Corse, Aquitaine, Poitou Charentes";
+
+$langliste['fr'][$id_page][]="Nb loc.";
+$langliste['fr'][$id_page.'-popup'][]="Nb de localités >= 1990";
+
+$langliste['fr'][$id_page][]="Nb mailles<br> >1990";
+$langliste['fr'][$id_page.'-popup'][]="Nombre de mailles 5km²>=1990 ajustée pour prendre en compte Lorraine, Alsace, Corse, Aquitaine, Poitou Charentes";
+
+$langliste['fr'][$id_page][]="Cat<br>A";
+$langliste['fr'][$id_page.'-popup'][]="Catégorie la plus élevée selon le critère A";
+
+$langliste['fr'][$id_page][]="Cat<br>B2";
+$langliste['fr'][$id_page.'-popup'][]="Catégorie la plus élévee selon le critère B2";
+
+$langliste['fr'][$id_page][]="Cat<br>C";
+$langliste['fr'][$id_page.'-popup'][]="Catégorie la plus élévee selon le critère C";
+
+$langliste['fr'][$id_page][]="Cat<br>D";
+$langliste['fr'][$id_page.'-popup'][]="Catégorie la plus élévee selon le critère D";
+
+$langliste['fr'][$id_page][]="Cat<br>Fin";
+$langliste['fr'][$id_page.'-popup'][]="Catégorie proposée pour la Liste rouge nationale après ajustement";
+
+$langliste['fr'][$id_page][]="Crit<br>Fin";
+$langliste['fr'][$id_page.'-popup'][]="Critère(s) proposé(s) pour la Liste rouge nationale";
+
+$langliste['fr'][$id_page][]="Cat<br>EU";
+$langliste['fr'][$id_page.'-popup'][]="Catégorie UICN à l'échelle de l'Europe géographique";
+
+$langliste['fr'][$id_page][]="Cat<br>Synthèse region";
+$langliste['fr'][$id_page.'-popup'][]="Synthèse des Catégories UICN issue des évaluations régionales";
+
+$langliste['fr'][$id_page][]="Nb region<br>eval";
+$langliste['fr'][$id_page.'-popup'][]="Nombre de régions ayant une évaluation régionale pour ce taxon";
+
+$langliste['fr'][$id_page][]="Note Explic";
+$langliste['fr'][$id_page.'-popup'][]="Notes explicative l'évaluation";
+
+$langliste['fr'][$id_page][]="Avancement";
+$langliste['fr'][$id_page.'-popup'][]="";
+
+
+
 
 //------------------------------------------------------------------------------ FONCTIONS du module
 

@@ -73,23 +73,8 @@ $lang['it']['enregistrer_dialog']="";
 $lang['fr']['taxon']="Taxons";
 $lang['it']['taxon']="Taxa";
 
-$lang['fr']['lr']="Liste rouge";
-$lang['it']['lr']="";
-
-$lang['fr']['lsi']="News";
-$lang['it']['lsi']="";
-
 $lang['fr']['droit']="Utilisateurs";
 $lang['it']['droit']="";
-
-$lang['fr']['eee']="Liste EEE";
-$lang['it']['eee']="";
-
-$lang['fr']['eee_reg']="Listes EEE régionales";
-$lang['it']['eee_reg']="";
-
-$lang['fr']['titre_lr']="Liste rouge";
-$lang['it']['titre_lr']="";
 
 $lang['fr']['evee']="EVEE";
 $lang['it']['evee']="";
@@ -108,37 +93,6 @@ $lang['it']['voir_fiche']="";
 
 $lang['fr']['fiche']="Fiche";
 $lang['it']['fiche']="Spina";
-
-$lang['fr']['liste_lsi']="Les news";
-$lang['it']['liste_lsi']="";
-
-$lang['fr']['add_lsi']="Ajouter une news";
-$lang['it']['add_lsi']="";
-
-$lang['fr']['edit_lsi']="Modifier une news";
-$lang['it']['edit_lsi']="";
-
-$lang['fr']['voir_lsi']="Consulter une news";
-$lang['it']['voir_lsi']="";
-
-
-$lang['fr']['catnat']="Catalogue national";
-$lang['it']['catnat']="";
-
-$lang['fr']['catnat_reg']="Suite";
-$lang['it']['catnat_reg']="";
-
-$lang['fr']['liste_catnat']="Catalogue national";
-$lang['it']['liste_catnat']="";
-
-$lang['fr']['add_catnat']="Ajouter un taxon";
-$lang['it']['add_catnat']="";
-
-$lang['fr']['edit_catnat']="Modifier un taxon";
-$lang['it']['edit_catnat']="";
-
-$lang['fr']['voir_catnat']="Consulter une fiche taxon";
-$lang['it']['voir_catnat']="";
 
 //------------------------------------------------------------------------------ home
 $lang['fr']['Identification']="Identification";
@@ -242,60 +196,8 @@ $lang['it']['titre_import']="Dati Importazioni";
 $lang['fr']['CBNMED']="Conservatoire botanique national méditerranéen de Porquerolles";
 $lang['it']['CBNMED']="Conservatoire botanique national méditerranéen de Porquerolles";
 
-//------------------------------------------------------------------------------ Form / Groupes LR
-$lang['fr']['groupe_lr_1']="Taxonomie";
-$lang['it']['groupe_lr_1']="";
 
-$lang['fr']['groupe_lr_2']="Distribution";
-$lang['it']['groupe_lr_2']="";
-
-$lang['fr']['groupe_lr_3']="Population";
-$lang['it']['groupe_lr_3']="";
-
-$lang['fr']['groupe_lr_4']="Evaluation";
-$lang['it']['groupe_lr_4']="";
-
-$lang['fr']['groupe_lr_5']="Commentaires";
-$lang['it']['groupe_lr_5']="";
-
-//------------------------------------------------------------------------------ Form / Groupes EEE
-$lang['fr']['groupe_eee_1']="Identification";
-$lang['it']['groupe_eee_1']="";
-
-$lang['fr']['groupe_eee_2']="A. Risques d'introduction et d'installation (Biogéographie)";
-$lang['it']['groupe_eee_2']="";
-
-$lang['fr']['groupe_eee_3']="B. Risques de propagation (Naturalisaion et dynamisme)";
-$lang['it']['groupe_eee_3']="";
-
-$lang['fr']['groupe_eee_4']="C. Risques d'impact (comportement ailleurs et habitats colonisés)";
-$lang['it']['groupe_eee_4']="";
-
-$lang['fr']['groupe_eee_5']="D. Evaluation nationale";
-$lang['it']['groupe_eee_5']="";
-
-$lang['fr']['groupe_eee_6']="E. Evaluation par région biogéographique";
-$lang['it']['groupe_eee_6']="";
-
-//------------------------------------------------------------------------------ Form / Groupes LSI
-
-$lang['fr']['groupe_lsi_1']="Ajout de news";
-$lang['it']['groupe_lsi_1']="";
-
-//------------------------------------------------------------------------------ Form / Groupes LR
-$lang['fr']['groupe_catnat_1']="Taxonomie";
-$lang['it']['groupe_catnat_1']="";
-
-$lang['fr']['groupe_catnat_2']="Statuts";
-$lang['it']['groupe_catnat_2']="";
-
-$lang['fr']['groupe_catnat_3']="Cartographie";
-$lang['it']['groupe_catnat_3']="";
-
-// $lang['fr']['groupe_catnat_4']="Evaluation";
-// $lang['it']['groupe_catnat_4']="";
-
-//------------------------------------------------------------------------------ Form / Groupes LSI
+//------------------------------------------------------------------------------ Form / Groupes
 
 $lang['fr']['defaut_1']="Ajouter";
 $lang['it']['defaut_1']="";
@@ -306,59 +208,7 @@ $lang['it']['defaut']="";
 $lang['fr']['defaut_2']="Onglet n°2";
 $lang['it']['defaut_2']="";
 
-// $lang['fr']['add_catnat']="Ajouter un taxon";
-// $lang['it']['add_catnat']="";
 
-// $lang['fr']['edit_catnat']="Modifier un taxon";
-// $lang['it']['edit_catnat']="";
-
-// $lang['fr']['voir_catnat']="Consulter une fiche taxon";
-// $lang['it']['voir_catnat']="";
-
-//------------------------------------------------------------------------------ Form / Groupes LSI
-
-$lang['fr']['refnat_1']="Ajouter";
-$lang['it']['refnat_1']="";
-
-$lang['fr']['refnat']="Evolution TAXREF";
-$lang['it']['refnat']="";
-
-$lang['fr']['refnat_2']="Rechercher";
-$lang['it']['refnat_2']="";
-
-$lang['fr']['add_refnat']="Ajouter un taxon";
-$lang['it']['add_refnat']="";
-
-$lang['fr']['edit_refnat']="Modifier un taxon";
-$lang['it']['edit_refnat']="";
-
-$lang['fr']['voir_refnat']="Consulter une fiche taxon";
-$lang['it']['voir_refnat']="";
 
 //------------------------------------------------------------------------------ Form / Groupes FSD
-
-
-$lang['fr']['fsd']="Format Standard de Données";
-$lang['it']['fsd']="";
-
-$lang['fr']['liste_fsd']="Format Standard de Données";
-$lang['it']['liste_fsd']="";
-
-$lang['fr']['add_fsd']="Ajouter un champ";
-$lang['it']['add_fsd']="";
-
-$lang['fr']['edit_fsd']="Modifier un champ";
-$lang['it']['edit_fsd']="";
-
-$lang['fr']['voir_fsd']="Consulter un champ";
-$lang['it']['voir_fsd']="";
-
-$lang['fr']['groupe_fsd_1']="Description Champ";
-$lang['it']['groupe_fsd_1']="";
-
-$lang['fr']['groupe_fsd_2']="Description Champ ancienne version";
-$lang['it']['groupe_fsd_2']="";
-
-$lang['fr']['liste_champ']="Liste des champs";
-$lang['it']['liste_champ']="";
 ?>

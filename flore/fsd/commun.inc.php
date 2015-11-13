@@ -27,22 +27,12 @@ $lang_select=$_COOKIE['lang_select'];
 
 if (ON_Server == 'no') $path = 'D:/'; else $path = '/home/export_pgsql/';
 
-$query_champ = "
-	SELECT * FROM referentiels.champ
-	WHERE id_module = '$id_page'";
+//------------------------------------------------------------------------------ QUERY du module
+$query_champ = " SELECT * FROM referentiels.champ WHERE id_module = '$id_page'";
 
-$query_liste = "
-	SELECT count(*) OVER() AS total_count, 
-		ddd.*
-	FROM fsd.ddd
-	WHERE 1 = 1 ";
-
+$query_liste = " SELECT count(*) OVER() AS total_count, ddd.* FROM fsd.ddd WHERE 1 = 1 ";
 	
-$query_export = "
-	SELECT * 
-	FROM fsd.ddd
-	WHERE 1 = 1
-	";
+$query_export = "SELECT * FROM fsd.ddd WHERE 1 = 1";
 $export_id = "uid";
 
 $query_user = "
@@ -55,9 +45,71 @@ $query_discussion = "
 	FROM fsd.discussion a JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn 
 	WHERE uid = ";
 
+	//------------------------------------------------------------------------------ VOCABULAIRE du module
+$lang['fr']['fsd']="Dictionnaire de données";
+$lang['it']['fsd']="";
 
+$lang['fr']['liste_fsd']="Dictionnaire de données";
+$lang['it']['liste_fsd']="";
 
-//------------------------------------------------------------------------------ PATHS du module
+$lang['fr']['groupe_fsd_1']="Description Champ";
+$lang['it']['groupe_fsd_1']="";
+
+$lang['fr']['groupe_fsd_2']="Description Champ ancienne version";
+$lang['it']['groupe_fsd_2']="";
+
+$lang['fr']['liste_champ']="Liste des champs";
+$lang['it']['liste_champ']="";
+
+//------------------------------------------------------------------------------ CHAMPS du module
+$langliste['fr'][$id_page][]="Id";
+$langliste['fr'][$id_page.'-popup'][]="Identifiant";
+
+$langliste['fr'][$id_page][]="Version";
+$langliste['fr'][$id_page.'-popup'][]="Version";
+
+$langliste['fr'][$id_page][]="Module";
+$langliste['fr'][$id_page.'-popup'][]="Module";
+
+$langliste['fr'][$id_page][]="Sous-module";
+$langliste['fr'][$id_page.'-popup'][]="Sous-module";
+
+$langliste['fr'][$id_page][]="Code";
+$langliste['fr'][$id_page.'-popup'][]="Code";
+
+$langliste['fr'][$id_page][]="Libellé";
+$langliste['fr'][$id_page.'-popup'][]="Libellé";
+
+$langliste['fr'][$id_page][]="Description";
+$langliste['fr'][$id_page.'-popup'][]="Description";
+
+$langliste['fr'][$id_page][]="Format";
+$langliste['fr'][$id_page.'-popup'][]="Format";
+
+$langliste['fr'][$id_page][]= "Data";
+$langliste['fr'][$id_page.'-popup'][]="Obligation DATA";
+
+$langliste['fr'][$id_page][]= "Taxa";
+$langliste['fr'][$id_page.'-popup'][]="Obligation TAXA";
+
+$langliste['fr'][$id_page][]= "Sdata";
+$langliste['fr'][$id_page.'-popup'][]="Obligation SYNDATA";
+
+$langliste['fr'][$id_page][]= "Staxa";
+$langliste['fr'][$id_page.'-popup'][]="Obligation SYNTAXA";
+
+$langliste['fr'][$id_page][]="Voca Ctrl";
+$langliste['fr'][$id_page.'-popup'][]="Voca Ctrl";
+
+$langliste['fr'][$id_page][]="Règle";
+$langliste['fr'][$id_page.'-popup'][]="Règle Renseignement";
+
+$langliste['fr'][$id_page][]="Evol.";
+$langliste['fr'][$id_page.'-popup'][]="Exemple";
+
+$langliste['fr'][$id_page][]="Exemple";
+$langliste['fr'][$id_page.'-popup'][]="Exemple";
+
 
 //------------------------------------------------------------------------------ FONCTIONS du module
 

@@ -32,7 +32,7 @@ $id_user=$_SESSION['id_user'];
 $config=$_SESSION['id_config'];
 $lang_select=$_COOKIE['lang_select'];
 
-
+//------------------------------------------------------------------------------ QUERY du module
 $query_liste = "
 SELECT count(*) OVER() AS total_count,news.id,news.id_subject,title,abstract,string_agg(libelle_tag,' / ') as libelle_tag,link,link_2,date
 FROM lsi.news 
@@ -56,7 +56,52 @@ $query_user = "
 	FROM applications.utilisateur
 	WHERE utilisateur.niveau_".$id_page." <> 0";
 
-//------------------------------------------------------------------------------ PATHS du module
+//------------------------------------------------------------------------------ VOCABULAIRE du module
+$lang['fr']['groupe_lsi_1']="Ajout de news";
+$lang['it']['groupe_lsi_1']="";
+
+$lang['fr']['lsi']="News";
+$lang['it']['lsi']="";
+
+$lang['fr']['liste_lsi']="Les news";
+$lang['it']['liste_lsi']="";
+
+$lang['fr']['add_lsi']="Ajouter une news";
+$lang['it']['add_lsi']="";
+
+$lang['fr']['edit_lsi']="Modifier une news";
+$lang['it']['edit_lsi']="";
+
+$lang['fr']['voir_lsi']="Consulter une news";
+$lang['it']['voir_lsi']="";
+
+
+//------------------------------------------------------------------------------ CHAMPS du module
+$langliste['fr'][$id_page][]="Id";
+$langliste['fr'][$id_page.'-popup'][]="Identifiant";
+
+$langliste['fr'][$id_page][]="Thématique";
+$langliste['fr'][$id_page.'-popup'][]="Thématique de la news";
+
+$langliste['fr'][$id_page][]="Titre";
+$langliste['fr'][$id_page.'-popup'][]="Titre de la news";
+
+$langliste['fr'][$id_page][]="Extrait";
+$langliste['fr'][$id_page.'-popup'][]="Extrait de la news";
+
+$langliste['fr'][$id_page][]="Mots clés";
+$langliste['fr'][$id_page.'-popup'][]="Mots clés";
+
+$langliste['fr'][$id_page][]="Lien";
+$langliste['fr'][$id_page.'-popup'][]="Lien hypertexte";
+
+$langliste['fr'][$id_page][]="Lien 2";
+$langliste['fr'][$id_page.'-popup'][]="Lien hypertexte 2";
+
+$langliste['fr'][$id_page][]="Date";
+$langliste['fr'][$id_page.'-popup'][]="Date de publication";
+
+
 
 //------------------------------------------------------------------------------ FONCTIONS du module
 

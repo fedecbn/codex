@@ -28,6 +28,7 @@ $lang_select=$_COOKIE['lang_select'];
 
 if (ON_Server == 'no') $path = 'D:/'; else $path = '/home/export_pgsql/';
 
+//------------------------------------------------------------------------------ QUERY du module
 $query_module = "
 	SELECT * FROM catnat.taxons_nat t
 	JOIN refnat.taxons a ON a.uid = t.uid 
@@ -238,7 +239,67 @@ END;$$;
 
 $rang= array(''=>'','ES'=>'ES','SSES'=>'SSES','VAR'=>'VAR','SVAR'=>'SVAR','FO'=>'FO','SSFO'=>'SSFO','CAR'=>'CAR');
 
-//------------------------------------------------------------------------------ PATHS du module
+//------------------------------------------------------------------------------ VOCABULAIRE du module
+$lang['fr']['catnat']="Catalogue national";
+$lang['it']['catnat']="";
+
+$lang['fr']['catnat_reg']="Suite";
+$lang['it']['catnat_reg']="";
+
+$lang['fr']['liste_catnat']="Catalogue national";
+$lang['it']['liste_catnat']="";
+
+$lang['fr']['add_catnat']="Ajouter un taxon";
+$lang['it']['add_catnat']="";
+
+$lang['fr']['edit_catnat']="Modifier un taxon";
+$lang['it']['edit_catnat']="";
+
+$lang['fr']['voir_catnat']="Consulter une fiche taxon";
+$lang['it']['voir_catnat']="";
+
+$lang['fr']['groupe_catnat_1']="Taxonomie";
+$lang['it']['groupe_catnat_1']="";
+
+$lang['fr']['groupe_catnat_2']="Statuts";
+$lang['it']['groupe_catnat_2']="";
+
+$lang['fr']['groupe_catnat_3']="Cartographie";
+$lang['it']['groupe_catnat_3']="";
+
+// $lang['fr']['groupe_catnat_4']="Evaluation";
+// $lang['it']['groupe_catnat_4']="";
+
+//------------------------------------------------------------------------------ CHAMPS du module
+$langliste['fr']['catnat'][]="CD REF";
+$langliste['fr']['catnat-popup'][]="CD REF";
+
+$langliste['fr']['catnat'][]="Famille";
+$langliste['fr']['catnat-popup'][]="Famille";
+
+$langliste['fr']['catnat'][]="Nom scientifique";
+$langliste['fr']['catnat-popup'][]="Nom scientifique";
+
+$langliste['fr']['catnat'][]="Rang";
+$langliste['fr']['catnat-popup'][]="Rang";
+
+$langliste['fr']['catnat'][]="Nom vernaculaire";
+$langliste['fr']['catnat-popup'][]="Nom vernaculaire";
+
+$langliste['fr']['catnat'][]="Hybride";
+$langliste['fr']['catnat-popup'][]="Hybride";
+
+$langliste['fr']['catnat'][]="Indigénat";
+$langliste['fr']['catnat-popup'][]="Indigenat";
+
+$langliste['fr']['catnat'][]="Liste Rouge";
+$langliste['fr']['catnat-popup'][]="Liste Rouge";
+
+$langliste['fr']['catnat'][]="Rareté";
+$langliste['fr']['catnat-popup'][]="Rareté";
+
+$langliste['fr']['catnat'][]="Endemisme";
+$langliste['fr']['catnat-popup'][]="Endemisme";
 
 //------------------------------------------------------------------------------ FONCTIONS du module
 
