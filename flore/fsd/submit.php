@@ -121,6 +121,9 @@ if (!empty ($id) AND !empty($type))                                             
 	if ($type == 'vocactrl' AND $niveau >= 128)
 		{
 		for ($j=0;$j<=$_POST['nb'];$j++)
+		if ($_POST['cdChamp_'.$j] == null AND $_POST['libChamp_'.$j] == null)
+			$query .= "DELETE FROM fsd.voca_ctrl WHERE id = ".sql_format_quote($_POST['id_'.$j],'do').";";
+		else
 			$query .= "UPDATE fsd.voca_ctrl SET \"cdChamp\" = ".sql_format_quote($_POST['cdChamp_'.$j],'do').", \"libChamp\" = ".sql_format_quote($_POST['libChamp_'.$j],'do').", \"descChamp\" = ".sql_format_quote($_POST['descChamp_'.$j],'do').", \"typChamp\" = ".sql_format_quote($_POST['typChamp'],'do')." WHERE id = ".sql_format_quote($_POST['id_'.$j],'do').";";
 		if (isset($_POST['cdChamp']) AND isset($_POST['libChamp']))
 			if (!empty($_POST['cdChamp']) AND !empty($_POST['libChamp']))

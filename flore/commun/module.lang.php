@@ -37,7 +37,6 @@ $langliste['fr']['droit'][]="Référent";
 $langliste['fr']['droit-popup'][]="";
 
 
-
 //------------------------------------------------------------------------------ Module flore / _base_module
 $langliste['fr']['defaut'][]="UID";
 $langliste['fr']['defaut-popup'][]="Identifiant unique";
