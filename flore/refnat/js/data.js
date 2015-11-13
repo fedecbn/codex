@@ -60,7 +60,7 @@
 		return nRow;
 		},
 		"oLanguage": { "sProcessing":   "Traitement en cours...",
-            "sLengthMenu":   "Afficher _MENU_ taxons",
+            "sLengthMenu":   "Afficher _MENU_ lignes",
             "sZeroRecords":  "Aucun taxon à afficher",
             "sInfo": "Affichage du taxon _START_ à _END_",
             "sInfoEmpty": "Affichage du taxon 0 à 0 sur 0 ",
@@ -76,7 +76,7 @@
             }
         }, 
        // "aaSorting": [[3,'asc']],                                               // Nom scientifique 
-        "sDom": '<"top"fl>rt<"bottom"ip>',
+        "sDom": '<"top"l>rt<"bottom"ip>',
             "aoColumns": [                                                        // 
             	{ "sWidth": "7%" },
             	{ "sWidth": "7%" },

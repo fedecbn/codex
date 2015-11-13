@@ -21,13 +21,13 @@ if (typeof oTable == 'undefined') {
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": "liste.php",
-			// "bStateSave": true,
-			// "fnStateSave": function (oSettings, oData) {
-				// localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
-				// },
-			// "fnStateLoad": function (oSettings) {
-				// return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
-				// }, 
+			"bStateSave": true,
+			"fnStateSave": function (oSettings, oData) {
+				localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
+				},
+			"fnStateLoad": function (oSettings) {
+				return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
+				}, 
 			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 			switch (aData[4]) {default : $('td:eq(4)', nRow).addClass('nom_taxon'); break;}
 			switch (aData[8]){
@@ -52,7 +52,7 @@ if (typeof oTable == 'undefined') {
 				}
 			},
 			"oLanguage": { "sProcessing":   "Traitement en cours...",
-				"sLengthMenu":   "Afficher _MENU_ taxons",
+				"sLengthMenu":   "Afficher _MENU_ lignes",
 				"sZeroRecords":  "Aucun taxon à afficher",
 				"sInfo": "Affichage du taxon _START_ à _END_",
 				"sInfoEmpty": "Affichage du taxon 0 à 0 sur 0 ",
@@ -67,8 +67,7 @@ if (typeof oTable == 'undefined') {
 					"sLast":     "Dernier"
 				}
 			}, 
-		   // "aaSorting": [[3,'asc']],                                               // Nom scientifique 
-			"sDom": '<"top"fl>rt<"bottom"ip>',
+			"sDom": '<"top"l>rt<"bottom"ip>',
 				"aoColumns": [                                                        // 
 					{ "sWidth": "3%" },
 					{ "sWidth": "2%" },
@@ -112,7 +111,8 @@ if (typeof oTable == 'undefined') {
 			});
 	oTable.fnSort( [ [0,'asc'] ] );		
 
-		include("../commun/js/user.js");
+	include("../commun/js/user.js");
+		
 	} else {
 	oTable.fnClearTable (false);
 	oTable.fnDraw ();
