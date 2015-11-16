@@ -354,7 +354,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 40%;\">");
 						metaform_text ("Version FSD"," bloque",10,"","version",$row["version"]);
-						// echo ("<input type=\"hidden\" id=\"version\" value=\"".$row["version"]."\" />");
+						echo ("<input type=\"hidden\" name=\"version\" id=\"version\" value=\"$version\" />");
 						metaform_sel ("Module",$bloq,null,$modl,"modl",$row["modl"]);
 						metaform_sel ("Sous-module",$bloq,null,$ssmodl,"ssmodl",$row["ssmodl"]);
 						metaform_text ("Code du champ",$bloq,40,"","cd",sql_format_quote($row["cd"],"undo"));
