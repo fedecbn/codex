@@ -127,11 +127,9 @@ function export_txt ($nom_fichier,$query) {
 	// include ("../../_INCLUDE/fonctions.inc.php");
     global $db, $ref, $aColumnsTot,$champ_ref;
 	$page = $_SESSION['page'];
-	// $page = 'lr';
 	ref_colonne_et_valeur ($page);
 	$ref_col = $aColumnsTot[$page] ;
-	
-	
+
 	/*récupération des référentiels (correspondace des noms de colonnes et de valeurs*/
 	/* if (strpos($query,'liste_rouge') !== false) {
 		
@@ -152,7 +150,6 @@ function export_txt ($nom_fichier,$query) {
 	*/
 	
     $result = pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($rResultTotal)); 
-    $nb_col = pg_num_fields ($result);
     $nb_result = pg_num_rows ($result); 
     $info = pg_fetch_assoc ($result);
     if ($nb_result>0) {
@@ -162,55 +159,39 @@ function export_txt ($nom_fichier,$query) {
         {
             $col=$ligne="";
             foreach ($info as $column => $value) {
-				var_dump($page);
-                if (!empty($ref_col[$column]))
-					$col.=$ref_col[$column]['description']."\t";
-				else
-					$col.=$column."\t";
+                if (!empty($ref_col[$column])) $col.=$ref_col[$column]['description']."\t";
+				else $col.=$column."\t";
 					
-				if ($value == "t") $value = "OUI";
-				if ($value == "f") $value = "NON";				
-				if (!empty($ref[$champ_ref[$column]]))	{
-					$ligne.="\"".filter ($ref[$champ_ref[$column]][$value])."\"\t";
-					}
-				else
-					$ligne.="\"".filter ($value)."\"\t";
+				if ($value == "t") $value = "Oui";
+				if ($value == "f") $value = "Non";	
+				
+				if (!empty($ref[$champ_ref[$column]])) $ligne.="\"".filter ($ref[$champ_ref[$column]][$value])."\"\t";
+				else $ligne.="\"".filter ($value)."\"\t";
             }
+			
+			/*Encodage si nécessaire*/
 			// $col = utf8_decode($col);
 			// $col = utf8_encode($col);
 			// $ligne = utf8_decode($ligne);
 			// $ligne = utf8_encode($ligne);
+			/*Ecriture dans le fichier*/
             fwrite ($fp,$col."\n");                                             //  1ere ligne = noms des champs
             fwrite ($fp,$ligne."\n");                                           //  2eme ligne = 1ere ligne de données
-           /*Od version : ATTENTION VERIFIER POUR EEE*/ 
-			/*
-			while ($row=pg_fetch_row ($result)) {
-                $ligne="";
-                for ($i=0;$i<sizeof($row);$i++)
-					var_dump($column[$i]);
-                    if (!empty($ref[$column[$i]]))
-						$ligne.="\"".filter($ref[$column[$i]][$row[$i]])."\"\t";
-					else
-					$ligne.="\"".filter($row[$i])."\"\t";
-                fwrite ($fp,$ligne."\n");
-            }
-			*/
+           
 			while ($row=pg_fetch_assoc ($result)) {
 				$ligne="";
 				foreach ($row as $column => $value) {
-					if ($value == "t") $value = "OUI";
-					if ($value == "f") $value = "NON";
-					/* echo "<BR> la colonne est  $column et la valeur $value<br>";*/
-					if (!empty($ref[$champ_ref[$column]]))	{
-						$ligne.="\"".filter($ref[$champ_ref[$column]][$value])."\"\t";
-						var_dump($ref[$champ_ref[$column]]);
-						/* echo "<BR> la valeur exportée est : ".filter($ref[$column][$value])."<br>";*/
-						}
-					else
-					$ligne.="\"".filter($value)."\"\t";
+					if ($value == "t") $value = "Oui";
+					if ($value == "f") $value = "Non";
+						
+					if (!empty($ref[$champ_ref[$column]])) $ligne.="\"".filter($ref[$champ_ref[$column]][$value])."\"\t";
+					else $ligne.="\"".filter($value)."\"\t";
+					
 				}
+				/*Encodage si nécessaire*/
 				// $ligne = utf8_decode($ligne);
 				// $ligne = utf8_encode($ligne);
+				/*Ecriture dans le fichier*/
 				fwrite ($fp,$ligne."\n");
 			}
             fclose ($fp);                                                        //  Ferme le fichier
@@ -1404,7 +1385,9 @@ function convert_txt ($txt) {
 function filter ($str) {
     $str = str_replace ("\n", "", $str);
     $str = str_replace ("\r\n", "", $str);
-    $str = str_replace ("\r", "", $str); 
+    // $str = str_replace ("\r", "", $str); 
+    $str = str_replace ("\\\"", "\"", $str); 
+    $str = str_replace ("\\'", "'", $str); 
     return ($str);
 }
 
