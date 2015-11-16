@@ -254,7 +254,8 @@ if ( $("#mode").val() == 'liste') {
 			            buttons: {
                     		"Nouvelle fiche": function() {
                                 $(this).dialog("close");
-                    	   },
+								location.reload();
+							},
                     		"Liste des taxons": function() {
                                 $(this).dialog("close");
                                 window.location.replace ('index.php');
