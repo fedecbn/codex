@@ -211,6 +211,8 @@ switch ($mode) {
 						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;$gris",$jvs1,$autre_chp,"id_from_to",null);
 						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;$gris",$jvs2,null,"id_from",null);	
 
+					echo "<BR><BR>";
+					metaform_text ("champ SINP",$bloq,20,"","lien_sinp",null);
 						
 					echo ("</td></tr></table>");
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
@@ -291,7 +293,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
             echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
 			
-			$query = "WITH RECURSIVE hierarchie (uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj,id_from) AS (
+			$query = "WITH RECURSIVE hierarchie (uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj, lien_sinp, id_from) AS (
 				SELECT a.*, z.id_from as id_from
 				FROM fsd.ddd a
 				LEFT JOIN fsd.lien_champs z ON a.uid = z.uid
@@ -302,7 +304,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				LEFT JOIN fsd.lien_champs t3 ON t1.uid = t3.uid
 				INNER JOIN hierarchie t2 ON t2.id_from = t1.uid
 				)
-			SELECT uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj FROM hierarchie GROUP BY uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj ORDER BY version DESC;";
+			SELECT uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj, lien_sinp FROM hierarchie GROUP BY uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj, lien_sinp ORDER BY version DESC;";
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
 			if (pg_num_rows ($result)) {
@@ -390,6 +392,9 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;$gris",$jvs1,$autre_chp,"id_from_to_$i",null);
 						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;$gris",$jvs2,$id_from,"id_from_$i",null);	
 
+						echo "<BR><BR>";
+
+						metaform_text ("champ SINP",$bloq,20,"","lien_sinp",sql_format_quote($row["lien_sinp"],"undo"));
 						
 					echo ("</td></tr></table>");
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
@@ -434,6 +439,10 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
 						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;$gris",null,$autre_chp,"id_from_to_$i",null);
 						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;$gris",null,$id_from,"id_from_$i",null);	
+
+						echo "<BR><BR>";
+
+						metaform_text ("champ SINP",$bloq,20,"","lien_SINP_stay",sql_format_quote($row["lien_sinp"],"undo"));
 
 					echo ("</td></tr></table>");
 					
