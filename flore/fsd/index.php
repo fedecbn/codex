@@ -126,7 +126,7 @@ switch ($mode) {
 	
 	$i = 0;
 
-/*------------------------------------------------------------------------------ EDIT  EN TETE*/
+/*------------------------------------------------------------------------------ ADD  EN TETE*/
         echo ("<div id=\"$id_page\" >");
         echo ("</div>");
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
@@ -147,7 +147,7 @@ switch ($mode) {
             echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
 			echo ("<br><br>");
 
-//------------------------------------------------------------------------------ Edit
+//------------------------------------------------------------------------------ ADD
 		echo ("<div id=\"radio2\">");    
 			/*modules*/
 			$query = "SELECT DISTINCT modl FROM fsd.ddd WHERE version = $version ORDER BY modl;";
@@ -177,8 +177,8 @@ switch ($mode) {
 			echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>"); 
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 40%;\">");
-						metaform_text ("Version FSD"," bloque",10,"","version",$version);
-						// echo ("<input type=\"hidden\" id=\"version\" value=\"".$row["version"]."\" />");
+						metaform_text ("Version FSD"," bloque",10,"","version_bloque",$version);
+						echo ("<input type=\"hidden\" name=\"version\" id=\"version\" value=\"$version\" />");
 						metaform_sel ("Module",null,null,$modl,"modl",null);
 						metaform_sel ("Sous-module",null,null,$ssmodl,"ssmodl",null);
 						metaform_text ("Code du champ",null,40,"","cd",null);
@@ -222,7 +222,7 @@ switch ($mode) {
 				echo ("</fieldset>");
 			
 
-/* ------------------------------------------------------------------------------ EDIT catnat SAVE*/
+/* ------------------------------------------------------------------------------ ADD SAVE*/
         echo ("<div style=\"float:right;\"><br>");
 			if ($mode == "add") {
 				echo ("<button id=\"enregistrer2-add-button\">".$lang[$lang_select]['enregistrer']."</button> ");

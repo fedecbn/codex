@@ -32,7 +32,7 @@ if (!isset($_POST["etape"])) {$etape = 0;}
 else {$etape = $_POST["etape"];}
 
 //------------------------------------------------------------------------------ EDIT
-if (!empty ($id) AND !empty($type))                                                               // EDIT
+if (!empty ($id) AND !empty($type))                                                              
 	{
 	if ($type == 'champ' AND $niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
 		{
@@ -157,10 +157,12 @@ if (!empty ($id) AND !empty($type))                                             
 			
 			if (!empty($_POST['id_from']))
 				{
+				$idfrominsert=null;
 				foreach ($_POST['id_from'] as $id_from)
-					$insert .= "INSERT INTO fsd.lien_champs VALUES (".$uid[0].",$id_from)";
+					$idfrominsert .= "INSERT INTO fsd.lien_champs VALUES (".$uid[0].",$id_from)";
+				if ($idfrominsert != null)
+				$result=pg_query ($db,$idfrominsert) or die ("Erreur pgSQL : ".pg_result_error ($idfrominsert));
 				}
-			$result=pg_query ($db,$insert) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			
 			add_suivi2($etape,$id_user,$uid[0],"fsd.ddd",$field,'','',$id_page,'manuel','add');
 
