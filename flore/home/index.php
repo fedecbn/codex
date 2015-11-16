@@ -284,6 +284,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
 			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
 				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
 				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp-ok\" />");
+				echo ("Pour récupérer vos identifiants de connexion, merci de renseigner votre adresse mail dans le champ suivant : ");
 				echo ("<input type=\"text\" name=\"mail\" id=\"mail\" size = \"40\" value=\"\" />");
 				// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
 				echo ("<BR>");
