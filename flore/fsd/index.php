@@ -350,11 +350,14 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 			if ($i > 0 OR $niveau <= 64) $bloq = " bloque"; else $bloq = "";
 			if ($i > 0 OR $niveau <= 64) $disa = " disabled"; else $disa = "";
 			if ($i > 0) $gris = " background-color:#EFEFEF"; else $gris = "";
-			if ($i > 0) echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>"); else echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_2']."</LEGEND>");
+			
+			if ($i == 0)
+				{
+				echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>"); 
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 40%;\">");
 						metaform_text ("Version FSD"," bloque",10,"","version",$row["version"]);
-						echo ("<input type=\"hidden\" name=\"version\" id=\"version\" value=\"$version\" />");
+						echo ("<input type=\"hidden\" name=\"version\" id=\"version\" value=\"".$row["version"]."\" />");
 						metaform_sel ("Module",$bloq,null,$modl,"modl",$row["modl"]);
 						metaform_sel ("Sous-module",$bloq,null,$ssmodl,"ssmodl",$row["ssmodl"]);
 						metaform_text ("Code du champ",$bloq,40,"","cd",sql_format_quote($row["cd"],"undo"));
@@ -372,18 +375,18 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						metaform_text ("Exemple 1",$bloq,20,"","ex1",sql_format_quote($row["ex1"],"undo"));
 						metaform_text ("Exemple 2",$bloq,20,"","ex2",sql_format_quote($row["ex2"],"undo"));
 					echo ("</td><td style=\"width:60%;\">");
-						if ($i > 0) echo ("<label class=\"preField_calc\">Description</label>"); else echo ("<label class=\"preField\">Description</label>");
+						echo ("<label class=\"preField\">Description</label>");
 						echo ("<textarea name=\"descr\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["descr"],"undo")."</textarea><br><br>");
 
-						if ($i > 0) echo ("<label class=\"preField_calc\">Objectif du partage</label>"); else echo ("<label class=\"preField\">Objectif du partage</label>");
+						echo ("<label class=\"preField\">Objectif du partage</label>");
 						echo ("<textarea name=\"obj\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["obj"],"undo")."</textarea><br><br>");
 						
-						if ($i > 0) echo ("<label class=\"preField_calc\">Règles de renseignement</label>"); else echo ("<label class=\"preField\">Règles de renseignement</label>");
+						echo ("<label class=\"preField\">Règles de renseignement</label>");
 						echo ("<textarea name=\"regleRens\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["regleRens"],"undo")."</textarea><br><br>");
 
 
-						if ($i == 0) $jvs1 = "OnDblClick='javascript: deplacer( this.form.id_from_to_$i, this.form.id_from_$i);'"; else $jvs1 = null;
-						if ($i == 0) $jvs2 = "OnDblClick='javascript: deplacer( this.form.id_from_$i, this.form.id_from_to_$i);'"; else $jvs2 = null;
+						$jvs1 = "OnDblClick='javascript: deplacer( this.form.id_from_to_$i, this.form.id_from_$i);'";
+						$jvs2 = "OnDblClick='javascript: deplacer( this.form.id_from_$i, this.form.id_from_to_$i);'";
 						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;$gris",$jvs1,$autre_chp,"id_from_to_$i",null);
 						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;$gris",$jvs2,$id_from,"id_from_$i",null);	
 
@@ -395,7 +398,53 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						if ($i > 0) echo ("<label class=\"preField_calc\">Evolutions à apporter?</label>"); else echo ("<label class=\"preField\">Evolutions à apporter?</label>");
 						echo ("<textarea name=\"discussion\" $disa style=\"width:80%;$gris\" rows=\"4\" >".sql_format_quote($row["discussion"],"undo")."</textarea><br><br>");
 					echo ("</td></tr></table>");
+				echo ("</fieldset>");				
+				}
+			elseif ($i > 0) 
+				{
+				echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>"); 
+					echo ("<table border=0 width=\"100%\"><tr valign=top >");
+					echo ("<td style=\"width: 40%;\">");
+						metaform_text ("Version FSD"," bloque",10,"","version_stay",$row["version"]);
+						metaform_sel ("Module",$bloq,null,$modl,"modl_stay",$row["modl"]);
+						metaform_sel ("Sous-module",$bloq,null,$ssmodl,"ssmodl_stay",$row["ssmodl"]);
+						metaform_text ("Code du champ",$bloq,40,"","cd_stay",sql_format_quote($row["cd"],"undo"));
+						metaform_text ("Libellé du champ",$bloq,40,"","lib_stay",sql_format_quote($row["lib"],"undo"));
+					echo "<BR>";
+						metaform_sel ("Format",$bloq,null,$format,"format_stay",$row["format"]);
+						metaform_text ("Taille",$bloq,10,"","taille_stay",sql_format_quote($row["taille"],"undo"));
+						metaform_sel ("Vocabulaire contrôlé",$bloq,null,$voca_ctrl,"vocaCtrl_stay",$row["vocaCtrl"]);
+					echo "<BR>";
+						metaform_sel ("Obligatoire (Data)",$bloq,null,$oblig,"oDat_staya",$row["oData"]);
+						metaform_sel ("Obligatoire (Taxa)",$bloq,null,$oblig,"oTaxa_stay",$row["oTaxa"]);
+						metaform_sel ("Obligatoire (Syntdata)",$bloq,null,$oblig,"oSynData_stay",$row["oSynData"]);
+						metaform_sel ("Obligatoire (Syntaxa)",$bloq,null,$oblig,"oSynTaxa_stay",$row["oSynTaxa"]);
+					echo "<BR>";
+						metaform_text ("Exemple 1",$bloq,20,"","ex1_stay",sql_format_quote($row["ex1"],"undo"));
+						metaform_text ("Exemple 2",$bloq,20,"","ex2_stay",sql_format_quote($row["ex2"],"undo"));
+					echo ("</td><td style=\"width:60%;\">");
+						echo ("<label class=\"preField_calc\">Description</label>");
+						echo ("<textarea name=\"descr_stay\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["descr"],"undo")."</textarea><br><br>");
+
+						echo ("<label class=\"preField_calc\">Objectif du partage</label>");
+						echo ("<textarea name=\"obj_stay\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["obj"],"undo")."</textarea><br><br>");
+						
+						echo ("<label class=\"preField_calc\">Règles de renseignement</label>");
+						echo ("<textarea name=\"regleRens_stay\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["regleRens"],"undo")."</textarea><br><br>");
+
+						metaform_sel_multi ("Champ(s) d'origine",null,5,"width: 190px;$gris",null,$autre_chp,"id_from_to_$i",null);
+						metaform_sel_multi ("Champ(s) d'origine"," no_lab",5,"width: 190px;$gris",null,$id_from,"id_from_$i",null);	
+
+					echo ("</td></tr></table>");
+					
+					echo ("<table border=0 width=\"100%\"><tr valign=top >");
+					echo ("<td style=\"width: 100%;\">");
+						echo "<BR>";
+						echo ("<label class=\"preField_calc\">Evolutions à apporter?</label>");
+						echo ("<textarea name=\"discussion_stay\" $disa style=\"width:80%;$gris\" rows=\"4\" >".sql_format_quote($row["discussion"],"undo")."</textarea><br><br>");
+					echo ("</td></tr></table>");
 				echo ("</fieldset>");
+				}
 			$i++;
 			}
 //------------------------------------------------------------------------------ EDIT Discussion
