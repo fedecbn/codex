@@ -14,11 +14,13 @@ INSERT INTO applications.rubrique("id_module", "pos", "icone", "titre", "descr",
 
 ---nouvelles colonnes dans les droits
 ALTER TABLE applications.utilisateur ADD COLUMN niveau_'||id_module||' smallint DEFAULT 0;
-ALTER TABLE applications.utilisateur ADD COLUMN ref_'||id_module||' boolean DEFAULT FALSE;
-UPDATE applications.utilisateur SET niveau_'||id_module||' = 255 , ref_'||id_module||' = TRUE WHERE id_user = '''||utilisateur||''';
+ALTER TABLE applications.utilisateur ADD COLUMN ref_'||id_module||' boolean DEFAULT FALSE;';
+EXECUTE'
+UPDATE applications.utilisateur SET niveau_'||id_module||' = 255 , ref_'||id_module||' = TRUE WHERE id_user = '''||utilisateur||''';';
 
+EXECUTE '
 --- Nouveau schema
-CREATE SCHEMA '||id_module||';
+CREATE SCHEMA '||id_module||' AUTHORIZATION user_codex;
 CREATE TABLE '||id_module||'.base
 (
   uid integer NOT NULL,
@@ -28,7 +30,7 @@ CREATE TABLE '||id_module||'.base
   info_bool boolean,
   CONSTRAINT '||id_module||'_pkey PRIMARY KEY (uid)
 ) WITH (OIDS=FALSE);
-ALTER TABLE '||id_module||'.base OWNER TO pg_user;
+ALTER TABLE '||id_module||'.base OWNER TO user_codex;
 ';
 
 RETURN 'OK';
