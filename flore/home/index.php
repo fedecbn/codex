@@ -36,6 +36,8 @@ $result=pg_query ($db,$query_rub) or fatal_error ("Erreur pgSQL : ".pg_result_er
 $i=0;
 While ($row = pg_fetch_row($result)) {$rubrique[$i] = $row[0];$i++;}
 
+
+
 foreach ($rubrique as $key => $val)
 	{
 	$ref[$val]=isset ($_SESSION['ref_'.$val]) ? $_SESSION['ref_'.$val] : 0;
@@ -100,17 +102,11 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
 				aff_pres ("home","home_header",FR,false);
             echo ("<br/>");
 			
+			
+			
 		foreach ($rubrique as $key => $val)
 			menu_rubrique ($niveau[$val],$val);
-			
-			// menu_rubrique ($niveau_refnat,"refnat");
-			// menu_rubrique ($niveau_catnat,"catnat");
-			// menu_rubrique ($niveau_lr,"lr");
-			// menu_rubrique ($niveau_eee,"eee");
-			// menu_rubrique ($niveau_lsi,"lsi");
-
-			// echo ("<br/>");
-            
+			            
 			aff_pres ("home","home_footer",FR,false);
 			
 			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
