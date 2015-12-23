@@ -1,5 +1,15 @@
-﻿-- modif BDD (application.pres et application.rub)
-CREATE OR REPLACE FUNCTION new_rubrique (id_module varchar,titre_module varchar, utilisateur varchar) RETURNS varchar AS  
+﻿------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+--- new_rubrique
+--- Description : Fonction permettant d'initialiser une nouvelle rubrique du Codex
+--- Variables :
+--- o id_module : identifiant pour le module (par exemple : 'lr' - nb : sera utilisé comme nom du schema et du répertoire pour la rubrique)
+--- o titre_module : titre du module (par exemple : 'Liste rouge')
+--- o utilisateur_codex : Utilisateur dans le codex (par défaut 'admin')
+--- o utilisateur_bdd : Utilisateur utilisé par la base de données (par défaut 'user_codex')
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION new_rubrique (id_module varchar,titre_module varchar, utilisateur_codex varchar, utilisateur_bdd varchar) RETURNS varchar AS  
 $BODY$  
 DECLARE maxpos int;
 BEGIN
@@ -14,13 +24,14 @@ INSERT INTO applications.rubrique("id_module", "pos", "icone", "titre", "descr",
 
 ---nouvelles colonnes dans les droits
 ALTER TABLE applications.utilisateur ADD COLUMN niveau_'||id_module||' smallint DEFAULT 0;
-ALTER TABLE applications.utilisateur ADD COLUMN ref_'||id_module||' boolean DEFAULT FALSE;';
-EXECUTE'
-UPDATE applications.utilisateur SET niveau_'||id_module||' = 255 , ref_'||id_module||' = TRUE WHERE id_user = '''||utilisateur||''';';
+ALTER TABLE applications.utilisateur ADD COLUMN ref_'||id_module||' boolean DEFAULT FALSE;
+';
+
+EXECUTE'UPDATE applications.utilisateur SET niveau_'||id_module||' = 255 , ref_'||id_module||' = TRUE WHERE id_user = '''||utilisateur_codex||''';';
 
 EXECUTE '
 --- Nouveau schema
-CREATE SCHEMA '||id_module||' AUTHORIZATION user_codex;
+CREATE SCHEMA '||id_module||' AUTHORIZATION '||utilisateur_bdd||';
 CREATE TABLE '||id_module||'.base
 (
   uid integer NOT NULL,
@@ -30,15 +41,20 @@ CREATE TABLE '||id_module||'.base
   info_bool boolean,
   CONSTRAINT '||id_module||'_pkey PRIMARY KEY (uid)
 ) WITH (OIDS=FALSE);
-ALTER TABLE '||id_module||'.base OWNER TO user_codex;
+ALTER TABLE '||id_module||'.base OWNER TO '||utilisateur_bdd||';
 ';
 
 RETURN 'OK';
 END;$BODY$ LANGUAGE plpgsql;
 
-
-
--- modif BDD (application.pres et application.rub)
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+--- drop_rubrique
+--- Description : Fonction permettant de supprimer une rubrique du Codex
+--- Variables :
+--- o id_module : identifiant pour le module (par exemple : 'lr' - nb : sera utilisé comme nom du schema et du répertoire pour la rubrique)
+------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION drop_rubrique (id_module varchar) RETURNS varchar AS  
 $BODY$  
 DECLARE maxpos int;
