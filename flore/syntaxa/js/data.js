@@ -60,13 +60,16 @@
                 "sLast":     "Dernier"
             }
         }, 
-        "aaSorting": [[3,'asc']],                                               // Nom scientifique 
+        "aaSorting": [[3,'asc']],                                               // Tri par le nom complet 
         "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [                                                        // 
                 null,                                                           // 
-                { "sWidth": "300px" },                                          // 
+                { "sWidth": "150px" },  
                 null,                                                           //  .
-                null,                                                                                                                                                                         // 
+                null,	     					 // 
+                null,                                                           //  .
+                null,  						//
+                null, 					      // 
     			{ "sClass": "center","sWidth": "50px","bSortable": false },     // 
         		{ "sClass": "center","sWidth": "20px","bSortable": false }      // .
         ]
@@ -76,6 +79,9 @@
                 { type: "text" },
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
+                { type: "text" },                                               //  
+	      { type: "text" },                                               // 
+	      { type: "text" },                                               // 
                 { type: "text" }                                              //  
 			]
 		});        

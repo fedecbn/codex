@@ -31,9 +31,9 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ($id_page);
 // var_dump($aColumns[$id_page]);
-// var_dump($champ_ref);
- //var_dump($ref['codeEnregistrementSyntax']);
-// var_dump($ref['rangSyntaxon']);
+//var_dump($champ_ref);
+//var_dump($ref['codeEnregistrementSyntax']);
+// var_dump($ref['nomSyntaxonRetenu']);
 //------------------------------------------------------------------------------ FILTERS
 $filters = filter_column($aColumns[$id_page]);
 $sLimit = $filters['sLimit'];  
@@ -43,7 +43,7 @@ $sWhere = $filters['sWhere'];
 //------------------------------------------------------------------------------ QUERY
 $query= $query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
 
-// echo "<br>".$query;
+ //echo "<br>".$query;
 
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 if (pg_num_rows ($result)) 

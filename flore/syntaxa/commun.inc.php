@@ -40,17 +40,28 @@ SELECT t.*
 	WHERE a.defaut = TRUE ";
 
 // ------------------------------------------------------------------------------ Vocabulaire du module
-$langliste['fr']['syntaxa'][]="blabal";
-$langliste['fr']['syntaxa-popup'][]="Identifiant unique";
+$lang['fr']['liste_taxons']="Liste des syntaxons";
 
-$langliste['fr']['syntaxa'][]="Texte";
-$langliste['fr']['syntaxa-popup'][]="info_text";
+$langliste['fr']['syntaxa'][]="Code enregistrement";
+$langliste['fr']['syntaxa-popup'][]="Identifiant unique du Syntaxon dans le catalogue partagé ";
 
-$langliste['fr']['syntaxa'][]="Réel";
-$langliste['fr']['syntaxa-popup'][]="info_real";
+$langliste['fr']['syntaxa'][]="Identifiant syntaxon";
+$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon dans le catalogue d'origine";
 
-$langliste['fr']['syntaxa'][]="Entier";
-$langliste['fr']['syntaxa-popup'][]="info_integer";
+$langliste['fr']['syntaxa'][]="Nom scientifique syntaxon";
+$langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon";
+
+$langliste['fr']['syntaxa'][]="Rang syntaxon retenu";
+$langliste['fr']['syntaxa-popup'][]="Rang du syntaxon";
+
+$langliste['fr']['syntaxa'][]="Identifiant syntaxon retenu";
+$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon retenu dans le catalogue d'origine";
+
+$langliste['fr']['syntaxa'][]="Nom scientifique syntaxon retenu";
+$langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon retenu";
+
+$langliste['fr']['syntaxa'][]="Identifiant syntaxon supérieur";
+$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supérieur dans le catalogue d'origine";
 //------------------------------------------------------------------------------ FONCTIONS du module
 
 ?>
