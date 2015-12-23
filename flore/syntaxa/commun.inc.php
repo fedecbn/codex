@@ -40,6 +40,9 @@ SELECT t.*
 	WHERE a.defaut = TRUE ";
 
 // ------------------------------------------------------------------------------ Vocabulaire du module
+
+$lang['fr']['titre']="Codex - Rubrique Catalogue des végétations";
+
 $lang['fr']['liste_taxons']="Liste des syntaxons";
 
 $langliste['fr']['syntaxa'][]="Code enregistrement";
