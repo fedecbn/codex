@@ -23,7 +23,7 @@ if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 //------------------------------------------------------------------------------ PARMS.
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
 if (isset($_GET['o']) & !empty($_GET['o'])) $o=$_GET['o'];
-$id=$_GET['id'];
+$id="'".$_GET['id']."'";
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -140,23 +140,40 @@ include ("../commun/add_fiche.php");
             }
 		echo ("</div>");
 		if (isset($_GET['id']) & !empty($_GET['id'])) { 
-            $id=$_GET['id'];
+            $id="'".$_GET['id']."'";
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
             		
 			$query= $query_module.$id.";";
-
+			echo $query;
 			$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+			
+			$table = pg_fetch_array($result);
+			var_dump($table);
             if (pg_num_rows ($result)) {
-
+			
 			echo ("<br><br>");
 				
 			echo("<input type=\"hidden\" name=\"zone\" id=\"zone1\" value=\"gl\">");
 			
 			echo ("<div id=\"radio2\">"); 
 			echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
-			echo ("<input type=\"hidden\" name=\"uid\" id=\"uid\" value=\"".pg_result($result,0,"uid")."\">");
+			echo ("<input type=\"hidden\" name=\"codeEnregistrementSyntax\" id=\"codeEnregistrementSyntax\" value=\"".pg_result($result,0,"codeEnregistrementSyntax")."\">");
 	/*------------------------------------------------------------------------------ EDIT fieldset1*/
-			
+			 echo ("<fieldset><LEGEND>syntaxa</LEGEND>");
+				echo ("<table border=0 width=\"100%\"><tr valign=top >");
+				echo ("<td style=\"width: 800px;\">");
+					metaform_text ("Nom scientifique"," bloque",100,"","codeEnregistrementSyntax",pg_result($result,0,"codeEnregistrementSyntax"));
+					metaform_text ("Nom vernaculaire"," bloque",100,"","nom_vern",pg_result($result,0,"nom_vern"));
+					metaform_bout ("Taxon hybride?"," bloque","hybride",pg_result($result,0,"hybride"));
+				echo ("</td><td style=\"width:300px;\">");	
+					metaform_text ("Code REF."," bloque",8,"","cd_ref",pg_result($result,0,"cd_ref"));
+					metaform_sel ("Rang"," bloque","",$ref[$champ_ref['id_rang']],"id_rang",pg_result($result,0,"id_rang"));
+				echo ("</td><td>");	
+					if ($niveau >= 128)
+						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
+				echo ("</td></tr></table>");
+			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
+			echo ("</fieldset>");
 	/*------------------------------------------------------------------------------ EDIT fieldset2*/
 
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/

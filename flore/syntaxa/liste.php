@@ -28,8 +28,12 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ REF.		
+global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ($id_page);
-
+// var_dump($aColumns[$id_page]);
+// var_dump($champ_ref);
+ //var_dump($ref['codeEnregistrementSyntax']);
+// var_dump($ref['rangSyntaxon']);
 //------------------------------------------------------------------------------ FILTERS
 $filters = filter_column($aColumns[$id_page]);
 $sLimit = $filters['sLimit'];  
@@ -65,8 +69,8 @@ $iTotal = $aResultTotal;
 		/*cas général avec référentiel*/
 		/*---------------*/
 			// else if (!empty($ref[$key]))
-			if (!empty($ref[$key]))
-				$sOutput .= '"'.$ref[$key][$row[$key]].'",';
+			if (!empty($ref[$champ_ref[$key]]))
+				$sOutput .= '"'.$ref[$champ_ref[$key]][$row[$key]].'",';
 		/*---------------*/
 		/*cas général sans référentiel*/
 		/*---------------*/
@@ -77,10 +81,10 @@ $iTotal = $aResultTotal;
 		/*dernières colonnes*/
 		/*---------------*/
         if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
+            $sOutput .= '"<a class=view id=\"'.$row['codeEnregistrementSyntax'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
         else        
-            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
+            $sOutput .= '"<a class=edit id=\"'.$row['codeEnregistrementSyntax'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
+		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['codeEnregistrementSyntax'].'\" >"';
     	$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );

@@ -14,8 +14,8 @@ require_once ("../../_INCLUDE/common.lang.php");
 require_once ("../commun/module.lang.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
-$id_page = $_SESSION['page'] = "defaut";
-$id_page_2 = "defaut_2";
+$id_page = $_SESSION['page'] = "syntaxa";
+$id_page_2 = "droit";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];
@@ -25,12 +25,12 @@ $lang_select=$_COOKIE['lang_select'];
 
 $query_module = "
 SELECT t.* 
-	FROM syntaxa.base t 
-	WHERE t.uid=";
+	FROM syntaxa.st_syntaxon t 
+	WHERE t.\"codeEnregistrementSyntax\"=";
 
 $query_liste = "
 SELECT count(*) OVER() AS total_count,*
-	FROM syntaxa.base
+	FROM syntaxa.st_syntaxon
 	";
 	
 $query_export = "
@@ -39,8 +39,18 @@ SELECT t.*
 	JOIN applications.taxons a ON a.uid = t.uid 
 	WHERE a.defaut = TRUE ";
 
-// ------------------------------------------------------------------------------ PATHS du module
+// ------------------------------------------------------------------------------ Vocabulaire du module
+$langliste['fr']['syntaxa'][]="blabal";
+$langliste['fr']['syntaxa-popup'][]="Identifiant unique";
 
+$langliste['fr']['syntaxa'][]="Texte";
+$langliste['fr']['syntaxa-popup'][]="info_text";
+
+$langliste['fr']['syntaxa'][]="Réel";
+$langliste['fr']['syntaxa-popup'][]="info_real";
+
+$langliste['fr']['syntaxa'][]="Entier";
+$langliste['fr']['syntaxa-popup'][]="info_integer";
 //------------------------------------------------------------------------------ FONCTIONS du module
 
 ?>

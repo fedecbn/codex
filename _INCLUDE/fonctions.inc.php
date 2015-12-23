@@ -278,7 +278,7 @@ function ref_colonne_et_valeur ($rubrique)	{
 	while ($row = pg_fetch_assoc ($result)) {
 		// if (DEBUG) echo "<BR> champ : ".$row['nom_champ'];
 		if (!isset($ref[$row['nom_ref']])) {
-			if ($row['orderby'] != "") {$orderby = "ORDER BY ".$row['orderby'];} else {$orderby = "";}
+			if ($row['orderby'] != "") {$orderby = "ORDER BY \"".$row['orderby']."\"";} else {$orderby = "";}
 			$query="SELECT * FROM ".$row['schema'].".".$row['table_ref']." ".$orderby;
 			// if (DEBUG) echo "<BR> $query";
 			$result2=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result2),false);unset($query);
