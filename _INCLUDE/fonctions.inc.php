@@ -25,6 +25,7 @@ function html_header ($charset,$css1,$css2) {
     echo ("<meta name=\"description\" content=\"Dispositif de partage des connaissances et d'expertises du réseau des CBN\">");
     
     echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/eval.css\" />");
+    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../flore/syntaxa/css/syntaxa.css\" />");
     echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/pepper-grinder/jquery-ui.min.css\" />");
     echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/pepper-grinder/jquery-ui.theme.min.css\" />");
 //    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/jquery.lightbox-0.5.css\" />");
@@ -46,6 +47,7 @@ function html_header_2 ($charset,$css1,$css2,$title) {
     echo ("<meta name=\"description\" content=\"Dispositif de partage des connaissances et d'expertises du réseau des CBN\">");
     
     echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/eval.css\" />");
+    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../flore/syntaxa/css/syntaxa.css\" />");
     echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/pepper-grinder/jquery-ui.min.css\" />");
     echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/pepper-grinder/jquery-ui.theme.min.css\" />");
 //    echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../_INCLUDE/css/jquery.lightbox-0.5.css\" />");
