@@ -28,6 +28,14 @@ SELECT t.*
 	FROM syntaxa.st_syntaxon t 
 	WHERE t.\"codeEnregistrementSyntax\"=";
 
+$query_module_biblio = "
+SELECT t.* 
+	FROM syntaxa.st_biblio t 
+	WHERE t.\"codeEnregistrement\"=";	
+	
+$query_description=
+"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ='st_syntaxon' and champs.nom_champ=";
+
 $query_liste = "
 SELECT count(*) OVER() AS total_count,*
 	FROM syntaxa.st_syntaxon
