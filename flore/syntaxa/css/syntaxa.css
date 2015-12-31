@@ -54,7 +54,7 @@ label, form .label {
     text-align: left;
 }
 
-label.preField {
+label.preField, caption {
     display: -moz-inline-box;
     display: inline-block;  
     margin: 2px 4px 0 0px;
