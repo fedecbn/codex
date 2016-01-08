@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 //------------------------------------------------------------------------------//
 //   commun.inc.php                                                             //
 //                                                                              //
@@ -49,12 +49,12 @@ SELECT t.*
 
 // ------------------------------------------------------------------------------ Vocabulaire du module
 
-$lang['fr']['titre']="Codex - Rubrique Catalogue des végétations";
+$lang['fr']['titre']="Codex - Rubrique Catalogue des vÃ©gÃ©tations";
 
 $lang['fr']['liste_taxons']="Liste des syntaxons";
 
 $langliste['fr']['syntaxa'][]="Code enregistrement";
-$langliste['fr']['syntaxa-popup'][]="Identifiant unique du Syntaxon dans le catalogue partagé ";
+$langliste['fr']['syntaxa-popup'][]="Identifiant unique du Syntaxon dans le catalogue partagÃ© ";
 
 $langliste['fr']['syntaxa'][]="Identifiant syntaxon";
 $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon dans le catalogue d'origine";
@@ -71,8 +71,8 @@ $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon retenu dans le cata
 $langliste['fr']['syntaxa'][]="Nom scientifique syntaxon retenu";
 $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon retenu";
 
-$langliste['fr']['syntaxa'][]="Identifiant syntaxon supérieur";
-$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supérieur dans le catalogue d'origine";
+$langliste['fr']['syntaxa'][]="Identifiant syntaxon supÃ©rieur";
+$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supÃ©rieur dans le catalogue d'origine";
 //------------------------------------------------------------------------------ FONCTIONS du module
 
 ?>
