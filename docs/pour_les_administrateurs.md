@@ -36,6 +36,12 @@ NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini 
 ## Créer un utilisateur
 
 ## Les droits utilisateurs
+| Rôle | Droits correspondants |
+| -- | -- |
+| Pas d'accès | 1:2 |
+| Lecteur | 1:3 |
+| Participant | 1:4 |
+| Evaluateur | 1:5 |
 
 ## Les référents
 
