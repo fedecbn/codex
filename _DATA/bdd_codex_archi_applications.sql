@@ -388,25 +388,31 @@ CREATE TABLE utilisateur (
     id_cbn smallint,
     nom character varying,
     prenom character varying,
-    pw character varying(50) NOT NULL,
+    login character varying,
+	pw character varying(50) NOT NULL,
     tel_bur character varying,
     tel_port character varying,
     tel_int character varying,
     email character varying(255) DEFAULT NULL::character varying,
     web character varying,
-    niveau_lr smallint DEFAULT 0,
     descr text,
     last_login timestamp without time zone,
-    niveau_eee smallint DEFAULT 0,
+    niveau_lr smallint DEFAULT 0,
+	niveau_eee smallint DEFAULT 0,
     niveau_lsi smallint,
     niveau_catnat smallint,
     niveau_refnat smallint,
-    login character varying,
+    niveau_fsd smallint,
+    niveau_defaut smallint,
+    niveau_syntaxa smallint,
     ref_lr boolean DEFAULT false,
     ref_eee boolean DEFAULT false,
     ref_lsi boolean DEFAULT false,
     ref_catnat boolean DEFAULT false,
     ref_refnat boolean DEFAULT false
+    ref_fsd boolean DEFAULT false
+    ref_defaut boolean DEFAULT false
+    ref_syntaxa boolean DEFAULT false
 );
 
 
