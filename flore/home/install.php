@@ -76,24 +76,20 @@ echo ("</div>");
 /*-------------------------------------------------------------------------------------*/
 /*Variables----------------------------------------------------------------------------*/
 $action=isset ($_POST['action']) ? $_POST['action'] : "";
-$rub = array (
-	"applications" =>"Base de l'outil",
-	"lr" =>"Liste Rouge",
-	"eee" =>"Liste EEE",
-	"catnat" =>"Catalogue National",
-	"refnat" =>"Référentiel National",
-	"lsi" =>"Lettre Système Information"
-	);
-$data_test = array (
-	"applications" =>"",
-	"lr" =>"",
-	"eee" =>"",
-	"catnat" =>"",
-	"refnat" =>"",
-	"lsi" =>""
-	);
-		
-$pos = 0;	
+$dir = scandir("../");
+/*suppression des valeurs non concernées*/
+$less = array ('bugs', 'home', 'module_admin','commun','index.php','.','..');
+foreach ($less as $element)
+	unset($dir[array_search($element, $dir)]);
+
+foreach ($dir  as $key => $val)
+	{
+	include ("../$val/commun.inc.php");
+	$rub[$val] = $name_page;
+	}
+
+$pos = 0;
+
 switch ($action)
 {
 /*-------------------------------------------------------------------------------------*/
@@ -109,21 +105,16 @@ case "install-param":	{
 		$host = SQL_server;$port = SQL_port;$user = SQL_user;$mdp = SQL_pass;$dbname = SQL_base;
 		$db = connexion ($host,$port,$user,$mdp,$dbname);	
 	
-		foreach ($rub  as $key => $val)
+		foreach ($rub as $key => $val)
 			{
 			$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
 			$schema = pg_query($db,$query);
 			$row = pg_fetch_row($schema);
-			if ($row[0] == "1") 
-				{
-				$rub_ok[$key] = 't';
-				$desc[$key] = " bloque";
-				}
-			else 
-				{
-				$rub_ok[$key] = 'f';
-				$desc[$key] = "";
-				}
+			$sqlexist = file_exists("../../_DATA/bdd_codex_archi_".$key.".sql");
+			
+			if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
+			elseif ($sqlexist == TRUE) 	{$rub_ok[$key] = 'f';$desc[$key] = "";}
+			else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
 			}
 		}
 	else
@@ -131,7 +122,7 @@ case "install-param":	{
 		require_once ("../../_INCLUDE/config_sql.inc.example.php");	
 		foreach ($rub  as $key => $val)	{$rub_ok[$key] = 'f'; $desc[$key] = "";}
 		}
-
+		
 	echo ("<div id=\"fiche\" >");
 	echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
 	echo ("<center><input type=\"hidden\" name=\"action\" value=\"install-set\" />");
@@ -239,6 +230,7 @@ case "install-set":	{
 						}
 					else 
 						$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";
+					$query .= "ALTER SCHEMA $key OWNER TO $conn_codex";
 					$result = pg_query($conn_codex,$query);
 					echo ("L'architecture de la $val a été implémentée<BR>"); 
 					}

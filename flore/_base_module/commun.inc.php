@@ -16,6 +16,7 @@ require_once ("../commun/module.lang.php");
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "defaut";
 $id_page_2 = "defaut_2";
+$name_page = "Rubrique Test";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];

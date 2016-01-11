@@ -16,6 +16,7 @@ require_once ("../commun/module.lang.php");
 //------------------------------------------------------------------------------ CONSTANTES du module
 $title = "Codex - LSI";
 $titre = "LSI";
+$name_page = "Lettre SI géomatique";
 $ouinon_txt=array("Non","Oui");
 $id_page="lsi";
 $id_page_2 = "droit";

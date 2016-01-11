@@ -16,6 +16,7 @@ require_once ("../commun/module.lang.php");
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "syntaxa";
 $id_page_2 = "droit";
+$name_page = "Catalogues des végétations";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];
