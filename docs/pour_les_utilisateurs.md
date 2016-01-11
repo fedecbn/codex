@@ -1,6 +1,6 @@
 # Pour les utilisateurs
 
-Bienvenue sur le wiki Codex pour les utilisateurs. Cette documentation s'applique à l'instance nationale déployé par la Fédération des conservatoire botanique nationaux. Elle reste cependant une base intéressante pour tout déploiement local de l'outil.
+Bienvenue sur le wiki Codex pour les utilisateurs. Cette documentation s'applique à l'instance nationale déployée par la Fédération des conservatoire botanique nationaux. Elle reste cependant une base intéressante pour tout déploiement local de l'outil.
 
 # Comment accéder à l'outil
 ## Nouvel utilisateur
