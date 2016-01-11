@@ -17,11 +17,12 @@ Si vous possédez déjà un compte sur l'outil, vous pouvez récupérer ces iden
 Si vous souhaitez accéder à une rubrique à laquelle vous n'avez pas accès, ou que vous souhaitez avoir un niveau de droit supérieur à celui que vous avez actuellement, vous devez en faire la demande au référent de votre structure correspondant ou par l'administrateur de l'outil en procédant.
 Vous pouvez accédez à la liste des référents de votre structure dans dans la page "Administration", onglet "Utilisateur".
 
-# Les tableaux de synthèse
+# Description d'une rubrique
+## Les tableaux de synthèse
 Après vous être identifié, la page d'accueil vous présente les rubriques auxquels vous avez accès. Lorsque vous cliquez sur une rubrique, un tableau de synthèse apparaît.
 Ce tableau permet d'avoir une vision d'ensemble des données disponible sur la problématique en question.
 
-## Filtrer sur le tableau de synthèse
+### Filtrer sur le tableau de synthèse
 Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs types sont à votre disposition :
 - liste de choix : certains filtres sont pré-établie en fonction des listes de valeurs utilisées en amont. Dans ce cas, il suffit de sélectionner la valeur d'intérêt et le tableau se mettra à jour.
 - filtre textuel : ce filtre permet de réaliser une recherche textuel SANS CASSE, de toutes les lignes comprenant le texte spécifié dans le champ "filtre".
@@ -36,9 +37,10 @@ Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs typ
 
 ![](filtre_et_trie_codex.jpg)
 
-## Trier le tableau de synthèse
+### Trier le tableau de synthèse
 Au niveau de l'en-tête de la colonne, il est possible de discerner le symbole ![](no_trie_codex.jpg). Ce symbole explicite que la colonne n'est pas utilisé par pour trier le tableau. Pour trier le tableau, il vous suffit de cliquer sur la colonne d'intérêt pour efectuer un trie croissant ![](tri_croissant.jpg) ou un tri décroissant ![](tri_decroissant.jpg).
 
+## L'onglet "utilisateurs"
 
 # Comment manipuler les fiches
 
