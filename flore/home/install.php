@@ -214,7 +214,7 @@ case "install-set":	{
 		/*-------------------*/	
 		/*Structure de la BDD*/
 		/*Rubrique application*/
-		$key = 'application';
+		$key = 'applications';
 		$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
 		$schema = pg_query($conn_codex,$query);
 		$row = pg_fetch_row($schema);
