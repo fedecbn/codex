@@ -230,7 +230,7 @@ case "install-set":	{
 						}
 					else 
 						$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";
-					$query .= "ALTER SCHEMA $key OWNER TO $conn_codex";
+					$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 					$result = pg_query($conn_codex,$query);
 					echo ("L'architecture de la $val a été implémentée<BR>"); 
 					}
