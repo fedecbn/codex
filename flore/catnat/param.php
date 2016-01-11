@@ -4,23 +4,10 @@
 //                                                                              //
 //  Version 1.00  24/07/14 - OlGa / CBNMED                                      //
 //------------------------------------------------------------------------------//
-                                                      
-//------------------------------------------------------------------------------ CONFIG du module
-require_once ("../commun/commun.inc.php");
-
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "catnat";
-$name_page = "Catalogue National";
+$name_page = $titre = $title = "Catalogue National";
 $id_page_2 = "droit";
-$title = $lang['fr']['titre_web']." - ".$id_page;
-$titre = "Catalogue National";
-
-
-$niveau=$_SESSION['niveau_'.$id_page];
-$id_user=$_SESSION['id_user'];
-$config=$_SESSION['id_config'];
-
-$lang_select=$_COOKIE['lang_select'];
 
 if (ON_Server == 'no') $path = 'D:/'; else $path = '/home/export_pgsql/';
 

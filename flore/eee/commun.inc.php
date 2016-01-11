@@ -6,12 +6,7 @@
 //------------------------------------------------------------------------------//
                                                       
 //------------------------------------------------------------------------------ CONFIG du module
-require_once ("../../_INCLUDE/config_sql.inc.php");
-require_once ("../../_INCLUDE/constants.inc.php");
-require_once ("../../_INCLUDE/fonctions.inc.php");
-
-require_once ("../../_INCLUDE/common.lang.php");
-require_once ("../commun/module.lang.php");
+require_once ("../commun/commun.inc.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
 $id_page = $_SESSION['page'] = "eee";
