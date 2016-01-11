@@ -2,7 +2,12 @@
 
 Bienvenue sur le Wiki du Codex pour les administrateurs. Cette documentation est pour objectif de donner des éléments de compréhension pour faciliter l'installation et la manipulation de l'outil Codex par des administrateurs souhaitant s'en emparer.
 
-# Comment installer le codex?
+# Pourquoi utiliser l'outil Codex?
+L'outil Codex est une application web permettant le partage et l'évolution de données de manière centralisée, collaborative et en conservant l'historique. On peut comparer l'outil avec google-sheets (tableur en ligne collaboratif) avec les avantages (et inconvénients ^^) de pouvoir gérer une base de données relationnelle derrière l'application (import/export de données, traitement de données...).
+
+# Qu'est ce qu'il y a derrière l'outil Codex
+
+# Comment installer l'outil codex?
 ## Pré-requis
 * Apache (min 2.4.9)
 * Php (min 5.5 min)
