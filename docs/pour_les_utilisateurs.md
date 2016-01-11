@@ -43,18 +43,18 @@ Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs typ
 ### Trier le tableau de synthèse
 Au niveau de l'en-tête de la colonne, il est possible de discerner le symbole ![](no_trie_codex.jpg). Ce symbole explicite que la colonne n'est pas utilisé par pour trier le tableau. Pour trier le tableau, il vous suffit de cliquer sur la colonne d'intérêt pour efectuer un trie croissant ![](tri_croissant.jpg) ou un tri décroissant ![](tri_decroissant.jpg).
 
-## L'onglet "utilisateurs"
+## Onglet "utilisateurs"
 ![](onglet_utilisateur.jpg)
 
 Cet onglet est présent dans chaque rubrique. Il vous permet de connaitre les autres utilisateurs ayant accès à cette rubrique, et notamment connaitre leurs droits d'accès (niveau de droit et référent).
 
-## L'onglet "Fiche"
+## Onglet "Fiche"
 ![](onglet_fiche.jpg)
 
 L'onglet "fiche" présente une information beaucoup plus précise à l'échelle de l'objet étudié (par exemple, dans le cas de la rubrique "Liste rouge", une fiche correspond à l'évaluation d'un taxon particulier).
 Pour accéder à l'onglet "fiche", il vous faut cliquer sur le bouton "crayon" ![](bt_edit.jpg) ou le bouton "loupe" ![](bt_view.jpg) au bout de la ligne correspondant à l'objet d'intérêt dans le tableau de synthèse.
 
-## L'onglet "Historique" (à venir)
+## Onglet "Historique" (à venir)
 A terme, un onglet supplémentaire permettra de suivre toutes les évolutions qui ont été réaliser sur chaque fiche.
 
 # Comment remonter un bug
