@@ -54,7 +54,7 @@ Cet onglet est présent dans chaque rubrique. Il vous permet de connaitre les au
 L'onglet "fiche" présente une information beaucoup plus précise à l'échelle de l'objet étudié (par exemple, dans le cas de la rubrique "Liste rouge", une fiche correspond à l'évaluation d'un taxon particulier).
 Pour accéder à l'onglet "fiche", il vous faut cliquer sur le bouton "crayon" ![](bt_edit.jpg) ou le bouton "loupe" ![](bt_view.jpg) au bout de la ligne correspondant à l'objet d'intérêt dans le tableau de synthèse.
 
-## L'onglet "Historique"
+## L'onglet "Historique" (à venir)
 A terme, un onglet supplémentaire permettra de suivre toutes les évolutions qui ont été réaliser sur chaque fiche.
 
 # Comment remonter un bug
