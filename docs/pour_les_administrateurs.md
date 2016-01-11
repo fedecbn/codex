@@ -32,7 +32,13 @@ L'outil est une plateforme web développé en php utilisant des librairies javas
 
 NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini et augmenter là.
 
-# Les utilisateurs
+# Gestion des utilisateurs
+## Créer un utilisateur
+
+## Les droits utilisateurs
+
+## Les référents
+
 
 # Charger des données dans une rubrique
 
