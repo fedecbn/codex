@@ -47,6 +47,11 @@ SELECT t.*
 	JOIN applications.taxons a ON a.uid = t.uid 
 	WHERE a.defaut = TRUE ";
 
+$tables = array ('st_syntaxon');
+if (!isset($_POST["etape"])) {$etape = 1;}
+else {$etape = $_POST["etape"];}
+
+	
 // ------------------------------------------------------------------------------ Vocabulaire du module
 
 $lang['fr']['titre']="Codex - Rubrique Catalogue des végétations";

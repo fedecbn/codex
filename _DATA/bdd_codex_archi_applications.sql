@@ -280,7 +280,7 @@ ALTER SEQUENCE rubrique_id_rubrique_seq OWNED BY rubrique.id_rubrique;
 --
 -- Name: suivi; Type: TABLE; Schema: applications; Owner: pg_user; Tablespace: 
 --
-
+--DROP TABLE suivi if exists;
 CREATE TABLE suivi (
     id_suivi integer NOT NULL,
     etape smallint DEFAULT 0 NOT NULL,
@@ -295,7 +295,7 @@ CREATE TABLE suivi (
     type_modif character varying,
     libelle_1 character varying,
     libelle_2 character varying,
-    uid integer
+    uid character varying
 );
 
 

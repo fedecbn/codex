@@ -469,7 +469,7 @@ function add_suivi2 ($etape,$id_user,$uid,$table,$champ,$valeur_1,$valeur_2,$rub
 	if ($libelle2 == '0' OR $libelle2 == null  OR $libelle2 == 'NULL' or $libelle2 == '') $libelle2='-'; 
 	
 	$query="INSERT INTO ".SQL_schema_app.".suivi (etape,id_user,uid,tables,champ,valeur_1,valeur_2,datetime,rubrique,methode,type_modif,libelle_1,libelle_2) VALUES  
-	(".$etape.",'".$id_user."',".$uid.",'".$table."','".$champ."',".sql_format_quote ($valeur_1,'do').",".sql_format_quote ($valeur_2,'do').",NOW(),'".$rubrique."','".$methode."','".$type_modif."',".sql_format_quote($libelle1,'do').",".sql_format_quote($libelle2,'do').");";
+	(".$etape.",'".$id_user."',".$uid."::varchar,'".$table."','".$champ."',".sql_format_quote ($valeur_1,'do').",".sql_format_quote ($valeur_2,'do').",NOW(),'".$rubrique."','".$methode."','".$type_modif."',".sql_format_quote($libelle1,'do').",".sql_format_quote($libelle2,'do').");";
 	// echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	
