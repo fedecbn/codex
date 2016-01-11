@@ -216,7 +216,7 @@ case "install-set":	{
 		/*Rubrique application*/
 		$key = 'application';
 		$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
-		$schema = pg_query($db,$query);
+		$schema = pg_query($conn_codex,$query);
 		$row = pg_fetch_row($schema);
 		if ($row[0] != "1")
 			{
