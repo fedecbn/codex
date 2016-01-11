@@ -51,5 +51,5 @@ Un référent est un utilisateur qui a des droits d'administration supplémentai
 
 # Charger des données dans une rubrique
 
-# Comment remonter un bug?
-
+# Comment remonter les bugs et nouvelles demandes?
+Il est préconisé d'utiliser la page Github du Codex pour faire remonter les bugs et nouvelles demandes
