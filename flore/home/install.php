@@ -110,10 +110,10 @@ case "install-param":	{
 			$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
 			$schema = pg_query($db,$query);
 			$row = pg_fetch_row($schema);
-			$sqlexist = file_exists("../../_DATA/bdd_codex_archi_".$key.".sql");
 			
 			if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
-			elseif ($sqlexist == TRUE) 	{$rub_ok[$key] = 'f';$desc[$key] = "";}
+			elseif (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == TRUE) 	
+										{$rub_ok[$key] = 'f';$desc[$key] = "";}
 			else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
 			}
 		}
@@ -153,10 +153,10 @@ case "install-param":	{
 			echo ("<fieldset style=\"width: 50%;\"><LEGEND> Choix des rubriques à installer </LEGEND>");
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 800px;\">");
-					$rub_ok["applications"] = 't';
 					$rub_ok["refnat"] = 't';
 					foreach ($rub as $key => $val)
 						{
+						if (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == FALSE) {$desc[$key] = " bloque";}
 						metaform_bool ($val,$desc[$key],$key,$rub_ok[$key]);
 						// metaform_bool ($val,$desc[$key],$key."_data",$rub_ok[$key]);
 						echo ("<BR>");
@@ -213,6 +213,22 @@ case "install-set":	{
 		
 		/*-------------------*/	
 		/*Structure de la BDD*/
+		/*Rubrique application*/
+		$key = 'application';
+		$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
+		$schema = pg_query($db,$query);
+		$row = pg_fetch_row($schema);
+		if ($row[0] != "1")
+			{
+			$archi = "../../_DATA/bdd_codex_archi_$key.sql";
+			$data = "../../_DATA/bdd_codex_data_$key.sql";
+			$query = create_query($archi,$user_codex);
+			$query .= create_query($data,$user_codex);
+			$query .= "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, niveau_lr, niveau_eee, niveau_lsi, niveau_catnat, niveau_refnat) VALUES ('ADMI1',16,'admin','admin','admin','admin',255,255,255,255,255);";
+			$query .= create_query("../../_DATA/bdd_codex_referentiels.sql",$user_codex);
+			}
+		
+		/*les autres rubriques*/
 		foreach ($rub as $key => $val)
 			{
 			if (isset($_POST[$key]))
@@ -223,13 +239,7 @@ case "install-set":	{
 					$data = "../../_DATA/bdd_codex_data_$key.sql";
 					$query = create_query($archi,$user_codex);
 					$query .= create_query($data,$user_codex);
-					if ($key == "applications")
-						{
-						$query .= "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, niveau_lr, niveau_eee, niveau_lsi, niveau_catnat, niveau_refnat) VALUES ('ADMI1',16,'admin','admin','admin','admin',255,255,255,255,255);";
-						$query .= create_query("../../_DATA/bdd_codex_referentiels.sql",$user_codex);
-						}
-					else 
-						$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";
+					$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";
 					$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 					$result = pg_query($conn_codex,$query);
 					echo ("L'architecture de la $val a été implémentée<BR>"); 
