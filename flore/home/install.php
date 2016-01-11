@@ -84,10 +84,22 @@ foreach ($less as $element)
 
 foreach ($dir  as $key => $val)
 	{
+	/*Récupération des noms des pages*/
 	include ("../$val/commun.inc.php");
 	$rub[$val] = $name_page;
+	/*pour la création du compte admin*/
+	$niveau[$val] = "niveau_".$val;
+	$niveau_cpt[$val] = "255";
+	$ref[$val] = "ref_".$val;
+	$ref_cpt[$val] = "TRUE";
 	}
-
+/*pour la création du compte admin suite*/
+$niveau_admin = implode(",", $niveau);
+$niveau_admin_cpt = implode(",", $niveau_cpt);
+$ref_admin = implode(",", $ref);
+$ref_admin_cpt = implode(",", $ref_cpt);
+$query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $niveau_admin, $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$niveau_admin_cpt, $ref_admin_cpt);";
+	
 $pos = 0;
 
 switch ($action)
@@ -218,13 +230,16 @@ case "install-set":	{
 		$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
 		$schema = pg_query($conn_codex,$query);
 		$row = pg_fetch_row($schema);
+		
+		
+		
 		if ($row[0] != "1")
 			{
 			$archi = "../../_DATA/bdd_codex_archi_$key.sql";
 			$data = "../../_DATA/bdd_codex_data_$key.sql";
 			$query = create_query($archi,$user_codex);
 			$query .= create_query($data,$user_codex);
-			$query .= "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, niveau_lr, niveau_eee, niveau_lsi, niveau_catnat, niveau_refnat) VALUES ('ADMI1',16,'admin','admin','admin','admin',255,255,255,255,255);";
+			$query .= $query_admin;
 			$query .= create_query("../../_DATA/bdd_codex_referentiels.sql",$user_codex);
 			$result = pg_query($conn_codex,$query);
 			}
