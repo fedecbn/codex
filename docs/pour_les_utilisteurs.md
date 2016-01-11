@@ -34,7 +34,6 @@ Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs typ
 | <22 | toutes les lignes où la valeur est inférieure à "22" |
 | =22 | toutes les lignes où la valeur est égale à "22" |
 
-
 ## Trier le tableau de synthèse
 
 
