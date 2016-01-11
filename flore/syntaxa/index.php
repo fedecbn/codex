@@ -218,7 +218,7 @@ include ("../commun/add_fiche.php");
 				echo ("</td></tr></table>");
 				
 				$tooltip=pg_fetch_result(pg_query ($db,$query_description."'$colname7'".";"),0,"description" );
-				echo ("<br><label title= \"$tooltip\" class=\"preField\">Remarque nomenclaturale</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"\"$colname7\""),'undo_hmtl')."</textarea><br><br>");
+				echo ("<br><label title= \"$tooltip\" class=\"preField\">Remarque nomenclaturale</label><textarea name=\"rqNomenclaturale\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"\"$colname7\""),'undo_hmtl')."</textarea><br><br>");
 				
 				echo ("<table border=0 width=\"100%\"><tr valign=top >");
 				echo ("</td><td style=\"width:300px;\">");				
