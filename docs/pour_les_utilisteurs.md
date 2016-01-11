@@ -23,9 +23,17 @@ Ce tableau permet d'avoir une vision d'ensemble des données disponible sur la p
 
 ## Filtrer sur le tableau de synthèse
 Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs types sont à votre disposition :
-- liste de choix : 
-- filtre numérique : 
-- filtre texte : ce filtre va réaliser une recherche textuel 
+- liste de choix : certains filtres sont pré-établie en fonction des listes de valeurs utilisés en amont. Dans ce cas, il suffit de sélectionner la valeur d'intérêt et le tableau se mettra à jour.
+- filtre textuel : ce filtre permet de réaliser une recherche textuel SANS CASSE, de toutes les lignes comprenant le texte spécifié dans le champ "filtre".
+- filtre numérique : ce filtre permet de réaliser une recherche sur un champ numérique selon les conditions du tableau ci-dessous 
+
+| Valeur du Filtre | Résultat de la recherche |
+| -- | -- |
+| 22 | toutes les lignes dont le champ contient "22" (identique à un filtre textuel) |
+| >22 | toutes les lignes où la valeur est supérieure à "22" |
+| <22 | toutes les lignes où la valeur est inférieure à "22" |
+| =22 | toutes les lignes où la valeur est égale à "22" |
+
 
 ## Trier le tableau de synthèse
 
