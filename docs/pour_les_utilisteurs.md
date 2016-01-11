@@ -11,7 +11,7 @@ Afin de définir les différentes rubriques auquels vous pourrez avoir accés, r
 
 ## Utilisateur existant
 ### Récupérer ses identifiants de connexion
-Si vous possédez déjà un compte sur l'outil, vous pouvez récupérer ces identifiants de connexion au niveau de la page d'accueil en appuyant sur le bouton "Récupérer mon mots de passe".
+Si vous possédez déjà un compte sur l'outil, vous pouvez récupérer ces identifiants de connexion au niveau de la page d'accueil en appuyant sur le bouton "Récupérer mon mots de passe". Suivez la procédure et un mail vous sera en envoyé avec les informations nécessaire (l'adresse utilisée dans cette procédure doit être la même que celle utilisée lors de la création de votre compte).
 
 ### Changer de niveau de droit pour une rubrique
 
