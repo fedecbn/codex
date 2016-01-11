@@ -40,7 +40,7 @@ NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini 
 | -- | -- |
 | Pas d'accès | l'utilisateur n'a pas accès à la rubrique concernée (la rubrique ne s'affiche pas) |
 | Lecteur | l'utilisateur a accès à la rubrique concernée en lecture (il ne peut pas interagir) |
-| Participant | 1:4 |
+| Participant | l'utilisateur a les droits "Lecteur" + la possibilité de laisser des commentaires dans les fiches |
 | Evaluateur | 1:5 |
 | Administrateur | 1:5 |
 
