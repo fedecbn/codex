@@ -34,9 +34,11 @@ NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini 
 
 # Gestion des utilisateurs
 ## Créer un utilisateur
-
+Un administrateur peut créer simplement un utilisateur à partir de du bouton "Ajouter" de l'onglet "Utilisateur" dans la partie "Administration".
 
 ## Les droits utilisateurs
+Le niveau de droit dépend du rôle de l'utilisateur. Voici un tableau qui résume les rôles proposés et les droits correspondants.
+
 | Rôle | Droits correspondants |
 | -- | -- |
 | Pas d'accès | l'utilisateur n'a pas accès à la rubrique concernée (la rubrique ne s'affiche pas) |
