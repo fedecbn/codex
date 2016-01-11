@@ -231,8 +231,6 @@ case "install-set":	{
 		$schema = pg_query($conn_codex,$query);
 		$row = pg_fetch_row($schema);
 		
-		
-		
 		if ($row[0] != "1")
 			{
 			$archi = "../../_DATA/bdd_codex_archi_$key.sql";
