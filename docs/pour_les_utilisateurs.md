@@ -57,4 +57,5 @@ Pour accéder à l'onglet "fiche", il vous faut cliquer sur le bouton "crayon" !
 ## Onglet "Historique" (à venir)
 A terme, un onglet supplémentaire permettra de suivre toutes les évolutions qui ont été réaliser sur chaque fiche.
 
-# Comment remonter un bug
+# Comment remonter les bugs et nouvelles demandes?
+Il est préconisé d'utiliser la page Github du Codex pour faire remonter les bugs et nouvelles demandes
