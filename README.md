@@ -9,8 +9,6 @@ Le codex est une application web de partage de connaissances et d'expertises par
 - les formats standards de données
 
 
-[Documentation pour les utilisateurs](https://github.com/TomMilon/codex/wiki/Pour-les-utilisateurs)
-
 [Documentation pour les administrateurs](https://github.com/TomMilon/codex/wiki/Pour-les-administrateurs)
 
 [Documentation pour les développeurs](https://github.com/TomMilon/codex/wiki/Pour-les-d%C3%A9veloppeurs)
