@@ -3,7 +3,7 @@
 Bienvenue sur le wiki Codex pour les utilisateurs
 
 # Comment accéder à l'outil
-## Nouveau utilisateur
+## Nouvel utilisateur
 
 Pour accéder à l'outil, il vous faut des identifiants de connexion.
 Si vous souhaitez que l'on vous créer un compte sur l'outil, vous devez rentrer en contact avec l’administrateur de l'outil ou avec l'un des référents d'une rubrique de l'outil.
