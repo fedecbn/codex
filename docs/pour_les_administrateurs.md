@@ -27,13 +27,14 @@ L'outil est une plateforme web développé en php utilisant des librairies javas
 - Vérifiez la configuration du serveur web
  - activez les extensions php_pgsql et php_pdo_pgsql
  - XXX
-- accédez à la racine du projet. Vous serez redirigé sur la page install.php. Suivez les instructions et cliquez sur "lancez l'installation". La base de données sera créée et l'outil paramétré.
+- accédez à la racine du projet. Vous serez redirigé automatiquement sur la page ./flore/home/install.php.,
+- suivez les instructions et cliquez sur "lancez l'installation". La base de données sera créée et l'outil paramétré.
 
 NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini et augmenter là.
 
-# Comment charger des référentiels?
+# Les utilisateurs
 
-# Comment gérer les utilisateurs et droits d'accès?
+# Charger des données dans une rubrique
 
 # Comment remonter un bug?
 
