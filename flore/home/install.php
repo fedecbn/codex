@@ -226,6 +226,7 @@ case "install-set":	{
 			$query .= create_query($data,$user_codex);
 			$query .= "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, niveau_lr, niveau_eee, niveau_lsi, niveau_catnat, niveau_refnat) VALUES ('ADMI1',16,'admin','admin','admin','admin',255,255,255,255,255);";
 			$query .= create_query("../../_DATA/bdd_codex_referentiels.sql",$user_codex);
+			$result = pg_query($conn_codex,$query);
 			}
 		
 		/*les autres rubriques*/
