@@ -15,6 +15,7 @@ Si vous possédez déjà un compte sur l'outil, vous pouvez récupérer ces iden
 
 ### Changer de niveau de droit pour une rubrique
 Si vous souhaitez accéder à une rubrique à laquelle vous n'avez pas accès, ou que vous souhaitez avoir un niveau de droit supérieur à celui que vous avez actuellement, vous devez en faire la demande au référent de votre strucuture correspondant ou par l'administrateur de l'outil en procédant.
+Vous pouvez accédez à la liste des référents de votre structure dans dans la page "Administration", onglet "Utilisateur".
 
 # Comment manipuler les tableaux de synthèse
 
