@@ -38,10 +38,11 @@ NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini 
 ## Les droits utilisateurs
 | Rôle | Droits correspondants |
 | -- | -- |
-| Pas d'accès | 1:2 |
-| Lecteur | 1:3 |
+| Pas d'accès | l'utilisateur n'a pas accès à la rubrique concernée (la rubrique ne s'affiche pas) |
+| Lecteur | l'utilisateur a accès à la rubrique concernée en lecture (il ne peut pas interagir) |
 | Participant | 1:4 |
 | Evaluateur | 1:5 |
+| Administrateur | 1:5 |
 
 ## Les référents
 
