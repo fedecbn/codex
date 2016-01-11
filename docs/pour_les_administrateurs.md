@@ -1,6 +1,6 @@
 # Pour les administrateurs
 
-Bienvenue sur le Wiki du Codex pour les administrateurs
+Bienvenue sur le Wiki du Codex pour les administrateurs. Cette documentation est pour objectif de donner des éléments de compréhension pour faciliter l'installation et la manipulation de l'outil Codex par des administrateurs souhaitant s'en emparer.
 
 # Comment installer le codex?
 ## Pré-requis
