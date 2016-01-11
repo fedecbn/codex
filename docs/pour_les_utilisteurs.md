@@ -29,7 +29,7 @@ Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs typ
 
 | Valeur du Filtre | Résultat de la recherche |
 | -- | -- |
-| 22 | toutes les lignes dont le champ contient "22" (identique à un filtre textuel) |
+| 22 | toutes les lignes où le champ contient la valeur "22" (identique à un filtre textuel) |
 | >22 | toutes les lignes où la valeur est supérieure à "22" |
 | <22 | toutes les lignes où la valeur est inférieure à "22" |
 | =22 | toutes les lignes où la valeur est égale à "22" |
