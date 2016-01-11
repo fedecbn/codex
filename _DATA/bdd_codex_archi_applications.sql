@@ -399,19 +399,19 @@ CREATE TABLE utilisateur (
     last_login timestamp without time zone,
     niveau_lr smallint DEFAULT 0,
 	niveau_eee smallint DEFAULT 0,
-    niveau_lsi smallint,
-    niveau_catnat smallint,
-    niveau_refnat smallint,
-    niveau_fsd smallint,
-    niveau_defaut smallint,
-    niveau_syntaxa smallint,
+    niveau_lsi smallint DEFAULT 0,
+    niveau_catnat smallint DEFAULT 0,
+    niveau_refnat smallint DEFAULT 0,
+    niveau_fsd smallint DEFAULT 0,
+    niveau_defaut smallint DEFAULT 0,
+    niveau_syntaxa smallint DEFAULT 0,
     ref_lr boolean DEFAULT false,
     ref_eee boolean DEFAULT false,
     ref_lsi boolean DEFAULT false,
     ref_catnat boolean DEFAULT false,
-    ref_refnat boolean DEFAULT false
-    ref_fsd boolean DEFAULT false
-    ref_defaut boolean DEFAULT false
+    ref_refnat boolean DEFAULT false,
+    ref_fsd boolean DEFAULT false,
+    ref_defaut boolean DEFAULT false,
     ref_syntaxa boolean DEFAULT false
 );
 
