@@ -23,7 +23,7 @@ Ce tableau permet d'avoir une vision d'ensemble des données disponible sur la p
 
 ## Filtrer sur le tableau de synthèse
 Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs types sont à votre disposition :
-- liste de choix : certains filtres sont pré-établie en fonction des listes de valeurs utilisés en amont. Dans ce cas, il suffit de sélectionner la valeur d'intérêt et le tableau se mettra à jour.
+- liste de choix : certains filtres sont pré-établie en fonction des listes de valeurs utilisées en amont. Dans ce cas, il suffit de sélectionner la valeur d'intérêt et le tableau se mettra à jour.
 - filtre textuel : ce filtre permet de réaliser une recherche textuel SANS CASSE, de toutes les lignes comprenant le texte spécifié dans le champ "filtre".
 - filtre numérique : ce filtre permet de réaliser une recherche sur un champ numérique selon les conditions du tableau ci-dessous 
 
@@ -34,7 +34,10 @@ Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs typ
 | <22 | toutes les lignes où la valeur est inférieure à "22" |
 | =22 | toutes les lignes où la valeur est égale à "22" |
 
+![](filtre_et_trie_codex.jpg)
+
 ## Trier le tableau de synthèse
+Au niveau de l'en-tête de la colonne, il est possible de discerner le symbole ![](no_trie_codex.jpg). Ce symbole explicite que la colonne n'est pas utilisé par pour trier le tableau. Pour trier le tableau, il vous suffit de cliquer sur la colonne d'intérêt pour efectuer un trie croissant ![](tri_croissant.jpg) ou un tri décroissant ![](tri_decroissant.jpg).
 
 
 # Comment manipuler les fiches
