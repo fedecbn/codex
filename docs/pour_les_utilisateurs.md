@@ -18,9 +18,12 @@ Si vous souhaitez accéder à une rubrique à laquelle vous n'avez pas accès, o
 Vous pouvez accédez à la liste des référents de votre structure dans dans la page "Administration", onglet "Utilisateur".
 
 # Description d'une rubrique
-## Les tableaux de synthèse
 Après vous être identifié, la page d'accueil vous présente les rubriques auxquels vous avez accès. Lorsque vous cliquez sur une rubrique, un tableau de synthèse apparaît.
-Ce tableau permet d'avoir une vision d'ensemble des données disponible sur la problématique en question.
+
+## Onglet "tableau de synthèse"
+![](onglet_tblx_synthese.jpg)
+
+Cet onglet (dans l'image ci-dessus appelé "Liste Rouge") présente un tableau synthétique donnant une vision d'ensemble des données disponibles sur la problématique en question.
 
 ### Filtrer sur le tableau de synthèse
 Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs types sont à votre disposition :
@@ -41,7 +44,9 @@ Afin d'accéder à l'information que vous cherchez, des filtres de plusieurs typ
 Au niveau de l'en-tête de la colonne, il est possible de discerner le symbole ![](no_trie_codex.jpg). Ce symbole explicite que la colonne n'est pas utilisé par pour trier le tableau. Pour trier le tableau, il vous suffit de cliquer sur la colonne d'intérêt pour efectuer un trie croissant ![](tri_croissant.jpg) ou un tri décroissant ![](tri_decroissant.jpg).
 
 ## L'onglet "utilisateurs"
+Cet onglet est présent dans chaque rubrique. Il vous permet de connaitre les autres utilisateurs ayant accès à cette rubrique, et notamment connaitre leurs droits d'accès (niveau de droit et référent).
 
-# Comment manipuler les fiches
+## Les fiches
+
 
 # Comment remonter un bug
