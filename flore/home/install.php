@@ -88,17 +88,17 @@ foreach ($dir  as $key => $val)
 	include ("../$val/commun.inc.php");
 	$rub[$val] = $name_page;
 	/*pour la création du compte admin*/
-	$niveau[$val] = "niveau_".$val;
-	$niveau_cpt[$val] = "255";
+	$nvx[$val] = "niveau_".$val;
+	$nvx_cpt[$val] = "255";
 	$ref[$val] = "ref_".$val;
 	$ref_cpt[$val] = "TRUE";
 	}
 /*pour la création du compte admin suite*/
-$niveau_admin = implode(",", $niveau);
-$niveau_admin_cpt = implode(",", $niveau_cpt);
+$nvx_admin = implode(",", $nvx);
+$nvx_admin_cpt = implode(",", $nvx_cpt);
 $ref_admin = implode(",", $ref);
 $ref_admin_cpt = implode(",", $ref_cpt);
-$query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $niveau_admin, $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$niveau_admin_cpt, $ref_admin_cpt);";
+$query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
 	
 $pos = 0;
 
