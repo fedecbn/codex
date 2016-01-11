@@ -44,7 +44,7 @@ NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini 
 | Évaluateur | L'utilisateur a les droits "participant" + la possibilité de participer aux évaluations, ajouter des actualités dans la LSI (droits d'édition) |
 
 ## Les référents
-
+Un référent est un utilisateur qui a des droits d'administration supplémentaires. Il peut ajouter des comptes utilisateurs pour l'organisme auquel il appartient. Il peut également modifier les droits d'accès des utilisateurs qui le souhaitent. Pour ce faire, il peut donner un niveau de droit inférieur ou égal au sien (par exemple, un "référent" sur la rubrique "Liste rouge" qui a un rôle de participant sur cette rubrique peut nommer d'autres "utilisateur" en tant que "participant", "Lecteur" ou peut également couper l'accès ("Pas d'accès").
 
 # Charger des données dans une rubrique
 
