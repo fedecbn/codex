@@ -12,15 +12,22 @@ De plus, l'outil possède des fonctionnalités supplémentaires :
 - un système de notification permettant de prévenir au besoin des utilisateurs quand cela est nécessaire (récupération du mot de passe, modification sur certaines fiches...)
 
 # Qu'est ce qu'il y a derrière l'outil Codex
+L'outil est une plateforme web développé en php utilisant des librairies javascript (jQuery, dataTable) connecté à un serveur de données PostgreSQL.
+
 
 # Comment installer l'outil codex?
 ## Pré-requis
-* Apache (min 2.4.9)
-* Php (min 5.5 min)
-* Postgresql (min 9.1 )
+* Apache (minimum 2.4.9)
+* Php (minimum 5.5 min)
+* Postgresql (minimum 9.1 )
 
 ## Mise en oeuvre
-Une fois le repository installé en local (ou sur votre serveur), accédez à la racine du projet. Vous serez redirigé sur la page install.php. Suivez les instructions et cliquez sur "lancez l'installation". La base de données sera créée et l'outil paramétré.
+- Téléchargez le contenu du repository en local (ou sur votre serveur),
+- Lancez votre serveur web si vous travaillez en local,
+- Vérifiez la configuration du serveur web
+ - activez les extensions php_pgsql et php_pdo_pgsql
+ - XXX
+- accédez à la racine du projet. Vous serez redirigé sur la page install.php. Suivez les instructions et cliquez sur "lancez l'installation". La base de données sera créée et l'outil paramétré.
 
 NB : vous pouvez avoir un problème de memory_limit_size ==> allez dans php.ini et augmenter là.
 
