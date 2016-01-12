@@ -8,4 +8,6 @@ Le codex est une application web de partage de connaissances et d'expertises par
 - la veille technologique
 - les formats standards de données
 
+Accédez à la [documentation sur gitbook](https://www.gitbook.com/book/tommilon/codex/details)
+
 [![Join the chat at https://gitter.im/TomMilon/codex](https://badges.gitter.im/TomMilon/codex.svg)](https://gitter.im/TomMilon/codex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
