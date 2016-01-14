@@ -32,7 +32,7 @@ global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ($id_page);
 		
 //------------------------------------------------------------------------------ MAIN
-$filters = filter_column($aColumns[$id_page]);
+$filters = filter_column_post($aColumns[$id_page]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
@@ -49,7 +49,8 @@ else $aResultTotal=0;
 $iTotal = $aResultTotal;
 
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	// $sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 //	$sOutput .= '"iTotalDisplayRecords": '.$iFilteredTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';

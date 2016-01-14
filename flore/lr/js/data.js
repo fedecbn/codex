@@ -35,6 +35,7 @@
 		"bProcessing": true,
     	"bServerSide": true,
     	"sAjaxSource": "liste.php",
+    	"sServerMethod": "POST",
         "bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
             localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );

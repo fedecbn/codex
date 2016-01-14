@@ -1123,6 +1123,78 @@ return $output;
 }
 
 
+function filter_column_post($colonne) {
+$sLimit = "";                                                                   // Paging
+if ( isset( $_POST['iDisplayStart'] ) && $_POST['iDisplayLength'] != '-1' )
+	$sLimit = "LIMIT ".pg_escape_string( $_POST['iDisplayLength'] )." OFFSET ".pg_escape_string( $_POST['iDisplayStart'] );
+
+	
+$sOrder = "";                                                                   // Paging
+if ( isset( $_POST['iSortCol_0'] ) )                                             // ORDER BY
+	{
+	$sOrder="ORDER BY ";  
+		foreach ($colonne as $key => $val )	{
+			if	($val['pos'] == $_POST['iSortCol_0'])	{
+				if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
+				if ( $_POST[ 'bSortable_'.intval($_POST['iSortCol_0']) ] == "true" ) {
+					$sOrder .= $table."\"".$val['nom_champ_synthese']."\" ".pg_escape_string( $_POST['sSortDir_0']);
+				}
+			}
+		}
+	}
+if ($sOrder=="ORDER BY ") $sOrder="";
+
+$sWhere = "";$sHaving = "";															  // FILTRE
+foreach ($colonne as $key => $val )                                       // columnFilter v2.1
+{
+	/*cas particulier*/
+	if ($val['nom_champ_synthese'] == 'libelle_tag' AND $_POST['sSearch_'.$val['pos']] != null)
+		$sHaving = "HAVING string_agg(libelle_tag,' / ') ::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+    elseif ( $_POST['bSearchable_'.$val['pos']] == "true" && $_POST['sSearch_'.$val['pos']] != '' )
+	{
+	if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
+	
+	$champ = "\"".$val['nom_champ_synthese']."\"";
+	
+		if (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'not_null') {
+			$sWhere .= " AND ".$table.$champ." IS NOT NULL ";
+			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$champ." <> 0";
+		}
+		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'is_null') {
+			$sWhere .= " AND ".$table.$champ." = IS NULL";
+			}
+		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'not_zero') {
+			$sWhere .= " AND ".$table.$champ." <> 0";
+		}
+		elseif ($val['type'] == 'val') {
+        	$sWhere .= " AND ".$table.$champ." ='".pg_escape_string($_POST['sSearch_'.$val['pos']])."' ";
+     	}
+		elseif ($val['type'] == 'string') {
+        	$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+		}
+		elseif ($val['type'] == 'bool') {
+        	$sWhere .= " AND ".$table.$champ." = ".pg_escape_string($_POST['sSearch_'.$val['pos']])." ";
+		}
+		elseif ($val['type'] == 'int') {
+			if (pg_escape_string($_POST['sSearch_'.$val['pos']]) == '>' OR pg_escape_string($_POST['sSearch_'.$val['pos']]) == '<' OR pg_escape_string($_POST['sSearch_'.$val['pos']]) == '=' ) {
+				$sWhere .= "";
+				}
+			else if ((strpos($_POST['sSearch_'.$val['pos']],"<") === 0) OR (strpos($_POST['sSearch_'.$val['pos']],">") === 0) OR (strpos($_POST['sSearch_'.$val['pos']],"=") === 0)) {
+				$sWhere .= " AND ".$table.$champ." ".pg_escape_string($_POST['sSearch_'.$val['pos']]);
+				}
+			else	{
+			$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+			}
+		}
+		else {
+        	$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+    	}
+	}
+}
+$output = array('sLimit'=>$sLimit,'sOrder'=>$sOrder,'sWhere'=>$sWhere,'sHaving'=>$sHaving);
+return $output;
+}
+
 function add_and_modif_taxon ($in,$mod,$uid_modif)
 {
 /*$in corresponds aux infos du taxons à enregistrer*/
