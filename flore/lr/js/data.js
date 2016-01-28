@@ -225,7 +225,7 @@
                 { type: "text" },                                               // Famille
                 { type: "text" },                                               // CD_REF
                 { type: "text" },                                               // Nom scientifique 
-                { type: "select", values: ['ES','SSES','VAR','SVAR','FO','SSFO']}, // Rang
+                { type: "select", values: [{ value: 1, label:'ES'},{ value: 2, label: 'SSES'},{ value: 3, label: 'VAR'},{ value: 4, label: 'SVAR'},{ value: 5, label: 'FO'},{ value: 6, label: 'SSFO'}]}, // Rang
                 { type: "select", values: [{ value: 1, label: 'Indigène'},{ value: 2, label: 'Cryptogène'},{ value: 3, label: 'Exotique'}] },                                               //  
                 { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
                 { type: "text" },                                               //  
