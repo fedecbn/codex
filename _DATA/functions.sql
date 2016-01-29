@@ -49,12 +49,10 @@ EXECUTE '
 --- nouvelles colonnes - niveau de droit - référentiels
 INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
 						VALUES (''utilisateur'', ''niveau_'||id_module||''', ''val'', ''Droit '||id_module||''', ''utilisateur'', '||maxpos||', FALSE, ''niveau_'||id_module||''', ''niveau_'||id_module||''', FALSE, ''utilisateur'', ''droit'');
-';
-SELECT max(pos) + 1 INTO maxpos FROM referentiels.champs WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'ref_%';
-EXECUTE '
+
 --- nouvelles colonnes - référent - référentiels
 INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
-						VALUES (''utilisateur'', ''ref_'||id_module||''', ''val'', ''Ref '||id_module||''', ''utilisateur'', '||maxpos||', FALSE, ''ref_'||id_module||''', ''ref_'||id_module||''', FALSE, ''utilisateur'', ''droit'');
+						VALUES (''utilisateur'', ''ref_'||id_module||''', ''val'', ''Ref '||id_module||''', ''utilisateur'', '||maxpos+1||', FALSE, ''ref_'||id_module||''', ''ref_'||id_module||''', FALSE, ''utilisateur'', ''droit'');
 ';
 
 RETURN 'OK';
