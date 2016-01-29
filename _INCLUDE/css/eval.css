@@ -851,6 +851,14 @@ select.NA {
     background-color:#CC0066;  
 }
 
+option.ref_non, select.ref_non , td.ref_non {
+    color:black;  
+    background-color:#e8dbdd;  
+}
+option.ref_oui, select.ref_oui, td.ref_oui  {
+    color:black;  
+    background-color:#dbe8e0;  
+}
 option.non, select.non , td.non {
     color:white;  
     background-color:#DA1C23;  

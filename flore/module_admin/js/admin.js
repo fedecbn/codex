@@ -298,19 +298,19 @@ $(document).ready(function(){
 				}, 
             "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 			switch (aData[6]){case 'Pas d\'accès' :$('td:eq(6)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(6)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(6)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(6)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(6)', nRow).addClass('avancement_5');break;}
-			switch (aData[7]){case 'oui' :$('td:eq(7)', nRow).addClass('oui');break;case 'non' : $('td:eq(7)', nRow).addClass('non'); break;}
+			switch (aData[7]){case 'oui' :$('td:eq(7)', nRow).addClass('ref_oui');break;case 'non' : $('td:eq(7)', nRow).addClass('ref_non'); break;}
 			switch (aData[8]){case 'Pas d\'accès' :$('td:eq(8)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(8)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(8)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(8)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(8)', nRow).addClass('avancement_5');break;}
-			switch (aData[9]){case 'oui' :$('td:eq(9)', nRow).addClass('oui');break;case 'non' : $('td:eq(9)', nRow).addClass('non'); break;}
+			switch (aData[9]){case 'oui' :$('td:eq(9)', nRow).addClass('ref_oui');break;case 'non' : $('td:eq(9)', nRow).addClass('ref_non'); break;}
 			switch (aData[10]){case 'Pas d\'accès' :$('td:eq(10)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(10)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(10)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(10)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(10)', nRow).addClass('avancement_5');break;}
-			switch (aData[11]){case 'oui' :$('td:eq(11)', nRow).addClass('oui');break;case 'non' : $('td:eq(11)', nRow).addClass('non'); break;}
+			switch (aData[11]){case 'oui' :$('td:eq(11)', nRow).addClass('ref_oui');break;case 'non' : $('td:eq(11)', nRow).addClass('ref_non'); break;}
 			switch (aData[12]){case 'Pas d\'accès' :$('td:eq(12)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(12)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(12)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(12)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(12)', nRow).addClass('avancement_5');break;}
-			switch (aData[13]){case 'oui' :$('td:eq(13)', nRow).addClass('oui');break;case 'non' : $('td:eq(13)', nRow).addClass('non'); break;}
+			switch (aData[13]){case 'oui' :$('td:eq(13)', nRow).addClass('ref_oui');break;case 'non' : $('td:eq(13)', nRow).addClass('ref_non'); break;}
 			switch (aData[14]){case 'Pas d\'accès' :$('td:eq(14)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(14)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(14)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(14)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(14)', nRow).addClass('avancement_5');break;}
-			switch (aData[15]){case 'oui' :$('td:eq(15)', nRow).addClass('oui');break;case 'non' : $('td:eq(15)', nRow).addClass('non'); break;}
+			switch (aData[15]){case 'oui' :$('td:eq(15)', nRow).addClass('ref_oui');break;case 'non' : $('td:eq(15)', nRow).addClass('ref_non'); break;}
 			switch (aData[16]){case 'Pas d\'accès' :$('td:eq(16)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(16)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(16)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(16)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(16)', nRow).addClass('avancement_5');break;}
-			switch (aData[17]){case 'oui' :$('td:eq(17)', nRow).addClass('oui');break;case 'non' : $('td:eq(17)', nRow).addClass('non'); break;}
+			switch (aData[17]){case 'oui' :$('td:eq(17)', nRow).addClass('ref_oui');break;case 'non' : $('td:eq(17)', nRow).addClass('ref_non'); break;}
 			switch (aData[18]){case 'Pas d\'accès' :$('td:eq(18)', nRow).addClass('avancement_1');break;case 'Lecteur' : $('td:eq(18)', nRow).addClass('avancement_2'); break;case 'Participant' : $('td:eq(18)', nRow).addClass('avancement_3');break;case 'Evaluateur' : $('td:eq(18)', nRow).addClass('avancement_4');break;case 'Référent' : $('td:eq(18)', nRow).addClass('avancement_5');break;}
-			switch (aData[19]){case 'oui' :$('td:eq(19)', nRow).addClass('oui');break;case 'non' : $('td:eq(19)', nRow).addClass('non'); break;}
+			switch (aData[19]){case 'oui' :$('td:eq(19)', nRow).addClass('ref_oui');break;case 'non' : $('td:eq(19)', nRow).addClass('ref_non'); break;}
 			return nRow;
 			},
 			"oLanguage": { "sProcessing":   "Traitement en cours...",
@@ -339,19 +339,19 @@ $(document).ready(function(){
         		{ "sWidth": "10%"},
         		{ "sWidth": "13%"},
         		{ "sWidth": "5%"},
-        		{ "sWidth": "5%"},                                           // Niveau
-        		{ "sWidth": "5%"},                                            // Niveau
-        		{ "sWidth": "5%"},                                            // Niveau
-        		{ "sWidth": "5%"},                                            // Niveau
-        		{ "sWidth": "5%"},                                            // Niveau
-        		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "2%"},                                            // ref
+        		{ "sWidth": "5%"},                                            // Niveau
         		{ "sWidth": "2%"},                                            // ref
         		{ "sClass": "center","sWidth": "5%","bSortable": false },      // Actions
         		{ "sClass": "center","sWidth": "3%","bSortable": false }      // Actions
@@ -366,18 +366,18 @@ $(document).ready(function(){
 					{ type: "text" },                                           // 
                     { type: "text" },                                           // 
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
+					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
-					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] }
     			]
     		});      
