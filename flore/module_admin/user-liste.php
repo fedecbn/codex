@@ -46,12 +46,11 @@ elseif ($ref['all'] === 't' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = 
 else $where1="WHERE 1=1" ;
 
 $query = "SELECT string_agg(one.champ,',') AS les_champs FROM 
-(SELECT nom_champ as champ FROM referentiels.champs WHERE rubrique_champ = 'utilisateur' AND pos IS NOT NULL AND nom_champ <> 'id_cbn' ORDER BY pos) as one;";
+(SELECT nom_champ as champ FROM referentiels.champs WHERE rubrique_champ = 'utilisateur' AND pos IS NOT NULL ORDER BY pos) as one;";
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
-$query_liste="SELECT count(*) OVER() AS total_count,".pg_result($result,0,"les_champs").",cbn.id_cbn
+$query_liste="SELECT count(*) OVER() AS total_count,".pg_result($result,0,"les_champs")."
 	FROM applications.utilisateur
-	LEFT JOIN referentiels.cbn ON cbn.id_cbn=utilisateur.id_cbn
 	$where1 ";
 
 $query=$query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
