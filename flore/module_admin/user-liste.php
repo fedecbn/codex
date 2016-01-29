@@ -41,8 +41,8 @@ $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result
 $row = pg_fetch_row($result);
 $id_cbn = $row[0];
 
-if ($ref['all'] === 'f' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
-elseif ($ref['all'] === 't' AND $niveau['all'] < 255) $where1="WHERE u.id_cbn = $id_cbn";
+if ($ref['all'] === 'f' AND $niveau['all'] < 255) $where1="WHERE id_cbn = $id_cbn";
+elseif ($ref['all'] === 't' AND $niveau['all'] < 255) $where1="WHERE id_cbn = $id_cbn";
 else $where1="WHERE 1=1" ;
 
 $query = "SELECT string_agg(one.champ,',') AS les_champs FROM 
