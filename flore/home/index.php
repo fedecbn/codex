@@ -36,8 +36,6 @@ $result=pg_query ($db,$query_rub) or fatal_error ("Erreur pgSQL : ".pg_result_er
 $i=0;
 While ($row = pg_fetch_row($result)) {$rubrique[$i] = $row[0];$i++;}
 
-
-
 foreach ($rubrique as $key => $val)
 	{
 	$ref[$val]=isset ($_SESSION['ref_'.$val]) ? $_SESSION['ref_'.$val] : 0;
@@ -47,22 +45,6 @@ $niveau['all']=isset ($_SESSION['niveau']) ? $_SESSION['niveau'] : 0;
 $ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
 
 $id_user=$_SESSION['id_user'];
-
-// $niveau=isset ($_SESSION['niveau']) ? $_SESSION['niveau'] : 0;
-// $niveau_lr=isset ($_SESSION['niveau_lr']) ? $_SESSION['niveau_lr'] : 0;
-// $niveau_eee=isset ($_SESSION['niveau_eee']) ? $_SESSION['niveau_eee'] : 0;
-// $niveau_lsi=isset ($_SESSION['niveau_lsi']) ? $_SESSION['niveau_lsi'] : 0;
-// $niveau_refnat=isset ($_SESSION['niveau_refnat']) ? $_SESSION['niveau_refnat'] : 0;
-// $niveau_catnat=isset ($_SESSION['niveau_catnat']) ? $_SESSION['niveau_catnat'] : 0;
-// $ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
-// $ref['lr']=isset ($_SESSION['ref_lr']) ? $_SESSION['ref_lr'] : 0;
-// $ref['eee']=isset ($_SESSION['ref_eee']) ? $_SESSION['ref_eee'] : 0;
-// $ref['lsi']=isset ($_SESSION['ref_lsi']) ? $_SESSION['ref_lsi'] : 0;
-// $ref['refnat']=isset ($_SESSION['ref_refnat']) ? $_SESSION['ref_refnat'] : 0;
-// $ref['catnat']=isset ($_SESSION['ref_catnat']) ? $_SESSION['ref_catnat'] : 0;
-
-
-
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -188,25 +170,14 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
             if (pg_num_rows ($result)) {
                 $_SESSION['EVAL_FLORE']="ok";
-                /*niveau de droit*/
-				 foreach ($rubrique as $key => $val) 
+                /*niveau de droit et référents*/
+				$_SESSION['niveau'] = 0;
+				 foreach ($rubrique as $key => $val) {	
 					$_SESSION['niveau_'.$val]=pg_result ($result,0,"niveau_".$val);
-				// $_SESSION['niveau_lr']=pg_result ($result,0,"niveau_lr");
-                // $_SESSION['niveau_eee']=pg_result ($result,0,"niveau_eee");
-                // $_SESSION['niveau_lsi']=pg_result ($result,0,"niveau_lsi");
-                // $_SESSION['niveau_catnat']=pg_result ($result,0,"niveau_catnat");
-                // $_SESSION['niveau_refnat']=pg_result ($result,0,"niveau_refnat");
-				$_SESSION['niveau'] = max($_SESSION['niveau_lr'],$_SESSION['niveau_eee'],$_SESSION['niveau_lsi'],$_SESSION['niveau_catnat'],$_SESSION['niveau_refnat']);
-				/*niveau référents*/
-				foreach ($rubrique as $key => $val) 
+					$_SESSION['niveau'] = max($_SESSION['niveau'],$_SESSION['niveau_'.$val]);
 					$_SESSION['ref_'.$val]=pg_result ($result,0,"ref_".$val);
-				// $_SESSION['ref_lr']=pg_result ($result,0,"ref_lr");
-                // $_SESSION['ref_eee']=pg_result ($result,0,"ref_eee");
-                // $_SESSION['ref_lsi']=pg_result ($result,0,"ref_lsi");
-                // $_SESSION['ref_catnat']=pg_result ($result,0,"ref_catnat");
-                // $_SESSION['ref_refnat']=pg_result ($result,0,"ref_refnat");
-				if (($_SESSION['ref_lr'] == 't') OR ($_SESSION['ref_eee'] == 't') OR ($_SESSION['ref_lsi'] == 't') OR ($_SESSION['ref_catnat'] == 't') OR ($_SESSION['ref_refnat'] == 't')) $_SESSION['ref']= 't'; else $_SESSION['ref']= 'f';
-			   /*id user*/
+					$_SESSION['ref'] = $_SESSION['ref'] = 't' OR $_SESSION['ref_'.$val] = 't' ? 't' : 'f';
+					}
 				$_SESSION['id_user']=pg_result ($result,0,"id_user");
 				add_log ("log",3,pg_result($result,0,"id_user"),getenv("REMOTE_ADDR"),"Login",$user_login,"");
                 die ("<meta HTTP-equiv=\"refresh\" content=0;url=index.php />");

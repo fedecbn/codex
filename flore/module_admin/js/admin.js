@@ -124,6 +124,16 @@ $(document).ready(function(){
             metaForm ("Ajouter un utilisateur",670,500,'#admin-user-dialog',"user-form.php","user-submit.php",user_oTable,"",$(this).attr('name'));
 		});
 
+	$( "#admin-text-add-button" )
+        .button({
+            text: true
+        })
+        .click(function() {
+            metaForm ("Ajouter une rubrique",670,500,'#admin-text-dialog',"text-form.php","text-submit.php",text_oTable,"",$(this).attr('name'));
+		});
+
+		
+		
 	$( "#mdp-button" )
 		.button({	
 			text: true 
@@ -348,21 +358,21 @@ $(document).ready(function(){
                     { type: "text" },                                           // Code
                     { type: "text" },                                           // Nom
                     { type: "text" },                                           // Prénom
-{ type: "select", values:['CBN Alpin','CBN de Bailleul','CBN de Brest','CBN de Corse','CBN de Franche-Comté','CBN des Pyrénées et de Midi-Pyrénées','CBN du Bassin Parisien','CBN du Massif central','[Guyane]','[Grand Est]','[Guadeloupe]','[Martinique]','FCBN','inconnu','CBN Méditerranéen de Porquerolles','CBN Sud-Atlantique','CBN Mascarin']},                    
-					{ type: "text" },                                           // Login
-                    { type: "text" },                                           // Login
+					{ type: "select", values:[{ value: 1, label: 'CBN ALP'},{ value: 2, label: 'CBN BAL'},{ value: 7, label: 'CBN BPA'},{ value: 3, label: 'CBN BRE'},{ value: 4, label: 'CBN COR'},{ value: 5, label: 'CBN FRC'},{ value: 11, label: 'CBN MAS'},{ value: 8, label: 'CBN MCE'},{ value: 9, label: 'CBN MED'},{ value: 6, label: 'CBN PMP'},{ value: 10, label: 'CBN SAT'},{ value: 12, label: '[Guyane]'},{ value: 13, label: '[Grand Est]'},{ value: 14, label: '[Guadeloupe]'},{ value: 15, label: '[Martinique]'},{ value: 16, label: 'FCBN'}]},                    
+					{ type: "text" },                                           // 
+                    { type: "text" },                                           // 
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
 					{ type: "select", values: [{ value: 0, label: 'Pas d\'accès'},{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
-					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
-					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
-					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
-					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
-					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] },
-					{ type: "select", values: [{ value: 'oui', label: 'oui'},{ value: 'non', label: 'non' }] }
+					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] },
+					{ type: "select", values: [{ value: 'true', label: 'oui'},{ value: 'false', label: 'non' }] }
     			]
     		});      
 	} else {

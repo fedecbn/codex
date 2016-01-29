@@ -20,6 +20,8 @@ global $lang;
 global $langliste;
 
 //------------------------------------------------------------------------------ PATHS du module
+$db=sql_connect (SQL_base);
+if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ FONCTIONS du module
 

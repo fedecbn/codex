@@ -1,6 +1,6 @@
 <?php
 //------------------------------------------------------------------------------//
-//  module_gestion/lr-liste.php                                                 //
+//  module_gestion/eee-liste.php                                                 //
 //                                                                              //
 //  Application WEB 'EVAL'                                                      //
 //  Outil d’aide à l’évaluation de la flore                                     //
@@ -17,7 +17,7 @@
 
 //------------------------------------------------------------------------------ INIT.
 session_start();
-include ("commun.inc.php");
+include_once ("commun.inc.php");
 
 //------------------------------------------------------------------------------ VAR.
 
@@ -27,18 +27,17 @@ include ("commun.inc.php");
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
-//------------------------------------------------------------------------------ REF.
-global $aColumns, $ref, $champ_ref ;
+//------------------------------------------------------------------------------ REF.		
 ref_colonne_et_valeur ($id_page);
-		
-//------------------------------------------------------------------------------ MAIN
-$filters = filter_column_post($aColumns[$id_page]);
+
+//------------------------------------------------------------------------------ FILTERS
+$filters = filter_column($aColumns[$id_page]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query=$query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
+$query= $query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
 
 // echo "<br>".$query;
 
@@ -48,10 +47,8 @@ if (pg_num_rows ($result))
 else $aResultTotal=0; 
 $iTotal = $aResultTotal;
 
-//------------------------------------------------------------------------------ Liste
 	$sOutput = '{';
-	// $sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
-	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 //	$sOutput .= '"iTotalDisplayRecords": '.$iFilteredTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
@@ -63,24 +60,16 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*cas paticuliers*/
 		/*---------------*/
-			if 	($key == 'aoo_precis')	
-				if ($row['aoo_precis'] != 0) {$sOutput .= '"'.$row['aoo_precis'].'",';} else {$sOutput .= '"'.$ref['aoo'][$row['id_aoo']].'",';}
-			else if ($key == 'nbloc_precis')
-        		if ($row['nbloc_precis'] != 0) {$sOutput .= '"'.$row['nbloc_precis'].'",';} else {$sOutput .= '"'.$ref['nbloc'][$row['id_nbloc']].'",';}
-			else if ($key == 'nbm5_post1990_est')
-				if ($row['nbm5_post1990_est'] != '') {$sOutput .= '"'.$row['nbm5_post1990_est'].'",';} else {$sOutput .= '"'.$row['nbm5_post1990'].'",';}
-			else if ($key == 'notes')
-				if ($row['notes'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['notes'],"undo_hmtl").'\" ></a>",';} else {$sOutput .= '"",';}
+
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
-			else if (!empty($ref[$champ_ref[$key]]))
-				$sOutput .= '"'.$ref[$champ_ref[$key]][$row[$key]].'",';
+			// else if (!empty($ref[$key]))
+			if (!empty($ref[$key]))
+				$sOutput .= '"'.$ref[$key][$row[$key]].'",';
 		/*---------------*/
 		/*cas général sans référentiel*/
 		/*---------------*/
-			elseif ($value["type"] == "bool")
-				{if ($row[$key] == 't') $sOutput .= '"oui",'; elseif ($row[$key] == 'f') $sOutput .= '"non",'; else $sOutput .= '"'.$row[$key].'",';}
 			else
 				$sOutput .= '"'.$row[$key].'",';
 			}
@@ -88,9 +77,9 @@ $iTotal = $aResultTotal;
 		/*dernières colonnes*/
 		/*---------------*/
         if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" target=\"_blank\"><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
+            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
         else        
-            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" target=\"_blank\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
+            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
 		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
     	$sOutput .= "],";
 	}

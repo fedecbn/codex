@@ -44,6 +44,25 @@ CREATE TABLE '||id_module||'.base
 ALTER TABLE '||id_module||'.base OWNER TO '||utilisateur_bdd||';
 ';
 
+SELECT max(pos) + 1 INTO maxpos FROM referentiels.champ WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'niveau_%';
+EXECUTE '
+--- nouvelles colonnes - niveau de droit - référentiels
+INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
+						VALUES (''droit_'||id_module||''', ''niveau_'||id_module||''', ''string'', ''Niveau de droit'', ''utilisateur'', '||maxpos||', FALSE, ''niveau_'||id_module||''', ''niveau_'||id_module||''', FALSE, ''utilisateur'', ''droit_'||id_module||''');
+';
+SELECT max(pos) + 1 INTO maxpos FROM referentiels.champ WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'ref_%';
+EXECUTE '
+--- nouvelles colonnes - référent - référentiels
+INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
+						VALUES (''droit_'||id_module||''', ''ref_'||id_module||''', ''string'', ''Référent'', ''utilisateur'', '||maxpos||', FALSE, ''ref_'||id_module||''', ''ref_'||id_module||''', FALSE, ''utilisateur'', ''droit_'||id_module||''');
+';
+
+
+
+EXECUTE 'INSERT INTO referentiels.champs_ref (nom_ref, cle, valeur, schema, table_ref, orderby, rubrique_ref) 
+								VALUES (''droit_'||id_module||''', ''cd'', ''lib'', ''referentiels'', ''droit'', null, ''droit_'||id_module||''');
+';
+
 RETURN 'OK';
 END;$BODY$ LANGUAGE plpgsql;
 
@@ -72,6 +91,13 @@ ALTER TABLE applications.utilisateur DROP COLUMN ref_'||id_module||';
 
 --- Nouveau schema
 DROP SCHEMA '||id_module||' CASCADE;
+';
+
+
+EXECUTE '
+--- nouvelles colonnes dans le suivi des droits - référentiels
+DELETE FROM referentiels.champs WHERE rubrique_champ = ''droit_'||id_module||''' AND nom_champ = ''niveau_'||id_module||''';
+DELETE FROM referentiels.champs_ref WHERE nom_ref = ''droit_'||id_module||''';
 ';
 
 RETURN 'OK';
