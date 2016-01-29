@@ -44,23 +44,17 @@ CREATE TABLE '||id_module||'.base
 ALTER TABLE '||id_module||'.base OWNER TO '||utilisateur_bdd||';
 ';
 
-SELECT max(pos) + 1 INTO maxpos FROM referentiels.champ WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'niveau_%';
+SELECT max(pos) + 1 INTO maxpos FROM referentiels.champs WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'niveau_%';
 EXECUTE '
 --- nouvelles colonnes - niveau de droit - référentiels
 INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
-						VALUES (''droit_'||id_module||''', ''niveau_'||id_module||''', ''string'', ''Niveau de droit'', ''utilisateur'', '||maxpos||', FALSE, ''niveau_'||id_module||''', ''niveau_'||id_module||''', FALSE, ''utilisateur'', ''droit_'||id_module||''');
+						VALUES (''utilisateur'', ''niveau_'||id_module||''', ''val'', ''Droit '||id_module||''', ''utilisateur'', '||maxpos||', FALSE, ''niveau_'||id_module||''', ''niveau_'||id_module||''', FALSE, ''utilisateur'', ''droit'');
 ';
-SELECT max(pos) + 1 INTO maxpos FROM referentiels.champ WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'ref_%';
+SELECT max(pos) + 1 INTO maxpos FROM referentiels.champs WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'ref_%';
 EXECUTE '
 --- nouvelles colonnes - référent - référentiels
 INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
-						VALUES (''droit_'||id_module||''', ''ref_'||id_module||''', ''string'', ''Référent'', ''utilisateur'', '||maxpos||', FALSE, ''ref_'||id_module||''', ''ref_'||id_module||''', FALSE, ''utilisateur'', ''droit_'||id_module||''');
-';
-
-
-
-EXECUTE 'INSERT INTO referentiels.champs_ref (nom_ref, cle, valeur, schema, table_ref, orderby, rubrique_ref) 
-								VALUES (''droit_'||id_module||''', ''cd'', ''lib'', ''referentiels'', ''droit'', null, ''droit_'||id_module||''');
+						VALUES (''utilisateur'', ''ref_'||id_module||''', ''val'', ''Ref '||id_module||''', ''utilisateur'', '||maxpos||', FALSE, ''ref_'||id_module||''', ''ref_'||id_module||''', FALSE, ''utilisateur'', ''droit'');
 ';
 
 RETURN 'OK';

@@ -49,7 +49,7 @@ $query = "SELECT string_agg(one.champ,',') AS les_champs FROM
 (SELECT nom_champ as champ FROM referentiels.champs WHERE rubrique_champ = 'utilisateur' AND pos IS NOT NULL ORDER BY pos) as one;";
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
-$query_liste="SELECT count(*) OVER() AS total_count,".pg_result($result,0,"les_champs")."
+$query_liste="SELECT count(*) OVER() AS total_count, *
 	FROM applications.utilisateur
 	$where1 ";
 

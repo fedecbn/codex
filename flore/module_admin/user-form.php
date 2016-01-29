@@ -136,7 +136,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		if ($id == $_GET["id_user"] OR $niveau['all'] >= 255) echo ("<input type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"pw")."\" /><br>");
 			else echo("<input disabled style=\"background-color:F0F0F0;\" type=\"text\" name=\"pw\" id=\"pw\" size=\"20\" value=\"---privé---\" /><br>");
        		
-	   echo ("<label class=\"preField\">Email</label><input type=\"text\" name=\"email\" id=\"email\" style=\"width:30em;\" maxlength=\"70\" value=\"".pg_result($result,0,"email")."\" /><br>");
+	    echo ("<label class=\"preField\">Email</label><input type=\"text\" name=\"email\" id=\"email\" style=\"width:30em;\" maxlength=\"70\" value=\"".pg_result($result,0,"email")."\" /><br>");
         echo ("<label class=\"preField\">Site WEB</label><input type=\"text\" name=\"web\" id=\"web\" style=\"width:30em;\" maxlength=\"55\" value=\"".pg_result($result,0,"web")."\" /><br>");
         echo ("<label class=\"preField\">Tél. fixe, portable</label><input type=\"text\" name=\"tel_bur\" id=\"tel_bur\" size=\"20\" maxlength=\"20\" value=\"".pg_result($result,0,"tel_bur")."\" /> <input type=\"text\" name=\"tel_port\" id=\"tel_port\" size=\"20\" maxlength=\"20\"  value=\"".pg_result($result,0,"tel_port")."\" /><br>");
         
