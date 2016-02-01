@@ -68,6 +68,7 @@
             	null,                                          					//   
                 null,                                                           //  .
                 null,                                                                                                                                                                         // 
+                null,                                                                                                                                                                         // 
     			{ "sClass": "center","sWidth": "50px","bSortable": false },     // 
         		{ "sClass": "center","sWidth": "20px","bSortable": false }      // .
         ]
@@ -78,6 +79,7 @@
                 { type: "text" },                                               // 
                 { type: "text" },                                               //  
                 { type: "text" },                                               //  
+                { type: "text" },                                              //  
                 { type: "text" }                                              //  
 			]
 		});        

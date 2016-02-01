@@ -33,8 +33,8 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL ".SQL_s
 //------------------------------------------------------------------------------ VAR.
 /*récupération des rubriques*/
 $result=pg_query ($db,$query_rub) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-$i=0;
-While ($row = pg_fetch_row($result)) {$rubrique[$i] = $row[0];$i++;}
+
+While ($row = pg_fetch_row($result)) $rubrique[$row[0]] = $row[0];
 
 foreach ($rubrique as $key => $val)
 	{
@@ -73,8 +73,8 @@ switch ($action)
         echo ("<div class=\"narrowcolumn\">");
 //        echo ("<img src=\"../../_GRAPH/theme/home4.png\" border=\"0\" align=right >");
   		echo ("<div class=\"post\">");
-if (DEBUG) echo ("<br>Cookie = ".$lang_select." ");
-if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
+		if (DEBUG) echo ("<br>Cookie = ".$lang_select." ");
+		if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
             if ($niveau['all'] == 0) {
 				echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
 				echo ("<div style=\"text-align: center;\" ><img src=\"../../_GRAPH/Dracocephalum_austriacum_L._cbna_JVE.jpg\" width=\"300\" height=\"453\" border=\"0\"></div>");
@@ -83,8 +83,6 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
 			else
 				aff_pres ("home","home_header",FR,false);
             echo ("<br/>");
-			
-			
 			
 		foreach ($rubrique as $key => $val)
 			menu_rubrique ($niveau[$val],$val);

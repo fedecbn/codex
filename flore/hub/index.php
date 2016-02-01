@@ -27,6 +27,7 @@ $id=$_GET['id'];
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
+$db2=sql_connect_hub(SQL_base_hub);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ REF.
@@ -46,6 +47,7 @@ ref_colonne_et_valeur ($id_page);
 
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
 <script type="text/javascript" language="javascript" src="js/liste.js"></script>
+<script type="text/javascript" language="javascript" src="js/function.js"></script>
 <script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
 
 <?php
@@ -143,10 +145,14 @@ include ("../commun/add_fiche.php");
             $id=$_GET['id'];
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
             		
-			$query= $query_module.$id.";";
+			$query= "SELECT lib_cbn FROM public.bilan WHERE uid = $id;";
+			$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-			$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
             if (pg_num_rows ($result)) {
+				/*Récupération du zz_log*/
+				$row = pg_fetch_row($result);
+				$query= "SELECT * FROM \"".$row[0]."\".zz_log ORDER BY date DESC";
+				$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
 			echo ("<br><br>");
 				
@@ -154,11 +160,47 @@ include ("../commun/add_fiche.php");
 			
 			echo ("<div id=\"radio2\">"); 
 			echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
-			echo ("<input type=\"hidden\" name=\"uid\" id=\"uid\" value=\"".pg_result($result,0,"uid")."\">");
+			echo ("<input type=\"hidden\" name=\"uid\" id=\"uid\" value=\"$id\">");
 	/*------------------------------------------------------------------------------ EDIT fieldset1*/
+		echo ("<div id=\"radio3\">");    
+        echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_1']."</LEGEND>");
+				echo ("<table border=0 width=\"100%\">");
+				if ($niveau >= 128)
+					{
+					echo ("<tr valign=top ><td style=\"width: 30px;\">");
+					echo ("<button id=\"import_button\">".$lang[$lang_select]['import']."</button> ");
+					echo ("</td><td style=\"width:100px;\">");		
+					metaform_text (""," no_lab bloque",50,"","import","Dernier import : ");
+					echo ("</td></tr>");
+					}
+				/*Export*/
+				echo ("<tr valign=top ><td style=\"width: 30px;\">");
+				echo ("<button id=\"export_button\">".$lang[$lang_select]['export']."</button> ");				
+				echo ("</td><td style=\"width:100px;\">");		
+				metaform_text (""," no_lab bloque",50,"","export","Dernier export : ");
+				echo ("</td></tr>");
+				/*Rafraîchir le Bilan*/
+				echo ("<tr valign=top ><td style=\"width: 30px;\">");
+				echo ("<button id=\"bilan_button\">".$lang[$lang_select]['bilan']."</button> ");				
+				echo ("</td><td style=\"width:100px;\">");		
+				metaform_text (""," no_lab bloque",50,"","export","Dernier bilan : ");
+				echo ("</td></tr>");
+				
+				echo ("</table>");
+			echo ("</fieldset>");
+		echo ("</div>");    			
 			
 	/*------------------------------------------------------------------------------ EDIT fieldset2*/
-
+		echo ("<div id=\"radio3\">");    
+        echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_2']."</LEGEND>");
+				echo ("<table class=\"display\" width=\"100%\">");
+				// echo ("<td style=\"width: 800px;\">");
+				echo ("<tr><td>Table</td><td>Champ</td><td>Action</td><td>Log</td><td>Nb Occurence</td><td>Date</td></tr>");
+				while ($row = pg_fetch_row($result))
+					echo ("<tr><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td><td>".$row[6]."</td></tr>");
+				echo ("</table>");
+			echo ("</fieldset>");
+		echo ("</div>");    	
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
 			echo ("<div style=\"float:right;\"><br>");
 				if ($mode == "edit") {

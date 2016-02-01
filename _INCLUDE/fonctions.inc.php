@@ -795,11 +795,11 @@ function sql_connect_admin ($base) {
 }
 
 function sql_connect_hub ($base) {
-    global $db;
+    global $db2;
 	
     if ($base != "") {
-        $db=pg_connect ("host=".SQL_server." port=".SQL_port_hub." user=".SQL_admin_user." password=".SQL_admin_pass." dbname=".$base);
-        return ($db);
+        $db2=pg_connect ("host=".SQL_server." port=".SQL_port_hub." user=".SQL_admin_user." password=".SQL_admin_pass." dbname=".$base);
+        return ($db2);
     }
     else
         return (false);
