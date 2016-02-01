@@ -20,10 +20,9 @@ $table="utilisateur";
 //------------------------------------------------------------------------------ REF.
 //------------------------------------------------------------------------------ CONSTANTES du module
 // /*récupération des rubriques*/
-$query = "SELECT id_module FROM applications.rubrique ORDER BY pos";
+$query = "SELECT id_module, titre FROM applications.rubrique ORDER BY pos";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-$i=0;
-While ($row = pg_fetch_row($result)) {$rubrique[$i] = $row[0];$i++;}
+While ($row = pg_fetch_row($result)) {$rubrique[$row[0]] = $row[1];$i++;}
 
 /*référents et  niveau de droits*/
 $query="SELECT * FROM applications.utilisateur WHERE id_user= '".$_GET["id_user"]."';";
@@ -31,11 +30,11 @@ $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error 
 $ref['all'] = 'f';$niveau['all'] = 0;
 foreach ($rubrique as $key => $val)
 	{
-	$ref[$val]= pg_result ($result,0,"ref_".$val) != null ? pg_result ($result,0,"ref_".$val) : 'f';
-	$ref['all'] = $ref['all'] = 't' OR $ref['ref_'.$val] = 't' ? 't' : 'f';
-	$niveau[$val]= pg_result ($result,0,"niveau_".$val) != null ? pg_result ($result,0,"niveau_".$val) : 0;
-	$niveau['all'] = max($niveau['all'],$niveau['niveau_'.$val]);
-	$blocked[$val]= ($ref[$val] == 't' OR $niveau[$val] >= 255) ? "" : "disabled";
+	$ref[$key]= pg_result ($result,0,"ref_".$key) != null ? pg_result ($result,0,"ref_".$key) : 'f';
+	$ref['all'] = $ref['all'] = 't' OR $ref['ref_'.$key] = 't' ? 't' : 'f';
+	$niveau[$key]= pg_result ($result,0,"niveau_".$key) != null ? pg_result ($result,0,"niveau_".$key) : 0;
+	$niveau['all'] = max($niveau['all'],$niveau['niveau_'.$key]);
+	$blocked[$key]= ($ref[$key] == 't' OR $niveau[$key] >= 255) ? "" : "disabled";
 	}
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
@@ -147,7 +146,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
         echo ("</select><br>");
 
 	   /*Gestion des droits*/		
-		foreach ($rub as $id_rub => $nom_rub) {
+		foreach ($rubrique as $id_rub => $nom_rub) {
 			echo ("<label class=\"preField\">$nom_rub</label><select ".$blocked[$id_rub]." name=\"niveau_".$id_rub."\" >");
 			foreach ($user_level as $key => $value) 
 				echo ("<option ".($niveau[$id_rub] >= $key ? "" : "disabled")." value=\"$key\" ".($key == pg_result($result,0,"niveau_".$id_rub."") ? "SELECTED" : "").">".$value."</option>");
@@ -179,7 +178,7 @@ else
         echo ("</select><br>");
        
 	   /*Gestion des droits*/
-		foreach ($rub as $id_rub => $nom_rub) {
+		foreach ($rubrique as $id_rub => $nom_rub) {
 			echo ("<label class=\"preField\">$nom_rub</label><select ".$blocked[$id_rub]." name=\"niveau_".$id_rub."\" >");
 			foreach ($user_level as $key => $value) 
 				echo ("<option ".($niveau[$id_rub] >= $key ? "" : "disabled")." value=\"$key\" >".$value."</option>");

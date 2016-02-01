@@ -49,11 +49,11 @@ if (pg_num_rows ($result)) {
 if (!empty($id))                                                                
 {
 $query_niveau = "";$query_ref = "";
-foreach ($rub as $key => $val)	{
+foreach ($rubrique as $key => $val)	{
 	if ($ref[$key] === 't' OR $niveau['all'] >= 255) $query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
 	if ($ref[$key] === 't' OR $niveau['all'] >= 255) $query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
 	}
-var_dump($ref);
+// var_dump($ref);
 
 /*cas des modif de référent sur d'autres users*/
 if ($id == $id_user OR $niveau['all'] >= 255) $code = "login=".sql_format ($_POST["login"]).",pw=".sql_format ($_POST["pw"]).","; else $code = "";
@@ -77,7 +77,7 @@ $query="UPDATE ".SQL_schema_app.".utilisateur SET
     add_log ("log",4,$id_user,getenv("REMOTE_ADDR"),"Admin. edit user",$id,"utilisateur");
 } else { 
 //------------------------------------------------------------------------------ ADD
-foreach ($rub as $key => $val)	{
+foreach ($rubrique as $key => $val)	{
 	if (empty($_POST["niveau_".$key])) $_POST["niveau_".$key] = 0;
 	if (empty($_POST["ref_".$key])) $_POST["ref_".$key] = 0;
 	}
