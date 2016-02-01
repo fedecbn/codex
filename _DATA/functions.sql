@@ -44,7 +44,7 @@ CREATE TABLE '||id_module||'.base
 ALTER TABLE '||id_module||'.base OWNER TO '||utilisateur_bdd||';
 ';
 
-SELECT max(pos) + 1 INTO maxpos FROM referentiels.champs WHERE rubrique_champ = 'utilisateur' AND nom_champ LIKE 'niveau_%';
+SELECT max(pos) + 1 INTO maxpos FROM referentiels.champs WHERE rubrique_champ = 'utilisateur';
 EXECUTE '
 --- nouvelles colonnes - niveau de droit - référentiels
 INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
