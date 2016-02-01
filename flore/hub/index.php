@@ -47,7 +47,6 @@ ref_colonne_et_valeur ($id_page);
 
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
 <script type="text/javascript" language="javascript" src="js/liste.js"></script>
-<script type="text/javascript" language="javascript" src="js/function.js"></script>
 <script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
 
 <?php
@@ -91,7 +90,7 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau >= 128) 
+                if ($niveau >= 255) 
                     echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
                 echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
                 if ($niveau >= 255) 
@@ -130,12 +129,13 @@ include ("../commun/add_fiche.php");
         echo ("<div id=\"fiche\" >");
         echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
 
+		
+		
         echo ("<div style=\"float:left;\">");
             echo ("<font size=5 color=#008C8E >".$lang[$lang_select]['edit_fiche']."</font>");
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
             if ($mode == "edit") {
-                echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
                 echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
             } else {
                 echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
@@ -153,22 +153,25 @@ include ("../commun/add_fiche.php");
 				$row = pg_fetch_row($result);
 				$query= "SELECT * FROM \"".$row[0]."\".zz_log ORDER BY date DESC";
 				$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-
+		
 			echo ("<br><br>");
-				
-			echo("<input type=\"hidden\" name=\"zone\" id=\"zone1\" value=\"gl\">");
+
+			echo ("<div id=\"import-dialog\"></div>");
 			
+			echo("<input type=\"hidden\" name=\"zone\" id=\"zone1\" value=\"gl\">");
+					 
 			echo ("<div id=\"radio2\">"); 
 			echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 			echo ("<input type=\"hidden\" name=\"uid\" id=\"uid\" value=\"$id\">");
 	/*------------------------------------------------------------------------------ EDIT fieldset1*/
 		echo ("<div id=\"radio3\">");    
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_1']."</LEGEND>");
-				echo ("<table border=0 width=\"100%\">");
+				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
 				if ($niveau >= 128)
 					{
 					echo ("<tr valign=top ><td style=\"width: 30px;\">");
-					echo ("<button id=\"import_button\">".$lang[$lang_select]['import']."</button> ");
+					echo ("<button id=\"import_button\" class=\"import_button\" name=\"".$row[0]."\">".$lang[$lang_select]['import']."</button> ");
+					// echo ("<a class=\"import_button\" id=\"$id\" name=\"$id_user\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Import\" ></a>");
 					echo ("</td><td style=\"width:100px;\">");		
 					metaform_text (""," no_lab bloque",50,"","import","Dernier import : ");
 					echo ("</td></tr>");
@@ -204,7 +207,6 @@ include ("../commun/add_fiche.php");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
 			echo ("<div style=\"float:right;\"><br>");
 				if ($mode == "edit") {
-					echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
 					echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
 				} else {
 					echo ("<button id=\"retour4-button\">".$lang[$lang_select]['retour']."</button> ");

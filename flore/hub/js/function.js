@@ -19,4 +19,76 @@
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
 
+// $(document).ready(function(){
 
+	$( "#import_button" )
+        .button({
+            text: true
+        })
+        .click(function() {
+			metaImport ("Lancer un import",670,500,'#import-dialog',"form.php","submit.php",$(this).attr('id'),$(this).attr('name'));
+			return (false);
+		});
+		
+					
+    function metaImport (titre,larg,haut,dialogId,formUrl,submitUrl,params,params2) {
+        if (submitUrl != "") {
+        	$(dialogId).dialog({
+                open: function ()
+                {
+                    originalContent = $(dialogId).html();
+                    $(dialogId).load (formUrl+"?id="+params+"&id_user="+params2);
+                },
+                close : function(event, ui) {
+                    $(dialogId).html(originalContent);
+                },
+                title: titre,
+                modal: true,
+                position:['middle',100],
+        		width: larg,
+        		height : haut,
+            	resizable: false,
+    			buttons: [
+                    { text: "Annuler", click: function() {
+            		      $(dialogId).dialog( "close" );
+                    }},
+                    { text: "Enregistrer", click: function() {
+                        if ($("#form1").valid()) {
+                            $("#form1",this).ajaxSubmit({
+                                url: submitUrl,
+                                type: "post",
+                                data: { id: params},
+                                clearForm: true,
+                                error: function(){
+                                    alert ("Erreur AJAX");
+                                },
+                                success: function(e) {
+                                    $(dialogId).dialog().dialog('close');
+                                }
+                            });
+                        }
+                    }}
+                ]
+            });
+        } else {                                                                // View
+        	$(dialogId).dialog({
+                open: function ()
+                {
+                    $(dialogId).load (formUrl+"?id="+params+"&id_user="+params2);
+                },
+                title: titre,
+                modal: true,
+                position:['middle',100],
+        		width: larg,
+        		height : haut,
+            	resizable: false,
+    			buttons: [
+                    { text: "Fermer", click: function() {
+            		      $(dialogId).dialog( "close" );
+                    }}
+                ]
+            });
+        }
+    };
+
+	// });

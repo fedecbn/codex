@@ -272,6 +272,7 @@ $(document).ready(function(){
         return (false);
 	});
 
+
 //------------------------------------------------------------------------------ LISTE / User
 
     if (typeof user_oTable == 'undefined') {

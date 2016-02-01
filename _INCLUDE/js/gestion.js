@@ -136,10 +136,6 @@ $(document).ready(function(){
             window.location.replace ('index.php?m=maj');
 		});
 
-	$("#import_button,#export_button,#bilan_button")
-        .button({
-            text: true
-        });	
 //------------------------------------------------------------------------------ BOUTONS / Exports PDF
 
     $( "#export-PDF-button" )
