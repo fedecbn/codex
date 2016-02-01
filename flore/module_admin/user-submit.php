@@ -25,26 +25,18 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ MAIN
-$query="SELECT id_user,niveau_lr,niveau_eee,niveau_lsi,niveau_catnat,niveau_refnat,ref_lr,ref_eee,ref_lsi,ref_catnat,ref_refnat 
-FROM applications.utilisateur WHERE id_user= '$id_user';";
-// echo $query;
+/*référents et  niveau de droits*/
+$query="SELECT * FROM applications.utilisateur WHERE id_user= '$id_user';";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
-if (pg_num_rows ($result)) {
-	/*niveau de droit*/
-	$niveau['lr']=pg_result ($result,0,"niveau_lr");
-	$niveau['eee']=pg_result ($result,0,"niveau_eee");
-	$niveau['lsi']=pg_result ($result,0,"niveau_lsi");
-	$niveau['catnat']=pg_result ($result,0,"niveau_catnat");
-	$niveau['refnat']=pg_result ($result,0,"niveau_refnat");
-	$niveau['all'] = max($niveau['lr'],$niveau['eee'],$niveau['lsi'],$niveau['catnat'],$niveau['refnat']);
-	/*niveau référents*/
-	$ref['lr']=pg_result ($result,0,"ref_lr");
-	$ref['eee']=pg_result ($result,0,"ref_eee");
-	$ref['lsi']=pg_result ($result,0,"ref_lsi");
-	$ref['catnat']=pg_result ($result,0,"ref_catnat");
-	$ref['refnat']=pg_result ($result,0,"ref_refnat");
-	if (($ref['lr'] == 't') OR ($ref['eee'] == 't') OR ($ref['lsi'] == 't') OR ($ref['catnat'] == 't') OR ($ref['refnat'] == 't')) $ref['all']= 't'; else $ref['all']= 'f';
-}
+$ref['all'] = 'f';$niveau['all'] = 0;
+foreach ($rubrique as $key => $val)
+	{
+	$ref[$key]= pg_result ($result,0,"ref_".$key) != null ? pg_result ($result,0,"ref_".$key) : 'f';
+	$ref['all'] = $ref['all'] = 't' OR $ref['ref_'.$key] = 't' ? 't' : 'f';
+	$niveau[$key]= pg_result ($result,0,"niveau_".$key) != null ? pg_result ($result,0,"niveau_".$key) : 0;
+	$niveau['all'] = max($niveau['all'],$niveau['niveau_'.$key]);
+	}
+	
 //------------------------------------------------------------------------------ EDIT
 if (!empty($id))                                                                
 {
@@ -79,10 +71,17 @@ $query="UPDATE ".SQL_schema_app.".utilisateur SET
 //------------------------------------------------------------------------------ ADD
 foreach ($rubrique as $key => $val)	{
 	if (empty($_POST["niveau_".$key])) $_POST["niveau_".$key] = 0;
+	$val_niveau .= sql_format_num ($_POST["niveau_".$key]).",";
+	$key_niveau .= "niveau_".$key.",";
 	if (empty($_POST["ref_".$key])) $_POST["ref_".$key] = 0;
+	$val_ref .= sql_format_bool ($_POST["ref_".$key]).",";
+	$key_ref .= "ref_".$key.",";
 	}
     $id=strtoupper(substr(stripAccents($_POST['prenom']),0,2).substr(stripAccents($_POST['nom']),0,2)).mt_rand(1,9);
-    $query="INSERT INTO ".SQL_schema_app.".utilisateur (id_user, id_cbn,nom,prenom,login,pw,tel_bur,tel_port,tel_int,email,web,niveau_lr,niveau_eee,niveau_catnat,niveau_refnat,niveau_lsi,ref_lr,ref_eee,ref_catnat,ref_refnat,ref_lsi,descr)
+    $query="INSERT INTO ".SQL_schema_app.".utilisateur (id_user, id_cbn,nom,prenom,login,pw,tel_bur,tel_port,tel_int,email,web,
+	$key_niveau
+	$key_ref
+	descr)
 	VALUES (
 		'".$id."',
 		".sql_format_num ($_POST["id_cbn"]).",
@@ -95,16 +94,7 @@ foreach ($rubrique as $key => $val)	{
 		".sql_format ($_POST["tel_int"]).",
 		".sql_format ($_POST["email"]).",
 		".sql_format ($_POST["web"]).",
-		".sql_format_num ($_POST["niveau_lr"]).",
-		".sql_format_num ($_POST["niveau_eee"]).",
-		".sql_format_num ($_POST["niveau_catnat"]).",
-		".sql_format_num ($_POST["niveau_refnat"]).",
-		".sql_format_num ($_POST["niveau_lsi"]).",
-		".sql_format_bool ($_POST["ref_lr"]).",
-		".sql_format_bool ($_POST["ref_eee"]).",
-		".sql_format_bool ($_POST["ref_catnat"]).",
-		".sql_format_bool ($_POST["ref_refnat"]).",
-		".sql_format_bool ($_POST["ref_lsi"]).",
+		$val_niveau $val_ref
 		".sql_format ($_POST["descr"]).");";
 // echo $query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
