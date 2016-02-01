@@ -51,8 +51,8 @@ INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, ta
 						VALUES (''utilisateur'', ''niveau_'||id_module||''', ''val'', ''Droit '||id_module||''', ''utilisateur'', '||maxpos||', FALSE, ''niveau_'||id_module||''', ''niveau_'||id_module||''', FALSE, ''utilisateur'', ''droit'');
 
 --- nouvelles colonnes - référent - référentiels
-INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, referentiel)
-						VALUES (''utilisateur'', ''ref_'||id_module||''', ''val'', ''Ref '||id_module||''', ''utilisateur'', '||maxpos+1||', FALSE, ''ref_'||id_module||''', ''ref_'||id_module||''', FALSE, ''utilisateur'', ''droit'');
+INSERT INTO referentiels.champs(rubrique_champ, nom_champ, type, description, table_champ, pos, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd)
+						VALUES (''utilisateur'', ''ref_'||id_module||''', ''bool'', ''Ref '||id_module||''', ''utilisateur'', '||maxpos+1||', FALSE, ''ref_'||id_module||''', ''ref_'||id_module||''', FALSE, ''utilisateur'');
 ';
 
 RETURN 'OK';
