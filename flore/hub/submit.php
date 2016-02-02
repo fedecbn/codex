@@ -40,8 +40,8 @@ if (!empty ($id))
 				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path')";
 			elseif ($typjdd == 'listTaxon')
 				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path','$listaxon')";
-			echo $query;
-			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			// echo $query;
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 		}
 	} else {                                                                     //  ADD
