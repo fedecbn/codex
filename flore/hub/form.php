@@ -15,10 +15,9 @@ $id = $_GET['id'] != null ? $_GET['id'] : null;
 $mode = $_GET['m'] != null ? $_GET['m'] : null;
 
 /*Datapath*/
-$path = Data_path.$id."/";
-$files = scandir($path);
-unset($files[array_search("..", $files)]);
-unset($files[array_search(".", $files)]);
+$path = Data_path.$id."";
+
+
 
 $typejdd = array(
 	"data" => "jdd data",
@@ -68,6 +67,11 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 			echo ("<BR>");
 			metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon","std_listtaxon.csv");
 			echo ("<BR><label class=\"preField\">Liste des fichiers disponibles</label><BR>");
+			
+			/*Liste de fichiers*/
+			$files = scandir($path."/import");
+			unset($files[array_search("..", $files)]);
+			unset($files[array_search(".", $files)]);
 			foreach ($files as $key => $val) 
 				echo ("- $val<BR>");
 		echo ("</fieldset>");
