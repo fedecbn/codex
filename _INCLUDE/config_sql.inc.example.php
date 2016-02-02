@@ -31,6 +31,7 @@
     define ("SQL_schema_ref", "referentiels");
     define ("SQL_schema_lsi", "lsi");
 
+	define ("Data_path", "../../_DATA/");
 //------------------------------------------------------------------------------ FONCTIONS
 
 

@@ -12,15 +12,18 @@ include("commun.inc.php");
 
 //------------------------------------------------------------------------------ VAR.
 $id = $_GET['id'] != null ? $_GET['id'] : null;
-$cbn_name = $_GET['name'] != null ? $_GET['name'] : null;
+$mode = $_GET['m'] != null ? $_GET['m'] : null;
 
-// $path = "/home/hub/".$cbn_name;
-$path = "../../_DATA/".$cbn_name;
-$files = scandir($path );
-$typejdd = array (
-	"data" => "data",
-	"taxa" => "taxa",
-	"hybride" => "hybride"
+/*Datapath*/
+$path = Data_path.$id."/";
+$files = scandir($path);
+unset($files[array_search("..", $files)]);
+unset($files[array_search(".", $files)]);
+
+$typejdd = array(
+	"data" => "jdd data",
+	"taxa" => "jdd taxa",
+	"listTaxon" => "liste de taxons"
 	);
 	
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
@@ -52,22 +55,29 @@ $(document).ready(function(){
 <?php
 //------------------------------------------------------------------------------ REF.
 if (isset($_GET['id']) & !empty($_GET['id']))  
-{
-//------------------------------------------------------------------------------ MAIN
-//------------------------------------------------------------------------------ EDIT
-echo ("<form method=\"POST\" id=\"form1\" name=\"add\" action=\"#\" >");
-if (isset($_GET['id']) & !empty($_GET['id']))                                  
 	{
-    $id=$_GET['id'];
+	switch ($mode) {
+	//------------------------------------------------------------------------------ Import
+		case "import" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"import\" action=\"#\" >");
+		echo ("<fieldset><LEGEND> Choix du type de données </LEGEND>");
+			echo ("<label class=\"preField\">Type de jeu de données</label><select name=\"typjdd\">");
+			foreach ($typejdd as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+			metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon","std_listtaxon.csv");
+			echo ("<BR><label class=\"preField\">Liste des fichiers disponibles</label><BR>");
+			foreach ($files as $key => $val) 
+				echo ("- $val<BR>");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
 		
-	echo ("<fieldset><LEGEND> Utilisateur </LEGEND>");
-		metaform_sel ("Type de jeu de données",null,null,$typejdd,"typ_jdd","data");
-    echo ("</fieldset>");
-    }
-    else die ("> Pas de résultats !");
-}
-//------------------------------------------------------------------------------ MAIN
-//------------------------------------------------------------------------------ ADD
+		
+		}
+	}
 else die ("> Pas de résultats !");
-echo ("</form>");
+
 ?>

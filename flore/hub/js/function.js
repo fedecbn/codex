@@ -26,7 +26,7 @@
             text: true
         })
         .click(function() {
-			metaImport ("Lancer un import",670,500,'#import-dialog',"form.php","submit.php",$(this).attr('id'),$(this).attr('name'));
+			metaImport ("Lancer un import",670,500,'#import-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'));
 			return (false);
 		});
 		
@@ -37,7 +37,7 @@
                 open: function ()
                 {
                     originalContent = $(dialogId).html();
-                    $(dialogId).load (formUrl+"?id="+params+"&id_user="+params2);
+                    $(dialogId).load (formUrl+"?id="+params+"&m="+params2);
                 },
                 close : function(event, ui) {
                     $(dialogId).html(originalContent);
@@ -52,12 +52,12 @@
                     { text: "Annuler", click: function() {
             		      $(dialogId).dialog( "close" );
                     }},
-                    { text: "Enregistrer", click: function() {
+                    { text: "Importer", click: function() {
                         if ($("#form1").valid()) {
                             $("#form1",this).ajaxSubmit({
                                 url: submitUrl,
                                 type: "post",
-                                data: { id: params},
+                                data: { id: params, m:params2},
                                 clearForm: true,
                                 error: function(){
                                     alert ("Erreur AJAX");

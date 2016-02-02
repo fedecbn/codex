@@ -16,23 +16,37 @@ include ("commun.inc.php");
 //------------------------------------------------------------------------------ PARMS.
 define ("DEBUG",false);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
+$mode = $_POST['m'] != null ? $_POST['m'] : null;
+$typjdd = $_POST['typjdd'];
+$listaxon = $_POST['file_listtaxon'];
+
+/*Datapath*/
+$path = Data_path.$id."/";
+$files = scandir($path);
+unset($files[array_search("..", $files)]);
+unset($files[array_search(".", $files)]);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
+$db2=sql_connect_hub(SQL_base_hub);
+
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
-//------------------------------------------------------------------------------ REF.
-ref_colonne_et_valeur ('catnat');
-global $db, $ref, $champ_ref;
 
 //------------------------------------------------------------------------------ EDIT
 if (!empty ($id))                                                               
-{
-//------------------------------------------------------------------------------ SUIVI
-/*--------------------------------------------------*/
-/*ici ajouter la GESTION DES MODIFICATIONS ET SUIVI*/
-/*-------------------------------------------------*/
-} else {                                                                     //  ADD
+	{
+	switch ($mode) {
+		case "import" : {
+			if ($typjdd == 'data' OR $typjdd == 'taxa' )
+				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path')";
+			elseif ($typjdd == 'listTaxon')
+				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path','$listaxon')";
+			echo $query;
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+		}
+	} else {                                                                     //  ADD
 //------------------------------------------------------------------------------ Valeurs numériques
     if ($_POST['etape']=="") $_POST['etape']=2;
 //------------------------------------------------------------------------------

@@ -170,7 +170,7 @@ include ("../commun/add_fiche.php");
 				if ($niveau >= 128)
 					{
 					echo ("<tr valign=top ><td style=\"width: 30px;\">");
-					echo ("<button id=\"import_button\" class=\"import_button\" name=\"".$row[0]."\">".$lang[$lang_select]['import']."</button> ");
+					echo ("<button id=\"import_button\" value=\"import\" name=\"".$row[0]."\">".$lang[$lang_select]['import']."</button> ");
 					// echo ("<a class=\"import_button\" id=\"$id\" name=\"$id_user\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Import\" ></a>");
 					echo ("</td><td style=\"width:100px;\">");		
 					metaform_text (""," no_lab bloque",50,"","import","Dernier import : ");
