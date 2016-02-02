@@ -22,9 +22,6 @@ $listaxon = $_POST['file_listtaxon'];
 
 /*Datapath*/
 $path = Data_path.$id."/";
-$files = scandir($path);
-unset($files[array_search("..", $files)]);
-unset($files[array_search(".", $files)]);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -38,6 +35,7 @@ if (!empty ($id))
 	{
 	switch ($mode) {
 		case "import" : {
+			$path = $path."import/";
 			if ($typjdd == 'data' OR $typjdd == 'taxa' )
 				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path')";
 			elseif ($typjdd == 'listTaxon')
