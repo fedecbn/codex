@@ -19,6 +19,8 @@ $id = isset($_POST['id']) ? $_POST['id'] : "";
 $mode = $_POST['m'] != null ? $_POST['m'] : null;
 $typjdd = $_POST['typjdd'];
 $listaxon = $_POST['file_listtaxon'];
+$format = $_POST['format'] != null ? $_POST['format'] : 'f';
+
 
 /*Datapath*/
 $path = Data_path.$id."/";
@@ -29,7 +31,7 @@ $db2=sql_connect_hub(SQL_base_hub);
 
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
-
+			
 //------------------------------------------------------------------------------ EDIT
 if (!empty ($id))                                                               
 	{
@@ -40,25 +42,38 @@ if (!empty ($id))
 				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path')";
 			elseif ($typjdd == 'listTaxon')
 				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path','$listaxon')";
-			// echo $query;
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
+			break;
+		
+		case "export" : {
+			$path = $path."export/";
+			if ($typjdd == 'data' OR $typjdd == 'taxa')
+				$query = "SELECT * FROM hub_export('$id','$typjdd','$path','$format')";
+			elseif ($typjdd == 'listTaxon')
+				{
+				if ($listaxon == 't') $source = 'listTaxonInfra';
+					else $source = 'listTaxon';
+				if ($source == 'listTaxonInfra')
+					$query = "SELECT * FROM hub_txInfra('$id');SELECT * FROM hub_export('$id', '$source', '$path','$listaxon')";
+				else 
+					$query = "SELECT * FROM hub_export('$id', '$source', '$path','$listaxon');";
+				}
+				pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
+		case "bilan" : {
+			$query = "SELECT * FROM hub_bilan('$id');";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
 		}
+
 	} else {                                                                     //  ADD
 //------------------------------------------------------------------------------ Valeurs numériques
     if ($_POST['etape']=="") $_POST['etape']=2;
 //------------------------------------------------------------------------------
 	/*Paramètre à ajouter*/
-	$in["cd_ref"] = sql_format_num ($_POST["cd_ref"]);
-	$in["famille"] = sql_format_quote ($_POST["famille"],'do');
-	$in["nom_sci"] = sql_format_quote ($_POST["nom_sci"],'do');
-	$in["cd_rang"] = sql_format ($_POST["cd_rang"]);
-	$in["nom_verna"] = sql_format_quote ($_POST["nom_verna"],'do');
-	$in["hybride"] = sql_format_bool ($_POST["hybride"],'do');
-	
-	$rub[$id_page] = 'true';
-	
-	$uid = add_taxon ($in,$rub);
 	
 	add_suivi2($_POST["etape"],$id_user,$uid,"taxons","nom",null,sql_format_num ($_POST["nom_sci"]),'applications','manuel','ajout');
 	add_suivi2($_POST["etape"],$id_user,$uid,"taxons","uid",null,$uid,'applications','manuel','ajout');	

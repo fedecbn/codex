@@ -17,22 +17,44 @@ $mode = $_GET['m'] != null ? $_GET['m'] : null;
 /*Datapath*/
 $path = Data_path.$id."";
 
-
-
+/*type de jdd*/
 $typejdd = array(
 	"data" => "jdd data",
 	"taxa" => "jdd taxa",
 	"listTaxon" => "liste de taxons"
 	);
+$date_obs = array(
+	"1990" => "après 1990",
+	"2000" => "après 2000",
+	"tout" => "tout"
+	);
+$statut = array(
+	"LR" => "Liste rouge",
+	"LEEE" => "Liste EEE",
+	"DEF_OBS" => "Déficit d'observation",
+	"DEGNAT" => "Degré de naturalisation",
+	"PRES_TEST_GERM" => "Présence de test de germination",
+	"INDI" => "Indigénat",
+	"PRES_BANQ" => "Présence en banque de semence",
+	"RAR" => "Rareté",
+	"ALL" => "Tous les statuts"
+	);
+
+$format = array(
+	"fcbn" => "FCBN",
+	"sinp" => "SINP",
+	);
+
 	
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
-// $db=sql_connect (SQL_base);
-// if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
+$db=sql_connect (SQL_base);
+$db2=sql_connect_hub(SQL_base_hub);
+if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
+
 
 //------------------------------------------------------------------------------ REF.
 //------------------------------------------------------------------------------ CONSTANTES du module
-// /*récupération des rubriques*/
-/*référents et  niveau de droits*/
+
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -50,36 +72,139 @@ $(document).ready(function(){
 			}
 		}
 	)}); 
+	
+
+function apparition_champ(champ1,champ2,val_affichage)
+	{
+	if (document.getElementById(champ1).value == val_affichage)
+		{      
+		document.getElementById(champ2).style.display = "";
+		}
+	else    
+		{
+		document.getElementById(champ2).style.display = "none";
+		}
+	}
+
+	
 </script> 
 <?php
 //------------------------------------------------------------------------------ REF.
+
+echo ("<div id=\"chargement\" style=\"display:none;text-align:center;\">Chargement en cours... <img src=\"../../_GRAPH/aidesaisiewait.gif\">  Merci de patienter  </div>");
+
+
 if (isset($_GET['id']) & !empty($_GET['id']))  
 	{
 	switch ($mode) {
 	//------------------------------------------------------------------------------ Import
 		case "import" : {
 		echo ("<form method=\"POST\" id=\"form1\" name=\"import\" action=\"#\" >");
-		echo ("<fieldset><LEGEND> Choix du type de données </LEGEND>");
-			echo ("<label class=\"preField\">Type de jeu de données</label><select name=\"typjdd\">");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Choix du type de données </LEGEND>");
+			echo ("<label class=\"preField\">Type de jeu de données</label><select id=\"typjdd\" name=\"typjdd\" onChange=\"javascript:apparition_champ('typjdd','div_listtaxon','listTaxon');\">");
 			foreach ($typejdd as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
 			echo ("<BR>");
-			metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon","std_listtaxon.csv");
-			echo ("<BR><label class=\"preField\">Liste des fichiers disponibles</label><BR>");
+			echo ("<div id = \"div_listtaxon\" style=\"display:none\">");
+				metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon","std_listtaxon.csv");
+			echo ("</div>");
 			
+
+			echo ("<label class=\"preField\">Format d'import</label>");
+			echo ("<select id=\"format\" name=\"format\">");
+			foreach ($format as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+
 			/*Liste de fichiers*/
 			$files = scandir($path."/import");
 			unset($files[array_search("..", $files)]);
 			unset($files[array_search(".", $files)]);
-			foreach ($files as $key => $val) 
-				echo ("- $val<BR>");
+			echo ("<BR><BR>");
+			echo ("<table class = \"basic_table\">");
+			echo ("<tr><td>Liste des fichiers disponibles</td></tr>");
+			foreach ($files as $key => $val)
+				echo ("<tr><td>$val</td></tr>");
+			echo ("</table>");
 		echo ("</fieldset>");
 		echo ("</form>");
 			}
 			break;
+		case "export" : {
 		
-		
+		$query = "SELECT count(*) FROM \"$id\".zz_log_liste_taxon";
+		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		$nb_taxon = pg_fetch_row($result,0);
+
+		$query = "SELECT \"cdRef\", \"nomValide\"  FROM \"$id\".zz_log_liste_taxon LIMIT 10";
+		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		$list_taxon = pg_fetch_all($result);
+
+		echo ("<form method=\"POST\" id=\"form1\" name=\"export\" action=\"#\" >");
+		echo ("<fieldset>");
+					echo ("<LEGEND> Paramétrage de l'export</LEGEND>");
+					echo ("<label class=\"preField\">Type de jeu de données</label>");
+					echo ("<select id=\"typjdd\" name=\"typjdd\" onChange=\"javascript:apparition_champ('typjdd','div_data','data');apparition_champ('typjdd','div_taxa','taxa');apparition_champ('typjdd','div_listTaxon','listTaxon');\">");
+					foreach ($typejdd as $key => $val) 
+						echo ("<option value=\"$key\">".$val."</option>");
+					echo ("</select>");
+					/*DATA*/
+					echo ("<div id = \"div_data\">");
+						echo ("<BR>");
+						metaform_bool ("Export des taxons de la liste",null,"list_taxon",'t');
+						echo("<i>(Nombre de taxon dans la liste : ".$nb_taxon[0].")</i>");
+						echo ("<BR>");
+						metaform_bool ("Inclure les infra-taxons",null,"infrataxon",'f');
+						echo ("<BR>");
+						echo ("<label class=\"preField\">Période d'observation</label>");
+						echo ("<select id=\"periode\" name=\"periode\">");
+						foreach ($date_obs as $key => $val) 
+							echo ("<option value=\"$key\">".$val."</option>");
+						echo ("</select>");
+						echo ("<BR>");
+						echo ("<label class=\"preField\">Format d'export</label>");
+						echo ("<select id=\"format\" name=\"format\">");
+						foreach ($format as $key => $val) 
+							echo ("<option value=\"$key\">".$val."</option>");
+						echo ("</select>");
+					echo("</div>");
+					/*TAXA*/
+					echo ("<div id = \"div_taxa\" style=\"display:none\">");
+						echo ("<BR>");
+						echo ("<select id=\"statut\" name=\"periode\">");
+						foreach ($statut as $key => $val) 
+							echo ("<option value=\"$key\">".$val."</option>");
+						echo ("</select>");
+					echo("</div>");
+					/*Liste Taxon*/
+					echo ("<div id = \"div_listTaxon\" style=\"display:none\">");
+						echo ("<BR>");
+						metaform_bool ("Inclure les infra-taxons",null,"infrataxon",'f');
+						echo ("<BR><BR>");
+						echo ("Extrait de la liste des taxons <i>(Nombre total de taxon dans la liste : ".$nb_taxon[0].")</i>");
+						echo ("<BR>");
+						echo ("<table class = \"basic_table\">");
+						echo ("<tr><td>cd_ref</td><td>Nom</td></tr>");
+						foreach ($list_taxon as $key => $val)
+							echo ("<tr><td>".$val['cdRef']."</td><td>".$val['nomValide']."</td></tr>");
+						echo ("</table>");
+					echo("</div>");
+
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
+		case "bilan" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"bilan\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Bilan </LEGEND>");
+			echo ("Rafraîchir le bilan permet de mettre à jour le tableau de synthèse.");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
 		}
 	}
 else die ("> Pas de résultats !");

@@ -41,11 +41,11 @@ $lang['fr']['groupe_1']="Actions";
 
 $lang['fr']['groupe_2']="Log";
 
-$lang['fr']['import']="Lancer un import";
+$lang['fr']['import']="Importer des données";
 
-$lang['fr']['export']="Lancer un export";
+$lang['fr']['export']="Exporter des données";
 
-$lang['fr']['bilan']="Rafraîchir le bilan sur les données";
+$lang['fr']['bilan']= "Bilan sur les données";
 
 
 //------------------------------------------------------------------------------ CHAMPS du module

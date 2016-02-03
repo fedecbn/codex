@@ -598,8 +598,9 @@ function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='')
 {
 	
 	if (strpos($descr,"no_lab") === false)
-		if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\">".$label."</label>");
-		else echo ("<label title=\"".$tooltip."\" class=\"preField\">".$label."</label>");
+		if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\" id=\"label_".$champ."\">".$label."</label>");
+		elseif (strpos($descr,"not_display") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\" style=\"$style\">".$label."</label>");
+		else echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\">".$label."</label>");
 
 	if (!isset($extra)) $extra = "";		
 	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}

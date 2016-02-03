@@ -19,19 +19,28 @@
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
 
-// $(document).ready(function(){
-
 	$( "#import_button" )
-        .button({
-            text: true
-        })
+        .button({text: true})
         .click(function() {
-			metaImport ("Lancer un import",670,500,'#import-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'));
+			metaForm ("Importer des données",670,500,'#import-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Importer");
 			return (false);
 		});
 		
+	$( "#export_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Exporter des données",670,500,'#export-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Exporter");
+			return (false);
+		});
+		
+	$( "#bilan_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Bilan sur les données",670,500,'#bilan-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Lancer le bilan");
+			return (false);
+		});
 					
-    function metaImport (titre,larg,haut,dialogId,formUrl,submitUrl,params,params2) {
+    function metaForm (titre,larg,haut,dialogId,formUrl,submitUrl,params,params2,name) {
         if (submitUrl != "") {
         	$(dialogId).dialog({
                 open: function ()
@@ -52,8 +61,9 @@
                     { text: "Annuler", click: function() {
             		      $(dialogId).dialog( "close" );
                     }},
-                    { text: "Importer", click: function() {
+                    { text: name, click: function() {
                         if ($("#form1").valid()) {
+							document.getElementById('chargement').style.display = "";
                             $("#form1",this).ajaxSubmit({
                                 url: submitUrl,
                                 type: "post",
@@ -64,9 +74,11 @@
                                 },
                                 success: function(e) {
                                     $(dialogId).dialog().dialog('close');
+									window.location.reload();
                                 }
                             });
-                        }
+						
+						}
                     }}
                 ]
             });
@@ -91,4 +103,3 @@
         }
     };
 
-	// });
