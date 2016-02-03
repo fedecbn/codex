@@ -28,12 +28,14 @@ While ($row = pg_fetch_row($result)) {$rubrique[$row[0]] = $row[1];$i++;}
 $query="SELECT * FROM applications.utilisateur WHERE id_user= '".$_GET["id_user"]."';";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
 $ref['all'] = 'f';$niveau['all'] = 0;
+$arraysult = pg_fetch_array ($result);
+
 foreach ($rubrique as $key => $val)
 	{
-	$ref[$key]= pg_result ($result,0,"ref_".$key) != null ? pg_result ($result,0,"ref_".$key) : 'f';
+	$ref[$key]= $arraysult["ref_".$key] != null ? $arraysult["ref_".$key] : 'f';
 	$ref['all'] = $ref['all'] = 't' OR $ref['ref_'.$key] = 't' ? 't' : 'f';
-	$niveau[$key]= pg_result ($result,0,"niveau_".$key) != null ? pg_result ($result,0,"niveau_".$key) : 0;
-	$niveau['all'] = max($niveau['all'],$niveau['niveau_'.$key]);
+	$niveau[$key]= $arraysult["niveau_".$key] != null ? intval($arraysult["niveau_".$key]) : 0;
+	$niveau['all'] = max($niveau['all'],$niveau[$key]);
 	$blocked[$key]= ($ref[$key] == 't' OR $niveau[$key] >= 255) ? "" : "disabled";
 	}
 

@@ -29,23 +29,25 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 $query="SELECT * FROM applications.utilisateur WHERE id_user= '$id_user';";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
 $ref['all'] = 'f';$niveau['all'] = 0;
+$arraysult = pg_fetch_array ($result);
+
 foreach ($rubrique as $key => $val)
 	{
-	$ref[$key]= pg_result ($result,0,"ref_".$key) != null ? pg_result ($result,0,"ref_".$key) : 'f';
+	$ref[$key]= $arraysult["ref_".$key] != null ? $arraysult["ref_".$key] : 'f';
 	$ref['all'] = $ref['all'] = 't' OR $ref['ref_'.$key] = 't' ? 't' : 'f';
-	$niveau[$key]= pg_result ($result,0,"niveau_".$key) != null ? pg_result ($result,0,"niveau_".$key) : 0;
-	$niveau['all'] = max($niveau['all'],$niveau['niveau_'.$key]);
+	$niveau[$key]= $arraysult["niveau_".$key] != null ? intval($arraysult["niveau_".$key]) : 0;
+	$niveau['all'] = max($niveau['all'],$niveau[$key]);
 	}
-	
+	var_dump($niveau);
 //------------------------------------------------------------------------------ EDIT
 if (!empty($id))                                                                
 {
 $query_niveau = "";$query_ref = "";
 foreach ($rubrique as $key => $val)	{
-	if ($ref[$key] === 't' OR $niveau['all'] >= 255) $query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
-	if ($ref[$key] === 't' OR $niveau['all'] >= 255) $query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
+	if ($ref[$key] === 't' OR $niveau[$key] >= 255) $query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
+	if ($ref[$key] === 't' OR $niveau[$key] >= 255) $query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
 	}
-// var_dump($ref);
+
 
 /*cas des modif de référent sur d'autres users*/
 if ($id == $id_user OR $niveau['all'] >= 255) $code = "login=".sql_format ($_POST["login"]).",pw=".sql_format ($_POST["pw"]).","; else $code = "";
@@ -64,7 +66,7 @@ $query="UPDATE ".SQL_schema_app.".utilisateur SET
 	".$query_ref."
 	descr=".sql_format ($_POST["descr"])." 
 	WHERE id_user='".$id."';";
-// echo $query;
+echo $query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
     add_log ("log",4,$id_user,getenv("REMOTE_ADDR"),"Admin. edit user",$id,"utilisateur");
 } else { 
@@ -96,7 +98,7 @@ foreach ($rubrique as $key => $val)	{
 		".sql_format ($_POST["web"]).",
 		$val_niveau $val_ref
 		".sql_format ($_POST["descr"]).");";
-// echo $query;
+echo $query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
     add_log ("log",4,$id_user,getenv("REMOTE_ADDR"),"Admin. ajout user",$id,"utilisateur");
