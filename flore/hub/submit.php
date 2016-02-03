@@ -18,8 +18,8 @@ define ("DEBUG",false);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 $mode = $_POST['m'] != null ? $_POST['m'] : null;
 $typjdd = $_POST['typjdd'];
-$listaxon = $_POST['file_listtaxon'];
-$format = $_POST['format'] != null ? $_POST['format'] : 'f';
+$listaxon = $_POST['file_listtaxon'] != null ? $_POST['file_listtaxon'] : 'f';
+$format = $_POST['format'] != null ? $_POST['format'] : 'fcbn';
 
 
 /*Datapath*/
@@ -52,13 +52,14 @@ if (!empty ($id))
 				$query = "SELECT * FROM hub_export('$id','$typjdd','$path','$format')";
 			elseif ($typjdd == 'listTaxon')
 				{
-				if ($listaxon == 't') $source = 'listTaxonInfra';
-					else $source = 'listTaxon';
+				if ($listaxon == 't') $source = 'listtaxoninfra';
+					else $source = 'listtaxon';
 				if ($source == 'listTaxonInfra')
-					$query = "SELECT * FROM hub_txInfra('$id');SELECT * FROM hub_export('$id', '$source', '$path','$listaxon')";
+					$query = "SELECT * FROM hub_txInfra('$id');SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				else 
-					$query = "SELECT * FROM hub_export('$id', '$source', '$path','$listaxon');";
+					$query = "SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				}
+				echo $query;
 				pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
@@ -68,7 +69,6 @@ if (!empty ($id))
 			}
 			break;
 		}
-
 	} else {                                                                     //  ADD
 //------------------------------------------------------------------------------ Valeurs numériques
     if ($_POST['etape']=="") $_POST['etape']=2;
