@@ -44,6 +44,8 @@ if (!empty($id))
 {
 $query_niveau = "";$query_ref = "";
 foreach ($rubrique as $key => $val)	{
+	if (empty($_POST["niveau_".$key])) $_POST["niveau_".$key] = 0;
+	if (empty($_POST["ref_".$key])) $_POST["ref_".$key] = 'false';
 	if ($ref[$key] === 't' OR $niveau[$key] >= 255) $query_niveau .= "niveau_".$key."=".sql_format_num ($_POST["niveau_".$key]).",";
 	if ($ref[$key] === 't' OR $niveau[$key] >= 255) $query_ref .= "ref_".$key."=".sql_format_bool ($_POST["ref_".$key]).",";
 	}
