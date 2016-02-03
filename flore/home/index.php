@@ -88,15 +88,7 @@ switch ($action)
 			menu_rubrique ($niveau[$val],$val);
 			            
 			aff_pres ("home","home_footer",FR,false);
-			
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
-				{
-				echo ("<form method=\"POST\" id=\"form1\" name=\"loginform\" action=\"index.php\" >");
-					echo ("<center><input type=\"hidden\" name=\"action\" value=\"maj_data\" />");
-					echo ("<button id=\"maj_data_fr\">Import HUB Agregation</button></center>");
-				echo ("</form>");
-				}
-				
+							
 			echo ("</div>");                                                    // post
             echo ("</div>");                                                    // narrowcolumn
 
@@ -328,54 +320,7 @@ switch ($action)
    echo ("</div>");
    }
 	break;
-
-   case "maj_data" : {
-	echo ("<div id=\"page\">");
-        echo ("<div lang=\"fr\">");
-        echo ("<div class=\"narrowcolumn\">");
-			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
-				{
-				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
-				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"maj_data-ok\" />");
-				echo ("<input type=\"text\" name=\"cbn\" id=\"cbn\" size = \"40\" value=\"XXX\" />exemple : ALP");
-				echo ("<BR>");
-				echo ("<button id=\"envoi_maj\" >Lancer l'import</button></center>");
-				echo ("</form>");
-				}
-				echo ("</div>");                                                    // post
-            echo ("</div>");                                                    // narrowcolumn
-		echo ("<div class=\"whidecolumn\">");
-		echo ("</div>");
-   echo ("</div>");
-   }
-	break;	
 	
-	 case "maj_data-ok" : {
-	 	echo ("<div id=\"page\">");
-        echo ("<div lang=\"fr\">");
-        echo ("<div class=\"narrowcolumn\">");
-			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
-				{
-				// echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
-				// echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"maj_data-ok\" />");
-				/*connexion en admin*/
-				$db2=sql_connect_hub(SQL_base_hub);
-				/*requete*/
-				$query = "SELECT * FROM import_temp_hub('CBN_".$_POST['cbn']."','/home/hub/".$_POST['cbn']."/import/');";
-				$result=pg_query ($db2,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
-				echo ("Import réalisé");
-				echo ("<center><button id=\"home-button\">Retour à l'accueil</button></center>");				
-				echo ("</form>");
-				}		
-				echo ("</div>");                                                    // post
-            echo ("</div>");                                                    // narrowcolumn
-		echo ("<div class=\"whidecolumn\">");
-		echo ("</div>");
-   echo ("</div>");
-	}
-	break;	
 }
 echo ("<table width=\"100%\"><tr>");
 echo ("<td align=center><img src=\"../../_GRAPH/logos/logo_FCBN.gif\" border=\"0\" /></td>");
