@@ -26,7 +26,7 @@ if (ON_Server == 'no') $path = 'D:/'; else $path = '/home/export_pgsql/';
 //------------------------------------------------------------------------------ QUERY du module
 $query_champ = " SELECT * FROM referentiels.champ WHERE id_module = '$id_page'";
 
-$query_liste = " SELECT count(*) OVER() AS total_count, ddd.* FROM fsd.ddd WHERE 1 = 1 ";
+$query_liste = " SELECT count(*) OVER() AS total_count, ddd.* FROM fsd.ddd WHERE VERSION = 3 ";
 	
 $query_export = "SELECT * FROM fsd.ddd WHERE 1 = 1";
 $export_id = "uid";
@@ -58,53 +58,16 @@ $lang['fr']['liste_champ']="Liste des champs";
 $lang['it']['liste_champ']="";
 
 //------------------------------------------------------------------------------ CHAMPS du module
-$langliste['fr'][$id_page][]="Id";
-$langliste['fr'][$id_page.'-popup'][]="Identifiant";
 
-$langliste['fr'][$id_page][]="Version";
-$langliste['fr'][$id_page.'-popup'][]="Version";
+/*récupération des champs*/
+$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs WHERE rubrique_champ = '$id_page' AND pos IS NOT NULL ORDER BY pos";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-$langliste['fr'][$id_page][]="Module";
-$langliste['fr'][$id_page.'-popup'][]="Module";
-
-$langliste['fr'][$id_page][]="Sous-module";
-$langliste['fr'][$id_page.'-popup'][]="Sous-module";
-
-$langliste['fr'][$id_page][]="Code";
-$langliste['fr'][$id_page.'-popup'][]="Code";
-
-$langliste['fr'][$id_page][]="Libellé";
-$langliste['fr'][$id_page.'-popup'][]="Libellé";
-
-$langliste['fr'][$id_page][]="Description";
-$langliste['fr'][$id_page.'-popup'][]="Description";
-
-$langliste['fr'][$id_page][]="Format";
-$langliste['fr'][$id_page.'-popup'][]="Format";
-
-$langliste['fr'][$id_page][]= "Data";
-$langliste['fr'][$id_page.'-popup'][]="Obligation DATA";
-
-$langliste['fr'][$id_page][]= "Taxa";
-$langliste['fr'][$id_page.'-popup'][]="Obligation TAXA";
-
-$langliste['fr'][$id_page][]= "Sdata";
-$langliste['fr'][$id_page.'-popup'][]="Obligation SYNDATA";
-
-$langliste['fr'][$id_page][]= "Staxa";
-$langliste['fr'][$id_page.'-popup'][]="Obligation SYNTAXA";
-
-$langliste['fr'][$id_page][]="Voca Ctrl";
-$langliste['fr'][$id_page.'-popup'][]="Voca Ctrl";
-
-$langliste['fr'][$id_page][]="Règle";
-$langliste['fr'][$id_page.'-popup'][]="Règle Renseignement";
-
-$langliste['fr'][$id_page][]="Evol.";
-$langliste['fr'][$id_page.'-popup'][]="Exemple";
-
-$langliste['fr'][$id_page][]="Exemple";
-$langliste['fr'][$id_page.'-popup'][]="Exemple";
+While ($row = pg_fetch_row($result)) 
+	{
+	$langliste['fr'][$id_page][]= $row[1];
+	$langliste['fr'][$id_page.'-popup'][]= $row[2];
+	}
 
 
 //------------------------------------------------------------------------------ FONCTIONS du module

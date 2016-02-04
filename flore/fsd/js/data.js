@@ -29,26 +29,16 @@ if (typeof oTable == 'undefined') {
 				return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 				}, 
 			"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-			switch (aData[4]) {default : $('td:eq(4)', nRow).addClass('nom_taxon'); break;}
-			switch (aData[8]){
-				case "Oui" :$('td:eq(8)', nRow).addClass('oui');break;
-				case "Oui si" :$('td:eq(8)', nRow).addClass('ouisi');break;
-				case "Non" :$('td:eq(8)', nRow).addClass('non');break;
+			switch (aData[0]) {default : $('td:eq(0)', nRow).addClass('nom_taxon'); break;}
+			switch (aData[4]){
+				case "Oui" :$('td:eq(4)', nRow).addClass('oui');break;
+				case "Oui si" :$('td:eq(4)', nRow).addClass('ouisi');break;
+				case "Non" :$('td:eq(4)', nRow).addClass('non');break;
 				}
-			switch (aData[9]){
-				case "Oui" :$('td:eq(9)', nRow).addClass('oui');break;
-				case "Oui si" :$('td:eq(9)', nRow).addClass('ouisi');break;
-				case "Non" :$('td:eq(9)', nRow).addClass('non');break;
-				}
-			switch (aData[10]){
-				case "Oui" :$('td:eq(10)', nRow).addClass('oui');break;
-				case "Oui si" :$('td:eq(10)', nRow).addClass('ouisi');break;
-				case "Non" :$('td:eq(10)', nRow).addClass('non');break;
-				}
-			switch (aData[11]){
-				case "Oui" :$('td:eq(11)', nRow).addClass('oui');break;
-				case "Oui si" :$('td:eq(11)', nRow).addClass('ouisi');break;
-				case "Non" :$('td:eq(11)', nRow).addClass('non');break;
+			switch (aData[5]){
+				case "Oui" :$('td:eq(5)', nRow).addClass('oui');break;
+				case "Oui si" :$('td:eq(5)', nRow).addClass('ouisi');break;
+				case "Non" :$('td:eq(5)', nRow).addClass('non');break;
 				}
 			},
 			"oLanguage": { "sProcessing":   "Traitement en cours...",
@@ -69,38 +59,26 @@ if (typeof oTable == 'undefined') {
 			}, 
 			"sDom": '<"top"l>rt<"bottom"ip>',
 				"aoColumns": [                                                        // 
-					{ "sWidth": "3%" },
-					{ "sWidth": "2%" },
-					{ "sWidth": "6%" },
-					{ "sWidth": "6%" },
-					{ "sWidth": "14%" },
 					{ "sWidth": "12%" },
-					{ "sWidth": "30%" },
-					{ "sWidth": "4%" },
-					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
+					{ "sWidth": "15%" },
+					{ "sWidth": "35%" },
 					{ "sWidth": "8%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "3%" },
+					{ "sWidth": "15%" },
 					{ "sClass": "center","sWidth": "3%","bSortable": false },     // 
 					{ "sClass": "center","sWidth": "3%","bSortable": false }      // .
 			]
 			}).columnFilter({
 				sPlaceHolder: "head:after",
 				aoColumns: [ 
-					{ type: "text" },
-					{ type: "select", values: [1,2,3]}, // 
 					{ type: "text" },                                               // 
 					{ type: "text" },                                               //  
 					{ type: "text" },  
-					{ type: "text" },                                               //  
-					{ type: "text" },   
 					{ type: "select", values: ['character varying','float','integer','boolean','date']},
-					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
-					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'not_null', label: 'Dans FSD'},{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'not_null', label: 'present'},{ value: 'null', label: 'absent'}]},                                              //  
