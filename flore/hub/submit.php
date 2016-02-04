@@ -18,9 +18,9 @@ define ("DEBUG",false);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 $mode = $_POST['m'] != null ? $_POST['m'] : null;
 $typjdd = $_POST['typjdd'];
+$infrataxon = $_POST['infrataxon'] != null ? $_POST['infrataxon'] : 'f';
 $listaxon = $_POST['file_listtaxon'] != null ? $_POST['file_listtaxon'] : 'f';
 $format = $_POST['format'] != null ? $_POST['format'] : 'fcbn';
-
 
 /*Datapath*/
 $path = Data_path.$id."/";
@@ -52,9 +52,9 @@ if (!empty ($id))
 				$query = "SELECT * FROM hub_export('$id','$typjdd','$path','$format')";
 			elseif ($typjdd == 'listTaxon')
 				{
-				if ($listaxon == 't') $source = 'listtaxoninfra';
+				if ($infrataxon == 'TRUE') $source = 'listtaxoninfra';
 					else $source = 'listtaxon';
-				if ($source == 'listTaxonInfra')
+				if ($source == 'listtaxoninfra')
 					$query = "SELECT * FROM hub_txInfra('$id');SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				else 
 					$query = "SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
