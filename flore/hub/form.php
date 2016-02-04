@@ -19,15 +19,17 @@ $path = Data_path.$id."";
 
 /*type de jdd*/
 $typejdd = array(
-	"data" => "jdd data",
-	"taxa" => "jdd taxa",
-	"listTaxon" => "liste de taxons"
+	"data" => "Data",
+	"taxa" => "Taxa",
+	"listTaxon" => "Liste de taxons"
 	);
+	
 $date_obs = array(
 	"1990" => "après 1990",
 	"2000" => "après 2000",
 	"tout" => "tout"
 	);
+	
 $statut = array(
 	"LR" => "Liste rouge",
 	"LEEE" => "Liste EEE",
@@ -102,7 +104,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("<form method=\"POST\" id=\"form1\" name=\"import\" action=\"#\" >");
 		echo ("<fieldset>");
 			echo ("<LEGEND> Choix du type de données </LEGEND>");
-			echo ("<label class=\"preField\">Type de jeu de données</label><select id=\"typjdd\" name=\"typjdd\" onChange=\"javascript:apparition_champ('typjdd','div_listtaxon','listTaxon');\">");
+			echo ("<label class=\"preField\">Type de jeu de données</label><select id=\"typjdd\" name=\"typjdd\" onChange=\"javascript:apparition_champ('typjdd','div_listtaxon','listTaxon');apparition_champ('typjdd','div_format','data');\">");
 			foreach ($typejdd as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
@@ -111,20 +113,21 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 				metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon","std_listtaxon.csv");
 			echo ("</div>");
 			
-
-			echo ("<label class=\"preField\">Format d'import</label>");
-			echo ("<select id=\"format\" name=\"format\">");
-			foreach ($format as $key => $val) 
-				echo ("<option value=\"$key\">".$val."</option>");
-			echo ("</select>");
-
+			echo ("<div id = \"div_format\" style=\"\">");
+				echo ("<label class=\"preField\">Format d'import</label>");
+				echo ("<select id=\"format\" name=\"format\">");
+				foreach ($format as $key => $val) 
+					echo ("<option value=\"$key\">".$val."</option>");
+				echo ("</select>");
+			echo ("</div>");
+			
 			/*Liste de fichiers*/
 			$files = scandir($path."/import");
 			unset($files[array_search("..", $files)]);
 			unset($files[array_search(".", $files)]);
 			echo ("<BR><BR>");
 			echo ("<table class = \"basic_table\">");
-			echo ("<tr><td>Liste des fichiers disponibles</td></tr>");
+			echo ("<tr><td>Liste des fichiers dans le dossier d'import</td></tr>");
 			foreach ($files as $key => $val)
 				echo ("<tr><td>$val</td></tr>");
 			echo ("</table>");
@@ -153,10 +156,10 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 					/*DATA*/
 					echo ("<div id = \"div_data\">");
 						echo ("<BR>");
-						metaform_bool ("Export des taxons de la liste",null,"list_taxon",'t');
+						metaform_bool ("...depuis la liste de taxon",null,"list_taxon",'t');
 						echo("<i>(Nombre de taxon dans la liste : ".$nb_taxon[0].")</i>");
 						echo ("<BR>");
-						metaform_bool ("Inclure les infra-taxons",null,"infrataxon",'f');
+						metaform_bool ("Inclure les infra-taxons",null,"infrataxon","f");
 						echo ("<BR>");
 						echo ("<label class=\"preField\">Période d'observation</label>");
 						echo ("<select id=\"periode\" name=\"periode\">");
@@ -181,7 +184,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 					/*Liste Taxon*/
 					echo ("<div id = \"div_listTaxon\" style=\"display:none\">");
 						echo ("<BR>");
-						metaform_bool ("Inclure les infra-taxons",null,"infrataxon",'f');
+						metaform_bool ("Inclure les infra-taxons",null,"infrataxon","f");
 						echo ("<BR><BR>");
 						echo ("Extrait de la liste des taxons <i>(Nombre total de taxon dans la liste : ".$nb_taxon[0].")</i>");
 						echo ("<BR>");
@@ -191,6 +194,17 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 							echo ("<tr><td>".$val['cdRef']."</td><td>".$val['nomValide']."</td></tr>");
 						echo ("</table>");
 					echo("</div>");
+
+								/*Liste de fichiers*/
+					$files = scandir($path."/export");
+					unset($files[array_search("..", $files)]);
+					unset($files[array_search(".", $files)]);
+					echo ("<BR><BR>");
+					echo ("<table class = \"basic_table\">");
+					echo ("<tr><td>Liste des fichiers dans le dossier d'export</td></tr>");
+					foreach ($files as $key => $val)
+						echo ("<tr><td>$val</td></tr>");
+					echo ("</table>");
 
 		echo ("</fieldset>");
 		echo ("</form>");
