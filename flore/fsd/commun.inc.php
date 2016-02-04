@@ -57,6 +57,9 @@ $lang['it']['groupe_fsd_2']="";
 $lang['fr']['liste_champ']="Liste des champs";
 $lang['it']['liste_champ']="";
 
+$lang['fr']['commentaire']="Liste des champs";
+$lang['it']['commentaire']="";
+
 //------------------------------------------------------------------------------ CHAMPS du module
 
 /*récupération des champs*/
