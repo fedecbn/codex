@@ -168,9 +168,9 @@ if (typeof oTable == 'undefined') {
 					{ type: "text" },                                               // 
 					{ type: "text" },                                               //  
 					{ type: "text" },  
+					{ type: "text" },  
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'}]},
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Non', label: 'Non'}]},
-					{ type: "text" }, 
 					{ type: "text" }
 					]
 			});
@@ -254,9 +254,9 @@ if (typeof oTable == 'undefined') {
 					{ type: "text" },                                               // 
 					{ type: "text" },                                               //  
 					{ type: "text" },  
+					{ type: "text" },  
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'}]},
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Non', label: 'Non'}]},
-					{ type: "text" }, 
 					{ type: "text" }
 					]
 			});
@@ -339,9 +339,9 @@ if (typeof oTable == 'undefined') {
 					{ type: "text" },                                               // 
 					{ type: "text" },                                               //  
 					{ type: "text" },  
+					{ type: "text" },  
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Oui si', label: 'Oui si'},{ value: 'Non', label: 'Non'}]},
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Non', label: 'Non'}]},
-					{ type: "text" }, 
 					{ type: "text" }
 					]
 			});
