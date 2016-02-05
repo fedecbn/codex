@@ -103,7 +103,7 @@ switch ($mode) {
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			aff_table_reborn ("onglet1",'catnat');
 			// aff_table ($id_page."-liste",true,true);			
 		echo ("</div>");
 /*------------------------------------------------------------------------------ #fiche*/
@@ -122,8 +122,7 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ("droit",false,true);			
-            // aff_table ($id_page."-liste",true,true);
+			aff_table_reborn ("user","droit");
         echo ("</div>");    }
     break;
 

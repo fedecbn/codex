@@ -7,7 +7,7 @@
 //  Version 1.00  10/08/14 - DariaNet                                           //
 /*******************************************************************************/
 if (typeof oTable == 'undefined') {
-	var oTable = $('#data-liste').dataTable({
+	var oTable = $('#onglet1-liste').dataTable({
 			"bJQueryUI": true,
 			"iDisplayLength": 100,
 			"aLengthMenu": [[50,100,300],[50,100,300]],
