@@ -37,6 +37,7 @@ ref_colonne_et_valeur ($id_page);
 if ($niveau <= 64) $desc = " bloque"; else $disa = $desc;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
+/*A généraliser dans les référentiels*/
 $format = array("character varying"=>"character varying","float"=>"float","integer"=>"integer","boolean"=>"boolean","date"=>"date");
 $oblig = array(""=>"","Oui"=>"Oui","Oui si"=>"Oui si","Non"=>"Non","NSP"=>"NSP");
 
@@ -57,11 +58,11 @@ echo ("</div>");
 
 /*Deuxième bandeau : les onglets*/
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
-echo ("<ul>");
-foreach ($onglet["id"] as $key => $val)
-	echo ("<li><a href=\"#".$val."\">".$onglet["name"][$key]."</a></li>");
-echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
-echo ("</ul>");
+	echo ("<ul>");
+	foreach ($onglet["id"] as $key => $val)
+		echo ("<li><a href=\"#".$val."\">".$onglet["name"][$key]."</a></li>");
+	echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
+	echo ("</ul>");
 
 echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
 
@@ -90,7 +91,9 @@ switch ($mode) {
 /*------------------------------------------------------------------------------ #FSD META*/
         echo ("<div id=\"".$onglet["id"][1]."\" >");
 		echo ("<div id=\"titre2\">".$onglet["sstitre"][1]."</div>");
+            /*Boutons*/
             echo ("<div style=\"float:right;\">");
+				// if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -99,7 +102,9 @@ switch ($mode) {
 /*------------------------------------------------------------------------------ #FSD DATA*/
         echo ("<div id=\"".$onglet["id"][2]."\" >");
 		echo ("<div id=\"titre2\">".$onglet["sstitre"][2]."</div>");
+            /*Boutons*/
             echo ("<div style=\"float:right;\">");
+				// if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -108,7 +113,9 @@ switch ($mode) {
 /*------------------------------------------------------------------------------ #FSD TAXA*/
         echo ("<div id=\"".$onglet["id"][3]."\" >");
 		echo ("<div id=\"titre2\">".$onglet["sstitre"][3]."</div>");
+            /*Boutons*/
             echo ("<div style=\"float:right;\">");
+				// if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -118,8 +125,6 @@ switch ($mode) {
         echo ("<div id=\"".$onglet["id"][4]."\" >");
             /*Troisième bandeau*/
             echo ("<div id=\"titre2\">".$onglet["sstitre"][4]."</div>");
-            echo ("<div style=\"float:right;\">");
-            echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
 			aff_table_reborn ("user",$onglet["id"][4]);		
@@ -134,21 +139,39 @@ switch ($mode) {
 	$query = "SELECT max(version) as version FROM fsd.ddd;";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            $version = $row['version'];
-        pg_free_result ($result);
+        $version = $row['version'];
+    pg_free_result ($result);
 		
 	/*voca_ctrl*/
 	$query = "SELECT DISTINCT \"typChamp\" FROM fsd.voca_ctrl ORDER BY \"typChamp\";";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 	$voca_ctrl[null] = null;while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            {$voca_ctrl[$row['typChamp']] = $row['typChamp'];$i++;}
+            {$voca_ctrl[$row['typChamp']] = $row['typChamp'];}
 	pg_free_result ($result);
-	
-	$i = 0;
 
-/*------------------------------------------------------------------------------ ADD  EN TETE*/
-        echo ("<div id=\"".$onglet["id"][0]."\" >");
-        echo ("</div>");
+	/*modules*/
+	$query = "SELECT DISTINCT modl FROM fsd.ddd WHERE version = $version ORDER BY modl;";
+	$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
+			{$modl[$rowe['modl']] = $rowe['modl'];}
+	pg_free_result ($resulte);
+	
+	/*SSmodules*/
+	$query = "SELECT DISTINCT ssmodl FROM fsd.ddd WHERE version = $version ORDER BY ssmodl;";
+	$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
+			{$ssmodl[$rowe['ssmodl']] = $rowe['ssmodl'];}
+	pg_free_result ($resulte);
+	
+	/*autre_champ*/
+	$autre_chp = null;
+	$query = "SELECT DISTINCT cd, uid FROM fsd.ddd WHERE version = $version - 1 ORDER BY cd ;";
+	// echo $query;
+	$resultat=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	while ($ligne=pg_fetch_array ($resultat,NULL,PGSQL_ASSOC))
+		$autre_chp[$ligne['uid']] = $ligne['cd'];
+	pg_free_result ($resultat);
+
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
         echo ("<div id=\"fiche\" >");
         echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"add\" action=\"\" >");
@@ -164,36 +187,11 @@ switch ($mode) {
                 echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
             }
 		echo ("</div>");
-            echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
-			echo ("<br><br>");
+		echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
+		echo ("<br><br>");
 
 //------------------------------------------------------------------------------ 
 		echo ("<div id=\"radio2\">");    
-			/*modules*/
-			$query = "SELECT DISTINCT modl FROM fsd.ddd WHERE version = $version ORDER BY modl;";
-			$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-			while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
-					{$modl[$rowe['modl']] = $rowe['modl'];}
-			pg_free_result ($resulte);
-			
-			/*SSmodules*/
-			$query = "SELECT DISTINCT ssmodl FROM fsd.ddd WHERE version = $version ORDER BY ssmodl;";
-			$resulte=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-			while ($rowe=pg_fetch_array ($resulte,NULL,PGSQL_ASSOC))
-					{$ssmodl[$rowe['ssmodl']] = $rowe['ssmodl'];}
-			pg_free_result ($resulte);
-			
-			
-			/*autre_champ*/
-			$autre_chp = null;
-			$query = "SELECT DISTINCT cd, uid FROM fsd.ddd WHERE version = $version - 1 ORDER BY cd ;";
-			// echo $query;
-			$resultat=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
-			while ($ligne=pg_fetch_array ($resultat,NULL,PGSQL_ASSOC))
-				$autre_chp[$ligne['uid']] = $ligne['cd'];
-			pg_free_result ($resultat);
-			
-
 			echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_fsd_1']."</LEGEND>"); 
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 40%;\">");
@@ -242,7 +240,7 @@ switch ($mode) {
 						echo ("<textarea name=\"discussion\" $disa style=\"width:80%;$gris\" rows=\"4\" ></textarea><br><br>");
 					echo ("</td></tr></table>");
 				echo ("</fieldset>");
-			
+			echo ("</div>");
 
 /* ------------------------------------------------------------------------------ ADD SAVE*/
         echo ("<div style=\"float:right;\"><br>");
@@ -262,7 +260,8 @@ switch ($mode) {
         echo ("<div id=\"enregistrer-dialog\">");
             echo ("<center><img src=\"../../_GRAPH/check.png\"  /><br>".$lang[$lang_select]['enregistrer_dialog']."</center>");
         echo ("</div>");
-    }
+	echo ("</div>");
+	}
     break;
 
 /*--------------------------------------------------------------------------------------------------------- */
@@ -595,6 +594,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				echo ("<textarea name=\"descChamp\" $disa id=\"descChamp\" style=\"$gris\" rows=\"2\"  cols=\"50\" >".sql_format_quote($row["descChamp"],"undo")."</textarea><br><br>");
 			echo ("</td></tr>");
 			echo ("</table></fieldset>");
+			echo ("</div>");
 			}
 /* ------------------------------------------------------------------------------ EDIT catnat SAVE*/
         echo ("<div style=\"float:right;\"><br>");

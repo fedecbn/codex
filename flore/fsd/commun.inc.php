@@ -82,8 +82,8 @@ $lang['it']['groupe_fsd_1']="";
 $lang['fr']['groupe_fsd_2']="Description Champ ancienne version";
 $lang['it']['groupe_fsd_2']="";
 
-// $lang['fr']['liste_champ']="Liste des champs";
-// $lang['it']['liste_champ']="";
+$lang['fr']['liste_champ']="Liste des champs";
+$lang['it']['liste_champ']="";
 
 $lang['fr']['commentaire']="Liste des champs";
 $lang['it']['commentaire']="";
