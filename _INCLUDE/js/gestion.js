@@ -181,6 +181,7 @@ if ( $("#mode").val() == 'liste') {
 
 //------------------------------------------------------------------------------ LISTES / Taxons (Ldata)
 	include("js/data.js")        
+	include("js/function.js")
 
     $('#data-liste').on("click",".view", function ($e) {		
         window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				

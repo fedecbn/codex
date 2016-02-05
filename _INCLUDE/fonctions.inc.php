@@ -577,6 +577,26 @@ function aff_table_new ($id_liste,$actions,$check) {
     echo ("</tr></tfoot><tbody></tbody></table><br><br>");
 }
 
+function aff_table_reborn ($id_onglet,$id_liste,$actions = true,$check = true) {
+    global $lang_select,$langliste;
+
+    $nbre_col=count($langliste[$lang_select][$id_liste]);
+	echo ("<table id=\"".$id_onglet."-liste\" class=\"display\" ><thead><tr>");
+    for ($i=1;$i<=$nbre_col;$i++) 
+        echo ("<th></th>");
+    echo ("</tr><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    if ($actions) echo ("<th></th>");
+    if ($check) echo ("<th><a><input type=\"checkbox\" class=\"liste-all\" value=\"1\" ></a></th>");
+    echo ("</tr></thead><tfoot><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    if ($actions) echo ("<th></th>");
+    if ($check) echo ("<th><a><input type=\"checkbox\" class=\"liste-all\" value=\"1\" ></a></th>");
+    echo ("</tr></tfoot><tbody></tbody></table><br><br>");
+}
+
 
 //------------------------------------------------------------------------------ MétaForm
 

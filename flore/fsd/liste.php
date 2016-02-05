@@ -20,7 +20,7 @@ session_start();
 include_once ("commun.inc.php");
 
 //------------------------------------------------------------------------------ VAR.
-
+$onglet = $_GET['onglet'];
 //------------------------------------------------------------------------------ PARMS.
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
@@ -28,17 +28,16 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ REF.
-ref_colonne_et_valeur ($id_page);
+ref_colonne_et_valeur ($onglet);
 
 //------------------------------------------------------------------------------ FILTERS
-$filters = filter_column($aColumns[$id_page]);
+$filters = filter_column($aColumns[$onglet]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query=$query_liste.$sWhere." ".$sOrder." ".$sLimit;
-
+$query = $query_liste[$_GET['onglet']].$sWhere." ".$sOrder." ".$sLimit;
 // echo "<br>".$query;
 
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
@@ -56,7 +55,7 @@ $iTotal = $aResultTotal;
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
 	{
 		$sOutput .= "[";
-		foreach ($aColumns[$id_page] as $key => $value) {
+		foreach ($aColumns[$onglet] as $key => $value) {
 		/*---------------*/
 		/*cas paticuliers*/
 		/*---------------*/

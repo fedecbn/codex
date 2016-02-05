@@ -18,4 +18,16 @@
 //  Version 1.17  23/09/14 - MaJ lr-liste                                       //
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
+    var $tabs = $("#tabs").tabs();
 
+    if ( $("#mode").val() == 'liste') {
+        $tabs.tabs('disable',5);                                                // Fiche
+    } 
+	else {
+        $tabs.tabs ("option","active",5);                                       // Fiche
+        $tabs.tabs ('disable',0);                                               //                                                 
+        $tabs.tabs ('disable',1);                                               //                                                 
+        $tabs.tabs ('disable',2);                                               //                                                 
+        $tabs.tabs ('disable',3);                                               //                                                 
+        $tabs.tabs ('disable',4);                                               //                                                 
+    }

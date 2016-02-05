@@ -58,8 +58,8 @@ echo ("</div>");
 /*Deuxième bandeau : les onglets*/
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
 echo ("<ul>");
-echo ("<li><a href=\"#".$id_page."\">".$lang[$lang_select][$id_page]."</a></li>");
-echo ("<li><a href=\"#".$id_page_2."\">".$lang[$lang_select][$id_page_2]."</a></li>");
+foreach ($onglet["id"] as $key => $val)
+	echo ("<li><a href=\"#".$val."\">".$onglet["name"][$key]."</a></li>");
 echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
 echo ("</ul>");
 
@@ -70,41 +70,61 @@ switch ($mode) {
 /*------------------------------------------------------------------------------ #CAS TABLEAU DE SYNTHESE */
 /*------------------------------------------------------------------------------------------------------- */
     case "liste" : {
-/*------------------------------------------------------------------------------ #Onglet 1*/
-        echo ("<div id=\"".$id_page."\" >");
-            /*Troisième bandeau*/
-            echo ("<div id=\"titre2\">");
-                echo ($lang[$lang_select]["liste_champ"]);
-            echo ("</div>");
-            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$id_page."_".$id_user.".csv\" />");
+/*------------------------------------------------------------------------------ #Dictionnaire de données*/
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
+            echo ("<div id=\"titre2\">".$onglet["sstitre"][0]."</div>");
+            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$onglet["id"][0]."_".$id_user.".csv\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
-            echo ("<div style=\"float:right;\">");
-				if ($niveau >= 128) 
-                    echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				if ($niveau >= 128) 
-					echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) 
-                    echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
-                if ($niveau >= 512) 
-                    echo ("<button id=\"figer-version-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");
+            /*Boutons*/
+			echo ("<div style=\"float:right;\">");
+				if ($niveau >= 128) echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                if ($niveau >= 255) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                if ($niveau >= 512) echo ("<button id=\"figer-version-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);						
+			aff_table_reborn ("onglet0",$onglet["id"][0]);						
 		echo ("</div>");
-/*------------------------------------------------------------------------------ #fiche*/
-        echo ("<div id=\"droit\" >");
+/*------------------------------------------------------------------------------ #FSD META*/
+        echo ("<div id=\"".$onglet["id"][1]."\" >");
+		echo ("<div id=\"titre2\">".$onglet["sstitre"][1]."</div>");
+            echo ("<div style=\"float:right;\">");
+			echo ("</div><br><br>");
+            echo ("<div id=\"dialog\"></div>");
+			/*Table des données*/
+			aff_table_reborn ("onglet1",$onglet["id"][1]);						
+		echo ("</div>");
+/*------------------------------------------------------------------------------ #FSD DATA*/
+        echo ("<div id=\"".$onglet["id"][2]."\" >");
+		echo ("<div id=\"titre2\">".$onglet["sstitre"][2]."</div>");
+            echo ("<div style=\"float:right;\">");
+			echo ("</div><br><br>");
+            echo ("<div id=\"dialog\"></div>");
+			/*Table des données*/
+			aff_table_reborn ("onglet2",$onglet["id"][2]);						
+		echo ("</div>");
+/*------------------------------------------------------------------------------ #FSD TAXA*/
+        echo ("<div id=\"".$onglet["id"][3]."\" >");
+		echo ("<div id=\"titre2\">".$onglet["sstitre"][3]."</div>");
+            echo ("<div style=\"float:right;\">");
+			echo ("</div><br><br>");
+            echo ("<div id=\"dialog\"></div>");
+			/*Table des données*/
+			aff_table_reborn ("onglet3",$onglet["id"][3]);						
+		echo ("</div>");
+/*------------------------------------------------------------------------------ #Utilisateurs*/
+        echo ("<div id=\"".$onglet["id"][4]."\" >");
             /*Troisième bandeau*/
-            echo ("<div id=\"titre2\">");
-                echo "Droit d'utilisation de la rubrique";
-            echo ("</div>");
+            echo ("<div id=\"titre2\">".$onglet["sstitre"][4]."</div>");
             echo ("<div style=\"float:right;\">");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ("droit",false,true);			
-        echo ("</div>");    }
+			aff_table_reborn ("user",$onglet["id"][4]);		
+		echo ("</div>");    
+		}
     break;
 
 /*------------------------------------------------------------------------------ #CAS AJOUT D'UNE FICHE */
@@ -127,7 +147,7 @@ switch ($mode) {
 	$i = 0;
 
 /*------------------------------------------------------------------------------ ADD  EN TETE*/
-        echo ("<div id=\"$id_page\" >");
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
         echo ("</div>");
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
         echo ("<div id=\"fiche\" >");
@@ -271,7 +291,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 	$i = 0;
 
 /*------------------------------------------------------------------------------ EDIT  EN TETE*/
-        echo ("<div id=\"$id_page\" >");
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
         echo ("</div>");
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
         echo ("<div id=\"fiche\" >");
@@ -506,7 +526,7 @@ if ($niveau <= 64) $desc = " bloque"; else $desc = null;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
 /*------------------------------------------------------------------------------ EDIT  EN TETE*/
-        echo ("<div id=\"$id_page\" >");
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
         echo ("</div>");
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
         echo ("<div id=\"fiche\" >");
