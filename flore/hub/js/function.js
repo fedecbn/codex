@@ -19,6 +19,26 @@
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
 
+ //------------------------------------------------------------------------------ UI / Activation des onglets
+
+    var $tabs = $("#tabs").tabs();
+
+    if ( $("#mode").val() == 'liste') {
+        $tabs.tabs('disable',2);                                                // Fiche
+    } 
+	else if ( $("#mode").val() == 'maj') {
+        $tabs.tabs ('disable',0);                                               //   Fiche                                              
+        $tabs.tabs ('disable',1);                                               //                                                 	
+        $tabs.tabs ('disable',2);                                               //                                                 	
+	}
+	else {
+        $tabs.tabs ("option","active",2);                                       // Fiche
+        $tabs.tabs ('disable',0);                                               //                                                 
+        $tabs.tabs ('disable',1);                                               //                                                 
+    }
+
+ //------------------------------------------------------------------------------ bouttons
+	
 	$( "#import_button" )
         .button({text: true})
         .click(function() {
@@ -39,7 +59,9 @@
 			metaForm ("Bilan sur les données",670,500,'#bilan-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Lancer le bilan");
 			return (false);
 		});
-					
+
+ //------------------------------------------------------------------------------ fonctin metForm
+		
     function metaForm (titre,larg,haut,dialogId,formUrl,submitUrl,params,params2,name) {
         if (submitUrl != "") {
         	$(dialogId).dialog({

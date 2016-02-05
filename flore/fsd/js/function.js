@@ -18,7 +18,10 @@
 //  Version 1.17  23/09/14 - MaJ lr-liste                                       //
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
-    var $tabs = $("#tabs").tabs();
+ 
+ //------------------------------------------------------------------------------ UI / Activation des onglets
+
+var $tabs = $("#tabs").tabs();
 
     if ( $("#mode").val() == 'liste') {
         $tabs.tabs('disable',5);                                                // Fiche

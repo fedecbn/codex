@@ -62,21 +62,21 @@ $(document).ready(function(){
 
 //------------------------------------------------------------------------------ UI / Tabs
 
-    var $tabs = $("#tabs").tabs();
+    // var $tabs = $("#tabs").tabs();
 
-    if ( $("#mode").val() == 'liste') {
-        $tabs.tabs('disable',2);                                                // Fiche
-    } 
-	else if ( $("#mode").val() == 'maj') {
-        $tabs.tabs ('disable',0);                                               // LR                                                
-        $tabs.tabs ('disable',1);                                               // EVEE                                                	
-        $tabs.tabs ('disable',2);                                               // EVEE                                                	
-	}
-	else {
-        $tabs.tabs ("option","active",2);                                       // Fiche
-        $tabs.tabs ('disable',0);                                               // LR                                                
-        $tabs.tabs ('disable',1);                                               // EVEE                                                
-    }
+    // if ( $("#mode").val() == 'liste') {
+        // $tabs.tabs('disable',2);                                                // Fiche
+    // } 
+	// else if ( $("#mode").val() == 'maj') {
+        // $tabs.tabs ('disable',0);                                               // LR                                                
+        // $tabs.tabs ('disable',1);                                               // EVEE                                                	
+        // $tabs.tabs ('disable',2);                                               // EVEE                                                	
+	// }
+	// else {
+        // $tabs.tabs ("option","active",2);                                       // Fiche
+        // $tabs.tabs ('disable',0);                                               // LR                                                
+        // $tabs.tabs ('disable',1);                                               // EVEE                                                
+    // }
 
 //------------------------------------------------------------------------------ UI / Boutons
 

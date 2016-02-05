@@ -19,6 +19,25 @@
 //  Version 1.18  24/09/14 - MaJ lr-liste (coul UICN)                           //
 /*******************************************************************************/
 
+ //------------------------------------------------------------------------------ UI / Activation des onglets
+
+    var $tabs = $("#tabs").tabs();
+
+    if ( $("#mode").val() == 'liste') {
+        $tabs.tabs('disable',2);                                                // Fiche
+    } 
+	else if ( $("#mode").val() == 'maj') {
+        $tabs.tabs ('disable',0);                                               //   Fiche                                              
+        $tabs.tabs ('disable',1);                                               //                                                 	
+        $tabs.tabs ('disable',2);                                               //                                                 	
+	}
+	else {
+        $tabs.tabs ("option","active",2);                                       // Fiche
+        $tabs.tabs ('disable',0);                                               //                                                 
+        $tabs.tabs ('disable',1);                                               //                                                 
+    }
+
+	
 //------------------------------------------------------------------------------ FORM / Plages
 // function enable_champ() {
 // var hybride_oui=$("input[id=hybride1]:checked").val();	
