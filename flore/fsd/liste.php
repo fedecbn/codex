@@ -54,6 +54,7 @@ $iTotal = $aResultTotal;
 	$sOutput .= '"aaData": [ ';
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
 	{
+		if ($onglet == "fsd") $id = $row['uid']; else $id = $row['cd_ddd'];
 		$sOutput .= "[";
 		foreach ($aColumns[$onglet] as $key => $value) {
 		/*---------------*/
@@ -82,10 +83,10 @@ $iTotal = $aResultTotal;
 		/*dernières colonnes*/
 		/*---------------*/
         if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
+            $sOutput .= '"<a class=view id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
         else        
-            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
+            $sOutput .= '"<a class=edit id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
+		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$id.'\" >"';
     	$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
