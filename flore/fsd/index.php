@@ -187,7 +187,7 @@ switch ($mode) {
                 echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
             }
 		echo ("</div>");
-		echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
+		echo ("<input type=\"hidden\" name=\"type\" value=\"ddd\" />");
 		echo ("<br><br>");
 
 //------------------------------------------------------------------------------ 
@@ -310,7 +310,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 		if (isset($_GET['id']) & !empty($_GET['id'])) {                         // Modifier
             $id=$_GET['id'];
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
-            echo ("<input type=\"hidden\" name=\"type\" value=\"champ\" />");
+            echo ("<input type=\"hidden\" name=\"type\" value=\"ddd\" />");
 			
 			$query = "WITH RECURSIVE hierarchie (uid, version, modl, ssmodl, cd, lib, descr, format, taille, \"oData\", \"vocaCtrl\", \"regleRens\", ex1, ex2, discussion, \"oTaxa\", \"oSynData\", \"oSynTaxa\", obj, lien_sinp, id_from) AS (
 				SELECT a.*, z.id_from as id_from
@@ -388,8 +388,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						metaform_text ("Taille",$bloq,10,"","taille",sql_format_quote($row["taille"],"undo"));
 						metaform_sel ("Vocabulaire contrôlé",$bloq,null,$voca_ctrl,"vocaCtrl",$row["vocaCtrl"]);
 					echo "<BR>";
-						metaform_sel ("Obligatoire (Data)",$bloq,null,$oblig,"oData",$row["oData"]);
-						metaform_sel ("Obligatoire (Taxa)",$bloq,null,$oblig,"oTaxa",$row["oTaxa"]);
+						// metaform_sel ("Obligatoire (Data)",$bloq,null,$oblig,"oData",$row["oData"]);
+						// metaform_sel ("Obligatoire (Taxa)",$bloq,null,$oblig,"oTaxa",$row["oTaxa"]);
 						// metaform_sel ("Obligatoire (Syntdata)",$bloq,null,$oblig,"oSynData",$row["oSynData"]);
 						// metaform_sel ("Obligatoire (Syntaxa)",$bloq,null,$oblig,"oSynTaxa",$row["oSynTaxa"]);
 					echo "<BR>";
@@ -402,8 +402,8 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 						echo ("<label class=\"preField\">Objectif du partage</label>");
 						echo ("<textarea name=\"obj\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["obj"],"undo")."</textarea><br><br>");
 						
-						echo ("<label class=\"preField\">Règles de renseignement</label>");
-						echo ("<textarea name=\"regleRens\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["regleRens"],"undo")."</textarea><br><br>");
+						// echo ("<label class=\"preField\">Règles de renseignement</label>");
+						// echo ("<textarea name=\"regleRens\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["regleRens"],"undo")."</textarea><br><br>");
 
 
 						$jvs1 = "OnDblClick='javascript: deplacer( this.form.id_from_to_$i, this.form.id_from_$i);'";
@@ -620,6 +620,95 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 	}
 	break;
 
+/*------------------------------------------------------------------------------ FSD*/
+/*------------------------------------------------------------------------------ */	
+	
+	case "fsd"	: {
+/*Gestion des niveau de droit*/
+if ($niveau <= 64) $desc = " bloque"; else $desc = null;
+if ($niveau <= 64) $disa = "disabled"; else $disa = null;
+
+/*------------------------------------------------------------------------------ EDIT  EN TETE*/
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
+        echo ("</div>");
+/*------------------------------------------------------------------------------ #Onglet Fiche*/
+        echo ("<div id=\"fiche\" >");
+        echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"fsd\" action=\"\" >");
+
+        echo ("<div style=\"float:left;\">");
+            echo ("<font size=5 color=#008C8E >".$lang[$lang_select]['edit_fiche']."</font>");
+        echo ("</div>");
+        echo ("<div style=\"float:right;\">");
+            if ($mode == "fsd") {
+                echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+                echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_champ']."</button> ");
+            } else {
+                echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
+            }
+		echo ("</div>");
+		if (isset($_GET['id']) & !empty($_GET['id'])) {
+            $id=$_GET['id'];
+            echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
+            echo ("<input type=\"hidden\" name=\"type\" value=\"fsd\" />");
+			
+			/*voca_ctrl*/
+			$query = "SELECT * FROM fsd.formats WHERE \"uid\" = '$id';";
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+			$row=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
+			
+			if (pg_num_rows ($result)) {
+			
+			echo ("<br><br>");
+
+//------------------------------------------------------------------------------ Edit
+		echo ("<div id=\"radio2\">");    
+		echo ("<fieldset><LEGEND>Champ du FSD</LEGEND>");
+		metaform_text ("uid"," bloque",40,"","uid",sql_format_quote($row["uid"],"undo"));
+		// echo "<BR>";
+		metaform_text ("Jeu de données"," bloque",40,"","typ_jdd",sql_format_quote($row["typ_jdd"],"undo"));
+		// echo "<BR>";
+		metaform_text ("Identifiant du champ"," bloque",40,"","cd_ddd",sql_format_quote($row["cd_ddd"],"undo"));
+		echo "<BR>";
+		metaform_text ("Ordre de la table",$desc,10,"","ordre_table",sql_format_quote($row["ordre_table"],"undo"));
+		metaform_text ("Code de la table",$desc,40,"","cd_table",sql_format_quote($row["cd_table"],"undo"));
+		echo "<BR>";
+		metaform_text ("Ordre du champ",$desc,10,"","ordre_champ",sql_format_quote($row["ordre_champ"],"undo"));
+		metaform_text ("Code du champ",$desc,40,"","cd_champ",sql_format_quote($row["cd_champ"],"undo"));
+		echo "<BR>";
+		metaform_text ("Obligation",$desc,10,"","obligation",sql_format_quote($row["obligation"],"undo"));
+		metaform_text ("Unicité",$desc,10,"","unicite",sql_format_quote($row["unicite"],"undo"));
+		echo "<BR>";
+		echo ("<label class=\"preField\">Règles de renseignement</label>");
+		echo ("<textarea name=\"regle\" $disa style=\"width:80%;$gris\" rows=\"3\" >".sql_format_quote($row["regle"],"undo")."</textarea><br><br>");
+		// metaform_text ("Bonne pratique",$desc,60,"","regle",sql_format_quote($row["regle"],"undo"));
+		echo "<BR>";
+		
+			echo ("</fieldset>");
+			echo ("</div>");
+			}
+/* ------------------------------------------------------------------------------ EDIT catnat SAVE*/
+        echo ("<div style=\"float:right;\"><br>");
+			if ($mode == "fsd") {
+				echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+				echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_champ']."</button> ");
+			} else {
+				echo ("<button id=\"retour4-button\">".$lang[$lang_select]['retour']."</button> ");
+			}
+			echo ("</div>");
+			echo ("</form>");
+			} else fatal_error ("ID ".$id." > Vide !",false);
+		
+    
+        echo ("<div id=\"exit-confirm\" title=\"Retour\">");
+            echo ("<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>".$lang[$lang_select]['retour_dialog']."</p>");
+        echo ("</div>");
+
+        echo ("<div id=\"enregistrer-dialog\">");
+            echo ("<center><img src=\"../../_GRAPH/check.png\"  /><br>".$lang[$lang_select]['enregistrer_dialog']."</center>");
+        echo ("</div>");
+
+	}
+	break;
 }
 
 //------------------------------------------------------------------------------
