@@ -681,6 +681,21 @@ function metaform_sel ($label,$descr,$style,$liste,$champ,$val,$tooltip='')
 	echo ("</select><br>");
 }
 
+function metaform_check ($label,$descr,$style,$liste,$champ,$liste_reponse,$tooltip='')
+{
+	if (strpos($descr,"no_lab") === false)
+	if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\">".$label."</label>");
+	else echo ("<label title=\"".$tooltip."\" class=\"preField\">".$label."</label>");
+
+	if (!isset($extra)) $extra = "";				
+	if (strpos($descr,"bloque") !== false) {$extra .= " disabled ";}	
+	if (strpos($descr,"bloque") !== false AND $liste_reponse == null) {$extra .= " class=\"bloque\"";}	
+	if ($liste_reponse == null) $liste_reponse = array(null);
+	
+    foreach ($liste as $key => $value) 
+        echo ("<br><input type=\"checkbox\" id=\"$champ\" name=\"$champ\" value=\"$key\" style=\"$style\" style=\"$style\" $extra ".(in_array($key,$liste_reponse) ? "checked" : "")." >$value");
+
+}
 
 function metaform_sel_multi ($label,$descr,$size,$style,$extra,$liste,$champ,$val,$tooltip='')
 {
