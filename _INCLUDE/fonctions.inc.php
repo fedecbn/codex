@@ -405,7 +405,7 @@ function add_suivi2 ($etape,$id_user,$uid,$table,$champ,$valeur_1,$valeur_2,$rub
 		$valeur_2 = mono_table($valeur_2);
 	
 	/*valeur_1 = VALEUR INITIALE*/
-	var_dump($valeur_1);
+	// var_dump($valeur_1);
 	if (($valeur_1 == null) OR (!empty($valeur_1)))
 		{
 		$valeur_1 = null;
@@ -693,8 +693,10 @@ function metaform_check ($label,$descr,$style,$liste,$champ,$liste_reponse,$tool
 	if ($liste_reponse == null) $liste_reponse = array(null);
 	
     foreach ($liste as $key => $value) 
-        echo ("<br><input type=\"checkbox\" id=\"$champ\" name=\"$champ\" value=\"$key\" style=\"$style\" style=\"$style\" $extra ".(in_array($key,$liste_reponse) ? "checked" : "")." >$value");
-
+		{
+		$checked = array_key_exists($key,$liste_reponse) ? "checked" : "";
+		echo ("<br><input type=\"checkbox\" id=\"".$champ."[]\" name=\"".$champ."[]\" value=\"$key\" style=\"$style\" style=\"$style\" $extra $checked >$value");
+		}
 }
 
 function metaform_sel_multi ($label,$descr,$size,$style,$extra,$liste,$champ,$val,$tooltip='')
@@ -1014,15 +1016,18 @@ function update_multi($query,$statut,$id_att,$att_sel,$table,$id)
 	$att = empty($att) ? array() : $att;
 	$att_sel = empty($att_sel) ? array() : $att_sel;
     // echo "<br>".$query;
-	// echo "$statut 1 :";var_dump($att);
-	// echo "$statut 2 :";var_dump($att_sel);
-	
+
 	if ($table == "eee.reponse") {$att3 = 'zone';} 
 	else {$att3 = 'statut';}
 	
 	$query = "";
 	$supp = array_diff($att, $att_sel);
 	$add = array_diff($att_sel,$att);
+	
+	// echo "$statut 1 :<BR>";var_dump($att);
+	// echo "$statut 2 :<BR>";var_dump($att_sel);
+	// echo "supp :<BR>";var_dump($supp);
+	// echo "add :<BR>";var_dump($add);
 	
 	if (!empty($supp))		/*Suppression*/
 		{
