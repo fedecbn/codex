@@ -92,7 +92,6 @@ $lang['it']['eee']="";
 $lang['fr']['eee_reg']="Listes EEE régionales";
 $lang['it']['eee_reg']="";
 
-
 $lang['fr']['groupe_eee_1']="Identification";
 $lang['it']['groupe_eee_1']="";
 

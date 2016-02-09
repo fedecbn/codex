@@ -37,7 +37,6 @@ while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
 	$ida[$row['ida']] = "ida".$row['ida'];
 pg_free_result ($result);unset($query);
 
-// include ("./eee-ref.php");		
 global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ('eee');
 
@@ -45,30 +44,28 @@ if (!empty ($id))  {                                                            
 	if ($niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
 		{	
 		// /*Statuts internationaux*/
-		$statut = array('pres'=>$_POST['pays_pres_select'],'indig'=>$_POST['pays_indi_select'],'invav'=>$_POST['st_nvav_inter_select']);
-		foreach ($statut as $stt => $val_2)	{
-			$query = "SELECT t.uid, st.idp,st.statut, p.pays, p.region_biogeo FROM eee.taxons AS t JOIN eee.statut_inter st ON t.uid = st.uid JOIN eee.pays p ON st.idp = p.idp WHERE t.uid=$id AND st.statut = '".$stt."';";
-			$ligne = sql_assoc ($query,true);
-			$modif = check_modif($ligne['idp'],$val_2,"idp_".$stt);
-			if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($_POST["etape"],$id_user,$id,"statut_inter_".$stt,"idp_".$stt,$ligne['idp'],$val_2,'eee','manuel',$modif);
-			update_multi($query,$stt,"idp",$val_2,"eee.statut_inter",$id);
-			unset($ligne);
-			}
-		unset($val_2);
+		// $statut = array('pres'=>$_POST['pays_pres_select'],'indig'=>$_POST['pays_indi_select'],'invav'=>$_POST['st_nvav_inter_select']);
+		// foreach ($statut as $stt => $val_2)	{
+			// $query = "SELECT t.uid, st.idp,st.statut, p.pays, p.region_biogeo FROM eee.taxons AS t JOIN eee.statut_inter st ON t.uid = st.uid JOIN eee.pays p ON st.idp = p.idp WHERE t.uid=$id AND st.statut = '".$stt."';";
+			// $ligne = sql_assoc ($query,true);
+			// $modif = check_modif($ligne['idp'],$val_2,"idp_".$stt);
+			// if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($_POST["etape"],$id_user,$id,"statut_inter_".$stt,"idp_".$stt,$ligne['idp'],$val_2,'eee','manuel',$modif);
+			// update_multi($query,$stt,"idp",$val_2,"eee.statut_inter",$id);
+			// unset($ligne);
+			// }
+		// unset($val_2);
 
 		// /*Statuts nationaux*/
-		$statut_natio = array ("pres"=>$_POST["reg_pres_select"], "indig"=>$_POST["reg_indi_select"], "invav"=>$_POST["st_nvav_fr_select"]);
-		foreach ($statut_natio as $stt => $val_2)	{
-			$query="SELECT t.uid, sn.idr,sn.statut, r.region, r.region_biogeo FROM eee.taxons AS t JOIN eee.statut_natio sn ON t.uid = sn.uid JOIN eee.region r ON sn.idr = r.idr WHERE t.uid=".$id." AND sn.statut = '".$stt."';";
-			$ligne = sql_assoc ($query,true);
-			$modif = check_modif($ligne['idr'],$val_2,"idr_".$stt);
-			if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($_POST["etape"],$id_user,$id,"statut_natio_".$stt,"idr_".$stt,$ligne['idr'],$val_2,'eee','manuel',$modif);
-			update_multi($query,$stt,"idr",$val_2,"eee.statut_natio",$id);
-			unset($ligne);
-			}
-			unset($val_2);
-		
-		
+		// $statut_natio = array ("pres"=>$_POST["reg_pres_select"], "indig"=>$_POST["reg_indi_select"], "invav"=>$_POST["st_nvav_fr_select"]);
+		// foreach ($statut_natio as $stt => $val_2)	{
+			// $query="SELECT t.uid, sn.idr,sn.statut, r.region, r.region_biogeo FROM eee.taxons AS t JOIN eee.statut_natio sn ON t.uid = sn.uid JOIN eee.region r ON sn.idr = r.idr WHERE t.uid=".$id." AND sn.statut = '".$stt."';";
+			// $ligne = sql_assoc ($query,true);
+			// $modif = check_modif($ligne['idr'],$val_2,"idr_".$stt);
+			// if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($_POST["etape"],$id_user,$id,"statut_natio_".$stt,"idr_".$stt,$ligne['idr'],$val_2,'eee','manuel',$modif);
+			// update_multi($query,$stt,"idr",$val_2,"eee.statut_natio",$id);
+			// unset($ligne);
+			// }
+			// unset($val_2);
 		
 		/*Sources et fiabilité*/	
 		$query="SELECT t.uid, s.ids,s.contenu, s.fiabilite
@@ -84,10 +81,7 @@ if (!empty ($id))  {                                                            
 			if ($_POST['ids'.$key] != null) $val_2[$key] = $_POST['ids'.$key];
 			if ($_POST['fiab'.$key] != null) $fiab_2[$key] = $_POST['fiab'.$key];
 			}
-		// if (DEBUG) echo'<BR> val_1 ';var_dump($val_1);
-		// if (DEBUG) echo'<BR> val_2 ';var_dump($val_2);
-		// if (DEBUG) echo'<BR> fiab_1 ';var_dump($fiab_1);
-		// if (DEBUG) echo'<BR> fiab_2 ';var_dump($fiab_2);
+
 		foreach ($ref['liste_source'] as $key => $i)	{
 			$modif = check_modif($val_1[$key],$val_2[$key],"ids".$key);
 			if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($_POST["etape"],$id_user,$id,"liste_source_".$key,"ids".$key,$val_1[$key],$val_2[$key],'eee','manuel',$modif);	
@@ -96,7 +90,7 @@ if (!empty ($id))  {                                                            
 			}
 		pg_free_result ($result);unset($val_1);unset($val_2);
 
-			/*Sources*/
+		/*Sources*/
 		$query = "SELECT t.uid, s.ids, s.contenu, s.fiabilite
 			FROM eee.taxons t JOIN eee.source s ON t.uid = s.uid
 			WHERE t.uid = $id;";
@@ -142,8 +136,6 @@ if (!empty ($id))  {                                                            
 		foreach ($ref['liste_argument'] as $key => $i)	{
 			if ($_POST['ida'.$key]  != null) $val_2[$key] = $_POST['ida'.$key];
 			}
-		// if (DEBUG) echo'<BR> val_1 ';var_dump($val_1);
-		// if (DEBUG) echo'<BR> val_2 ';var_dump($val_2);
 		foreach ($ref['liste_argument'] as $key => $key)	{
 			$modif = check_modif($val_1[$key],$val_2[$key],'ida'.$key);
 			if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($_POST["etape"],$id_user,$id,"liste_argument_".$key,"ida".$key,$val_1[$key],$val_2[$key],'eee','manuel',$modif);
@@ -190,155 +182,154 @@ if (!empty ($id))  {                                                            
 			$val_1_eval[$field] = $val_1;
 			
 	//------------------------------------------------------------------------------ Update
-		
 		/*Entrée pour les questions Géo*/	
-		$pays_indi = !empty($_POST["pays_indi_select"]) ? $_POST["pays_indi_select"] : array();
-		$pays_choisis = !empty($_POST["pays_pres_select"]) ? $_POST["pays_pres_select"] : array();
-		$query_ag = array();
-		$query="SELECT p.idq, lr.code_question
-		FROM eee.taxons AS t JOIN eee.reponse p ON t.uid = p.uid JOIN eee.liste_reponse lr ON lr.idq = p.idq
-		WHERE t.uid=".$id.";";
-		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-			$reponse[$row['code_question']] = $row['idq'];
-		pg_free_result ($result);
+		// $pays_indi = !empty($_POST["pays_indi_select"]) ? $_POST["pays_indi_select"] : array();
+		// $pays_choisis = !empty($_POST["pays_pres_select"]) ? $_POST["pays_pres_select"] : array();
+		// $query_ag = array();
+		// $query="SELECT p.idq, lr.code_question
+		// FROM eee.taxons AS t JOIN eee.reponse p ON t.uid = p.uid JOIN eee.liste_reponse lr ON lr.idq = p.idq
+		// WHERE t.uid=".$id.";";
+		// $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		// while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+			// $reponse[$row['code_question']] = $row['idq'];
+		// pg_free_result ($result);
 		
 		/*question 1*/
-		$query="SELECT idp, pays
-		 FROM eee.pays WHERE pays IN ('Afghanistan', 'Afrique du Sud', 'Albanie', 'Algérie', 'Allemagne', 'Andorre', 'Argentine', 'Australie', 'Autriche', 'Belgique', 'Bolivie', 'Bosnie-Herzégovine', 'Brésil', 'Bulgarie', 'Canada', 'Chili', 'Chine', 'Cisjordanie', 'Colombie', 'Corée du Sud', 'Croatie', 'Danemark', 'Équateur', 'Espagne', 'États-Unis', 'Éthiopie', 'France', 'Grèce', 'Hongrie', 'Île Pitcairn', 'Inde', 'Irak', 'Iran', 'Irlande', 'Israël', 'Italie', 'Japon', 'Kenya', 'Libye', 'Luxembourg', 'Madagascar', 'Maroc', 'Mexique', 'Moldavie', 'Montenegro', 'Norvège', 'Nouvelle-Zélande', 'Ouzbékistan', 'Paraguay', 'Pays-Bas', 'Pérou', 'Pologne', 'Portugal', 'République Tchèque', 'Réunion', 'Roumanie', 'Royaume-Uni', 'Serbie', 'Slovaquie', 'Slovénie', 'Suède', 'Suisse', 'Syrie', 'Tadjikistan', 'Tanzanie', 'Taïwan', 'Territoire Palestinien Occupé', 'Tunisie', 'Ukraine', 'Uruguay', 'Vietnam') ORDER BY idp;";
-		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-			$pays_climat[$row['idp']] = $row['idp'];
-		pg_free_result ($result);
-		/*Regle de décision*/
-		$test_climat = array_intersect($pays_choisis,$pays_climat);
-		if (empty($pays_choisis))
-			$idq['ag1'] = null;
-		else if (!empty($test_climat))
-			$idq['ag1'] = 1;
-		else
-			$idq['ag1'] = 2;
+		// $query="SELECT idp, pays
+		 // FROM eee.pays WHERE pays IN ('Afghanistan', 'Afrique du Sud', 'Albanie', 'Algérie', 'Allemagne', 'Andorre', 'Argentine', 'Australie', 'Autriche', 'Belgique', 'Bolivie', 'Bosnie-Herzégovine', 'Brésil', 'Bulgarie', 'Canada', 'Chili', 'Chine', 'Cisjordanie', 'Colombie', 'Corée du Sud', 'Croatie', 'Danemark', 'Équateur', 'Espagne', 'États-Unis', 'Éthiopie', 'France', 'Grèce', 'Hongrie', 'Île Pitcairn', 'Inde', 'Irak', 'Iran', 'Irlande', 'Israël', 'Italie', 'Japon', 'Kenya', 'Libye', 'Luxembourg', 'Madagascar', 'Maroc', 'Mexique', 'Moldavie', 'Montenegro', 'Norvège', 'Nouvelle-Zélande', 'Ouzbékistan', 'Paraguay', 'Pays-Bas', 'Pérou', 'Pologne', 'Portugal', 'République Tchèque', 'Réunion', 'Roumanie', 'Royaume-Uni', 'Serbie', 'Slovaquie', 'Slovénie', 'Suède', 'Suisse', 'Syrie', 'Tadjikistan', 'Tanzanie', 'Taïwan', 'Territoire Palestinien Occupé', 'Tunisie', 'Ukraine', 'Uruguay', 'Vietnam') ORDER BY idp;";
+		// $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		// while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+			// $pays_climat[$row['idp']] = $row['idp'];
+		// pg_free_result ($result);
+		// /*Regle de décision*/
+		// $test_climat = array_intersect($pays_choisis,$pays_climat);
+		// if (empty($pays_choisis))
+			// $idq['ag1'] = null;
+		// else if (!empty($test_climat))
+			// $idq['ag1'] = 1;
+		// else
+			// $idq['ag1'] = 2;
 		/*Requêtes*/
-		if (empty($reponse['ag1']) AND !empty($pays_choisis))	/*Nouvelle liste de pays*/
-			{$query_ag['ag1'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag1'].", 'gl');";}
-		elseif (empty($pays_choisis) AND !empty($reponse['ag1']))	/*Supression de tous les pays*/
-			{$query_ag['ag1'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag1'].";";}
-		elseif ($idq['ag1'] != $reponse['ag1'] AND !empty($reponse['ag1']))	/*Modification de la liste des pays*/
-			{$query_ag['ag1'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag1']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag1'].", 'gl');";}
+		// if (empty($reponse['ag1']) AND !empty($pays_choisis))	/*Nouvelle liste de pays*/
+			// {$query_ag['ag1'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag1'].", 'gl');";}
+		// elseif (empty($pays_choisis) AND !empty($reponse['ag1']))	/*Supression de tous les pays*/
+			// {$query_ag['ag1'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag1'].";";}
+		// elseif ($idq['ag1'] != $reponse['ag1'] AND !empty($reponse['ag1']))	/*Modification de la liste des pays*/
+			// {$query_ag['ag1'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag1']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag1'].", 'gl');";}
 		
 		/* question 2 - Indigenat en Europe */
-		$query="SELECT p.idp
-		FROM eee.pays p
-		WHERE continent ='Europe';";
-		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-			$europe[$row['idp']] = $row['idp'];
-		pg_free_result ($result);
+		// $query="SELECT p.idp
+		// FROM eee.pays p
+		// WHERE continent ='Europe';";
+		// $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		// while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+			// $europe[$row['idp']] = $row['idp'];
+		// pg_free_result ($result);
 		/*Regle de décision*/
-		$indi_europe = array_intersect($pays_indi,$europe);
-		if (empty($pays_indi))
-			$idq['ag2'] = null;
-		else if (!empty($indi_europe))
-			$idq['ag2'] = 5;
-		else
-			$idq['ag2'] = 6;
+		// $indi_europe = array_intersect($pays_indi,$europe);
+		// if (empty($pays_indi))
+			// $idq['ag2'] = null;
+		// else if (!empty($indi_europe))
+			// $idq['ag2'] = 5;
+		// else
+			// $idq['ag2'] = 6;
 		/*Requêtes*/
-		if (empty($reponse['ag2']) AND !empty($pays_indi))	/*Nouvelle liste de pays*/
-			{$query_ag['ag2'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag2'].", 'gl');";}
-		elseif (empty($pays_choisis) AND !empty($reponse['ag2']))	/*Supression de tous les pays*/
-			{$query_ag['ag2'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag2'].";";}
-		elseif ($idq['ag2'] != $reponse['ag2']  AND !empty($reponse['ag2']))	/*Modification de la liste des pays*/
-			{$query_ag['ag2'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag2']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag2'].", 'gl');";}
+		// if (empty($reponse['ag2']) AND !empty($pays_indi))	/*Nouvelle liste de pays*/
+			// {$query_ag['ag2'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag2'].", 'gl');";}
+		// elseif (empty($pays_choisis) AND !empty($reponse['ag2']))	/*Supression de tous les pays*/
+			// {$query_ag['ag2'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag2'].";";}
+		// elseif ($idq['ag2'] != $reponse['ag2']  AND !empty($reponse['ag2']))	/*Modification de la liste des pays*/
+			// {$query_ag['ag2'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag2']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag2'].", 'gl');";}
 
 		// /*question 3 - nombre de Pays*/
 		// /*Regle de décision*/
 		// /* $nb_pays = count($pays_choisis);*/
-		$nb_pays_euro = count(array_intersect($pays_choisis,$europe));
-		if (empty($pays_choisis))
-			$idq['ag3'] = null;
-		else if ($nb_pays_euro <= 1)
-			$idq['ag3'] = 9;
-		elseif ($nb_pays_euro > 1 AND $nb_pays_euro <= 5)
-			$idq['ag3'] = 10;
-		elseif ($nb_pays_euro > 5)
-			$idq['ag3'] = 11;
+		// $nb_pays_euro = count(array_intersect($pays_choisis,$europe));
+		// if (empty($pays_choisis))
+			// $idq['ag3'] = null;
+		// else if ($nb_pays_euro <= 1)
+			// $idq['ag3'] = 9;
+		// elseif ($nb_pays_euro > 1 AND $nb_pays_euro <= 5)
+			// $idq['ag3'] = 10;
+		// elseif ($nb_pays_euro > 5)
+			// $idq['ag3'] = 11;
 			
 		/*Requêtes*/	
-		if (empty($reponse['ag3']) AND !empty($pays_choisis))	/*Nouvelle liste de pays*/
-			{$query_ag['ag3'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag3'].", 'gl');";}
-		elseif (empty($pays_choisis) AND !empty($reponse['ag3']))	/*Supression de tous les pays*/
-			{$query_ag['ag3'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag3'].";";}
-		elseif ($idq['ag3'] != $reponse['ag3']  AND !empty($reponse['ag3']))	/*Modification de la liste des pays*/
-			{$query_ag['ag3'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag3']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag3'].", 'gl');";}
+		// if (empty($reponse['ag3']) AND !empty($pays_choisis))	/*Nouvelle liste de pays*/
+			// {$query_ag['ag3'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag3'].", 'gl');";}
+		// elseif (empty($pays_choisis) AND !empty($reponse['ag3']))	/*Supression de tous les pays*/
+			// {$query_ag['ag3'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag3'].";";}
+		// elseif ($idq['ag3'] != $reponse['ag3']  AND !empty($reponse['ag3']))	/*Modification de la liste des pays*/
+			// {$query_ag['ag3'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag3']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag3'].", 'gl');";}
 		
 		/*question 4 - Etendue géographique*/
-		$query="SELECT x_min, x_max, y_min, y_max, st.idp
-		FROM eee.pays p JOIN eee.statut_inter st ON st.idp = p.idp
-		WHERE st.uid=".$id." AND statut = 'pres' ORDER BY x_min, x_max;";
-		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		$i=0;
-		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-			{
-			$xmin[$i] = $row['x_min'];
-			$ymin[$i] = $row['y_min'];
-			$xmax[$i] = $row['x_max'];
-			$ymax[$i] = $row['y_max'];
-			$i++;
-			}
+		// $query="SELECT x_min, x_max, y_min, y_max, st.idp
+		// FROM eee.pays p JOIN eee.statut_inter st ON st.idp = p.idp
+		// WHERE st.uid=".$id." AND statut = 'pres' ORDER BY x_min, x_max;";
+		// $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		// $i=0;
+		// while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+			// {
+			// $xmin[$i] = $row['x_min'];
+			// $ymin[$i] = $row['y_min'];
+			// $xmax[$i] = $row['x_max'];
+			// $ymax[$i] = $row['y_max'];
+			// $i++;
+			// }
 		
-		pg_free_result ($result);
+		// pg_free_result ($result);
 		/*Précalcul*/
-		if (count($xmin) == 0)
-			{$etendu_lat = 0;$etendu_long = 0;}
-		elseif (count($xmin) == 1)
-			{$etendu_lat = $xmax[0] - $xmin[0];	$etendu_long = $ymax[0] - $ymin[0];
-			}
-		else
-			{
-			for ($i = 0; $i < $nb_pays-1; $i++) $diff[$i]= $xmin[$i+1] - $xmax[$i];
-			$diff["last"] = 360 + ($xmin[0] - $xmax[$nb_pays-1]);
-			$etendu_lat = 360 - max($diff);
-			$etendu_long = max($ymax) - min($ymin);
-			}
-		if (DEBUG) echo "les étendues sont de  $etendu_lat en latitude et $etendu_long en longitude <BR>";
+		// if (count($xmin) == 0)
+			// {$etendu_lat = 0;$etendu_long = 0;}
+		// elseif (count($xmin) == 1)
+			// {$etendu_lat = $xmax[0] - $xmin[0];	$etendu_long = $ymax[0] - $ymin[0];
+			// }
+		// else
+			// {
+			// for ($i = 0; $i < $nb_pays-1; $i++) $diff[$i]= $xmin[$i+1] - $xmax[$i];
+			// $diff["last"] = 360 + ($xmin[0] - $xmax[$nb_pays-1]);
+			// $etendu_lat = 360 - max($diff);
+			// $etendu_long = max($ymax) - min($ymin);
+			// }
+		// if (DEBUG) echo "les étendues sont de  $etendu_lat en latitude et $etendu_long en longitude <BR>";
 		/*Regle de décision*/
-		if ($etendu_lat == 0 AND $etendu_long == 0)
-			$idq['ag4'] = null;
-		else if ($etendu_lat >=15 OR $etendu_long>=15)
-			$idq['ag4'] = 16;
-		else
-			$idq['ag4'] = 15;
+		// if ($etendu_lat == 0 AND $etendu_long == 0)
+			// $idq['ag4'] = null;
+		// else if ($etendu_lat >=15 OR $etendu_long>=15)
+			// $idq['ag4'] = 16;
+		// else
+			// $idq['ag4'] = 15;
 		/*Requêtes*/
-		if (empty($reponse['ag4']) AND !empty($pays_choisis))	/*Nouvelle liste de pays*/
-			{$query_ag['ag4'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag4'].", 'gl');";}
-		elseif (empty($pays_choisis) AND !empty($reponse['ag4']))	/*Supression de tous les pays*/
-			{$query_ag['ag4'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag4'].";";}
-		elseif ($idq['ag4'] != $reponse['ag4']  AND !empty($reponse['ag4']))	/*Modification de la liste des pays*/
-			{$query_ag['ag4'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag4']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag4'].", 'gl');";}
+		// if (empty($reponse['ag4']) AND !empty($pays_choisis))	/*Nouvelle liste de pays*/
+			// {$query_ag['ag4'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag4'].", 'gl');";}
+		// elseif (empty($pays_choisis) AND !empty($reponse['ag4']))	/*Supression de tous les pays*/
+			// {$query_ag['ag4'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag4'].";";}
+		// elseif ($idq['ag4'] != $reponse['ag4']  AND !empty($reponse['ag4']))	/*Modification de la liste des pays*/
+			// {$query_ag['ag4'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['ag4']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['ag4'].", 'gl');";}
 		
 		/* question 9 - EEE inter */
-		$pays_invav = !empty($_POST["st_nvav_inter_select"]) ? $_POST["st_nvav_inter_select"] : array();
+		// $pays_invav = !empty($_POST["st_nvav_inter_select"]) ? $_POST["st_nvav_inter_select"] : array();
 		// /*Regle de décision*/
-		if (empty($pays_invav))
-			$idq['cg9'] = null;
-		elseif (count($pays_invav) >=3)
-			$idq['cg9'] = 65;
-		else
-			$idq['cg9'] = 66;
+		// if (empty($pays_invav))
+			// $idq['cg9'] = null;
+		// elseif (count($pays_invav) >=3)
+			// $idq['cg9'] = 65;
+		// else
+			// $idq['cg9'] = 66;
 		/*Requêtes*/
-		if (empty($reponse['cg9']) AND !empty($pays_invav))	/*Nouvelle liste de pays*/
-			{$query_ag['cg9'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['cg9'].", 'gl');";}
-		elseif (empty($pays_invav) AND !empty($reponse['cg9']))	/*Supression de tous les pays*/
-			{$query_ag['cg9'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['cg9'].";";}
-		elseif ($idq['cg9'] != $reponse['cg9']  AND !empty($reponse['cg9']))	/*Modification de la liste des pays*/
-			{$query_ag['cg9'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['cg9']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['cg9'].", 'gl');";}
+		// if (empty($reponse['cg9']) AND !empty($pays_invav))	/*Nouvelle liste de pays*/
+			// {$query_ag['cg9'] = "INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['cg9'].", 'gl');";}
+		// elseif (empty($pays_invav) AND !empty($reponse['cg9']))	/*Supression de tous les pays*/
+			// {$query_ag['cg9'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['cg9'].";";}
+		// elseif ($idq['cg9'] != $reponse['cg9']  AND !empty($reponse['cg9']))	/*Modification de la liste des pays*/
+			// {$query_ag['cg9'] = "DELETE FROM eee.reponse WHERE uid = $id AND idq = ".$reponse['cg9']."; INSERT INTO eee.reponse(uid,idq, zone) VALUES ($id, ".$idq['cg9'].", 'gl');";}
 			
 		/*Lancement des requêtes pour les questions 1 à 4 + 9*/
-		foreach ($query_ag as $key => $query)
-			{
-			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$key." => ".$query);
-			pg_free_result ($result);
-			}
+		// foreach ($query_ag as $key => $query)
+			// {
+			// $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$key." => ".$query);
+			// pg_free_result ($result);
+			// }
 
 
 		/*Question_reponses*/
