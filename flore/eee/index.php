@@ -136,45 +136,6 @@ include ("../commun/add_fiche.php");
 	case "view" : 
 	case "edit" : {
 //------------------------------------------------------------------------------ REF. EEE
-
-		/*Statut internationaux*/
-		$query="SELECT idp, pays FROM eee.pays ORDER BY pays;";
-		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-			$pays[$row["idp"]]=$row["pays"];
-		pg_free_result ($result);
-		foreach ($statut as $val_stat)
-			{
-			/*l'edit*/
-			$query="SELECT p.idp, pays FROM eee.statut_inter si LEFT JOIN eee.pays p ON si.idp = p.idp WHERE uid = $id and statut = '$val_stat';";
-			$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-			while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-				$pays_statut_edit[$val_stat][$row["idp"]]=$row["pays"];
-			pg_free_result ($result);
-			/*le reste*/
-			if (empty($pays_statut_edit[$val_stat])) {$pays_statut_reste[$val_stat] = $pays;}
-			else {$pays_statut_reste[$val_stat] = array_diff($pays,$pays_statut_edit[$val_stat]);}
-			}
-
-		/*Statut nationaux*/			
-        $query="SELECT idr, region FROM eee.region r ORDER BY region;";
-		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-            $region[$row["idr"]]=$row["region"];
-		pg_free_result ($result);
-		foreach ($statut as $val_stat)
-			{
-			/*l'edit*/
-			$query="SELECT r.idr, region FROM eee.region r JOIN eee.statut_natio sn ON sn.idr = r.idr WHERE uid = $id AND statut = '$val_stat';";
-			$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-			while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
-				$region_statut_edit[$val_stat][$row["idr"]]=$row["region"];
-			pg_free_result ($result);
-			/*le reste*/
-			if (empty($region_statut_edit[$val_stat])) {$region_statut_reste[$val_stat] = $region;}
-			else {$region_statut_reste[$val_stat] = array_diff($region,$region_statut_edit[$val_stat]);}
-			}
-		
 		/*Question réponses et evaluation*/
 		$query="SELECT t.uid, r.idq, r.zone, lr.code_question, lr.libelle_court_reponse, lr.indicateur
 		FROM eee.taxons AS t 
@@ -193,7 +154,8 @@ include ("../commun/add_fiche.php");
 		$query="SELECT code_question
 		FROM eee.liste_reponse;";
 		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-        if (!is_null($eval_temp))
+        
+		if (!is_null($eval_temp))
 			{
 			while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
 				{
@@ -262,7 +224,6 @@ include ("../commun/add_fiche.php");
 if ($niveau <= 64) $desc = " bloque"; else $desc = null;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
-		
 //------------------------------------------------------------------------------ EDIT EEE EN TETE
 /*------------------------------------------------------------------------------ #Onglet 1*/
         echo ("<div id=\"$id_page\" >");
@@ -360,6 +321,8 @@ foreach ($questionnaire as $ooo => $info)
 			echo ("<td><h3 style=\"margin-right:30px\">Sources</h3></td>");
 			echo ("<td><h3 style=\"margin-right:5px\">Fiabilité</h3></td></tr>");
 	foreach ($info["titre"] as $key => $val) {
+	// var_dump($lib_reponse[$info["code"].$key]);
+	// var_dump($lib_reponse_edit[$info["code"].$key]);
 		echo ("<tr valign=top >");
 			echo("<td>");
 			metaform_check ($val,$desc,null,$lib_reponse[$info["code"].$key],$info["code"].$key,$lib_reponse_edit[$info["code"].$key]);

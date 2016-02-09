@@ -333,21 +333,22 @@ if (!empty ($id))  {                                                            
 
 
 		/*Question_reponses*/
-		$question_reponse = array (
-			"bg5"=>$_POST["viab_graine_select"], 
-			"bg6"=>$_POST["croiss_veg_select"], 
-			"bg7"=>$_POST["mod_disp_select"], 
-			"bg8"=>$_POST["type_bio_select"], 
-			"cg10"=>$_POST["taxo_select"], 
-			"cg11"=>$_POST["habt_select"], 
-			"cg12"=>$_POST["dens_pop_select"]	
-			);
-		foreach ($question_reponse as $key_st => $val_st)
+		// $question_reponse = array (
+			// "bg5"=>$_POST["viab_graine_select"], 
+			// "bg6"=>$_POST["croiss_veg_select"], 
+			// "bg7"=>$_POST["mod_disp_select"], 
+			// "bg8"=>$_POST["type_bio_select"], 
+			// "cg10"=>$_POST["taxo_select"], 
+			// "cg11"=>$_POST["habt_select"], 
+			// "cg12"=>$_POST["dens_pop_select"]	
+			// );
+		$question_reponse = array ("ag1", "ag2", "ag3", "ag4", "bg5", "bg6", "bg7", "bg8", "cg10", "cg11", "cg12");
+		foreach ($question_reponse as $key)
 			{
 			$query="SELECT t.uid, r.idq, r.zone
 			FROM eee.taxons AS t JOIN eee.reponse AS r ON t.uid = r.uid	JOIN eee.liste_reponse lr ON lr.idq = r.idq
-			WHERE t.uid=$id AND lr.code_question = '$key_st';"; 			
-			update_multi($query,$_POST["zone"],"idq",$val_st,"eee.reponse",$id);
+			WHERE t.uid=$id AND lr.code_question = '$key';"; 			
+			update_multi($query,$_POST["zone"],"idq",$_POST[$key],"eee.reponse",$id);
 			}
 		
 
@@ -399,10 +400,10 @@ if (!empty ($id))  {                                                            
 		pg_free_result ($result);
 		
 		// /*Question spéciales diminuant la fiabilité*/
-		if ($_POST["viab_graine_select"][0] == 21) {$nb_rep = $nb_rep-1;}
-		if ($_POST["croiss_veg_select"][0] == 30) {$nb_rep = $nb_rep-1;}
-		if ($_POST["mod_disp_select"][0] == 43) {$nb_rep = $nb_rep-1;}
-		if ($_POST["dens_pop_select"][0] == 90) {$nb_rep = $nb_rep - 1;}
+		if ($_POST["bg5"][0] == 21) {$nb_rep = $nb_rep-1;}
+		if ($_POST["bg6"][0] == 30) {$nb_rep = $nb_rep-1;}
+		if ($_POST["bg7"][0] == 43) {$nb_rep = $nb_rep-1;}
+		if ($_POST["cg12"][0] == 90) {$nb_rep = $nb_rep - 1;}
 			
 		if ($nb_src_total + $nb_rep_total + $nb_src_bonne != 0)
 			{
@@ -508,18 +509,18 @@ if (!empty ($id))  {                                                            
 	//------------------------------------------------------------------------------ Suite et Fin du suivi
 
 		/*Reponses*/	
-		if (isset($_POST["viab_graine_select"])) $idq["bg5"] = $_POST["viab_graine_select"];
-		if (isset($_POST["croiss_veg_select"])) $idq["bg6"] = $_POST["croiss_veg_select"];
-		if (isset($_POST["mod_disp_select"])) $idq["bg7"] = $_POST["mod_disp_select"];
-		if (isset($_POST["type_bio_select"])) $idq["bg8"] = $_POST["type_bio_select"];
-		if (isset($_POST["taxo_select"])) $idq["cg10"] = $_POST["taxo_select"];
-		if (isset($_POST["habt_select"])) $idq["cg11"] = $_POST["habt_select"];
-		if (isset($_POST["dens_pop_select"])) $idq["cg12"] = $_POST["dens_pop_select"];
+		$question_reponse = array ("ag1", "ag2", "ag3", "ag4", "bg5", "bg6", "bg7", "bg8", "cg10", "cg11", "cg12");
+		foreach ($question_reponse as $key)
+			if (isset($_POST[$key])) $idq[$key] = $_POST[$key];
+			
+		// if (isset($_POST["croiss_veg_select"])) $idq["bg6"] = $_POST["croiss_veg_select"];
+		// if (isset($_POST["mod_disp_select"])) $idq["bg7"] = $_POST["mod_disp_select"];
+		// if (isset($_POST["type_bio_select"])) $idq["bg8"] = $_POST["type_bio_select"];
+		// if (isset($_POST["taxo_select"])) $idq["cg10"] = $_POST["taxo_select"];
+		// if (isset($_POST["habt_select"])) $idq["cg11"] = $_POST["habt_select"];
+		// if (isset($_POST["dens_pop_select"])) $idq["cg12"] = $_POST["dens_pop_select"];
 
 		$val_2 = $idq;
-		// if (DEBUG) echo'<BR> val_1 ';var_dump($val_1_idq);
-		// if (DEBUG) echo'<BR> val_2 ';var_dump($val_2);
-		// var_dump($ref['liste_question']);
 		foreach ($ref['liste_question'] as $key => $val)	{
 			$modif = check_modif($val_1_idq[$key],$val_2[$key],$key);
 			// echo "<BR> clé : $key";
@@ -543,8 +544,6 @@ if (!empty ($id))  {                                                            
 		foreach ($champ_eval as $key => $value)
 			if (isset($value)) $val_2[$key] = $value;
 
-		// if (DEBUG) echo'<BR> val_1 ';var_dump($val_1_eval);
-		// if (DEBUG) echo'<BR> val_2 ';var_dump($val_2);
 		foreach ($champ_eval as $field  => $foo) {
 			$modif = check_modif($val_1_eval[$field],$val_2[$field],$field);
 			if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($_POST["etape"],$id_user,$id,"evaluation",$field,$val_1_eval[$field],$val_2[$field],'eee','manuel',$modif);
