@@ -24,15 +24,17 @@
     var $tabs = $("#tabs").tabs();
 
     if ( $("#mode").val() == 'liste') {
-        $tabs.tabs('disable',2);                                                // Fiche
+        $tabs.tabs('disable',3);                                                // Fiche
     } 
 	else if ( $("#mode").val() == 'maj') {
         $tabs.tabs ('disable',0);                                               //   Fiche                                              
         $tabs.tabs ('disable',1);                                               //                                                 	
         $tabs.tabs ('disable',2);                                               //                                                 	
+        $tabs.tabs ('disable',3);                                               //                                                 	
 	}
 	else {
-        $tabs.tabs ("option","active",2);                                       // Fiche
+        $tabs.tabs ("option","active",3);                                       // Fiche
         $tabs.tabs ('disable',0);                                               //                                                 
         $tabs.tabs ('disable',1);                                               //                                                 
+        $tabs.tabs ('disable',2);                                               //                                                 
     }

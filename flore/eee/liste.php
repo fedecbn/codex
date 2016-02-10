@@ -19,12 +19,8 @@
 session_start();
 include ("commun.inc.php");
 
-
 //------------------------------------------------------------------------------ VAR.
-// $table="taxons";
-// $sIndexColumn = "uid";
-// $bool_txt=array(""=>"","f"=>"","t"=>"<b>Oui</b>");
-// $etape_txt=array("","pré-eval","éval","post-éval");
+$onglet = $_GET['onglet'];
 
 //------------------------------------------------------------------------------ PARMS.
 
@@ -34,16 +30,16 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 
 //------------------------------------------------------------------------------ REF.		
 global $aColumns, $ref, $champ_ref ;
-ref_colonne_et_valeur ($id_page);
+ref_colonne_et_valeur ($onglet);
 
 //------------------------------------------------------------------------------ FILTERS
-$filters = filter_column($aColumns[$id_page]);
+$filters = filter_column($aColumns[$onglet]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query=$query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
+$query = $query_liste[$onglet].$sWhere." ".$sOrder." ".$sLimit;
 
 // echo "<br>".$query;
 
@@ -62,7 +58,7 @@ $iTotal = $aResultTotal;
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
 	{
 		$sOutput .= "[";
-		foreach ($aColumns[$id_page] as $key => $value) {
+		foreach ($aColumns[$onglet] as $key => $value) {
 		/*---------------*/
 		/*cas paticuliers*/
 		/*---------------*/
@@ -86,6 +82,8 @@ $iTotal = $aResultTotal;
 		/*---------------*/
         if ($niveau == 1)                                                       // Lecteur
             $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
+        elseif ($onglet == 'eee_reg')
+			$sOutput .= '"<a class=eee_reg id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",';     
         else        
             $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
 		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';

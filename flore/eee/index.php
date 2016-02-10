@@ -69,8 +69,8 @@ echo ("</div>");
 /*Deuxième bandeau : les onglets*/
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
 echo ("<ul>");
-echo ("<li><a href=\"#".$id_page."\">".$lang[$lang_select][$id_page]."</a></li>");
-echo ("<li><a href=\"#".$id_page_2."\">".$lang[$lang_select][$id_page_2]."</a></li>");
+	foreach ($onglet["id"] as $key => $val)
+		echo ("<li><a href=\"#".$val."\">".$onglet["name"][$key]."</a></li>");
 echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
 echo ("</ul>");
 
@@ -82,12 +82,9 @@ switch ($mode) {
 /*------------------------------------------------------------------------------------------------------- */
     case "liste" : {
 /*------------------------------------------------------------------------------ #Onglet 1*/
-        echo ("<div id=\"".$id_page."\" >");
-            /*Troisième bandeau*/
-            echo ("<div id=\"titre2\">");
-                echo ($lang[$lang_select]["liste_taxons"]);
-            echo ("</div>");
-            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$id_page."_".$id_user.".csv\" />");
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
+            echo ("<div id=\"titre2\">".$onglet["sstitre"][0]."</div>");
+            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$onglet["id"][0]."_".$id_user.".csv\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
@@ -99,15 +96,13 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			aff_table_reborn ("onglet0",$onglet["id"][0]);	
+			// aff_table_new ($id_page,true,true);			
 			// aff_table ($id_page."-liste",true,true);			
 		echo ("</div>");
-//------------------------------------------------------------------------------ #deuxieme onglet (DROIT)
-        echo ("<div id=\"droit\" >");
-            /*Troisième bandeau*/
-            echo ("<div id=\"titre2\">");
-                echo "Droit d'utilisation de la rubrique";
-            echo ("</div>");
+//------------------------------------------------------------------------------ #deuxieme onglet
+        echo ("<div id=\"".$onglet["id"][1]."\" >");
+            echo ("<div id=\"titre2\">".$onglet["sstitre"][1]."</div>");
             echo ("<div style=\"float:right;\">");
                 // if ($niveau >= 128) 
                     // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
@@ -118,7 +113,24 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ("droit",false,true);			
+			aff_table_reborn ("onglet1",$onglet["id"][1]);	
+			// aff_table_new ("droit",false,true);			
+        echo ("</div>");
+//------------------------------------------------------------------------------ #troisien onglet (DROIT)
+        echo ("<div id=\"".$onglet["id"][2]."\" >");
+            echo ("<div id=\"titre2\">".$onglet["sstitre"][2]."</div>");
+            echo ("<div style=\"float:right;\">");
+                // if ($niveau >= 128) 
+                    // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				// if ($niveau >= 64) 
+					// echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                // if ($niveau >= 255) 
+                    // echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+            echo ("</div><br><br>");
+            echo ("<div id=\"dialog\"></div>");
+			/*Table des données*/
+			aff_table_reborn ("user",$onglet["id"][2]);	
+			// aff_table_new ("droit",false,true);			
         echo ("</div>");
     }
     break;
@@ -134,8 +146,44 @@ include ("../commun/add_fiche.php");
 /*------------------------------------------------------------------------------ #CAS MODIFICATION DE FICHE */
 /*--------------------------------------------------------------------------------------------------------- */
 	case "view" : 
+	case "eee_reg" : 
 	case "edit" : {
 //------------------------------------------------------------------------------ REF. EEE
+	if ($mode == "eee_reg")
+		{
+		/*Question réponses et evaluation*/
+		$query="SELECT t.uid, t.idq, lr.code_question, lr.libelle_court_reponse, lr.indicateur
+		FROM eee.reponse_regional AS t 
+		JOIN eee.liste_reponse lr ON lr.idq = t.idq
+		WHERE t.uid = $id;";
+		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+        while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+			$lib_reponse_edit[$row['code_question']][$row['idq']] = $row['libelle_court_reponse'];
+		pg_free_result ($result);	
+	
+	    $query="SELECT code_question,idq, libelle_court_reponse FROM eee.liste_reponse ORDER BY code_question,code_eval;";
+        $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+        while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+            {
+			$lib_reponse[$row['code_question']][$row['idq']] = $row['libelle_court_reponse'];
+			if (!isset($lib_reponse_edit[$row['code_question']][$row['idq']])) {$lib_reponse_reste[$row['code_question']][$row['idq']] = $lib_reponse[$row['code_question']][$row['idq']];}
+			}
+        pg_free_result ($result);
+
+		/*sources*/
+		$query="SELECT t.uid, t.source, lr.coor_ids
+		FROM eee.reponse_regional AS t 
+		JOIN eee.liste_reponse lr ON lr.idq = t.idq
+		WHERE t.uid = $id;";
+        $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+        while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+			{
+            $ids_result[$row['coor_ids']] = $row['source'];
+			}
+			pg_free_result ($result);
+		}
+	else
+		{
 		/*Question réponses et evaluation*/
 		$query="SELECT t.uid, r.idq, r.zone, lr.code_question, lr.libelle_court_reponse, lr.indicateur
 		FROM eee.taxons AS t 
@@ -219,10 +267,11 @@ include ("../commun/add_fiche.php");
             $carac_avere_base = $row['carac_avere'];			
             $eval_expert = $row['eval_expert'];}			
         pg_free_result ($result);
-
+		}
+		
 /*Gestion des niveau de droit*/
-if ($niveau <= 64) $desc = " bloque"; else $desc = null;
-if ($niveau <= 64) $disa = "disabled"; else $disa = null;
+if ($niveau <= 64 OR $mode == 'eee_reg') $desc = " bloque"; else $desc = null;
+if ($niveau <= 64 OR $mode == 'eee_reg') $disa = "disabled"; else $disa = null;
 
 //------------------------------------------------------------------------------ EDIT EEE EN TETE
 /*------------------------------------------------------------------------------ #Onglet 1*/
@@ -317,7 +366,7 @@ foreach ($questionnaire as $ooo => $info)
 	echo ("<table border=0 width=\"1200\">");
 		echo ("<tr valign=top>");
 			echo ("<td><h3 style=\"margin-left:0px;margin-right:35px;\">Questions / Réponses</h3></td>");
-			echo ("<td><h3 style=\"margin-right:30px\">Argumentations</h3></td>");
+			if ($mode !='eee_reg') echo ("<td><h3 style=\"margin-right:30px\">Argumentations</h3></td>");
 			echo ("<td><h3 style=\"margin-right:30px\">Sources</h3></td>");
 			echo ("<td><h3 style=\"margin-right:5px\">Fiabilité</h3></td></tr>");
 	foreach ($info["titre"] as $key => $val) {
@@ -327,8 +376,8 @@ foreach ($questionnaire as $ooo => $info)
 			echo("<td>");
 			metaform_check ($val,$desc,null,$lib_reponse[$info["code"].$key],$info["code"].$key,$lib_reponse_edit[$info["code"].$key]);
 			echo("</td><td>");
-			metaform_text_area (null," no_lab $desc","10","50","height:80px;",$ida[$key],sql_format_quote($ida_result[$key],'undo_html'));
-			echo("</td><td>");
+			if ($mode !='eee_reg') metaform_text_area (null," no_lab $desc","10","50","height:80px;",$ida[$key],sql_format_quote($ida_result[$key],'undo_html'));
+			if ($mode !='eee_reg') echo("</td><td>");
 			metaform_text_area (null," no_lab $desc","10","50","height:80px;",$ids[$key],sql_format_quote($ids_result[$key],'undo_html'));
 			echo("</td><td>");
 			metaform_bout_plus (null," no_lab $desc",$fiab[$key],$fiab_result[$key]);				
@@ -340,6 +389,8 @@ foreach ($questionnaire as $ooo => $info)
 	}
 			
 //------------------------------------------------------------------------------ EDIT EEE GRP5
+if ($mode != 'eee_reg')
+	{
         echo ("<div id=\"radio2\">");
         echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_eee_5']."</LEGEND>");
             echo ("<table border=0");
@@ -429,7 +480,7 @@ foreach ($questionnaire as $ooo => $info)
 		echo ("</fieldset>");
         echo ("</div>");
 
-		
+	}	
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
         echo ("<div style=\"float:right;\"><br>");
 			if ($mode == "edit") {

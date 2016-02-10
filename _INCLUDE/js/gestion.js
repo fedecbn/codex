@@ -276,6 +276,23 @@ if ( $("#mode").val() == 'liste') {
         return (false);
 	});
 
+    $('#onglet0-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet1-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet2-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet3-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+
 	
 //------------------------------------------------------------------------------ CHECKBOX
 
