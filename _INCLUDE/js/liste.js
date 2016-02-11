@@ -108,6 +108,31 @@
         return (false);
 	});
 
+	/*A supprimer à terme*/
+    $('#lsi-liste').on("click",".lsi-view", function ($e) {
+        window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+    $('#lsi-liste').on("click",".lsi-edit", function ($e) {
+        window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+//------------------------------------------------------------------------------ CHECKBOX
+
+    lsi_affMasqBtn ();
+
+    $('.lsi-liste-all').click(function () {
+        console.log ('lsi-liste-all');
+        $('.lsi-liste-one').not(this).attr('checked', this.checked);
+        lsi_affMasqBtn();
+    });
+
+    $('#lsi-liste').on("click",".lsi-liste-one", function ($e) {
+        console.log ('lsi-liste-one');
+        lsi_affMasqBtn();
+	});
 	
 //------------------------------------------------------------------------------ CHECKBOX
 
