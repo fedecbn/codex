@@ -45,11 +45,10 @@ ref_colonne_et_valeur ($id_page);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
-<script type="text/javascript" language="javascript" src="js/liste.js"></script>
-<script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
+<script type="text/javascript" language="javascript" src="js/commun.js"></script>
 
 <?php
+
 //------------------------------------------------------------------------------ MAIN
 // html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
 html_header_2 ("utf-8","table_eval.css","jquery-te-1.4.0.css",$title);
@@ -363,6 +362,9 @@ foreach ($questionnaire as $ooo => $info)
 	{
 	echo ("<div id=\"radio2\">");
 	echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_eee_'.$ooo]."</LEGEND>");
+	if ($mode !='eee_reg') echo ("<table border=0 width=\"1200\">");
+	
+	
 	echo ("<table border=0 width=\"1200\">");
 		echo ("<tr valign=top>");
 			echo ("<td><h3 style=\"margin-left:0px;margin-right:35px;\">Questions / Réponses</h3></td>");
