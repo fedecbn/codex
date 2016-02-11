@@ -80,6 +80,7 @@ $(document).ready(function(){
 
 //------------------------------------------------------------------------------ UI / Boutons
 
+
     $( "#home-button" )
         .button({
             text: false
