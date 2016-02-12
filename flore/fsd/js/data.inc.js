@@ -67,7 +67,6 @@ if (typeof oTable == 'undefined') {
 					{ "sWidth": "3%" },
 					{ "sWidth": "3%" },
 					{ "sWidth": "3%" },
-					{ "sWidth": "3%" },
 					{ "sWidth": "15%" },
 					{ "sClass": "center","sWidth": "3%","bSortable": false },     // 
 					{ "sClass": "center","sWidth": "3%","bSortable": false }      // .
@@ -81,8 +80,7 @@ if (typeof oTable == 'undefined') {
 					{ type: "select", values: ['character varying','float','integer','boolean','date']},
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
 					{ type: "select", values: [{ value: 'Oui', label: 'Oui'},{ value: 'Non', label: 'Non'},{ value: 'NSP', label: 'NeSaitPas'}]},
-					{ type: "select", values: [{ value: 'not_null', label: 'present'},{ value: 'null', label: 'absent'}]},                                              //  
-					{ type: "text" },                                               //  
+					{ type: "select", values: [{ value: 'not_null', label: 'present'},{ value: 'null', label: 'absent'}]},                                              //                                         //  
 					{ type: "text" },                                               //  
 					{ type: "text" },  
 				]
