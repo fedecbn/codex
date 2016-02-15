@@ -47,7 +47,7 @@ $lang_select=$_COOKIE['lang_select'];
 //------------------------------------------------------------------------------ QUERY du module
 $query_champ = " SELECT * FROM referentiels.champ WHERE id_module = '$id_page'";
 
-$query_liste["fsd"] = " SELECT count(*) OVER() AS total_count, ddd.* FROM fsd.ddd WHERE version = 3 ";
+$query_liste["fsd"] = " SELECT count(*) OVER() AS total_count, ddd.* FROM fsd.ddd WHERE version = 3 AND (\"oData\" = 'Oui' OR \"oData\" = 'Oui si'  OR \"oTaxa\" = 'Oui' OR \"oTaxa\" = 'Oui si')";
 $query_liste["meta"] = " SELECT count(*) OVER() AS total_count, formats.* FROM fsd.formats WHERE typ_jdd = 'meta'";
 $query_liste["data"] = " SELECT count(*) OVER() AS total_count, formats.* FROM fsd.formats WHERE typ_jdd = 'data'";
 $query_liste["taxa"] = " SELECT count(*) OVER() AS total_count, formats.* FROM fsd.formats WHERE typ_jdd = 'taxa'";
