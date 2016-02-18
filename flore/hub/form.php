@@ -18,17 +18,27 @@ $mode = $_GET['m'] != null ? $_GET['m'] : null;
 $path = Data_path.$id."";
 
 /*type de jdd*/
-$typejdd = array(
+$fsd = array(
 	"data" => "Data",
 	"taxa" => "Taxa",
-	"listTaxon" => "Liste de taxons"
+	"meta" => "Meta"
 	);
-	
+
 $date_obs = array(
 	"1990" => "après 1990",
 	"2000" => "après 2000",
 	"tout" => "tout"
 	);
+
+$typverif = array(
+	"all" => "Toutes les verifications",
+	"obligation" => "Obligation",
+	"type" => "Format des champs",
+	"doublon" => "Unicité des champs",
+	"voca_ctrl" => "Vocabulaire contrôlé"
+	);
+
+
 	
 $statut = array(
 	"LR" => "Liste rouge",
@@ -55,6 +65,14 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 
 
 //------------------------------------------------------------------------------ REF.
+/*type de jdd pour vérification*/
+$query = "SELECT cd_jdd FROM ".$_GET['id'].".temp_metadonnees;";
+$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_row($result))
+	$jdd_cbn[$row[0]] = $row[0];
+
+ $typejdd = array_merge($fsd,array("listTaxon" => "Liste de taxons"));
+ $jdd = array_merge(array("all" => "Tous les jeux de données"),$fsd,$jdd_cbn);
 //------------------------------------------------------------------------------ CONSTANTES du module
 
 
@@ -135,6 +153,26 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("</form>");
 			}
 			break;
+	//------------------------------------------------------------------------------ Import
+		case "verif" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"verif\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Choix des données à vérifier </LEGEND>");
+			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
+			foreach ($jdd as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+			echo ("<label class=\"preField\">Type de vérification</label><select id=\"typverif\" name=\"typverif\" >");
+			foreach ($typverif as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
+		//------------------------------------------------------------------------------ Export	
 		case "export" : {
 		
 		$query = "SELECT count(*) FROM $id.zz_log_liste_taxon";
@@ -210,6 +248,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("</form>");
 			}
 			break;
+		//------------------------------------------------------------------------------ Bilan
 		case "bilan" : {
 		echo ("<form method=\"POST\" id=\"form1\" name=\"bilan\" action=\"#\" >");
 		echo ("<fieldset>");

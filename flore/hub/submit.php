@@ -18,6 +18,8 @@ define ("DEBUG",false);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 $mode = $_POST['m'] != null ? $_POST['m'] : null;
 $typjdd = $_POST['typjdd'];
+$jdd = $_POST['jdd'];
+$verif = $_POST['verif'];
 $infrataxon = $_POST['infrataxon'] != null ? $_POST['infrataxon'] : 'f';
 $listaxon = $_POST['file_listtaxon'] != null ? $_POST['file_listtaxon'] : 'f';
 $format = $_POST['format'] != null ? $_POST['format'] : 'fcbn';
@@ -36,6 +38,7 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 if (!empty ($id))                                                               
 	{
 	switch ($mode) {
+		/*IMPORT*/
 		case "import" : {
 			$path = $path."import/";
 			if ($typjdd == 'data' OR $typjdd == 'taxa' )
@@ -45,7 +48,19 @@ if (!empty ($id))
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
-		
+
+		/*VERIFICATION*/
+		case "verif" : {
+			$path = $path."import/";
+			if ($jdd == 'all')
+				$query = "SELECT * FROM hub_verif_all('$id')";
+			else
+				$query = "SELECT * FROM hub_verif('$id', '$jdd', '$verif')";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
+
+		/*EXPORT*/
 		case "export" : {
 			$path = $path."export/";
 			if ($typjdd == 'data' OR $typjdd == 'taxa')
@@ -63,6 +78,8 @@ if (!empty ($id))
 				pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
+		
+		/*BILAN*/
 		case "bilan" : {
 			$query = "SELECT * FROM hub_bilan('$id');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);

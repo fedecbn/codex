@@ -160,6 +160,8 @@ include ("../commun/add_fiche.php");
 			echo ("<br><br>");
 
 			echo ("<div id=\"import-dialog\"></div>");
+			echo ("<div id=\"verif-dialog\"></div>");
+			echo ("<div id=\"push-dialog\"></div>");
 			echo ("<div id=\"export-dialog\"></div>");
 			echo ("<div id=\"bilan-dialog\"></div>");
 			
@@ -172,6 +174,7 @@ include ("../commun/add_fiche.php");
 		echo ("<div id=\"radio3\">");    
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_1']."</LEGEND>");
 				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
+				/*Import*/
 				if ($niveau >= 128)
 					{
 					echo ("<tr valign=top ><td style=\"width: 30px;\">");
@@ -180,12 +183,33 @@ include ("../commun/add_fiche.php");
 					metaform_text (""," no_lab bloque",50,"","import","Dernier import : ");
 					echo ("</td></tr>");
 					}
+				/*Vérification*/
+				if ($niveau >= 128)
+					{
+					echo ("<tr valign=top ><td style=\"width: 30px;\">");
+					echo ("<button id=\"verif_button\" value=\"verif\" name=\"".$row[0]."\">".$lang[$lang_select]['verif']."</button> ");
+					echo ("</td><td style=\"width:100px;\">");		
+					metaform_text (""," no_lab bloque",50,"","verif","Dernière vérification : ");
+					echo ("</td></tr>");
+					}				
+				/*Push*/
+				if ($niveau >= 128)
+					{
+					echo ("<tr valign=top ><td style=\"width: 30px;\">");
+					echo ("<button id=\"push_button\" value=\"push\" name=\"".$row[0]."\">".$lang[$lang_select]['push']."</button> ");
+					echo ("</td><td style=\"width:100px;\">");		
+					metaform_text (""," no_lab bloque",50,"","push","Dernier push : ");
+					echo ("</td></tr>");
+					}				
+				
 				/*Export*/
 				echo ("<tr valign=top ><td style=\"width: 30px;\">");
 				echo ("<button id=\"export_button\" value=\"export\" name=\"".$row[0]."\">".$lang[$lang_select]['export']."</button> ");				
 				echo ("</td><td style=\"width:100px;\">");		
 				metaform_text (""," no_lab bloque",50,"","export","Dernier export : ");
 				echo ("</td></tr>");
+				
+				
 				/*Rafraîchir le Bilan*/
 				if ($niveau >= 128)
 					{

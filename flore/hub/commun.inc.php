@@ -64,6 +64,10 @@ $lang['fr']['groupe_2']="Log";
 
 $lang['fr']['import']="Importer des données";
 
+$lang['fr']['verif']= "Vérifier la conformité";
+
+$lang['fr']['push']= "Pousser les données";
+
 $lang['fr']['export']="Exporter des données";
 
 $lang['fr']['bilan']= "Bilan sur les données";

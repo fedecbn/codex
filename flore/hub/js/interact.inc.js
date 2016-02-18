@@ -68,6 +68,20 @@
 			metaForm ("Importer des données",670,500,'#import-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Importer");
 			return (false);
 		});
+
+	$( "#verif_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Vérification de la conformité des données",670,500,'#verif-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Lancer la verification");
+			return (false);
+		});
+
+	$( "#push_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Passer les données dans la partie propre",670,500,'#push-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Pousser les données");
+			return (false);
+		});
 		
 	$( "#export_button" )
         .button({text: true})
@@ -82,6 +96,7 @@
 			metaForm ("Bilan sur les données",670,500,'#bilan-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Lancer le bilan");
 			return (false);
 		});
+
 
  //------------------------------------------------------------------------------ fonctin metForm
 		
