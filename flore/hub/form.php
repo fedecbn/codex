@@ -137,11 +137,11 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 			break;
 		case "export" : {
 		
-		$query = "SELECT count(*) FROM \"$id\".zz_log_liste_taxon";
+		$query = "SELECT count(*) FROM $id.zz_log_liste_taxon";
 		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		$nb_taxon = pg_fetch_row($result,0);
 
-		$query = "SELECT \"cdRef\", \"nomValide\"  FROM \"$id\".zz_log_liste_taxon LIMIT 10";
+		$query = "SELECT cd_ref, nom_valide  FROM $id.zz_log_liste_taxon LIMIT 10";
 		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		$list_taxon = pg_fetch_all($result);
 

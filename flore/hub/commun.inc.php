@@ -19,13 +19,34 @@ $config=$_SESSION['id_config'];
 
 $lang_select=$_COOKIE['lang_select'];
 
+$onglet = array(
+	"id" => array (
+		"hub",
+		"droit"
+		),
+	"name" => array (
+		"Etat du hub",
+		"Utilisateurs"
+		),
+	"sstitre" => array (
+		"Liste des CBN",
+		"Liste des droits"
+		)
+	);
+	
+//------------------------------------------------------------------------------ Querys
 $query_module = ""; /*Directement dans index.php*/
 
-$query_liste = "
+$query_liste["hub"] = "
 SELECT count(*) OVER() AS total_count,*
 	FROM public.bilan 
 	WHERE 1 = 1 ";
-	
+
+$query_user = "
+SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."
+FROM applications.utilisateur
+WHERE utilisateur.niveau_".$id_page." <> 0";
+
 
 $query_export = "
 SELECT * 

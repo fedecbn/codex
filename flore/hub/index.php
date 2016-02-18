@@ -24,6 +24,7 @@ if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
 if (isset($_GET['o']) & !empty($_GET['o'])) $o=$_GET['o'];
 $id=$_GET['id'];
+if (isset($_GET['id'])) $title.= "- ".$_GET['id']; else $title.= "- liste";
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -49,7 +50,8 @@ ref_colonne_et_valeur ($id_page);
 
 <?php
 // /*------------------------------------------------------------------------------ MAIN*/
-html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
+html_header_2 ("utf-8","table_eval.css","jquery-te-1.4.0.css",$title);
+/*html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");*/
 /*html_header ("utf-8","","");*/
 echo ("<body>");
 echo ("<div id=\"page_consult\" class=\"page_consult\">");
@@ -66,9 +68,9 @@ echo ("</div>");
 /*Deuxième bandeau : les onglets*/
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
 echo ("<ul>");
-echo ("<li><a href=\"#".$id_page."\">".$lang[$lang_select][$id_page]."</a></li>");
-echo ("<li><a href=\"#".$id_page_2."\">".$lang[$lang_select][$id_page_2]."</a></li>");
-echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
+	foreach ($onglet["id"] as $key => $val)
+		echo ("<li><a href=\"#".$val."\">".$onglet["name"][$key]."</a></li>");
+	echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
 echo ("</ul>");
 
 echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
@@ -79,12 +81,9 @@ switch ($mode) {
 /*------------------------------------------------------------------------------------------------------- */
     case "liste" : {
 /*------------------------------------------------------------------------------ #Onglet 1*/
-        echo ("<div id=\"".$id_page."\" >");
-            /*Troisième bandeau*/
-			echo ("<div id=\"titre2\">");
-                echo ($lang[$lang_select]["liste_taxons"]);
-            echo ("</div>");
-            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
+            echo ("<div id=\"titre2\">".$onglet["sstitre"][0]."</div>");
+            echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$onglet["id"][0]."_".$id_user.".txt\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
@@ -97,12 +96,18 @@ switch ($mode) {
             echo ("<div id=\"dialog\"></div>");
 			
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			/*aff_table_new ($id_page,true,true);*/
+			aff_table_reborn ("onglet0",$onglet["id"][0]);	
 		echo ("</div>");
-/*------------------------------------------------------------------------------ #Onglet Fiche*/
-        echo ("<div id=\"fiche\" >");
-        echo ("</div>");
-    }
+/*------------------------------------------------------------------------------ #Utilisateurs*/
+        echo ("<div id=\"".$onglet["id"][1]."\" >");
+            /*Troisième bandeau*/
+            echo ("<div id=\"titre2\">".$onglet["sstitre"][1]."</div>");
+            echo ("<div id=\"dialog\"></div>");
+			/*Table des données*/
+			aff_table_reborn ("user",$onglet["id"][1]);		
+		echo ("</div>");    
+		}
     break;
 
 /*------------------------------------------------------------------------------ #CAS AJOUT D'UNE FICHE */
@@ -149,7 +154,7 @@ include ("../commun/add_fiche.php");
 				$row = pg_fetch_row($result);
 				
 				/*Récupération du zz_log*/
-				$query= "SELECT * FROM \"".$row[0]."\".zz_log ORDER BY date DESC";
+				$query= "SELECT * FROM \"".$row[0]."\".zz_log ORDER BY date_log DESC";
 				$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		
 			echo ("<br><br>");

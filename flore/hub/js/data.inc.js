@@ -21,7 +21,7 @@
 //------------------------------------------------------------------------------ LISTES / Construction du tableau
 
     if (typeof oTable == 'undefined') {
-        var oTable = $('#data-liste').dataTable({
+        var oTable = $('#onglet0-liste').dataTable({
    	    "bJQueryUI": true,
         "iDisplayLength": 100,
     	"aLengthMenu": [[50,100,300],[50,100,300]],
@@ -34,7 +34,7 @@
     	"bAutoWidth": false,
 		"bProcessing": true,
     	"bServerSide": true,
-    	"sAjaxSource": "liste.php",
+    	"sAjaxSource": "liste.php?onglet=hub",
         "bStateSave": true,
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 		switch (aData[0])                                                  // Stylisation!
@@ -82,7 +82,8 @@
                 { type: "text" },                                              //  
                 { type: "text" }                                              //  
 			]
-		});        
+		});
+	include("../commun/js/user.js");        
 	} else {
 		oTable.fnClearTable (false);
 		oTable.fnDraw ();
