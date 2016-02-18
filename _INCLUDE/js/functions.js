@@ -39,6 +39,20 @@ function affMasqBtn(){
     }
 }
 
+function lsi_affMasqBtn(){
+    var n = $("input:checked[name='id']").length;                               // Nombre de checkbox cochée
+            console.log (n);
+    if(n == 0) {
+        $("#export-TXT-button").button('disable');
+        $("#export-PDF-button").button('disable');
+        $("#del-button").button('disable'); 
+    } else {
+        $("#export-TXT-button").button('enable');
+        $("#export-PDF-button").button('enable');
+        $("#del-button").button('enable'); 
+    }
+}
+
 function OR_declin(a,b,c,d,e) {
     return ( a || b || c || d || e);
 }

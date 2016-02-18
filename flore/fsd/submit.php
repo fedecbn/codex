@@ -14,7 +14,7 @@ session_start();
 include ("commun.inc.php");
 
 //------------------------------------------------------------------------------ PARMS.
-define ("DEBUG",TRUE);
+define ("DEBUG",FALSE);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 $type = isset($_POST['type']) ? $_POST['type'] : "";
 
