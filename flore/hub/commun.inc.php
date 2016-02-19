@@ -60,7 +60,9 @@ $lang['fr']['titre']="Hub";
 
 $lang['fr']['groupe_1']="Actions";
 
-$lang['fr']['groupe_2']="Log";
+$lang['fr']['groupe_2']="Bilan";
+
+$lang['fr']['groupe_3']="Log";
 
 $lang['fr']['import']="Importer des données";
 

@@ -152,10 +152,7 @@ include ("../commun/add_fiche.php");
             if (pg_num_rows ($result)) {
 				/*Identifiant du CBN*/
 				$row = pg_fetch_row($result);
-				
-				/*Récupération du zz_log*/
-				$query= "SELECT * FROM \"".$row[0]."\".zz_log ORDER BY date_log DESC";
-				$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+				$schema = $row[0];
 		
 			echo ("<br><br>");
 
@@ -225,7 +222,27 @@ include ("../commun/add_fiche.php");
 			
 	/*------------------------------------------------------------------------------ EDIT fieldset2*/
 		echo ("<div id=\"radio3\">");    
+		/*Récupération du bilan*/
+		$query= "SELECT * FROM public.bilan WHERE lib_cbn = '".$schema."'";
+		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_2']."</LEGEND>");
+				echo ("<table class=\"basic_table\" width=\"100%\">");
+				echo ("<th colspan=4>Partie temporaire</th><th colspan=4>Partie propre</th>");
+				echo ("<tr><td>Nb relevés</td><td>Nb Obs</td><td>Nb Taxons (data)</td><td>Nb Taxons (taxa)</td><td>Nb relevés</td><td>Nb Obs</td><td>Nb Taxons (data)</td><td>Nb Taxons (taxa)</td></tr>");
+				while ($row = pg_fetch_row($result))
+					echo ("<tr><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td><td>".$row[7]."</td><td>".$row[8]."</td><td>".$row[9]."</td><td>".$row[10]."</td></tr>");
+				echo ("</table>");
+			echo ("</fieldset>");
+		echo ("</div>");    	
+		
+	/*------------------------------------------------------------------------------ EDIT fieldset2*/
+		echo ("<div id=\"radio3\">");    
+		/*Récupération du zz_log*/
+		$query= "SELECT * FROM ".$schema.".zz_log ORDER BY date_log DESC";
+		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		
+        echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_3']."</LEGEND>");
 				echo ("<table class=\"basic_table\" width=\"100%\">");
 				echo ("<tr><td>Table</td><td>Champ</td><td>Action</td><td>Log</td><td>Nb Occurence</td><td>Date</td></tr>");
 				while ($row = pg_fetch_row($result))
