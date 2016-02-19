@@ -228,8 +228,9 @@ include ("../commun/add_fiche.php");
 
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_2']."</LEGEND>");
 				echo ("<table class=\"basic_table\" width=\"100%\">");
-				echo ("<th colspan=4>Partie temporaire</th><th colspan=4>Partie propre</th>");
+				// echo ("<th colspan=4 border=1>Partie temporaire</th><th colspan=4>Partie propre</th>");
 				echo ("<tr><td>Nb relevés</td><td>Nb Obs</td><td>Nb Taxons (data)</td><td>Nb Taxons (taxa)</td><td>Nb relevés</td><td>Nb Obs</td><td>Nb Taxons (data)</td><td>Nb Taxons (taxa)</td></tr>");
+				echo ("<tr><td colspan=4><b>Partie temporaire</b></td><td colspan=4><b>Partie propre</b></td></tr>");
 				while ($row = pg_fetch_row($result))
 					echo ("<tr><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td><td>".$row[7]."</td><td>".$row[8]."</td><td>".$row[9]."</td><td>".$row[10]."</td></tr>");
 				echo ("</table>");
