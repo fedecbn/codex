@@ -38,7 +38,11 @@ $typverif = array(
 	"voca_ctrl" => "Vocabulaire contrôlé"
 	);
 
-
+$typpush = array(
+	"add" => "Ajout de la différence",
+	"del" => "Suppression de l'existant de la partie temporaire",
+	"replace" => "Remplacement total",
+	);
 	
 $statut = array(
 	"LR" => "Liste rouge",
@@ -73,6 +77,7 @@ while ($row = pg_fetch_row($result))
 
  $typejdd = array_merge($fsd,array("listTaxon" => "Liste de taxons"));
  $jdd = array_merge(array("all" => "Tous les jeux de données"),$fsd,$jdd_cbn);
+ $jdd_push = array_merge($fsd,$jdd_cbn);
 //------------------------------------------------------------------------------ CONSTANTES du module
 
 
@@ -153,7 +158,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("</form>");
 			}
 			break;
-	//------------------------------------------------------------------------------ Import
+	//------------------------------------------------------------------------------ Verification
 		case "verif" : {
 		echo ("<form method=\"POST\" id=\"form1\" name=\"verif\" action=\"#\" >");
 		echo ("<fieldset>");
@@ -165,6 +170,25 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 			echo ("<BR>");
 			echo ("<label class=\"preField\">Type de vérification</label><select id=\"typverif\" name=\"typverif\" >");
 			foreach ($typverif as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
+	//------------------------------------------------------------------------------ Push
+		case "push" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"push\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Choix des données à vérifier </LEGEND>");
+			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
+			foreach ($jdd_push as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+			echo ("<label class=\"preField\">Type d'action</label><select id=\"typpush\" name=\"typpush\" >");
+			foreach ($typpush as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
 			echo ("<BR>");

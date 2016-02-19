@@ -19,7 +19,8 @@ $id = isset($_POST['id']) ? $_POST['id'] : "";
 $mode = $_POST['m'] != null ? $_POST['m'] : null;
 $typjdd = $_POST['typjdd'];
 $jdd = $_POST['jdd'];
-$verif = $_POST['verif'];
+$typverif = $_POST['typverif'];
+$typpush = $_POST['typpush'];
 $infrataxon = $_POST['infrataxon'] != null ? $_POST['infrataxon'] : 'f';
 $listaxon = $_POST['file_listtaxon'] != null ? $_POST['file_listtaxon'] : 'f';
 $format = $_POST['format'] != null ? $_POST['format'] : 'fcbn';
@@ -51,11 +52,17 @@ if (!empty ($id))
 
 		/*VERIFICATION*/
 		case "verif" : {
-			$path = $path."import/";
 			if ($jdd == 'all')
 				$query = "SELECT * FROM hub_verif_all('$id')";
 			else
-				$query = "SELECT * FROM hub_verif('$id', '$jdd', '$verif')";
+				$query = "SELECT * FROM hub_verif('$id', '$jdd', '$typverif')";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
+
+		/*PUSH*/
+		case "push" : {
+			$query = "SELECT * FROM hub_push('$id', '$jdd', '$typpush')";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
