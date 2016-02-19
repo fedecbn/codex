@@ -20,19 +20,19 @@ $config=$_SESSION['id_config'];
 $lang_select=$_COOKIE['lang_select'];
 
 $onglet = array(
-	"id" => array (
-		"hub",
-		"droit"
-		),
-	"name" => array (
-		"Etat du hub",
-		"Utilisateurs"
-		),
-	"sstitre" => array (
-		"Liste des CBN",
-		"Liste des droits"
-		)
+	"id" => array ("hub","droit"),
+	"name" => array ("Etat du hub","Utilisateurs"),
+	"sstitre" => array ("Liste des CBN","Liste des droits")
 	);
+
+$bouton = array (
+		array ("id" => "import","titre"=>"Importer des données","text" => "Dernier import : ","niveau" => 64),
+		array ("id" => "verif","titre"=>"Vérifier la conformité","text" => "Dernière vérification : ","niveau" => 128),
+		array ("id" => "diff","titre"=>"Analyser les différences","text" => "Dernière analyse des différences : ","niveau" => 128),
+		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128),
+		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1),
+		array ("id" => "bilan","titre"=>"Bilan sur les données","text" => "Dernier bilan : ","niveau" => 128)
+		);
 	
 //------------------------------------------------------------------------------ Querys
 $query_module = ""; /*Directement dans index.php*/
@@ -64,16 +64,8 @@ $lang['fr']['groupe_2']="Bilan";
 
 $lang['fr']['groupe_3']="Log";
 
-$lang['fr']['import']="Importer des données";
-
-$lang['fr']['verif']= "Vérifier la conformité";
-
-$lang['fr']['push']= "Pousser les données";
-
-$lang['fr']['export']="Exporter des données";
-
-$lang['fr']['bilan']= "Bilan sur les données";
-
+foreach ($bouton as $val)
+	$lang['fr'][$val["id"]]=$val["titre"];
 
 //------------------------------------------------------------------------------ CHAMPS du module
 

@@ -155,15 +155,11 @@ include ("../commun/add_fiche.php");
 				$schema = $row[0];
 		
 			echo ("<br><br>");
-
-			echo ("<div id=\"import-dialog\"></div>");
-			echo ("<div id=\"verif-dialog\"></div>");
-			echo ("<div id=\"push-dialog\"></div>");
-			echo ("<div id=\"export-dialog\"></div>");
-			echo ("<div id=\"bilan-dialog\"></div>");
 			
+			foreach ($bouton as $val)
+				echo ("<div id=\"".$val["id"]."-dialog\"></div>");
+						
 			echo("<input type=\"hidden\" name=\"zone\" id=\"zone1\" value=\"gl\">");
-					 
 			echo ("<div id=\"radio2\">"); 
 			echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 			echo ("<input type=\"hidden\" name=\"uid\" id=\"uid\" value=\"$id\">");
@@ -171,51 +167,22 @@ include ("../commun/add_fiche.php");
 		echo ("<div id=\"radio3\">");    
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_1']."</LEGEND>");
 				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
-				/*Import*/
-				if ($niveau >= 128)
+		
+		foreach ($bouton as $val)	{
+				if ($niveau >= $val["niveau"])
 					{
+					/*Récupération de la date de dernière réalisation*/
+					$query= "SELECT max(date_log) FROM $schema.zz_log WHERE typ_log = 'hub_".$val["id"]."';";
+					$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+					$row = pg_fetch_row($result);
+					/*Button*/
 					echo ("<tr valign=top ><td style=\"width: 30px;\">");
-					echo ("<button id=\"import_button\" value=\"import\" name=\"".$row[0]."\">".$lang[$lang_select]['import']."</button> ");
+					echo ("<button id=\"".$val["id"]."_button\" value=\"".$val["id"]."\" name=\"".$schema."\">".$lang[$lang_select][$val["id"]]."</button> ");
 					echo ("</td><td style=\"width:100px;\">");		
-					metaform_text (""," no_lab bloque",50,"","import","Dernier import : ");
+					metaform_text ($val["text"]," bloque",50,"",$val["id"],$row[0]);	/*dernière réalisation*/
 					echo ("</td></tr>");
 					}
-				/*Vérification*/
-				if ($niveau >= 128)
-					{
-					echo ("<tr valign=top ><td style=\"width: 30px;\">");
-					echo ("<button id=\"verif_button\" value=\"verif\" name=\"".$row[0]."\">".$lang[$lang_select]['verif']."</button> ");
-					echo ("</td><td style=\"width:100px;\">");		
-					metaform_text (""," no_lab bloque",50,"","verif","Dernière vérification : ");
-					echo ("</td></tr>");
-					}				
-				/*Push*/
-				if ($niveau >= 128)
-					{
-					echo ("<tr valign=top ><td style=\"width: 30px;\">");
-					echo ("<button id=\"push_button\" value=\"push\" name=\"".$row[0]."\">".$lang[$lang_select]['push']."</button> ");
-					echo ("</td><td style=\"width:100px;\">");		
-					metaform_text (""," no_lab bloque",50,"","push","Dernier push : ");
-					echo ("</td></tr>");
-					}				
-				
-				/*Export*/
-				echo ("<tr valign=top ><td style=\"width: 30px;\">");
-				echo ("<button id=\"export_button\" value=\"export\" name=\"".$row[0]."\">".$lang[$lang_select]['export']."</button> ");				
-				echo ("</td><td style=\"width:100px;\">");		
-				metaform_text (""," no_lab bloque",50,"","export","Dernier export : ");
-				echo ("</td></tr>");
-				
-				
-				/*Rafraîchir le Bilan*/
-				if ($niveau >= 128)
-					{
-					echo ("<tr valign=top ><td style=\"width: 30px;\">");
-					echo ("<button id=\"bilan_button\" value=\"bilan\" name=\"".$row[0]."\">".$lang[$lang_select]['bilan']."</button> ");				
-					echo ("</td><td style=\"width:100px;\">");		
-					metaform_text (""," no_lab bloque",50,"","export","Dernier bilan : ");
-					echo ("</td></tr>");
-					}
+				}
 				echo ("</table>");
 			echo ("</fieldset>");
 		echo ("</div>");    			
@@ -245,9 +212,9 @@ include ("../commun/add_fiche.php");
 		
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_3']."</LEGEND>");
 				echo ("<table class=\"basic_table\" width=\"100%\">");
-				echo ("<tr><td>Table</td><td>Champ</td><td>Action</td><td>Log</td><td>Nb Occurence</td><td>Date</td></tr>");
+				echo ("<tr><td>Action</td><td>Log</td><td>Table</td><td>Champ</td><td>Nb Occurence</td><td>Date</td></tr>");
 				while ($row = pg_fetch_row($result))
-					echo ("<tr><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td><td>".$row[6]."</td></tr>");
+					echo ("<tr><td><b>".$row[3]."</b></td><td>".$row[4]."</td><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[5]."</td><td>".$row[6]."</td></tr>");
 				echo ("</table>");
 			echo ("</fieldset>");
 		echo ("</div>");    	
