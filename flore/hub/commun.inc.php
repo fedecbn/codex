@@ -74,23 +74,18 @@ $lang['fr']['bilan']= "Bilan sur les données";
 
 
 //------------------------------------------------------------------------------ CHAMPS du module
-$langliste['fr'][$id_page][]="uid";
-$langliste['fr'][$id_page.'-popup'][]="Code du CBN";
 
-$langliste['fr'][$id_page][]="CBN";
-$langliste['fr'][$id_page.'-popup'][]="Trigramme du CBN";
+foreach ($onglet["id"] as $val)
+	{
+	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs WHERE rubrique_champ = '$val' AND pos IS NOT NULL ORDER BY pos";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-$langliste['fr'][$id_page][]="nb relevé";
-$langliste['fr'][$id_page.'-popup'][]="Nombre de relevés";
-
-$langliste['fr'][$id_page][]="nb Observation";
-$langliste['fr'][$id_page.'-popup'][]="Nombre d'observations";
-
-$langliste['fr'][$id_page][]="nb taxon (data)";
-$langliste['fr'][$id_page.'-popup'][]="Nombre de taxons (data)";
-
-$langliste['fr'][$id_page][]="nb taxon (taxa)";
-$langliste['fr'][$id_page.'-popup'][]="Nombre de taxons (taxa)";
+	While ($row = pg_fetch_row($result)) 
+		{
+		$langliste['fr'][$val][]= $row[1];
+		$langliste['fr'][$val.'-popup'][]= $row[2];
+		}
+	}
 
 //------------------------------------------------------------------------------ FONCTIONS du module
 

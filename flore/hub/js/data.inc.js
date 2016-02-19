@@ -40,7 +40,7 @@
 		switch (aData[0])                                                  // Stylisation!
             {
                 default : 
-                    $('td:eq(2)', nRow).addClass('nom_taxon');
+                    $('td:eq(1)', nRow).addClass('nom_taxon');
                 break;
             }
 		},
@@ -60,15 +60,21 @@
                 "sLast":     "Dernier"
             }
         }, 
-       // "aaSorting": [[3,'asc']],                                               // Nom scientifique 
+       // "aaSorting": [[3,'asc']],                                            
         "sDom": '<"top"fl>rt<"bottom"ip>',
-            "aoColumns": [                                                        // 
-                null,                                                           // 
-            	{ "sWidth": "300px" },                                          // 
-            	null,                                          					//   
-                null,                                                           //  .
-                null,                                                                                                                                                                         // 
-                null,                                                                                                                                                                         // 
+            "aoColumns": [                                                    
+                { "sWidth": "5%" },
+            	{ "sWidth": "5%" },
+            	{ "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "5%" },
+                { "sWidth": "25%" },
+                { "sWidth": "25%" },
     			{ "sClass": "center","sWidth": "50px","bSortable": false },     // 
         		{ "sClass": "center","sWidth": "20px","bSortable": false }      // .
         ]
@@ -76,11 +82,17 @@
             sPlaceHolder: "head:after",
             aoColumns: [ 
                 { type: "text" },
-                { type: "text" },                                               // 
-                { type: "text" },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                              //  
-                { type: "text" }                                              //  
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" },
+                { type: "text" }
 			]
 		});
 	include("../commun/js/user.js");        

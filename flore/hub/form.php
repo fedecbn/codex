@@ -74,7 +74,8 @@ $query = "SELECT cd_jdd FROM ".$_GET['id'].".temp_metadonnees;";
 $result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 while ($row = pg_fetch_row($result))
 	$jdd_cbn[$row[0]] = $row[0];
-
+$jdd_cbn = $jdd_cbn == null ? array() : $jdd_cbn;
+	
  $typejdd = array_merge($fsd,array("listTaxon" => "Liste de taxons"));
  $jdd = array_merge(array("all" => "Tous les jeux de données"),$fsd,$jdd_cbn);
  $jdd_push = array_merge($fsd,$jdd_cbn);
