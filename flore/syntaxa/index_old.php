@@ -44,49 +44,7 @@ ref_colonne_et_valeur ($id_page);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 
-<<<<<<< HEAD
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
-<script type="text/javascript" language="javascript" src="../../flore/syntaxa/js/function.js"></script>
-<script type="text/javascript" language="javascript" src="js/liste.js"></script>
-<script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
-
-
-<script type="text/javascript" language="javascript" >
-$(document).ready(function(){
-	$("#form1").validate({
-		rules: {
-			nomSyntaxon: {
-				required: true,
-                minlength: 2
-			},
-			auteurSyntaxon: {
-				required: true,
-                minlength: 2
-			},
-			
-/*			niveau_fsd: {
-				required: true,
-                digits: true
-			},
-*/
-		},
-		messages: {
-			nomSyntaxon: { required: "",	minlength: ""},
-			auteurSyntaxon: { required: "L'auteur du syntaxon est obligatoire",	minlength: "La longueur minimale est de 2"},
-/*			niveau: {
-				required: "",
-                digits: "Valeur numérique"
-			}
-*/
-		}
-	}); 
-});
-</script> 
-
-
-=======
 <script type="text/javascript" language="javascript" src="js/commun.js"></script>
->>>>>>> 95f4bdd998c794cda1c8b3f580fc0c9154600ab1
 <?php
 
 //-------------------------------------------------------------------------------- INIT CSS
@@ -230,57 +188,56 @@ include ("../commun/add_fiche.php");
 					$colname9="nomSyntaxonRetenu";$colname10="idSyntaxonRetenu";$colname11="rangSyntaxon";
 					$colname12="idSyntaxonSup";
 					//$colname13="nomFrancaisSyntaxon";$colname14="diagnoseCourteSyntaxon";$colname15="idCritique",$colname16="rqCritique";
-
-			echo ("<table border=0 width=\"100%\">");
-			echo ("<tr valign=top ><td width=50%>");
-			echo ("<fieldset><LEGEND>Nomenclature1</LEGEND>");				
+	
+			 echo ("<fieldset><LEGEND>Nomenclature</LEGEND>");
+			 
+				echo ("<table border=0 width=\"100%\"><tr valign=top >");
+				echo ("<td style=\"width: 350px;\">");
 				metaform_text ("Code de l'enregistrement"," ",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"$colname1\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'$colname1'".";"),0,"description" ));
-				metaform_text ("Identifiant du syntaxon"," bloque",20,"","idSyntaxon",pg_result($result,0,"\"$colname3\""), pg_fetch_result(pg_query ($db,$query_description."'$colname3'".";"),0,"description" ));		
-				metaform_text ("Identifiant du syntaxon retenu"," bloque",20,"","idSyntaxonRetenu",pg_result($result,0,"\"$colname10\""), pg_fetch_result(pg_query ($db,$query_description."'$colname10'".";"),0,"description" ));							
-				//metaform_text ("Code de l'enregistrement"," ",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"$colname1\"" ),'undo_text'));
-				metaform_text ("Nom du syntaxon","",30,"","nomSyntaxon",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
-				metaform_text ("Auteur du syntaxon","",30,"","auteurSyntaxon",sql_format_quote(pg_result($result,0,"\"$colname4\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'$colname4'".";"),0,"description" ));
-				metaform_text ("Nom complet du syntaxon"," bloque",30,"","nomCompletSyntaxon",pg_result($result,0,"\"$colname5\""), pg_fetch_result(pg_query ($db,$query_description."'$colname5'".";"),0,"description" ));
-				metaform_text ("Nom raccourcit"," bloque",30,"","nomSyntaxonRaccourci",pg_result($result,0,"\"$colname6\""), pg_fetch_result(pg_query ($db,$query_description."'$colname6'".";"),0,"description" ));
-				metaform_sel ("Type de synonymie","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
-				metaform_text ("Nom syntaxon retenu"," bloque",30,"","nomSyntaxonRetenu",pg_result($result,0,"\"$colname9\""), pg_fetch_result(pg_query ($db,$query_description."'$colname9'".";"),0,"description" ));
+				echo ("</td><td>");
+				metaform_text ("Identifiant du syntaxon"," bloque",20,"","idSyntaxon",pg_result($result,0,"\"$colname3\""), pg_fetch_result(pg_query ($db,$query_description."'$colname3'".";"),0,"description" ));
+				echo ("</td><td>");		
+				metaform_text ("Identifiant du syntaxon retenu"," bloque",20,"","idSyntaxonRetenu",pg_result($result,0,"\"$colname10\""), pg_fetch_result(pg_query ($db,$query_description."'$colname10'".";"),0,"description" ));				
+				echo ("</td></tr></table>");
+				
+				echo ("<table border=0 width=\"100%\"><tr valign=top >");
+				echo ("<td style=\"width: 800px;\">");					
+					//metaform_text ("Code de l'enregistrement"," ",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"$colname1\"" ),'undo_text'));
+					metaform_text ("Nom du syntaxon","",100,"","nomSyntaxon",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
+					metaform_text ("Auteur du syntaxon","",100,"","auteurSyntaxon",sql_format_quote(pg_result($result,0,"\"$colname4\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'$colname4'".";"),0,"description" ));
+					metaform_text ("Nom complet du syntaxon"," bloque",100,"","nomCompletSyntaxon",pg_result($result,0,"\"$colname5\""), pg_fetch_result(pg_query ($db,$query_description."'$colname5'".";"),0,"description" ));
+					metaform_text ("Nom raccourcit"," bloque",100,"","nomSyntaxonRaccourci",pg_result($result,0,"\"$colname6\""), pg_fetch_result(pg_query ($db,$query_description."'$colname6'".";"),0,"description" ));
+					metaform_sel ("Type de synonymie","",100,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
+					metaform_text ("Nom syntaxon retenu"," bloque",100,"","nomSyntaxonRetenu",pg_result($result,0,"\"$colname9\""), pg_fetch_result(pg_query ($db,$query_description."'$colname9'".";"),0,"description" ));
+				echo ("</td></tr></table>");
+				
 				$tooltip=pg_fetch_result(pg_query ($db,$query_description."'$colname7'".";"),0,"description" );
-				//style=\"width:70em;\"
-				echo ("<br><label title= \"$tooltip\" class=\"preField\">Remarque nomenclaturale</label><textarea name=\"rqNomenclaturale\" cols=\"57\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"\"$colname7\""),'undo_hmtl')."</textarea><br><br>");
-				metaform_sel ("Rang syntaxon","","",$ref[$champ_ref[$colname11]],"rangSyntaxon",pg_result($result,0,"\"$colname11\""), pg_fetch_result(pg_query ($db,$query_description."'$colname11'".";"),0,"description" ));
-				echo ("</fieldset></td>");
-				echo ("<td width=50%>");
-				echo ("<fieldset><LEGEND>Nomenclature2</LEGEND>");	
-				metaform_text ("Nom du syntaxon","","30em","","nomSyntaxon",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
-				echo ("</fieldset>");
-				echo ("</td></tr>");
+				echo ("<br><label title= \"$tooltip\" class=\"preField\">Remarque nomenclaturale</label><textarea name=\"rqNomenclaturale\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"\"$colname7\""),'undo_hmtl')."</textarea><br><br>");
+				
+				echo ("<table border=0 width=\"100%\"><tr valign=top >");
+				echo ("</td><td style=\"width:300px;\">");				
+					//metaform_text ("Code REF."," bloque",8,"","cd_ref",pg_result($result,0,"cd_ref"));
+					metaform_sel ("Rang syntaxon","","",$ref[$champ_ref[$colname11]],"rangSyntaxon",pg_result($result,0,"\"$colname11\""), pg_fetch_result(pg_query ($db,$query_description."'$colname11'".";"),0,"description" ));
 				/* //bout de code a utiliser si on veut aller vers une fiche taxon dans refnat
 				echo ("</td><td>");	
 					if ($niveau >= 128)
 						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
 				*/
-				//echo ("</td></tr>");
-				//echo ("</table>");
-				
+				echo ("</td></tr></table>");
+				echo ("</fieldset>");
 	/*------------------------------------------------------------------------------ EDIT fieldset2*/
 
-			echo ("<tr valign=top ><td width=50%>");
+	
 			echo ("<fieldset><LEGEND>Bibliographie</LEGEND>");
-				//echo("<div id=\"p_scents\">");
-				//echo(" <p><TABLE BORDER=\"0\"> <caption align=\"left\"> Correspondance des habitats </caption> 
-				//<tr valign=top ><th> Typologie </th> <th> Code habitat </th> </tr> 
-				//<tr>
-				//<th>  <label for=\"p_scnts\"><input type=\"text\" id=\"p_scnt_code\" size=\"20\" name=\"code\" value=\"\" placeholder=\"Valeur de l'input\" /> </label></th> 
-				//<th>  <label for=\"p_scnts\"><input type=\"text\" id=\"p_scnt_typo\" size=\"20\" name=\"typo\" value=\"\" placeholder=\"Valeur de l''input\" /> </label></th> 
-				//</tr> </TABLE></p> </div>");
+				echo("<div id=\"p_scents\">
+				<p><TABLE BORDER=\"0\"> <caption align=\"left\"> Correspondance des habitats </caption> 
+				<tr valign=top ><th> Typologie </th> <th> Code habitat </th> </tr> 
+				<tr>
+				<th>  <label for=\"p_scnts\"><input type=\"text\" id=\"p_scnt_code\" size=\"20\" name=\"code\" value=\"\" placeholder=\"Valeur de l'input\" /> </label></th> 
+				<th>  <label for=\"p_scnts\"><input type=\"text\" id=\"p_scnt_typo\" size=\"20\" name=\"typo\" value=\"\" placeholder=\"Valeur de l''input\" /> </label></th> 
+				</tr> </TABLE></p> </div>");
 				echo("<p colspan=\"4\" align=\"left\"><button type=\"button\" href=\"#\" id=\"addScnt\">Ajouter un habitat</button></p>");
-				echo ("</fieldset>");
-				echo ("</td>");
-				echo ("<td width=50%>");
-				echo ("<fieldset><LEGEND>Nomenclature3</LEGEND>");	
-				metaform_text ("Nom du syntaxon","","30em","","nomSyntaxon",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
-				echo ("</fieldset>");
-				echo ("</td></tr></table>");
+
 	
 	
 	
