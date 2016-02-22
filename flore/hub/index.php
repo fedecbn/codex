@@ -179,7 +179,7 @@ include ("../commun/add_fiche.php");
 					echo ("<tr valign=top ><td style=\"width: 30px;\">");
 					echo ("<button id=\"".$val["id"]."_button\" value=\"".$val["id"]."\" name=\"".$schema."\">".$lang[$lang_select][$val["id"]]."</button> ");
 					echo ("</td><td style=\"width:100px;\">");		
-					metaform_text ($val["text"]," bloque",50,"",$val["id"],$row[0]);	/*dernière réalisation*/
+					metaform_text ($val["text"]," bloque",50,"",$val["id"],substr($row[0],0,-4));	/*dernière réalisation*/
 					echo ("</td></tr>");
 					}
 				}
@@ -189,16 +189,29 @@ include ("../commun/add_fiche.php");
 			
 	/*------------------------------------------------------------------------------ EDIT fieldset2*/
 		echo ("<div id=\"radio3\">");    
+		/*Récupération des jeux des données*/
+		$query= "SELECT * FROM ".$schema.".temp_metadonnees";
+		$result1=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		
+		$query= "SELECT * FROM ".$schema.".metadonnees";
+		$result2=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+
+			
 		/*Récupération du bilan*/
 		$query= "SELECT * FROM public.bilan WHERE lib_cbn = '".$schema."'";
-		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		$result3=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_2']."</LEGEND>");
 				echo ("<table class=\"basic_table\" width=\"100%\">");
 				// echo ("<th colspan=4 border=1>Partie temporaire</th><th colspan=4>Partie propre</th>");
 				echo ("<tr><td>Nb relevés</td><td>Nb Obs</td><td>Nb Taxons (data)</td><td>Nb Taxons (taxa)</td><td>Nb relevés</td><td>Nb Obs</td><td>Nb Taxons (data)</td><td>Nb Taxons (taxa)</td></tr>");
 				echo ("<tr><td colspan=4><b>Partie temporaire</b></td><td colspan=4><b>Partie propre</b></td></tr>");
-				while ($row = pg_fetch_row($result))
+				echo ("<tr><td colspan=4>");
+				while ($row = pg_fetch_row($result1)) echo ("- Jdd ".$row[2]." :  ".$row[1]." -  ".$row[3]."<BR>");
+				echo ("</td><td colspan=4>");
+				while ($row = pg_fetch_row($result2)) echo ("- Jdd ".$row[2]." :  ".$row[1]." -  ".$row[3]."<BR>");
+				echo ("</td></tr>");
+				while ($row = pg_fetch_row($result3))
 					echo ("<tr><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td><td>".$row[7]."</td><td>".$row[8]."</td><td>".$row[9]."</td><td>".$row[10]."</td></tr>");
 				echo ("</table>");
 			echo ("</fieldset>");
@@ -214,7 +227,7 @@ include ("../commun/add_fiche.php");
 				echo ("<table class=\"basic_table\" width=\"100%\">");
 				echo ("<tr><td>Action</td><td>Log</td><td>Table</td><td>Champ</td><td>Nb Occurence</td><td>Date</td></tr>");
 				while ($row = pg_fetch_row($result))
-					echo ("<tr><td><b>".$row[3]."</b></td><td>".$row[4]."</td><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[5]."</td><td>".$row[6]."</td></tr>");
+					echo ("<tr><td><b>".$row[3]."</b></td><td>".$row[4]."</td><td>".$row[1]."</td><td>".$row[2]."</td><td>".$row[5]."</td><td>".substr($row[6],0,-4)."</td></tr>");
 				echo ("</table>");
 			echo ("</fieldset>");
 		echo ("</div>");    	
