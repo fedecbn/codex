@@ -405,7 +405,7 @@ function add_suivi2 ($etape,$id_user,$uid,$table,$champ,$valeur_1,$valeur_2,$rub
 		$valeur_2 = mono_table($valeur_2);
 	
 	/*valeur_1 = VALEUR INITIALE*/
-	var_dump($valeur_1);
+	// var_dump($valeur_1);
 	if (($valeur_1 == null) OR (!empty($valeur_1)))
 		{
 		$valeur_1 = null;
@@ -577,6 +577,26 @@ function aff_table_new ($id_liste,$actions,$check) {
     echo ("</tr></tfoot><tbody></tbody></table><br><br>");
 }
 
+function aff_table_reborn ($id_onglet,$id_liste,$actions = true,$check = true) {
+    global $lang_select,$langliste;
+
+    $nbre_col=count($langliste[$lang_select][$id_liste]);
+	echo ("<table id=\"".$id_onglet."-liste\" class=\"display\" ><thead><tr>");
+    for ($i=1;$i<=$nbre_col;$i++) 
+        echo ("<th></th>");
+    echo ("</tr><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    if ($actions) echo ("<th></th>");
+    if ($check) echo ("<th><a><input type=\"checkbox\" class=\"liste-all\" value=\"1\" ></a></th>");
+    echo ("</tr></thead><tfoot><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    if ($actions) echo ("<th></th>");
+    if ($check) echo ("<th><a><input type=\"checkbox\" class=\"liste-all\" value=\"1\" ></a></th>");
+    echo ("</tr></tfoot><tbody></tbody></table><br><br>");
+}
+
 
 //------------------------------------------------------------------------------ MétaForm
 
@@ -598,8 +618,9 @@ function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='')
 {
 	
 	if (strpos($descr,"no_lab") === false)
-		if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\">".$label."</label>");
-		else echo ("<label title=\"".$tooltip."\" class=\"preField\">".$label."</label>");
+		if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\" id=\"label_".$champ."\">".$label."</label>");
+		elseif (strpos($descr,"not_display") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\" style=\"$style\">".$label."</label>");
+		else echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\">".$label."</label>");
 
 	if (!isset($extra)) $extra = "";		
 	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
@@ -660,6 +681,23 @@ function metaform_sel ($label,$descr,$style,$liste,$champ,$val,$tooltip='')
 	echo ("</select><br>");
 }
 
+function metaform_check ($label,$descr,$style,$liste,$champ,$liste_reponse,$tooltip='')
+{
+	if (strpos($descr,"no_lab") === false)
+	if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\">".$label."</label>");
+	else echo ("<label title=\"".$tooltip."\" class=\"preField\">".$label."</label>");
+
+	if (!isset($extra)) $extra = "";				
+	if (strpos($descr,"bloque") !== false) {$extra .= " disabled ";}	
+	if (strpos($descr,"bloque") !== false AND $liste_reponse == null) {$extra .= " class=\"bloque\"";}	
+	if ($liste_reponse == null) $liste_reponse = array(null);
+	
+    foreach ($liste as $key => $value) 
+		{
+		$checked = array_key_exists($key,$liste_reponse) ? "checked" : "";
+		echo ("<br><input type=\"checkbox\" id=\"".$champ."[]\" name=\"".$champ."[]\" value=\"$key\" style=\"$style\" style=\"$style\" $extra $checked >$value");
+		}
+}
 
 function metaform_sel_multi ($label,$descr,$size,$style,$extra,$liste,$champ,$val,$tooltip='')
 {
@@ -795,11 +833,11 @@ function sql_connect_admin ($base) {
 }
 
 function sql_connect_hub ($base) {
-    global $db;
+    global $db2;
 	
     if ($base != "") {
-        $db=pg_connect ("host=".SQL_server." port=".SQL_port_hub." user=".SQL_admin_user." password=".SQL_admin_pass." dbname=".$base);
-        return ($db);
+        $db2=pg_connect ("host=".SQL_server." port=".SQL_port_hub." user=".SQL_admin_user." password=".SQL_admin_pass." dbname=".$base);
+        return ($db2);
     }
     else
         return (false);
@@ -978,15 +1016,18 @@ function update_multi($query,$statut,$id_att,$att_sel,$table,$id)
 	$att = empty($att) ? array() : $att;
 	$att_sel = empty($att_sel) ? array() : $att_sel;
     // echo "<br>".$query;
-	// echo "$statut 1 :";var_dump($att);
-	// echo "$statut 2 :";var_dump($att_sel);
-	
+
 	if ($table == "eee.reponse") {$att3 = 'zone';} 
 	else {$att3 = 'statut';}
 	
 	$query = "";
 	$supp = array_diff($att, $att_sel);
 	$add = array_diff($att_sel,$att);
+	
+	// echo "$statut 1 :<BR>";var_dump($att);
+	// echo "$statut 2 :<BR>";var_dump($att_sel);
+	// echo "supp :<BR>";var_dump($supp);
+	// echo "add :<BR>";var_dump($add);
 	
 	if (!empty($supp))		/*Suppression*/
 		{
@@ -1122,6 +1163,78 @@ $output = array('sLimit'=>$sLimit,'sOrder'=>$sOrder,'sWhere'=>$sWhere,'sHaving'=
 return $output;
 }
 
+
+function filter_column_post($colonne) {
+$sLimit = "";                                                                   // Paging
+if ( isset( $_POST['iDisplayStart'] ) && $_POST['iDisplayLength'] != '-1' )
+	$sLimit = "LIMIT ".pg_escape_string( $_POST['iDisplayLength'] )." OFFSET ".pg_escape_string( $_POST['iDisplayStart'] );
+
+	
+$sOrder = "";                                                                   // Paging
+if ( isset( $_POST['iSortCol_0'] ) )                                             // ORDER BY
+	{
+	$sOrder="ORDER BY ";  
+		foreach ($colonne as $key => $val )	{
+			if	($val['pos'] == $_POST['iSortCol_0'])	{
+				if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
+				if ( $_POST[ 'bSortable_'.intval($_POST['iSortCol_0']) ] == "true" ) {
+					$sOrder .= $table."\"".$val['nom_champ_synthese']."\" ".pg_escape_string( $_POST['sSortDir_0']);
+				}
+			}
+		}
+	}
+if ($sOrder=="ORDER BY ") $sOrder="";
+
+$sWhere = "";$sHaving = "";															  // FILTRE
+foreach ($colonne as $key => $val )                                       // columnFilter v2.1
+{
+	/*cas particulier*/
+	if ($val['nom_champ_synthese'] == 'libelle_tag' AND $_POST['sSearch_'.$val['pos']] != null)
+		$sHaving = "HAVING string_agg(libelle_tag,' / ') ::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+    elseif ( $_POST['bSearchable_'.$val['pos']] == "true" && $_POST['sSearch_'.$val['pos']] != '' )
+	{
+	if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
+	
+	$champ = "\"".$val['nom_champ_synthese']."\"";
+	
+		if (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'not_null') {
+			$sWhere .= " AND ".$table.$champ." IS NOT NULL ";
+			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$champ." <> 0";
+		}
+		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'is_null') {
+			$sWhere .= " AND ".$table.$champ." = IS NULL";
+			}
+		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'not_zero') {
+			$sWhere .= " AND ".$table.$champ." <> 0";
+		}
+		elseif ($val['type'] == 'val') {
+        	$sWhere .= " AND ".$table.$champ." ='".pg_escape_string($_POST['sSearch_'.$val['pos']])."' ";
+     	}
+		elseif ($val['type'] == 'string') {
+        	$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+		}
+		elseif ($val['type'] == 'bool') {
+        	$sWhere .= " AND ".$table.$champ." = ".pg_escape_string($_POST['sSearch_'.$val['pos']])." ";
+		}
+		elseif ($val['type'] == 'int') {
+			if (pg_escape_string($_POST['sSearch_'.$val['pos']]) == '>' OR pg_escape_string($_POST['sSearch_'.$val['pos']]) == '<' OR pg_escape_string($_POST['sSearch_'.$val['pos']]) == '=' ) {
+				$sWhere .= "";
+				}
+			else if ((strpos($_POST['sSearch_'.$val['pos']],"<") === 0) OR (strpos($_POST['sSearch_'.$val['pos']],">") === 0) OR (strpos($_POST['sSearch_'.$val['pos']],"=") === 0)) {
+				$sWhere .= " AND ".$table.$champ." ".pg_escape_string($_POST['sSearch_'.$val['pos']]);
+				}
+			else	{
+			$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+			}
+		}
+		else {
+        	$sWhere .= " AND ".$table.$champ."::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+    	}
+	}
+}
+$output = array('sLimit'=>$sLimit,'sOrder'=>$sOrder,'sWhere'=>$sWhere,'sHaving'=>$sHaving);
+return $output;
+}
 
 function add_and_modif_taxon ($in,$mod,$uid_modif)
 {

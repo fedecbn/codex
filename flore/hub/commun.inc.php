@@ -1,0 +1,88 @@
+﻿<?php
+//------------------------------------------------------------------------------//
+//   commun.inc.php                                                             //
+//                                                                              //
+//  Version 1.00  24/07/14 - OlGa / CBNMED                                      //
+//------------------------------------------------------------------------------//
+                                                      
+//------------------------------------------------------------------------------ CONFIG du module
+require_once ("../commun/commun.inc.php");
+
+//------------------------------------------------------------------------------ CONSTANTES du module
+$id_page = $_SESSION['page'] = "hub";
+$id_page_2 = "droit";
+$name_page = "Hub - interface de gestion des données du réseau";
+
+$niveau=$_SESSION['niveau_'.$id_page];
+$id_user=$_SESSION['id_user'];
+$config=$_SESSION['id_config'];
+
+$lang_select=$_COOKIE['lang_select'];
+
+$onglet = array(
+	"id" => array ("hub","droit"),
+	"name" => array ("Etat du hub","Utilisateurs"),
+	"sstitre" => array ("Liste des CBN","Liste des droits")
+	);
+
+$bouton = array (
+		array ("id" => "clear","titre"=>"Vider la partie temporaire données","text" => "Dernier nettoyage : ","niveau" => 128),
+		array ("id" => "import","titre"=>"Importer des données","text" => "Dernier import : ","niveau" => 128),
+		array ("id" => "import_taxon","titre"=>"Importer une liste de taxon","text" => "Dernier import : ","niveau" => 64),
+		array ("id" => "verif","titre"=>"Vérifier la conformité","text" => "Dernière vérification : ","niveau" => 128),
+		array ("id" => "diff","titre"=>"Analyser les différences","text" => "Dernière analyse : ","niveau" => 128),
+		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128),
+		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1),
+		array ("id" => "bilan","titre"=>"Bilan sur les données","text" => "Dernier bilan : ","niveau" => 128)
+		);
+	
+//------------------------------------------------------------------------------ Querys
+$query_module = ""; /*Directement dans index.php*/
+
+$query_liste["hub"] = "
+SELECT count(*) OVER() AS total_count,*
+	FROM public.bilan 
+	WHERE 1 = 1 ";
+
+$query_user = "
+SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."
+FROM applications.utilisateur
+WHERE utilisateur.niveau_".$id_page." <> 0";
+
+
+$query_export = "
+SELECT * 
+	FROM hub.bilan
+	WHERE 1 = 1	";
+
+//------------------------------------------------------------------------------ VOCABULAIRE du module
+$lang['fr'][$id_page]="Hub";
+
+$lang['fr']['titre']="Hub";
+
+$lang['fr']['groupe_1']="Actions";
+
+$lang['fr']['groupe_2']="Bilan";
+
+$lang['fr']['groupe_3']="Log";
+
+foreach ($bouton as $val)
+	$lang['fr'][$val["id"]]=$val["titre"];
+
+//------------------------------------------------------------------------------ CHAMPS du module
+
+foreach ($onglet["id"] as $val)
+	{
+	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs WHERE rubrique_champ = '$val' AND pos IS NOT NULL ORDER BY pos";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+
+	While ($row = pg_fetch_row($result)) 
+		{
+		$langliste['fr'][$val][]= $row[1];
+		$langliste['fr'][$val.'-popup'][]= $row[2];
+		}
+	}
+
+//------------------------------------------------------------------------------ FONCTIONS du module
+
+?>

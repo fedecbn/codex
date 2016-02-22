@@ -46,9 +46,7 @@ ref_colonne_et_valeur ($id_page);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
-<script type="text/javascript" language="javascript" src="js/liste.js"></script>
-<script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
+<script type="text/javascript" language="javascript" src="js/commun.js"></script>
 
 <?php
 // /*------------------------------------------------------------------------------ MAIN*/
@@ -103,7 +101,7 @@ switch ($mode) {
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			aff_table_reborn ("onglet1",'catnat');
 			// aff_table ($id_page."-liste",true,true);			
 		echo ("</div>");
 /*------------------------------------------------------------------------------ #fiche*/
@@ -122,8 +120,7 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ("droit",false,true);			
-            // aff_table ($id_page."-liste",true,true);
+			aff_table_reborn ("user","droit");
         echo ("</div>");    }
     break;
 

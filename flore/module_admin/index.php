@@ -83,6 +83,9 @@ echo ("<div id=\"text\">");
     echo ("<div id=\"titre2\">");
         echo ($lang[$lang_select]["titre_".$id_page]);
     echo ("</div>");
+	echo ("<div style=\"float:right;\">");
+		echo ("<button name = \"$id_user\" id=\"".$id_page."-add-button\">".$lang[$lang_select]['ajouter']."</button> ");
+	echo ("</div>");
     echo ("<div id=\"".$id_page."-dialog\"></div>");
     aff_table ($id_page."-liste",true,false);
 	}

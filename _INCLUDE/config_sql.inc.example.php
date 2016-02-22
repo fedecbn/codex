@@ -22,12 +22,16 @@
     define ("SQL_admin_pass", "test");
 	define ("SQL_taxa", "taxa");
 	
+	define ("SQL_port_hub", "5433");
+	define ("SQL_base_hub", "si_flore_national");
+	
     define ("SQL_schema_app", "applications");
     define ("SQL_schema_lr", "liste_rouge");
     define ("SQL_schema_eee", "eee");
     define ("SQL_schema_ref", "referentiels");
     define ("SQL_schema_lsi", "lsi");
 
+	define ("Data_path", "../../_DATA/");
 //------------------------------------------------------------------------------ FONCTIONS
 
 

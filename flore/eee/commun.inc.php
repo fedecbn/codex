@@ -15,23 +15,25 @@ $id_page_2 = "droit";
 $title = $lang['fr']['titre_web']." - ".$id_page;
 $titre = "Listes Espèces Exotique Envahissantes";
 
+$onglet = array(
+	"id" => array (
+		"eee",
+		"eee_reg",
+		"droit"
+		),
+	"name" => array (
+		"Eval Nationale",
+		"Eval Régionales",
+		"Utilisateurs"
+		),
+	"sstitre" => array (
+		"Liste des taxons",
+		"Liste des taxons",
+		"Liste des droits"
+		)
+	);
 
-
-$niveau=$_SESSION['niveau_'.$id_page];
-$id_user=$_SESSION['id_user'];
-$config=$_SESSION['id_config'];
-
-$lang_select=$_COOKIE['lang_select'];
-
-//------------------------------------------------------------------------------ QUERY du module
-$query_module = "
-	SELECT * FROM eee.taxons t
-	JOIN refnat.taxons a ON a.uid = t.uid 
-	WHERE a.$id_page = TRUE AND t.uid=";
-
-	
-$query_liste = "
-	SELECT total_count, taxons.cd_ref, taxons.nom_sci, taxons.lib_rang, presence, invav, liste_eval, carac_emerg, carac_avere, lavergne, ind_a, ind_b, ind_c, ind_tot, gbif_url, eval_tot,eval_expert,round(100*fiab_tot)||'%' as fiab_tot, taxons.uid FROM
+$query_liste["eee"] = "	SELECT total_count, taxons.cd_ref, taxons.nom_sci, taxons.lib_rang, presence, invav, liste_eval, carac_emerg, carac_avere, lavergne, ind_a, ind_b, ind_c, ind_tot, gbif_url, eval_tot,eval_expert,round(100*fiab_tot)||'%' as fiab_tot, taxons.uid FROM
 	(SELECT count(*) OVER() AS total_count,taxons.cd_ref,taxons.nom_sci,taxons.lib_rang,taxons.nom_verna,gbif_url,taxons.uid
 	FROM eee.taxons) as taxons
 	LEFT OUTER JOIN 
@@ -56,6 +58,48 @@ $query_liste = "
 	ON taxons.uid = five.uid 
 	JOIN refnat.taxons a ON a.uid = taxons.uid 
 	WHERE a.$id_page = TRUE ";
+$query_liste["eee_reg"] = " SELECT count(*) OVER() AS total_count, taxons.nom_complet, evaluation_regional.* FROM eee.evaluation_regional JOIN refnat.taxons ON evaluation_regional.uid = taxons.uid  WHERE 1 = 1";
+
+
+$niveau=$_SESSION['niveau_'.$id_page];
+$id_user=$_SESSION['id_user'];
+$config=$_SESSION['id_config'];
+
+$lang_select=$_COOKIE['lang_select'];
+
+//------------------------------------------------------------------------------ QUERY du module
+$query_module = "
+	SELECT * FROM eee.taxons t
+	JOIN refnat.taxons a ON a.uid = t.uid 
+	WHERE a.$id_page = TRUE AND t.uid=";
+
+	
+// $query_liste = "
+	// SELECT total_count, taxons.cd_ref, taxons.nom_sci, taxons.lib_rang, presence, invav, liste_eval, carac_emerg, carac_avere, lavergne, ind_a, ind_b, ind_c, ind_tot, gbif_url, eval_tot,eval_expert,round(100*fiab_tot)||'%' as fiab_tot, taxons.uid FROM
+	// (SELECT count(*) OVER() AS total_count,taxons.cd_ref,taxons.nom_sci,taxons.lib_rang,taxons.nom_verna,gbif_url,taxons.uid
+	// FROM eee.taxons) as taxons
+	// LEFT OUTER JOIN 
+	// (SELECT uid,liste_eval, carac_emerg, carac_avere,ind_A,ind_B,ind_C,ind_tot,eval_tot,eval_expert,fiab_tot
+	// FROM eee.evaluation) as evaluation
+	// ON evaluation.uid=taxons.uid
+	// LEFT OUTER JOIN
+	// (SELECT DISTINCT uid, 'oui' as presence
+	// FROM eee.statut_natio WHERE statut = 'pres') as two
+	// ON taxons.uid = two.uid
+	// LEFT OUTER JOIN 
+	// (SELECT DISTINCT uid, 'oui' as invav
+	// FROM eee.statut_natio WHERE statut = 'invav') as three
+	// ON taxons.uid = three.uid
+	// LEFT OUTER JOIN 
+	// (SELECT DISTINCT uid, 'oui' as lavergne
+	// FROM eee.statut_natio WHERE statut = 'lavergne') as four
+	// ON taxons.uid = four.uid
+	// LEFT OUTER JOIN 
+	// (SELECT DISTINCT uid, 'oui' as indigene_eu
+	// FROM eee.statut_inter si JOIN eee.pays p ON si.idp = p.idp WHERE statut = 'indig' AND continent = 'Europe') as five
+	// ON taxons.uid = five.uid 
+	// JOIN refnat.taxons a ON a.uid = taxons.uid 
+	// WHERE a.$id_page = TRUE ";
 
 $query_export = "
 	SELECT *
@@ -92,7 +136,6 @@ $lang['it']['eee']="";
 $lang['fr']['eee_reg']="Listes EEE régionales";
 $lang['it']['eee_reg']="";
 
-
 $lang['fr']['groupe_eee_1']="Identification";
 $lang['it']['groupe_eee_1']="";
 
@@ -113,65 +156,21 @@ $lang['it']['groupe_eee_6']="";
 
 
 //------------------------------------------------------------------------------ CHAMPS du module
-// $langliste['fr']['eee'][]="Etape";
-// $langliste['fr']['eee-popup'][]="Étapes de l'évaluation";
+foreach ($onglet["id"] as $val)
+	{
+	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs WHERE rubrique_champ = '$val' AND pos IS NOT NULL ORDER BY pos";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-$langliste['fr']['eee'][]="CD_REF";
-$langliste['fr']['eee-popup'][]="Code du taxon de référence";
+	While ($row = pg_fetch_row($result)) 
+		{
+		$langliste['fr'][$val][]= $row[1];
+		$langliste['fr'][$val.'-popup'][]= $row[2];
+		}
+	}
 
-$langliste['fr']['eee'][]="Nom scientifique ";
-$langliste['fr']['eee-popup'][]="Nom scientifique du taxon";
+	
 
-$langliste['fr']['eee'][]="Rang";
-$langliste['fr']['eee-popup'][]="Rang taxonomique du taxon";
 
-// $langliste['fr']['eee'][]="Nom vern";
-// $langliste['fr']['eee-popup'][]="Nom vernaculare du taxon";
-
-$langliste['fr']['eee'][]="Presence FR";
-$langliste['fr']['eee-popup'][]="Présence du taxon en métropole";
-
-$langliste['fr']['eee'][]="EEE FR";
-$langliste['fr']['eee-popup'][]="Mention EEE avérée";
-
-$langliste['fr']['eee'][]="Lavergne FR";
-$langliste['fr']['eee-popup'][]="Echelle de Lavegne";
-
-$langliste['fr']['eee'][]="Risque d'introduction";
-$langliste['fr']['eee-popup'][]="Risques d’introduction et d’installation (Biogéographie)";
-
-$langliste['fr']['eee'][]="Risque de propagation";
-$langliste['fr']['eee-popup'][]="Risques de propagation (Naturalisation et dynamisme)";
-
-$langliste['fr']['eee'][]="Risque d'impact";
-$langliste['fr']['eee-popup'][]="Risques d’impact (comportement ailleurs et habitats colonisés)";
-
-$langliste['fr']['eee'][]="Score Weber";
-$langliste['fr']['eee-popup'][]="Score de Weber";
-
-$langliste['fr']['eee'][]="Evaluation Weber";
-$langliste['fr']['eee-popup'][]="Risque global";
-
-$langliste['fr']['eee'][]="Fiabilité Weber";
-$langliste['fr']['eee-popup'][]="Fiabilité globale";
-
-$langliste['fr']['eee'][]="Liste Pcp/annexe";
-$langliste['fr']['eee-popup'][]="Appartenance à une liste";
-
-$langliste['fr']['eee'][]="Carac. emergent";
-$langliste['fr']['eee-popup'][]="Caractère émergent";
-
-$langliste['fr']['eee'][]="Carac. avéré";
-$langliste['fr']['eee-popup'][]="Caractère avéré";
-
-$langliste['fr']['eee'][]="Evaluation experte";
-$langliste['fr']['eee-popup'][]="Evaluation experte";
-
-$langliste['fr']['eee'][]="Carte GBIF";
-$langliste['fr']['eee-popup'][]="Carte GBIF – distribution modélisée";
-
-// $langliste['fr']['eee'][]="uid";
-// $langliste['fr']['eee-popup'][]="identifiant unique";
 
 
 //------------------------------------------------------------------------------ FONCTIONS du module

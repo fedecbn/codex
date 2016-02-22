@@ -33,10 +33,8 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL ".SQL_s
 //------------------------------------------------------------------------------ VAR.
 /*récupération des rubriques*/
 $result=pg_query ($db,$query_rub) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-$i=0;
-While ($row = pg_fetch_row($result)) {$rubrique[$i] = $row[0];$i++;}
 
-
+While ($row = pg_fetch_row($result)) $rubrique[$row[0]] = $row[0];
 
 foreach ($rubrique as $key => $val)
 	{
@@ -47,22 +45,6 @@ $niveau['all']=isset ($_SESSION['niveau']) ? $_SESSION['niveau'] : 0;
 $ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
 
 $id_user=$_SESSION['id_user'];
-
-// $niveau=isset ($_SESSION['niveau']) ? $_SESSION['niveau'] : 0;
-// $niveau_lr=isset ($_SESSION['niveau_lr']) ? $_SESSION['niveau_lr'] : 0;
-// $niveau_eee=isset ($_SESSION['niveau_eee']) ? $_SESSION['niveau_eee'] : 0;
-// $niveau_lsi=isset ($_SESSION['niveau_lsi']) ? $_SESSION['niveau_lsi'] : 0;
-// $niveau_refnat=isset ($_SESSION['niveau_refnat']) ? $_SESSION['niveau_refnat'] : 0;
-// $niveau_catnat=isset ($_SESSION['niveau_catnat']) ? $_SESSION['niveau_catnat'] : 0;
-// $ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
-// $ref['lr']=isset ($_SESSION['ref_lr']) ? $_SESSION['ref_lr'] : 0;
-// $ref['eee']=isset ($_SESSION['ref_eee']) ? $_SESSION['ref_eee'] : 0;
-// $ref['lsi']=isset ($_SESSION['ref_lsi']) ? $_SESSION['ref_lsi'] : 0;
-// $ref['refnat']=isset ($_SESSION['ref_refnat']) ? $_SESSION['ref_refnat'] : 0;
-// $ref['catnat']=isset ($_SESSION['ref_catnat']) ? $_SESSION['ref_catnat'] : 0;
-
-
-
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -91,8 +73,8 @@ switch ($action)
         echo ("<div class=\"narrowcolumn\">");
 //        echo ("<img src=\"../../_GRAPH/theme/home4.png\" border=\"0\" align=right >");
   		echo ("<div class=\"post\">");
-if (DEBUG) echo ("<br>Cookie = ".$lang_select." ");
-if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
+		if (DEBUG) echo ("<br>Cookie = ".$lang_select." ");
+		if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
             if ($niveau['all'] == 0) {
 				echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
 				echo ("<div style=\"text-align: center;\" ><img src=\"../../_GRAPH/Dracocephalum_austriacum_L._cbna_JVE.jpg\" width=\"300\" height=\"453\" border=\"0\"></div>");
@@ -102,21 +84,11 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
 				aff_pres ("home","home_header",FR,false);
             echo ("<br/>");
 			
-			
-			
 		foreach ($rubrique as $key => $val)
 			menu_rubrique ($niveau[$val],$val);
 			            
 			aff_pres ("home","home_footer",FR,false);
-			
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
-				{
-				echo ("<form method=\"POST\" id=\"form1\" name=\"loginform\" action=\"index.php\" >");
-					echo ("<center><input type=\"hidden\" name=\"action\" value=\"maj_data\" />");
-					echo ("<button id=\"maj_data_fr\">Import HUB Agregation</button></center>");
-				echo ("</form>");
-				}
-				
+							
 			echo ("</div>");                                                    // post
             echo ("</div>");                                                    // narrowcolumn
 
@@ -188,25 +160,14 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
             if (pg_num_rows ($result)) {
                 $_SESSION['EVAL_FLORE']="ok";
-                /*niveau de droit*/
-				 foreach ($rubrique as $key => $val) 
+                /*niveau de droit et référents*/
+				$_SESSION['niveau'] = 0;
+				 foreach ($rubrique as $key => $val) {	
 					$_SESSION['niveau_'.$val]=pg_result ($result,0,"niveau_".$val);
-				// $_SESSION['niveau_lr']=pg_result ($result,0,"niveau_lr");
-                // $_SESSION['niveau_eee']=pg_result ($result,0,"niveau_eee");
-                // $_SESSION['niveau_lsi']=pg_result ($result,0,"niveau_lsi");
-                // $_SESSION['niveau_catnat']=pg_result ($result,0,"niveau_catnat");
-                // $_SESSION['niveau_refnat']=pg_result ($result,0,"niveau_refnat");
-				$_SESSION['niveau'] = max($_SESSION['niveau_lr'],$_SESSION['niveau_eee'],$_SESSION['niveau_lsi'],$_SESSION['niveau_catnat'],$_SESSION['niveau_refnat']);
-				/*niveau référents*/
-				foreach ($rubrique as $key => $val) 
+					$_SESSION['niveau'] = max($_SESSION['niveau'],$_SESSION['niveau_'.$val]);
 					$_SESSION['ref_'.$val]=pg_result ($result,0,"ref_".$val);
-				// $_SESSION['ref_lr']=pg_result ($result,0,"ref_lr");
-                // $_SESSION['ref_eee']=pg_result ($result,0,"ref_eee");
-                // $_SESSION['ref_lsi']=pg_result ($result,0,"ref_lsi");
-                // $_SESSION['ref_catnat']=pg_result ($result,0,"ref_catnat");
-                // $_SESSION['ref_refnat']=pg_result ($result,0,"ref_refnat");
-				if (($_SESSION['ref_lr'] == 't') OR ($_SESSION['ref_eee'] == 't') OR ($_SESSION['ref_lsi'] == 't') OR ($_SESSION['ref_catnat'] == 't') OR ($_SESSION['ref_refnat'] == 't')) $_SESSION['ref']= 't'; else $_SESSION['ref']= 'f';
-			   /*id user*/
+					$_SESSION['ref'] = $_SESSION['ref'] = 't' OR $_SESSION['ref_'.$val] = 't' ? 't' : 'f';
+					}
 				$_SESSION['id_user']=pg_result ($result,0,"id_user");
 				add_log ("log",3,pg_result($result,0,"id_user"),getenv("REMOTE_ADDR"),"Login",$user_login,"");
                 die ("<meta HTTP-equiv=\"refresh\" content=0;url=index.php />");
@@ -359,54 +320,7 @@ if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
    echo ("</div>");
    }
 	break;
-
-   case "maj_data" : {
-	echo ("<div id=\"page\">");
-        echo ("<div lang=\"fr\">");
-        echo ("<div class=\"narrowcolumn\">");
-			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
-				{
-				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
-				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"maj_data-ok\" />");
-				echo ("<input type=\"text\" name=\"cbn\" id=\"cbn\" size = \"40\" value=\"XXX\" />exemple : ALP");
-				echo ("<BR>");
-				echo ("<button id=\"envoi_maj\" >Lancer l'import</button></center>");
-				echo ("</form>");
-				}
-				echo ("</div>");                                                    // post
-            echo ("</div>");                                                    // narrowcolumn
-		echo ("<div class=\"whidecolumn\">");
-		echo ("</div>");
-   echo ("</div>");
-   }
-	break;	
 	
-	 case "maj_data-ok" : {
-	 	echo ("<div id=\"page\">");
-        echo ("<div lang=\"fr\">");
-        echo ("<div class=\"narrowcolumn\">");
-			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
-			if ($id_user == 'JEGE4' OR $id_user == 'ALDE2' OR $id_user == 'CYTA1' OR $id_user == 'DOGU9' OR $id_user == 'PASP1' OR $id_user == 'GIBA6' OR $id_user == 'THVE4' OR $id_user == 'OLGA' OR $id_user == 'ELHA9' OR $id_user == 'JELE6' OR $id_user == 'ANJU3' OR $id_user == 'THMI')
-				{
-				// echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
-				// echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"maj_data-ok\" />");
-				/*connexion en admin*/
-				$db2=sql_connect_hub(SQL_base_hub);
-				/*requete*/
-				$query = "SELECT * FROM import_temp_hub('CBN_".$_POST['cbn']."','/home/hub/".$_POST['cbn']."/import/');";
-				$result=pg_query ($db2,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
-				echo ("Import réalisé");
-				echo ("<center><button id=\"home-button\">Retour à l'accueil</button></center>");				
-				echo ("</form>");
-				}		
-				echo ("</div>");                                                    // post
-            echo ("</div>");                                                    // narrowcolumn
-		echo ("<div class=\"whidecolumn\">");
-		echo ("</div>");
-   echo ("</div>");
-	}
-	break;	
 }
 echo ("<table width=\"100%\"><tr>");
 echo ("<td align=center><img src=\"../../_GRAPH/logos/logo_FCBN.gif\" border=\"0\" /></td>");

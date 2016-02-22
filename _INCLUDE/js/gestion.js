@@ -62,23 +62,24 @@ $(document).ready(function(){
 
 //------------------------------------------------------------------------------ UI / Tabs
 
-    var $tabs = $("#tabs").tabs();
+    // var $tabs = $("#tabs").tabs();
 
-    if ( $("#mode").val() == 'liste') {
-        $tabs.tabs('disable',2);                                                // Fiche
-    } 
-	else if ( $("#mode").val() == 'maj') {
-        $tabs.tabs ('disable',0);                                               // LR                                                
-        $tabs.tabs ('disable',1);                                               // EVEE                                                	
-        $tabs.tabs ('disable',2);                                               // EVEE                                                	
-	}
-	else {
-        $tabs.tabs ("option","active",2);                                       // Fiche
-        $tabs.tabs ('disable',0);                                               // LR                                                
-        $tabs.tabs ('disable',1);                                               // EVEE                                                
-    }
+    // if ( $("#mode").val() == 'liste') {
+        // $tabs.tabs('disable',2);                                                // Fiche
+    // } 
+	// else if ( $("#mode").val() == 'maj') {
+        // $tabs.tabs ('disable',0);                                               // LR                                                
+        // $tabs.tabs ('disable',1);                                               // EVEE                                                	
+        // $tabs.tabs ('disable',2);                                               // EVEE                                                	
+	// }
+	// else {
+        // $tabs.tabs ("option","active",2);                                       // Fiche
+        // $tabs.tabs ('disable',0);                                               // LR                                                
+        // $tabs.tabs ('disable',1);                                               // EVEE                                                
+    // }
 
 //------------------------------------------------------------------------------ UI / Boutons
+
 
     $( "#home-button" )
         .button({
@@ -181,6 +182,7 @@ if ( $("#mode").val() == 'liste') {
 
 //------------------------------------------------------------------------------ LISTES / Taxons (Ldata)
 	include("js/data.js")        
+	include("js/function.js")
 
     $('#data-liste').on("click",".view", function ($e) {		
         window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
@@ -197,6 +199,102 @@ if ( $("#mode").val() == 'liste') {
         return (false);
 	});
 
+	$('#onglet0-liste').on("click",".view", function ($e) {		
+        window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+    $('#onglet0-liste').on("click",".edit", function ($e) {
+        window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
+        return (false);
+	});
+	
+    $('#onglet0-liste').on("click",".vocactrl", function ($e) {
+        window.location.replace ('index.php?m=vocactrl&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+	$('#onglet1-liste').on("click",".view", function ($e) {		
+        window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+    $('#onglet1-liste').on("click",".edit", function ($e) {
+        window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
+        return (false);
+	});
+	
+    $('#onglet1-liste').on("click",".vocactrl", function ($e) {
+        window.location.replace ('index.php?m=vocactrl&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+
+	$('#onglet2-liste').on("click",".view", function ($e) {		
+        window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+    $('#onglet2-liste').on("click",".edit", function ($e) {
+        window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
+        return (false);
+	});
+	
+    $('#onglet2-liste').on("click",".vocactrl", function ($e) {
+        window.location.replace ('index.php?m=vocactrl&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+	$('#onglet3-liste').on("click",".view", function ($e) {		
+        window.location.replace ('index.php?m=view&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+    $('#onglet3-liste').on("click",".edit", function ($e) {
+        window.location.replace ('index.php?m=edit&id='+$(this).attr('id'));				
+        return (false);
+	});
+	
+    $('#onglet3-liste').on("click",".vocactrl", function ($e) {
+        window.location.replace ('index.php?m=vocactrl&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+    $('#onglet0-liste').on("click",".fsd", function ($e) {
+        window.location.replace ('index.php?m=fsd&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet1-liste').on("click",".fsd", function ($e) {
+        window.location.replace ('index.php?m=fsd&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet2-liste').on("click",".fsd", function ($e) {
+        window.location.replace ('index.php?m=fsd&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet3-liste').on("click",".fsd", function ($e) {
+        window.location.replace ('index.php?m=fsd&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+    $('#onglet0-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet1-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet2-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+    $('#onglet3-liste').on("click",".eee_reg", function ($e) {
+        window.location.replace ('index.php?m=eee_reg&id='+$(this).attr('id'));				
+        return (false);
+	});
+
+	
 //------------------------------------------------------------------------------ CHECKBOX
 
     affMasqBtn ();
@@ -208,6 +306,26 @@ if ( $("#mode").val() == 'liste') {
     });
 
     $('#data-liste').on("click",".liste-one", function ($e) {
+        console.log ('liste-one');
+        affMasqBtn();
+	});
+
+    $('#onglet0-liste').on("click",".liste-one", function ($e) {
+        console.log ('liste-one');
+        affMasqBtn();
+	});
+
+    $('#onglet1-liste').on("click",".liste-one", function ($e) {
+        console.log ('liste-one');
+        affMasqBtn();
+	});
+
+    $('#onglet2-liste').on("click",".liste-one", function ($e) {
+        console.log ('liste-one');
+        affMasqBtn();
+	});
+
+    $('#onglet3-liste').on("click",".liste-one", function ($e) {
         console.log ('liste-one');
         affMasqBtn();
 	});

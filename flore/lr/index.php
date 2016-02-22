@@ -49,10 +49,7 @@ ref_colonne_et_valeur ($id_page);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 
-<script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script>
-<script type="text/javascript" language="javascript" src="js/liste.js"></script>
-<script type="text/javascript" language="javascript" src="js/autocomp.js"></script>
-
+<script type="text/javascript" language="javascript" src="js/commun.js"></script>
 <?php
 //------------------------------------------------------------------------------ MAIN
 // html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
@@ -303,7 +300,7 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
                 metaform_text ("Justification du critère D1",$desc2,10,null,"crit_d1",pg_result($result,0,"crit_d1"));
                 echo ("<br>");
                 metaform_sel ("Catégorie D2",$desc2,null,$ref[$champ_ref['cat_d2']],"cat_d2",pg_result($result,0,"cat_d2"));
-                metaform_text ("Justification du critère D1",$desc2,26,null,"crit_d2",pg_result($result,0,"crit_d2"));
+                metaform_text ("Justification du critère D2",$desc2,26,null,"crit_d2",pg_result($result,0,"crit_d2"));
 				metaform_bout ("Menace directe",$desc2,"menace",pg_result($result,0,"menace"));
             echo ("</td><td width=250>");
                 echo ("<br>");

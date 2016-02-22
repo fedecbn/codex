@@ -14,7 +14,7 @@ session_start();
 include ("commun.inc.php");
 
 //------------------------------------------------------------------------------ PARMS.
-define ("DEBUG",TRUE);
+define ("DEBUG",FALSE);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 $type = isset($_POST['type']) ? $_POST['type'] : "";
 
@@ -25,22 +25,23 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ REF.
+if ($type == 'ddd') $id_page = 'fsd' ; else $id_page = 'meta';	/*Attenoin, c'est moche*/
 ref_colonne_et_valeur ($id_page);
 global $db, $ref, $champ_ref;
 
-if (!isset($_POST["etape"])) {$etape = 0;}
-else {$etape = $_POST["etape"];}
+if (!isset($_POST["etape"])) {$etape = 0;} else {$etape = $_POST["etape"];}
 
 //------------------------------------------------------------------------------ EDIT
 if (!empty ($id) AND !empty($type))                                                              
 	{
-	if ($type == 'champ' AND $niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
+	if (($type == 'ddd' OR $type == 'fsd') AND $niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
 		{
 		/*SUIVI DES MODIFICATIONS ET UPDATE*/
+		if ($type == 'ddd') $table = 'ddd' ; else $table = 'formats';
 		$liste_champs = '';
-		$update ="UPDATE fsd.ddd SET ";
+		$update ="UPDATE fsd.$table SET ";
 		foreach ($aColumnsTot[$id_page] as $key => $val)	{
-			if ($val['modifiable'] == 't' AND $val['table_champ'] == "ddd" AND $val['nom_champ'] != "id_from") {
+			if ($val['modifiable'] == 't' AND $val['table_champ'] == $table AND $val['nom_champ'] != "id_from") {
 				/*récupération des champs modifiables*/
 				$liste_champs .= "\"".$val['champ_interface']."\",";
 				$champs = "\"".$val['champ_interface']."\"";
@@ -55,7 +56,7 @@ if (!empty ($id) AND !empty($type))
 				}
 			}
 			/*SUIVI AVANT UPDATE*/
-			$select="SELECT ".rtrim($liste_champs,',')." FROM fsd.ddd AS t WHERE uid=".$id.";";
+			$select="SELECT ".rtrim($liste_champs,',')." FROM fsd.$table AS t WHERE uid=".$id.";";
 			if (DEBUG) echo "<br>".$select;
 			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);                          // Old values
@@ -65,19 +66,21 @@ if (!empty ($id) AND !empty($type))
 				if ($val_1 == 'f') $val_1 = "FALSE";
 				$modif = check_modif($val_1,$val_2,$field);
 				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
-				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,"fsd.ddd",$field,$val_1,$val_2,$id_page,'manuel',$modif);
+				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,"fsd.".$table,$field,$val_1,$val_2,$id_page,'manuel',$modif);
 				} 
 			/*UPDATE*/
 			$update = rtrim($update,',')." WHERE uid = ".$id.";";
 			if (DEBUG) echo "<br>".$update;
 			$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
-
+		}
+		if ($type == 'ddd' AND $niveau >= 128)
+		{
 			/*les champs rattachées anciens*/
 			$query = "SELECT id_from FROM fsd.lien_champs WHERE uid=$id;";
 			$ligne = sql_assoc ($query,true);
 			
-			var_dump($_POST['id_from_0']);
-			var_dump($ligne['id_from']);
+			// var_dump($_POST['id_from_0']);
+			// var_dump($ligne['id_from']);
 			
 			$supp = array_diff($ligne['id_from'], $_POST['id_from_0']);
 			$add = array_diff($_POST['id_from_0'],$ligne['id_from']);
@@ -104,7 +107,7 @@ if (!empty ($id) AND !empty($type))
 			pg_free_result ($result);		
 			
 		}
-	if ($type == 'champ' AND $niveau >= 64)	/*Seulement les participants et au dessus*/
+	if ($type == 'ddd' AND $niveau >= 64)	/*Seulement les participants et au dessus*/
 		{
 		if (isset($_POST['commentaire_eval']))	{
 			if (!empty($_POST['commentaire_eval'])) {
@@ -118,7 +121,7 @@ if (!empty ($id) AND !empty($type))
 				}
 			}
 		}
-	if ($type == 'vocactrl' AND $niveau >= 128)
+	if ($type == 'voca_ctrl' AND $niveau >= 128)
 		{
 		for ($j=0;$j<=$_POST['nb'];$j++)
 		if ($_POST['cdChamp_'.$j] == null AND $_POST['libChamp_'.$j] == null)
@@ -129,7 +132,7 @@ if (!empty ($id) AND !empty($type))
 			if (!empty($_POST['cdChamp']) AND !empty($_POST['libChamp']))
 				$query .= "INSERT INTO fsd.voca_ctrl (\"typChamp\",\"cdChamp\",\"libChamp\",\"descChamp\") VALUES (".sql_format_quote($_POST['typChamp'],'do').",".sql_format_quote($_POST['cdChamp'],'do').",".sql_format_quote($_POST['libChamp'],'do').",".sql_format_quote($_POST['descChamp'],'do').");";
 		$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
-		}
+		}	
 	} else {                                      
 //------------------------------------------------------------------------------	
 //------------------------------------------------------------------------------ ADD.
