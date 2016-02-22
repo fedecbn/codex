@@ -17,12 +17,13 @@ include ("commun.inc.php");
 define ("DEBUG",false);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 $mode = $_POST['m'] != null ? $_POST['m'] : null;
-$typjdd = $_POST['typjdd'];
 $jdd = $_POST['jdd'];
 $typverif = $_POST['typverif'];
 $typpush = $_POST['typpush'];
+$typdiff = $_POST['typdiff'];
 $infrataxon = $_POST['infrataxon'] != null ? $_POST['infrataxon'] : 'f';
-$listaxon = $_POST['file_listtaxon'] != null ? $_POST['file_listtaxon'] : 'f';
+$listaxon = $_POST['file_listtaxon'];
+$statut = $_POST['statut'];
 $format = $_POST['format'] != null ? $_POST['format'] : 'fcbn';
 
 /*Datapath*/
@@ -39,13 +40,24 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 if (!empty ($id))                                                               
 	{
 	switch ($mode) {
+		/*CLEAR*/
+		case "clear" : {
+			$query = "SELECT * FROM hub_clear('$id', '$jdd', 'temp')";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
 		/*IMPORT*/
 		case "import" : {
-			$path = $path."import/";
-			if ($typjdd == 'data' OR $typjdd == 'taxa' )
-				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path')";
-			elseif ($typjdd == 'listTaxon')
-				$query = "SELECT * FROM hub_import('$id', '$typjdd', '$path','$listaxon')";
+			$path .= "import/";
+			$query = "SELECT * FROM hub_import('$id', '$jdd', '$path')";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
+		/*IMPORT TAXON*/	
+		case "import_taxon" : {
+			$path .= "import/";
+			$query = "SELECT * FROM hub_import_taxon('$id', '$path','$listaxon');";	
+			if ($infrataxon == 'TRUE') $query .= "SELECT * FROM hub_txInfra('$id');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
@@ -66,13 +78,20 @@ if (!empty ($id))
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
+			
+		/*DIFF*/
+		case "diff" : {
+			$query = "SELECT * FROM hub_diff('$id', '$jdd', '$typdiff')";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
 
 		/*EXPORT*/
 		case "export" : {
-			$path = $path."export/";
-			if ($typjdd == 'data' OR $typjdd == 'taxa')
-				$query = "SELECT * FROM hub_export('$id','$typjdd','$path','$format')";
-			elseif ($typjdd == 'listTaxon')
+			$path .= "export/";
+			if ($jdd == 'data' OR $jdd == 'taxa')
+				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format')";
+			elseif ($jdd == 'listTaxon')
 				{
 				if ($infrataxon == 'TRUE') $source = 'listtaxoninfra';
 					else $source = 'listtaxon';
@@ -81,8 +100,9 @@ if (!empty ($id))
 				else 
 					$query = "SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				}
-				echo $query;
-				pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			else
+				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format')";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
 		

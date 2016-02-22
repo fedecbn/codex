@@ -14,21 +14,14 @@ include("commun.inc.php");
 $id = $_GET['id'] != null ? $_GET['id'] : null;
 $mode = $_GET['m'] != null ? $_GET['m'] : null;
 
+
 /*Datapath*/
 $path = Data_path.$id."";
 
 /*type de jdd*/
-$fsd = array(
-	"data" => "Data",
-	"taxa" => "Taxa",
-	"meta" => "Meta"
-	);
-
-$date_obs = array(
-	"1990" => "après 1990",
-	"2000" => "après 2000",
-	"tout" => "tout"
-	);
+$fsd = array("data" => "Data","taxa" => "Taxa","meta" => "Meta");
+$fsd_simple = array("data" => "Data","taxa" => "Taxa");
+$date_obs = array("1990" => "après 1990",	"2000" => "après 2000",	"tout" => "tout");
 
 $typverif = array(
 	"all" => "Toutes les verifications",
@@ -40,8 +33,13 @@ $typverif = array(
 
 $typpush = array(
 	"add" => "Ajout de la différence",
-	"del" => "Suppression de l'existant de la partie temporaire",
-	"replace" => "Remplacement total",
+	"del" => "Suppression de données à partir de la partie temporaire",
+	"replace" => "Remplacement total"
+	);
+	
+$typdiff = array(
+	"add" => "Différences",
+	"del" => "Points communs"
 	);
 	
 $statut = array(
@@ -58,7 +56,7 @@ $statut = array(
 
 $format = array(
 	"fcbn" => "FCBN",
-	"sinp" => "SINP",
+	"sinp" => "SINP"
 	);
 
 	
@@ -76,9 +74,9 @@ while ($row = pg_fetch_row($result))
 	$jdd_cbn[$row[0]] = $row[0];
 $jdd_cbn = $jdd_cbn == null ? array() : $jdd_cbn;
 	
- $typejdd = $niveau > 64 ? array_merge($fsd,array("listTaxon" => "Liste de taxons")) : array("listTaxon" => "Liste de taxons");
- $jdd = array_merge(array("all" => "Tous les jeux de données"),$fsd,$jdd_cbn);
- $jdd_push = array_merge($fsd,$jdd_cbn);
+ $jdd["import"] = $fsd_simple;
+ $jdd["verif"] = array_merge(array("all" => "Tous les jeux de données"),$fsd,$jdd_cbn);
+ $jdd["clear"] = $jdd["push"] =  $jdd["diff"] = $jdd["export"] = array_merge($fsd_simple,$jdd_cbn);
 //------------------------------------------------------------------------------ CONSTANTES du module
 
 
@@ -123,19 +121,33 @@ echo ("<div id=\"chargement\" style=\"display:none;text-align:center;\">Chargeme
 if (isset($_GET['id']) & !empty($_GET['id']))  
 	{
 	switch ($mode) {
+		//------------------------------------------------------------------------------ Bilan
+		case "clear" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"clear\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Nettoyage </LEGEND>");
+			echo ("Supprime définitivement le contenu de la partie temporaire.");
+echo ("<BR>");
+			echo ("<label class=\"preField\">Type de jeu de données</label><select id=\"jdd\" name=\"jdd\"\">");
+			foreach ($jdd[$mode] as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
 	//------------------------------------------------------------------------------ Import
 		case "import" : {
 		echo ("<form method=\"POST\" id=\"form1\" name=\"import\" action=\"#\" >");
 		echo ("<fieldset>");
 			echo ("<LEGEND> Choix du type de données </LEGEND>");
-			echo ("<label class=\"preField\">Type de jeu de données</label><select id=\"typjdd\" name=\"typjdd\" onChange=\"javascript:apparition_champ('typjdd','div_listtaxon','listTaxon');apparition_champ('typjdd','div_format','data');\">");
-			foreach ($typejdd as $key => $val) 
+			echo ("<label class=\"preField\">Type de jeu de données</label><select id=\"jdd\" name=\"jdd\"\">");
+			foreach ($jdd[$mode] as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
 			echo ("<BR>");
-			echo ("<div id = \"div_listtaxon\" style=\"display:none\">");
-				metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon","std_listtaxon.csv");
-			echo ("</div>");
 			
 			echo ("<div id = \"div_format\" style=\"\">");
 				echo ("<label class=\"preField\">Format d'import</label>");
@@ -159,13 +171,36 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("</form>");
 			}
 			break;
+	//------------------------------------------------------------------------------ Import de taxon
+		case "import_taxon" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"import_taxon\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Choix du fichier à importer</LEGEND>");
+			metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon",null);
+			echo ("<BR>");
+			metaform_bool ("Rechercher les infra-taxons",null,"infrataxon","f");
+			
+			/*Liste de fichiers*/
+			$files = scandir($path."/import");
+			unset($files[array_search("..", $files)]);
+			unset($files[array_search(".", $files)]);
+			echo ("<BR><BR>");
+			echo ("<table class = \"basic_table\">");
+			echo ("<tr><td>Liste des fichiers dans le dossier d'import</td></tr>");
+			foreach ($files as $key => $val)
+				echo ("<tr><td>$val</td></tr>");
+			echo ("</table>");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
 	//------------------------------------------------------------------------------ Verification
 		case "verif" : {
 		echo ("<form method=\"POST\" id=\"form1\" name=\"verif\" action=\"#\" >");
 		echo ("<fieldset>");
 			echo ("<LEGEND> Choix des données à vérifier </LEGEND>");
 			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
-			foreach ($jdd as $key => $val) 
+			foreach ($jdd[$mode] as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
 			echo ("<BR>");
@@ -184,12 +219,31 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("<fieldset>");
 			echo ("<LEGEND> Choix des données à vérifier </LEGEND>");
 			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
-			foreach ($jdd_push as $key => $val) 
+			foreach ($jdd[$mode] as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
 			echo ("<BR>");
 			echo ("<label class=\"preField\">Type d'action</label><select id=\"typpush\" name=\"typpush\" >");
 			foreach ($typpush as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
+	//------------------------------------------------------------------------------ diff
+		case "diff" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"diff\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Choix des données à vérifier </LEGEND>");
+			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
+			foreach ($jdd[$mode] as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+			echo ("<label class=\"preField\">Type d'action</label><select id=\"typdiff\" name=\"typdiff\" >");
+			foreach ($typdiff as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
 			echo ("<BR>");
@@ -212,8 +266,8 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("<fieldset>");
 					echo ("<LEGEND> Paramétrage de l'export</LEGEND>");
 					echo ("<label class=\"preField\">Type de jeu de données</label>");
-					echo ("<select id=\"typjdd\" name=\"typjdd\" onChange=\"javascript:apparition_champ('typjdd','div_data','data');apparition_champ('typjdd','div_taxa','taxa');apparition_champ('typjdd','div_listTaxon','listTaxon');\">");
-					foreach ($typejdd as $key => $val) 
+					echo ("<select id=\"jdd\" name=\"jdd\" onChange=\"javascript:apparition_champ('jdd','div_data','data');apparition_champ('jdd','div_taxa','taxa');apparition_champ('jdd','div_listTaxon','listTaxon');\">");
+					foreach ($jdd[$mode] as $key => $val) 
 						echo ("<option value=\"$key\">".$val."</option>");
 					echo ("</select>");
 					/*DATA*/

@@ -26,9 +26,11 @@ $onglet = array(
 	);
 
 $bouton = array (
-		array ("id" => "import","titre"=>"Importer des données","text" => "Dernier import : ","niveau" => 64),
+		array ("id" => "clear","titre"=>"Vider la partie temporaire données","text" => "Dernier nettoyage : ","niveau" => 128),
+		array ("id" => "import","titre"=>"Importer des données","text" => "Dernier import : ","niveau" => 128),
+		array ("id" => "import_taxon","titre"=>"Importer une liste de taxon","text" => "Dernier import : ","niveau" => 64),
 		array ("id" => "verif","titre"=>"Vérifier la conformité","text" => "Dernière vérification : ","niveau" => 128),
-		array ("id" => "diff","titre"=>"Analyser les différences","text" => "Dernière analyse des différences : ","niveau" => 128),
+		array ("id" => "diff","titre"=>"Analyser les différences","text" => "Dernière analyse : ","niveau" => 128),
 		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128),
 		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1),
 		array ("id" => "bilan","titre"=>"Bilan sur les données","text" => "Dernier bilan : ","niveau" => 128)
