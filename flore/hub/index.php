@@ -168,8 +168,12 @@ include ("../commun/add_fiche.php");
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_1']."</LEGEND>");
 				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
 		
+		$query= "SELECT id_cbn FROM applications.utilisateur WHERE id_user = '".$id_user."';";
+		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		$row = pg_fetch_row($result);$id_cbn = $row[0];	
+		
 		foreach ($bouton as $val)	{
-				if ($niveau >= $val["niveau"])
+				if ($niveau >= 255 OR ($niveau >= $val["niveau"] AND ($val["cbn"] == FALSE OR ($val["cbn"] == TRUE AND $id_cbn == $id))))
 					{
 					/*Récupération de la date de dernière réalisation*/
 					$query= "SELECT max(date_log) FROM $schema.zz_log WHERE typ_log = 'hub_".$val["id"]."';";

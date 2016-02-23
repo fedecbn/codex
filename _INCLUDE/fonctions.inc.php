@@ -43,6 +43,7 @@ function html_header_2 ($charset,$css1,$css2,$title) {
     echo ("<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />");
     echo ("<meta http-equiv=\"Content-Style-Type\" content=\"text/css\" />");
     echo ("<meta name=\"author\" content=\"DARIANET\" />");
+    echo ("<meta name=\"author\" content=\"FCBN\" />");
     echo ("<meta name=\"editor\" content=\"PSPad\" />");
     echo ("<meta name=\"description\" content=\"Dispositif de partage des connaissances et d'expertises du réseau des CBN\">");
     
