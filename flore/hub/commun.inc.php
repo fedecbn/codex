@@ -33,6 +33,7 @@ $bouton = array (
 		array ("id" => "verif","titre"=>"Vérifier la conformité","text" => "Dernière vérification : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "diff","titre"=>"Analyser les différences","text" => "Dernière analyse : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "pull","titre"=>"Tirer les données","text" => "Dernier pull : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1,"cbn"=>false),
 		array ("id" => "bilan","titre"=>"Bilan sur les données","text" => "Dernier bilan : ","niveau" => 1,"cbn"=>false)
 		);

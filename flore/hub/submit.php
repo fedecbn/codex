@@ -79,6 +79,13 @@ if (!empty ($id))
 			}
 			break;
 			
+		/*PULL*/
+		case "pull" : {
+			$query = "SELECT * FROM hub_pull('$id', '$jdd')";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
+			
 		/*DIFF*/
 		case "diff" : {
 			$query = "SELECT * FROM hub_diff('$id', '$jdd', '$typdiff')";

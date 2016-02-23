@@ -81,6 +81,13 @@
 			return (false);
 		});
 		
+	$( "#pull_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Passer les données dans la partie temporaire",670,500,'#push-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Tirer les données");
+			return (false);
+		});
+		
 	$( "#export_button" )
         .button({text: true})
         .click(function() {

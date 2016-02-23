@@ -73,10 +73,17 @@ $result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error
 while ($row = pg_fetch_row($result))
 	$jdd_cbn[$row[0]] = $row[0];
 $jdd_cbn = $jdd_cbn == null ? array() : $jdd_cbn;
+
+$query = "SELECT cd_jdd FROM ".$_GET['id'].".metadonnees;";
+$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_row($result))
+	$jdd_cbn_propre[$row[0]] = $row[0];
+$jdd_cbn_propre = $jdd_cbn_propre == null ? array() : $jdd_cbn_propre;
 	
  $jdd["import"] = $fsd_simple;
  $jdd["verif"] = array_merge(array("all" => "Tous les jeux de données"),$fsd,$jdd_cbn);
  $jdd["clear"] = $jdd["push"] =  $jdd["diff"] = $jdd["export"] = array_merge($fsd_simple,$jdd_cbn);
+ $jdd["pull"] = array_merge($fsd_simple,$jdd_cbn_propre);
 //------------------------------------------------------------------------------ CONSTANTES du module
 
 
@@ -217,7 +224,7 @@ echo ("<BR>");
 		case "push" : {
 		echo ("<form method=\"POST\" id=\"form1\" name=\"push\" action=\"#\" >");
 		echo ("<fieldset>");
-			echo ("<LEGEND> Choix des données à vérifier </LEGEND>");
+			echo ("<LEGEND> Choix des données à pousser </LEGEND>");
 			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
 			foreach ($jdd[$mode] as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
@@ -225,6 +232,20 @@ echo ("<BR>");
 			echo ("<BR>");
 			echo ("<label class=\"preField\">Type d'action</label><select id=\"typpush\" name=\"typpush\" >");
 			foreach ($typpush as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
+	//------------------------------------------------------------------------------ Pull
+		case "pull" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"pull\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Choix des données à tirer </LEGEND>");
+			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
+			foreach ($jdd[$mode] as $key => $val) 
 				echo ("<option value=\"$key\">".$val."</option>");
 			echo ("</select>");
 			echo ("<BR>");
