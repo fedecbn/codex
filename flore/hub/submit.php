@@ -42,14 +42,19 @@ if (!empty ($id))
 	switch ($mode) {
 		/*CLEAR*/
 		case "clear" : {
-			$query = "SELECT * FROM hub_clear('$id', '$jdd', 'temp')";
+			if ($jdd == 'all')
+				{
+				$query = "SELECT * FROM hub_clear('$id', 'data', 'temp');";
+				$query .= "SELECT * FROM hub_clear('$id', 'taxa', 'temp');";
+				}
+			else $query = "SELECT * FROM hub_clear('$id', '$jdd', 'temp');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
 		/*IMPORT*/
 		case "import" : {
 			$path .= "import/";
-			$query = "SELECT * FROM hub_import('$id', '$jdd', '$path')";
+			$query = "SELECT * FROM hub_import('$id', '$jdd', '$path');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
@@ -64,31 +69,44 @@ if (!empty ($id))
 
 		/*VERIFICATION*/
 		case "verif" : {
-			if ($jdd == 'all')
-				$query = "SELECT * FROM hub_verif_all('$id')";
-			else
-				$query = "SELECT * FROM hub_verif('$id', '$jdd', '$typverif')";
+			if ($jdd == 'all') $query = "SELECT * FROM hub_verif_all('$id');";
+			else $query = "SELECT * FROM hub_verif('$id', '$jdd', '$typverif');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
 
 		/*PUSH*/
 		case "push" : {
-			$query = "SELECT * FROM hub_push('$id', '$jdd', '$typpush')";
+			if ($jdd == 'all')
+				{
+				$query = "SELECT * FROM hub_push('$id', 'data', '$typpush');";
+				$query .= "SELECT * FROM hub_push('$id', 'taxa', '$typpush');";
+				}
+			else $query = "SELECT * FROM hub_push('$id', '$jdd', '$typpush');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
 			
 		/*PULL*/
 		case "pull" : {
-			$query = "SELECT * FROM hub_pull('$id', '$jdd')";
+			if ($jdd == 'all')
+				{
+				$query = "SELECT * FROM hub_pull('$id', 'data');";
+				$query .= "SELECT * FROM hub_pull('$id', 'taxa');";
+				}
+			else $query = "SELECT * FROM hub_pull('$id', '$jdd');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
 			
 		/*DIFF*/
 		case "diff" : {
-			$query = "SELECT * FROM hub_diff('$id', '$jdd', '$typdiff')";
+			if ($jdd == 'all')
+				{
+				$query = "SELECT * FROM hub_diff('$id', 'data','$typdiff');";
+				$query .= "SELECT * FROM hub_diff('$id', 'taxa','$typdiff');";
+				}
+			else $query = "SELECT * FROM hub_diff('$id', '$jdd', '$typdiff');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
@@ -97,7 +115,7 @@ if (!empty ($id))
 		case "export" : {
 			$path .= "export/";
 			if ($jdd == 'data' OR $jdd == 'taxa')
-				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format')";
+				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format');";
 			elseif ($jdd == 'listTaxon')
 				{
 				if ($infrataxon == 'TRUE') $source = 'listtaxoninfra';
@@ -116,6 +134,12 @@ if (!empty ($id))
 		/*BILAN*/
 		case "bilan" : {
 			$query = "SELECT * FROM hub_bilan('$id');";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
+		/*LOGS*/
+		case "log" : {
+			$query = "SELECT * FROM hub_log('$id',null,'clear');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;

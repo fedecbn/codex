@@ -102,6 +102,13 @@
 			return (false);
 		});
 
+	$( "#log_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Vider les logs",670,500,'#log-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Vider les logs");
+			return (false);
+		});
+
 
  //------------------------------------------------------------------------------ fonctin metForm
 		
