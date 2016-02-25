@@ -32,6 +32,7 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 //------------------------------------------------------------------------------ REF.
 /*Cette fonction récupère toutes les référentiels utiles pour la page. Les référentiels sons stockés dans l'objet $ref*/
 ref_colonne_et_valeur ($id_page);
+var_dump($ref);
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -174,7 +175,7 @@ include ("../commun/add_fiche.php");
         echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
 
         echo ("<div style=\"float:left;\">");
-            echo ("<font size=5 color=#008C8E >".$lang[$lang_select]['edit_fiche']."</font>");
+            echo ("<font size=5 color=#2D8946 >".$lang[$lang_select]['edit_fiche']."</font>");
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
             if ($mode == "edit") {
@@ -196,8 +197,14 @@ include ("../commun/add_fiche.php");
 			
 			$query2= $query_module_biblio.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
-			$result2=pg_query($db,$query2) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-			$numrows2 = pg_numrows($result2);
+			$result2=pg_query($db,$query2) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result2),false);
+			$numrows = pg_numrows($result2);
+			//for($i = 0; $i < $numrows; $i++) { $row = pg_fetch_array($result, $i);echo $row["codeEnregistrementSyntax"];}	
+			
+			$query3= $query_module_correspondance_pvf1.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result3=pg_query($db,$query3) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result3),false);
+			$numrows = pg_numrows($result3);
 			
 			
 			//$table = pg_fetch_array($result);
@@ -207,7 +214,7 @@ include ("../commun/add_fiche.php");
 			//echo $colname;
 			//$val= pg_fetch_result(pg_query ($db,$query_description."'$colname1'".";"),0,"description" );
 			//echo $val;
-			//$val= pg_fetch_result($result2,"\"codeEnregistrement\"" );
+			//$val= pg_fetch_result($result,"\"codeEnregistrementSyntax\"" );
 			//echo $val;
 			// Loop through rows in the result set
 			for($i = 0; $i < $numrows2; $i++) { $row = pg_fetch_array($result2, $i);echo $row["codeEnregistrement"];}
@@ -223,48 +230,72 @@ include ("../commun/add_fiche.php");
 			echo ("<div id=\"radio2\">"); 
 			echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 			//echo ("<input type=\"hidden\" name=\"codeEnregistrementSyntax\" id=\"codeEnregistrementSyntax\" value=\"".pg_result($result,0,"codeEnregistrementSyntax")."\">");
-	/*------------------------------------------------------------------------------ EDIT fieldset1*/
-	/*----------Attention la fonction pg_fetch_result() is case sensitive donc faire attention aux noms de colonnes avec majuscule*/
+	
+	
+	
+	
+	//------------------------------------------------------------------------------ EDIT fieldset1
+	//----------Attention la fonction pg_fetch_result() is case sensitive donc faire attention aux noms de colonnes avec majuscule
 
 					$colname1="codeEnregistrementSyntax";$colname2="nomSyntaxon";$colname3="idSyntaxon";$colname4="auteurSyntaxon";
 					$colname5="nomCompletSyntaxon";$colname6="nomSyntaxonRaccourci";$colname7="rqNomenclaturale";$colname8="typeSynonymie";
 					$colname9="nomSyntaxonRetenu";$colname10="idSyntaxonRetenu";$colname11="rangSyntaxon";
 					$colname12="idSyntaxonSup";
-					//$colname13="nomFrancaisSyntaxon";$colname14="diagnoseCourteSyntaxon";$colname15="idCritique",$colname16="rqCritique";
+					$colname13="nomFrancaisSyntaxon";$colname14="diagnoseCourteSyntaxon";$colname15="idCritique";$colname16="rqCritique";
+					$colname17="libEtageVeg";
 
-			echo ("<table border=0 width=\"100%\">");
-			echo ("<tr valign=top ><td width=50%>");
-			echo ("<fieldset><LEGEND>Nomenclature1</LEGEND>");				
-				metaform_text ("Code de l'enregistrement"," ",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"$colname1\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'$colname1'".";"),0,"description" ));
-				metaform_text ("Identifiant du syntaxon"," bloque",20,"","idSyntaxon",pg_result($result,0,"\"$colname3\""), pg_fetch_result(pg_query ($db,$query_description."'$colname3'".";"),0,"description" ));		
-				metaform_text ("Identifiant du syntaxon retenu"," bloque",20,"","idSyntaxonRetenu",pg_result($result,0,"\"$colname10\""), pg_fetch_result(pg_query ($db,$query_description."'$colname10'".";"),0,"description" ));							
-				//metaform_text ("Code de l'enregistrement"," ",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"$colname1\"" ),'undo_text'));
-				metaform_text ("Nom du syntaxon","",30,"","nomSyntaxon",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
-				metaform_text ("Auteur du syntaxon","",30,"","auteurSyntaxon",sql_format_quote(pg_result($result,0,"\"$colname4\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'$colname4'".";"),0,"description" ));
-				metaform_text ("Nom complet du syntaxon"," bloque",30,"","nomCompletSyntaxon",pg_result($result,0,"\"$colname5\""), pg_fetch_result(pg_query ($db,$query_description."'$colname5'".";"),0,"description" ));
-				metaform_text ("Nom raccourcit"," bloque",30,"","nomSyntaxonRaccourci",pg_result($result,0,"\"$colname6\""), pg_fetch_result(pg_query ($db,$query_description."'$colname6'".";"),0,"description" ));
+		/*	echo ("<table border=0 width=\"100%\">");
+			echo ("<tr valign=top ><td width=50%>");*/
+			echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=50%>");
+//                    echo ("<fieldset style=\"width:670px;\" ><LEGEND> Habitat </LEGEND>");
+            echo ("<fieldset ><LEGEND> Nomenclature </LEGEND>");				
+				metaform_text ("<b>Code de l'enregistrement*</b>"," ",30,"width:30em;","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"$colname1\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'$colname1'".";"),0,"description" ));
+				echo ("<br>");
+				metaform_text ("Identifiant du syntaxon"," bloque",30,"width:30em;","idSyntaxon",pg_result($result,0,"\"$colname3\""), pg_fetch_result(pg_query ($db,$query_description."'$colname3'".";"),0,"description" ));		
+				metaform_text ("Identifiant du syntaxon retenu"," bloque",30,"width:30em;","idSyntaxonRetenu",pg_result($result,0,"\"$colname10\""), pg_fetch_result(pg_query ($db,$query_description."'$colname10'".";"),0,"description" ));							
+				//metaform_text ("Code de l'enregistrement"," ",20,"<br>","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"$colname1\"" ),'undo_text'));
+				metaform_text ("Nom du syntaxon","",30,"width:30em;","nomSyntaxon",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
+				metaform_text ("Auteur du syntaxon","",30,"width:30em;","auteurSyntaxon",sql_format_quote(pg_result($result,0,"\"$colname4\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'$colname4'".";"),0,"description" ));
+				metaform_text ("Nom complet du syntaxon"," bloque",30,"width:30em;","nomCompletSyntaxon",pg_result($result,0,"\"$colname5\""), pg_fetch_result(pg_query ($db,$query_description."'$colname5'".";"),0,"description" ));
+				metaform_text ("Nom raccourcit"," bloque",30,"width:30em;","nomSyntaxonRaccourci",pg_result($result,0,"\"$colname6\""), pg_fetch_result(pg_query ($db,$query_description."'$colname6'".";"),0,"description" ));
 				metaform_sel ("Type de synonymie","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
-				metaform_text ("Nom syntaxon retenu"," bloque",30,"","nomSyntaxonRetenu",pg_result($result,0,"\"$colname9\""), pg_fetch_result(pg_query ($db,$query_description."'$colname9'".";"),0,"description" ));
+				metaform_text ("Nom syntaxon retenu"," bloque",30,"width:30em;","nomSyntaxonRetenu",pg_result($result,0,"\"$colname9\""), pg_fetch_result(pg_query ($db,$query_description."'$colname9'".";"),0,"description" ));
 				$tooltip=pg_fetch_result(pg_query ($db,$query_description."'$colname7'".";"),0,"description" );
 				//style=\"width:70em;\"
-				echo ("<br><label title= \"$tooltip\" class=\"preField\">Remarque nomenclaturale</label><textarea name=\"rqNomenclaturale\" cols=\"57\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"\"$colname7\""),'undo_hmtl')."</textarea><br><br>");
+				metaform_text_area ("Remarque nomenclaturale","",57,50,"","rqNomenclaturale",pg_result($result,0,"\"$colname7\""), pg_fetch_result(pg_query ($db,$query_description."'$colname7'".";"),0,"description" ));
 				metaform_sel ("Rang syntaxon","","",$ref[$champ_ref[$colname11]],"rangSyntaxon",pg_result($result,0,"\"$colname11\""), pg_fetch_result(pg_query ($db,$query_description."'$colname11'".";"),0,"description" ));
-				echo ("</fieldset></td>");
-				echo ("<td width=50%>");
-				echo ("<fieldset><LEGEND>Nomenclature2</LEGEND>");	
-				metaform_text ("Nom du syntaxon","","30em","","nomSyntaxon",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
-				echo ("</fieldset>");
-				echo ("</td></tr>");
-				/* //bout de code a utiliser si on veut aller vers une fiche taxon dans refnat
-				echo ("</td><td>");	
-					if ($niveau >= 128)
-						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
-				*/
-				//echo ("</td></tr>");
-				//echo ("</table>");
+				//metaform_text ("Nom syntaxon sup","",30,"width:30em;","nomSyntaxonSup",pg_result($result,0,"\"$colname9\""), pg_fetch_result(pg_query ($db,$query_description."'$colname9'".";"),0,"description" ));
+				metaform_text ("Nom français","",30,"width:30em;","idSyntaxonSup",pg_result($result,0,"\"$colname13\""), pg_fetch_result(pg_query ($db,$query_description."'$colname13'".";"),0,"description" ));
+				metaform_text_area ("Diagnose courte","",57,50,"","diagnoseCourteSyntaxon",pg_result($result,0,"\"$colname14\""), pg_fetch_result(pg_query ($db,$query_description."'$colname14'".";"),0,"description" ));
+				metaform_sel ("Typicité","",30,$ref[$champ_ref['idCritique']],"idCritique",pg_result($result,0,"\"$colname15\""), pg_fetch_result(pg_query ($db,$query_description."'$colname15'".";"),0,"description" ));
+				metaform_text ("Remarque typicité","",30,"width:30em;","rqCritiqueCritique",pg_result($result,0,"\"$colname16\""), pg_fetch_result(pg_query ($db,$query_description."'$colname16'".";"),0,"description" ));
 				
-	/*------------------------------------------------------------------------------ EDIT fieldset2*/
 
+
+            echo ("</fieldset>");
+			
+		/*------------------------------------------------------------------------------ EDIT fieldset2*/
+			echo ("<fieldset  ><LEGEND> Bibliographie </LEGEND>");
+                /*On utilise ici le résultat de la query_biblio (result2) pour avoir accès à la table st_biblio*/
+/*		
+					$colname1="idBiblio";$colname3="libPublication";$colname4="urlPublication";
+					$colname5="codePublication";
+	
+			echo ("<fieldset><LEGEND>Bibliographie</LEGEND>");
+*/				
+/*			 
+			 
+				echo ("<table border=0 width=\"100%\"><tr valign=top >");
+				echo ("<td style=\"width: 350px;\">");
+				metaform_text ("Identifiant de la ressource","no_lab",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result2,0,"\"$colname1\"" ),'undo_text'));
+				echo ("</td><td>");
+				metaform_text ("Libellé de la ressource"," no_lab",20,"","idSyntaxon",pg_result($result,0,"\"$colname2\""));
+				echo ("</td><td>");		
+				metaform_text ("url de la référence"," no_lab",20,"","idSyntaxonRetenu",pg_result($result,0,"\"$colname3\""));				
+				echo ("</td></tr></table>");
+				echo ("</fieldset>");
+*/				
+/*
 			echo ("<tr valign=top ><td width=50%>");
 			echo ("<fieldset><LEGEND>Bibliographie</LEGEND>");
 				//echo("<div id=\"p_scents\">");
@@ -283,40 +314,53 @@ include ("../commun/add_fiche.php");
 				echo ("</fieldset>");
 				echo ("</td></tr></table>");
 	
+*/	
 	
-	
+            echo ("</fieldset>");
+		/*------------------------------------------------------------------------------ EDIT fieldset3*/
+            echo ("<fieldset><LEGEND> Fichier rattaché (photo numérique) </LEGEND>");
+               /* $list_photos=scandir (PNM_PHOTO_PATH);
+                $list_photos[0]=$list_photos[1]="";
+                metaform_sel2 ("Fichier rattaché","","style=width:30em;","<br>",$list_photos,"PHOTO",mysql_result($result,0,"PHOTO"));*/
+            echo ("</fieldset>");
+            echo ("</td><td width=50%>");
+		/*------------------------------------------------------------------------------ EDIT fieldset4*/
+            echo ("<fieldset><LEGEND> Correspondances </LEGEND>");
+			
+			$colname18="idRattachementPVF";
+			$num_rows = pg_num_rows($result3);
+			if ($num_rows > 0) {
+			metaform_sel ("Rattachement PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"$colname18\""), pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));			
+			metaform_sel ("Rattachement PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"$colname18\""), pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));			
 
+			} else {
+				metaform_sel ("Rattachement PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));
+			}
+			
+			
+            echo ("</fieldset>");
+			
+			
+				/* //bout de code a utiliser si on veut aller vers une fiche taxon dans refnat
+				echo ("</td><td>");	
+					if ($niveau >= 128)
+						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
+				*/
+				//echo ("</td></tr>");
+				//echo ("</table>");
+				
+		/*------------------------------------------------------------------------------ EDIT fieldset5*/
 
+                echo ("<fieldset><LEGEND>Chorologie</LEGEND>");
 
-	/*On utilise ici le résultat de la query_biblio (result2) pour avoir accès à la table st_biblio*/
-/*		
-					$colname1="idBiblio";$colname3="libPublication";$colname4="urlPublication";
-					$colname5="codePublication";
-	
-			echo ("<fieldset><LEGEND>Bibliographie</LEGEND>");
-				echo("<div id=\"p_scents\">
-				<p><TABLE BORDER=\"0\"> <caption align=\"left\"> Correspondance des habitats </caption> 
-				<tr valign=top ><th> Typologie </th> <th> Code habitat </th> </tr> 
-				<tr>
-				<td>");
-				metaform_text ("Nom du syntaxon","no_lab",100,"","p_scnt",pg_result($result,0,"\"$colname2\""), pg_fetch_result(pg_query ($db,$query_description."'$colname2'".";"),0,"description" ));
-				echo("</td><td>");
-				metaform_sel ("Type de synonymie","no_lab",100,$ref[$champ_ref['typeSynonymie']],"p_scnt",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));				echo("</td></tr> </TABLE></p> </div>");
-				echo("<p colspan=\"4\" align=\"left\"><button type=\"button\" href=\"#\" id=\"addScnt\">Ajouter un habitat</button></p>");
+                echo ("</fieldset>");
+		/*------------------------------------------------------------------------------ EDIT fieldset6*/
 
-*/				
-/*			 
-			 
-				echo ("<table border=0 width=\"100%\"><tr valign=top >");
-				echo ("<td style=\"width: 350px;\">");
-				metaform_text ("Identifiant de la ressource","no_lab",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result2,0,"\"$colname1\"" ),'undo_text'));
-				echo ("</td><td>");
-				metaform_text ("Libellé de la ressource"," no_lab",20,"","idSyntaxon",pg_result($result,0,"\"$colname2\""));
-				echo ("</td><td>");		
-				metaform_text ("url de la référence"," no_lab",20,"","idSyntaxonRetenu",pg_result($result,0,"\"$colname3\""));				
-				echo ("</td></tr></table>");
-				echo ("</fieldset>");
-*/				
+                echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");
+
+                echo ("</fieldset>");
+        echo ("</td></tr></table>");
+        echo ("<hr>");
 
 
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/

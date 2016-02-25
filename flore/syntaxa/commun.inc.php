@@ -29,8 +29,13 @@ SELECT t.*
 	FROM syntaxa.st_biblio t 
 	WHERE t.\"codeEnregistrement\"=";	
 	
+$query_module_correspondance_pvf1 = "
+SELECT t.* 
+	FROM syntaxa.st_correspondance_pvf t 
+	WHERE t.\"versionReferentiel\"='v1' and t.\"codeEnregistrementSyntaxon\"=";	
+	
 $query_description=
-"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ='st_syntaxon' and champs.nom_champ=";
+"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and champs.nom_champ=";
 
 $query_liste = "
 SELECT count(*) OVER() AS total_count,*

@@ -133,9 +133,10 @@ fieldset.meta {
 	font-size: 12px;
 	background: white;
     border: 3px solid #CFCFCF; 
-    border-radius:4px; -moz-border-radius:4px; -web-kit-border-radius:4px; -khtml-border-radius:4px;   
+    border-radius:4px; -moz-border-radius:4px; -web-kit-border-radius:4px; -khtml-border-radius:4px;  
+	
 }
-
+br {line-height:20px;}
 
 #form1 input.error,#form2 input.error{
 	padding: 5px;
