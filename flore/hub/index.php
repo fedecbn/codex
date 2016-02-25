@@ -166,28 +166,51 @@ include ("../commun/add_fiche.php");
 	/*------------------------------------------------------------------------------ EDIT fieldset1*/
 		echo ("<div id=\"radio3\">");    
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_1']."</LEGEND>");
-				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
-		
+		/*droits*/			
 		$query= "SELECT id_cbn FROM applications.utilisateur WHERE id_user = '".$id_user."';";
 		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		$row = pg_fetch_row($result);$id_cbn = $row[0];	
-		
-		foreach ($bouton as $val)	{
+		/*Partie 1 des boutons*/
+		echo ("<div style=\"float:left;\" >");  
+		foreach ($bouton1 as $val)	{
+				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
 				if ($niveau >= 255 OR ($niveau >= $val["niveau"] AND ($val["cbn"] == FALSE OR ($val["cbn"] == TRUE AND $id_cbn == $id))))
 					{
 					/*Récupération de la date de dernière réalisation*/
-					$query= "SELECT max(date_log) FROM $schema.zz_log WHERE typ_log = 'hub_".$val["id"]."';";
+					$query= "SELECT max(date_log) FROM public.zz_log WHERE typ_log = 'hub_".$val["id"]."' AND lib_schema = '$schema';";
 					$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 					$row = pg_fetch_row($result);
 					/*Button*/
-					echo ("<tr valign=top ><td style=\"width: 30px;\">");
+					echo ("<tr valign=top ><td style=\"width: 200px;\">");
 					echo ("<button id=\"".$val["id"]."_button\" value=\"".$val["id"]."\" name=\"".$schema."\">".$lang[$lang_select][$val["id"]]."</button> ");
-					echo ("</td><td style=\"width:100px;\">");		
-					metaform_text ($val["text"]," bloque",50,"",$val["id"],substr($row[0],0,-4));	/*dernière réalisation*/
+					echo ("</td><td>");		
+					metaform_text ($val["text"]," bloque",20,"",$val["id"],substr($row[0],0,-4));	/*dernière réalisation*/
 					echo ("</td></tr>");
 					}
+					echo ("</table>");
 				}
-				echo ("</table>");
+			echo ("</div>");
+			
+		/*Partie 2 des boutons*/
+		echo ("<div style=\"float:left;\" >");  
+		foreach ($bouton2 as $val)	{
+				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
+				if ($niveau >= 255 OR ($niveau >= $val["niveau"] AND ($val["cbn"] == FALSE OR ($val["cbn"] == TRUE AND $id_cbn == $id))))
+					{
+					/*Récupération de la date de dernière réalisation*/
+					$query= "SELECT max(date_log) FROM public.zz_log WHERE typ_log = 'hub_".$val["id"]."' AND lib_schema = '$schema';";
+					$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+					$row = pg_fetch_row($result);
+					/*Button*/
+					echo ("<tr valign=top ><td style=\"width: 200px;\">");
+					echo ("<button id=\"".$val["id"]."_button\" value=\"".$val["id"]."\" name=\"".$schema."\">".$lang[$lang_select][$val["id"]]."</button> ");
+					echo ("</td><td>");		
+					metaform_text ($val["text"]," bloque",20,"",$val["id"],substr($row[0],0,-4));	/*dernière réalisation*/
+					echo ("</td></tr>");
+					}
+					echo ("</table>");
+				}
+			echo ("</div>");
 			echo ("</fieldset>");
 		echo ("</div>");    			
 			
@@ -216,7 +239,7 @@ include ("../commun/add_fiche.php");
 				while ($row = pg_fetch_row($result2)) echo ("- Jdd ".$row[2]." :  ".$row[1]." -  ".$row[3]."<BR>");
 				echo ("</td></tr>");
 				while ($row = pg_fetch_row($result3))
-					echo ("<tr><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td><td>".$row[7]."</td><td>".$row[8]."</td><td>".$row[9]."</td><td>".$row[10]."</td></tr>");
+					echo ("<tr><td>".$row[7]."</td><td>".$row[8]."</td><td>".$row[9]."</td><td>".$row[10]."</td><td>".$row[2]."</td><td>".$row[3]."</td><td>".$row[4]."</td><td>".$row[5]."</td></tr>");
 				echo ("</table>");
 			echo ("</fieldset>");
 		echo ("</div>");    	
@@ -224,7 +247,7 @@ include ("../commun/add_fiche.php");
 	/*------------------------------------------------------------------------------ EDIT fieldset2*/
 		echo ("<div id=\"radio3\">");    
 		/*Récupération du zz_log*/
-		$query= "SELECT * FROM ".$schema.".zz_log ORDER BY date_log DESC";
+		$query= "SELECT * FROM ".$schema.".zz_log ORDER BY date_log DESC, typ_log ASC";
 		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_3']."</LEGEND>");

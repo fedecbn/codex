@@ -80,10 +80,12 @@ while ($row = pg_fetch_row($result))
 	$jdd_cbn_propre[$row[0]] = $row[0];
 $jdd_cbn_propre = $jdd_cbn_propre == null ? array() : $jdd_cbn_propre;
 	
+ $all = array("all" => "Tous les jeux de données");	
  $jdd["import"] = $fsd_simple;
- $jdd["verif"] = array_merge(array("all" => "Tous les jeux de données"),$fsd,$jdd_cbn);
- $jdd["clear"] = $jdd["push"] =  $jdd["diff"] = $jdd["export"] = array_merge($fsd_simple,$jdd_cbn);
- $jdd["pull"] = array_merge($fsd_simple,$jdd_cbn_propre);
+ $jdd["verif"] = array_merge($all,$fsd,$jdd_cbn);
+ $jdd["export"] = array_merge($fsd_simple,$jdd_cbn);
+ $jdd["clear"] = $jdd["push"] =  $jdd["diff"] = array_merge($all,$fsd_simple,$jdd_cbn);
+ $jdd["pull"] = array_merge($all,$fsd_simple,$jdd_cbn_propre);
 //------------------------------------------------------------------------------ CONSTANTES du module
 
 
@@ -183,6 +185,7 @@ echo ("<BR>");
 		echo ("<form method=\"POST\" id=\"form1\" name=\"import_taxon\" action=\"#\" >");
 		echo ("<fieldset>");
 			echo ("<LEGEND> Choix du fichier à importer</LEGEND>");
+			echo("Attention, ENCODAGE = UTF8 et DELIMITER = ; ");
 			metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file_listtaxon",null);
 			echo ("<BR>");
 			metaform_bool ("Rechercher les infra-taxons",null,"infrataxon","f");
@@ -354,6 +357,16 @@ echo ("<BR>");
 		echo ("<fieldset>");
 			echo ("<LEGEND> Bilan </LEGEND>");
 			echo ("Rafraîchir le bilan permet de mettre à jour le tableau de synthèse.");
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
+		//------------------------------------------------------------------------------ Logs
+		case "log" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"bilan\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Logs </LEGEND>");
+			echo ("Vider les logs de cette fiche");
 		echo ("</fieldset>");
 		echo ("</form>");
 			}
