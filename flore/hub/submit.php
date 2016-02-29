@@ -75,9 +75,26 @@ if (!empty ($id))
 			}
 			break;
 		/*IMPORT TAXON*/	
-		case "import_taxon" : {
+		case "import_taxon" : {			
+			/*Import du fichier*/
 			$path .= "import/";
-			$query = "SELECT * FROM hub_import_taxon('$id', '$path','$file');";	
+			$nomOrigine = $_FILES['file']['name'];
+			$elementsChemin = pathinfo($nomOrigine);
+			$extensionFichier = $elementsChemin['extension'];
+			// var_dump($elementsChemin);
+			$extensionsAutorisees = array("csv","txt");
+			if (!(in_array($extensionFichier, $extensionsAutorisees))) {
+				echo "Le fichier n'a pas l'extension attendue";
+			} else {    
+				$repertoireDestination = $path;
+				$nomDestination = $nomOrigine;
+				if (file_exists($repertoireDestination.$nomDestination))  unlink($repertoireDestination.$nomDestination);
+				if (move_uploaded_file($_FILES["file"]["tmp_name"], $repertoireDestination.$nomDestination)) {
+					echo "Le fichier temporaire ".$_FILES["file"]["tmp_name"]." a été déplacé vers ".$repertoireDestination.$nomDestination;
+				} else echo "Le fichier n'a pas été uploadé (trop gros ?) ou Le déplacement du fichier temporaire a échoué vérifiez l'existence du répertoire ".$repertoireDestination;
+			}
+			
+			$query = "SELECT * FROM hub_import_taxon('$id', '$path','$nomOrigine');";	
 			if ($infrataxon == 'TRUE') $query .= "SELECT * FROM hub_txInfra('$id');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}

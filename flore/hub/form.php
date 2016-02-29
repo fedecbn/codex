@@ -90,6 +90,15 @@ $jdd_cbn_propre = $jdd_cbn_propre == null ? array() : $jdd_cbn_propre;
  $jdd["export"] = $jdd["verif"] = array_merge($all,$fsd,$list_taxon,$jdd_cbn);
  $jdd["import"] =  $jdd["clear"] = $jdd["del"] = $jdd["push"] =  $jdd["diff"] = array_merge($all,$fsd_simple,$jdd_cbn);
  $jdd["pull"] = array_merge($all,$fsd_simple,$jdd_cbn_propre);
+ 
+ /*Liste de taxon*/
+$query = "SELECT cd_ref, nom_valide  FROM $id.zz_log_liste_taxon LIMIT 10";
+$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+$zz_log_liste_taxon = pg_fetch_all($result);
+ /*Nb de taxon*/
+$query = "SELECT count(*) FROM $id.zz_log_liste_taxon";
+$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+$nb_taxon = pg_fetch_row($result,0);
 //------------------------------------------------------------------------------ CONSTANTES du module
 
 
@@ -238,13 +247,22 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 			break;
 	//------------------------------------------------------------------------------ Import de taxon
 		case "import_taxon" : {
-		echo ("<form method=\"POST\" id=\"form1\" name=\"import_taxon\" action=\"#\" >");
+		echo ("<form method=\"POST\" id=\"form1\" enctype=\"multipart/form-data\" name=\"import_taxon\" action=\"#\" >");
 		echo ("<fieldset>");
 			echo ("<LEGEND> Choix du fichier à importer</LEGEND>");
-			echo("<BR><b>Attention, ENCODAGE = UTF8 et DELIMITER = ; </b><BR>");
-			metaform_text("Fichier \"Liste de taxon\"",null,50,null,"file",null);
+			echo(" Fichier à intégrer : Attention, utiliser l'encodage UTF8 et un séparateur de champ point-virgule </b> ");
+			echo("<input type=\"file\" name=\"file\" /> ");
 			echo ("<BR>");
-			metaform_bool ("Rechercher les infra-taxons",null,"infrataxon","f");
+			metaform_bool ("Lister les infra-taxons",null,"infrataxon","f");
+
+			/*Affichage de la liste en cours*/
+			echo ("<BR><BR>");
+			echo ("<table class = \"basic_table\">");
+			echo ("<tr><td colspan=2>Dernière liste importée (extrait des 10 taxons sur la liste de ".$nb_taxon[0]." actuellement en base)</td></tr>");
+			echo ("<tr><td><b>cd_ref</b></td><td><b>nom scientifique</b></td></tr>");
+			foreach ($zz_log_liste_taxon as $key => $val)
+				echo ("<tr><td>".$val["cd_ref"]."</td><td>".$val["nom_valide"]."</td></tr>");
+			echo ("</table>");
 			
 			/*Liste des fichiers dans le dossier d'import*/
 			echo ("<BR><BR>");
@@ -331,15 +349,6 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 			break;
 		//------------------------------------------------------------------------------ Export	
 		case "export" : {
-		
-		$query = "SELECT count(*) FROM $id.zz_log_liste_taxon";
-		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		$nb_taxon = pg_fetch_row($result,0);
-
-		$query = "SELECT cd_ref, nom_valide  FROM $id.zz_log_liste_taxon LIMIT 10";
-		$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-		$list_taxon = pg_fetch_all($result);
-
 		echo ("<form method=\"POST\" id=\"form1\" name=\"export\" action=\"#\" >");
 		echo ("<fieldset>");
 					echo ("<LEGEND> Paramétrage de l'export</LEGEND>");
@@ -388,7 +397,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 						echo ("<BR>");
 						echo ("<table class = \"basic_table\">");
 						echo ("<tr><td>cd_ref</td><td>Nom</td></tr>");
-						foreach ($list_taxon as $key => $val)
+						foreach ($zz_log_liste_taxon as $key => $val)
 							echo ("<tr><td>".$val['cd_ref']."</td><td>".$val['nom_valide']."</td></tr>");
 						echo ("</table>");
 					echo("</div>");
