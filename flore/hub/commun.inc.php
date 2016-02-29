@@ -27,13 +27,13 @@ $onglet = array(
 	);
 
 $bouton1 = array (
-		array ("id" => "import","titre"=>"Importer des données","text" => "Dernier import : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "import_taxon","titre"=>"Importer des taxon","text" => "Dernier import : ","niveau" => 1,"cbn"=>true),
-		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1,"cbn"=>false),
+		array ("id" => "import","titre"=>"Import de données","text" => "Dernier import : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "import_taxon","titre"=>"Import liste taxon","text" => "Dernier import : ","niveau" => 1,"cbn"=>true),
+		array ("id" => "export","titre"=>"Export de données","text" => "Dernier export : ","niveau" => 1,"cbn"=>false),
 		array ("id" => "bilan","titre"=>"Rafraichir le bilan","text" => "Dernier bilan :","niveau" => 1,"cbn"=>false)
 		);
 $bouton2 = array (
-		array ("id" => "verif","titre"=>"Vérifier la conformité","text" => "Dernière vérification : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "verif","titre"=>"Vérifier conformité","text" => "Dernière vérification : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "diff","titre"=>"Analyser  différences","text" => "Dernière analyse : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "pull","titre"=>"Tirer les données","text" => "Dernier pull : ","niveau" => 128,"cbn"=>true)
