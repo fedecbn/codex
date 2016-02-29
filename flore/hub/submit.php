@@ -21,8 +21,10 @@ $jdd = $_POST['jdd'];
 $typverif = $_POST['typverif'];
 $typpush = $_POST['typpush'];
 $typdiff = $_POST['typdiff'];
+$lonely_file = $_POST['lonely_file'] != null ? $_POST['lonely_file'] : 'f';
 $infrataxon = $_POST['infrataxon'] != null ? $_POST['infrataxon'] : 'f';
-$listaxon = $_POST['file_listtaxon'];
+$ecraser = $_POST['ecraser'] != null ? $_POST['ecraser'] : 'f';
+$file = $_POST['file'];
 $statut = $_POST['statut'];
 $format = $_POST['format'] != null ? $_POST['format'] : 'fcbn';
 
@@ -51,17 +53,31 @@ if (!empty ($id))
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
+		/*DEL*/
+		case "del" : {
+			if ($jdd == 'all')
+				{
+				$query = "SELECT * FROM hub_clear('$id', 'data', 'propre');";
+				$query .= "SELECT * FROM hub_clear('$id', 'taxa', 'propre');";
+				}
+			else $query = "SELECT * FROM hub_clear('$id', '$jdd', 'propre');";
+			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
+			}
+			break;
 		/*IMPORT*/
 		case "import" : {
 			$path .= "import/";
-			$query = "SELECT * FROM hub_import('$id', '$jdd', '$path');";
+			/*Récupération des cj_jdd*/
+			
+			if ($lonely_file == true) {$file = substr(substr($file, 4), 0, -4);$query = "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser, '$file');";}
+			else $query = "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser);";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
 		/*IMPORT TAXON*/	
 		case "import_taxon" : {
 			$path .= "import/";
-			$query = "SELECT * FROM hub_import_taxon('$id', '$path','$listaxon');";	
+			$query = "SELECT * FROM hub_import_taxon('$id', '$path','$file');";	
 			if ($infrataxon == 'TRUE') $query .= "SELECT * FROM hub_txInfra('$id');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}

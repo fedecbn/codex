@@ -28,20 +28,24 @@ $onglet = array(
 
 $bouton1 = array (
 		array ("id" => "import","titre"=>"Importer des données","text" => "Dernier import : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "import_taxon","titre"=>"Importer une liste de taxon","text" => "Dernier import : ","niveau" => 64,"cbn"=>true),
-		array ("id" => "verif","titre"=>"Vérifier la conformité","text" => "Dernière vérification : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "diff","titre"=>"Analyser les différences","text" => "Dernière analyse : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "pull","titre"=>"Tirer les données","text" => "Dernier pull : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1,"cbn"=>false)
+		array ("id" => "import_taxon","titre"=>"Importer des taxon","text" => "Dernier import : ","niveau" => 64,"cbn"=>true),
+		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1,"cbn"=>false),
+		array ("id" => "bilan","titre"=>"Rafraichir le bilan","text" => "Dernier bilan :","niveau" => 1,"cbn"=>false)
 		);
 $bouton2 = array (
-		array ("id" => "clear","titre"=>"Vider la partie temporaire","text" => "Dernier nettoyage : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "bilan","titre"=>"Rafraichir le bilan","text" => "Dernier bilan :","niveau" => 1,"cbn"=>false),
+		array ("id" => "verif","titre"=>"Vérifier la conformité","text" => "Dernière vérification : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "diff","titre"=>"Analyser  différences","text" => "Dernière analyse : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "pull","titre"=>"Tirer les données","text" => "Dernier pull : ","niveau" => 128,"cbn"=>true)
+		);
+$bouton3 = array (
+		
+		array ("id" => "clear","titre"=>"Vider -partie temp","text" => "Dernier nettoyage : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "del","titre"=>"Vider -partie propre","text" => "Dernier nettoyage : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "log","titre"=>"Vider les logs","text" => "Dernier nettoyage","niveau" => 128,"cbn"=>false)
 		);
 
-$bouton = array_merge($bouton1,$bouton2);
+$bouton = array_merge($bouton1,$bouton2,$bouton3);
 	
 //------------------------------------------------------------------------------ Querys
 $query_module = ""; /*Directement dans index.php*/

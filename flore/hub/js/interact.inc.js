@@ -46,6 +46,13 @@
 			return (false);
 		});
 		
+	$( "#del_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Importer des données",670,500,'#del-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Nettoyer");
+			return (false);
+		});
+		
 	$( "#import_button" )
         .button({text: true})
         .click(function() {

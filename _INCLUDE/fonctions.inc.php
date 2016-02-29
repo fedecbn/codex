@@ -771,6 +771,18 @@ function metaform_bool ($label,$descr,$champ,$val,$tooltip='')
 }
 
 
+function metaform_bool_appared ($label,$descr,$extra,$style,$champ,$val,$tooltip='')
+{
+	if (strpos($descr,"no_lab") === false)
+		if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\">".$label."</label>");
+		else echo ("<label title=\"".$tooltip."\" class=\"preField\">".$label."</label>");
+	
+	// if (strpos($descr,"bloque") !== false) {$extra .= " readonly disabled";$style .= "background-color:#EFEFEF";}	
+	if (strpos($descr,"bloque") !== false) {$extra .= " disabled class=\"bloque\"";}	
+	echo ("	<input type=\"radio\" $extra name=\"".$champ."\" id=\"".$champ."1\" value=\"TRUE\" style=\"$style\" ".($val=='t' ? "checked=\"true\"" : "")."><label for=\"".$champ."1\">Oui</label>
+			<input type=\"radio\" name=\"".$champ."\" id=\"".$champ."2\" value=\"FALSE\" style=\"$style\" ".($val=='f' ? "checked=\"true\"" : "")."><label for=\"".$champ."2\">Non</label>");
+}
+
 function metaform_bout_plus ($label,$descr,$champ,$val,$tooltip='')
 {
 	if (strpos($descr,"no_lab") === false)
@@ -1534,5 +1546,28 @@ function coupe_txt ($txt,$max) {
     }
     return ($txt);
 }
+
+function les_boutons($array_bouton,$niveau,$lang,$schema) {
+		$db2=sql_connect_hub(SQL_base_hub);
+		echo ("<div style=\"float:left;\" >");  
+		foreach ($array_bouton as $val)	{
+				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
+				if ($niveau >= 255 OR ($niveau >= $val["niveau"] AND ($val["cbn"] == FALSE OR ($val["cbn"] == TRUE AND $id_cbn == $id))))
+					{
+					/*Récupération de la date de dernière réalisation*/
+					$query= "SELECT max(date_log) FROM public.zz_log WHERE typ_log = 'hub_".$val["id"]."' AND lib_schema = '$schema';";
+					$result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+					$row = pg_fetch_row($result);
+					/*Button*/
+					echo ("<tr valign=top ><td style=\"width: 150px;\">");
+					echo ("<button id=\"".$val["id"]."_button\" value=\"".$val["id"]."\" name=\"".$schema."\">".$lang['fr'][$val["id"]]."</button> ");
+					echo ("</td><td>");		
+					metaform_text ($val["text"]," bloque",15,"",$val["id"],substr($row[0],0,-4));	/*dernière réalisation*/
+					echo ("</td></tr>");
+					}
+					echo ("</table>");
+				}
+			echo ("</div>");
+			}
 
 ?>
