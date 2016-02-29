@@ -28,7 +28,7 @@ $onglet = array(
 
 $bouton1 = array (
 		array ("id" => "import","titre"=>"Importer des données","text" => "Dernier import : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "import_taxon","titre"=>"Importer des taxon","text" => "Dernier import : ","niveau" => 64,"cbn"=>true),
+		array ("id" => "import_taxon","titre"=>"Importer des taxon","text" => "Dernier import : ","niveau" => 1,"cbn"=>true),
 		array ("id" => "export","titre"=>"Exporter des données","text" => "Dernier export : ","niveau" => 1,"cbn"=>false),
 		array ("id" => "bilan","titre"=>"Rafraichir le bilan","text" => "Dernier bilan :","niveau" => 1,"cbn"=>false)
 		);
