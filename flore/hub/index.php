@@ -170,28 +170,7 @@ include ("../commun/add_fiche.php");
 		$query= "SELECT id_cbn FROM applications.utilisateur WHERE id_user = '".$id_user."';";
 		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		$row = pg_fetch_row($result);$id_cbn = $row[0];	
-		/*Partie 1 des boutons*/
-		// echo ("<div style=\"float:left;\" >");  
-		// foreach ($bouton1 as $val)	{
-				// echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
-				// if ($niveau >= 255 OR ($niveau >= $val["niveau"] AND ($val["cbn"] == FALSE OR ($val["cbn"] == TRUE AND $id_cbn == $id))))
-					// {
-					// /*Récupération de la date de dernière réalisation*/
-					// $query= "SELECT max(date_log) FROM public.zz_log WHERE typ_log = 'hub_".$val["id"]."' AND lib_schema = '$schema';";
-					// $result=pg_query ($db2,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-					// $row = pg_fetch_row($result);
-					// /*Button*/
-					// echo ("<tr valign=top ><td style=\"width: 200px;\">");
-					// echo ("<button id=\"".$val["id"]."_button\" value=\"".$val["id"]."\" name=\"".$schema."\">".$lang[$lang_select][$val["id"]]."</button> ");
-					// echo ("</td><td>");		
-					// metaform_text ($val["text"]," bloque",20,"",$val["id"],substr($row[0],0,-4));	/*dernière réalisation*/
-					// echo ("</td></tr>");
-					// }
-					// echo ("</table>");
-				// }
-			// echo ("</div>");
-			
-		/*Partie 2 des boutons*/
+		/*Partie boutons*/
 		les_boutons($bouton1,$niveau,$lang,$schema);
 		les_boutons($bouton2,$niveau,$lang,$schema);
 		les_boutons($bouton3,$niveau,$lang,$schema);
