@@ -32,7 +32,13 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 //------------------------------------------------------------------------------ REF.
 /*Cette fonction récupère toutes les référentiels utiles pour la page. Les référentiels sons stockés dans l'objet $ref*/
 ref_colonne_et_valeur ($id_page);
-var_dump($ref);
+//var_dump($ref);
+//var_dump($ref['st_geo_sigmafacies']);
+var_dump($ref['liste_departement']);
+
+//var_dump($ref[$champ_ref['idTerritoire']])
+//var_dump($ref[$champ_ref['idRattachementPVF']])
+//var_dump($champ_ref['liste_region'])
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -206,6 +212,11 @@ include ("../commun/add_fiche.php");
 			$result3=pg_query($db,$query3) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result3),false);
 			$numrows = pg_numrows($result3);
 			
+			$query4= $query_module_chorologie.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result4=pg_query($db,$query4) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result4),false);
+			$numrows = pg_numrows($result4);
+			
 			
 			//$table = pg_fetch_array($result);
 			//var_dump($table);
@@ -352,8 +363,15 @@ include ("../commun/add_fiche.php");
 		/*------------------------------------------------------------------------------ EDIT fieldset5*/
 
                 echo ("<fieldset><LEGEND>Chorologie</LEGEND>");
-
-                echo ("</fieldset>");
+			$colname19="idTerritoire";
+			$num_rows = pg_num_rows($result3);
+			if ($num_rows > 0) {
+			metaform_sel ("Présence départementale","",30,$ref['liste_departement'],"idTerritoire",pg_result($result3,0,"\"$colname19\""), pg_fetch_result(pg_query ($db,$query_description."'$colname19'".";"),0,"description" ));			
+			} else {
+				metaform_sel ("Présence départementale","",30,$ref['liste_departement'],"idTerritoire","", pg_fetch_result(pg_query ($db,$query_description."'$colname19'".";"),0,"description" ));	
+			}
+			
+			echo ("</fieldset>");
 		/*------------------------------------------------------------------------------ EDIT fieldset6*/
 
                 echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");

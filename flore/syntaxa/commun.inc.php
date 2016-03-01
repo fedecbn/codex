@@ -30,9 +30,14 @@ SELECT t.*
 	WHERE t.\"codeEnregistrement\"=";	
 	
 $query_module_correspondance_pvf1 = "
-SELECT t.* 
-	FROM syntaxa.st_correspondance_pvf t 
+SELECT t.*
+	FROM syntaxa.st_correspondance_pvf t
 	WHERE t.\"versionReferentiel\"='v1' and t.\"codeEnregistrementSyntaxon\"=";	
+	
+$query_module_chorologie = "
+SELECT t.*
+	FROM syntaxa.st_chorologie t
+	WHERE t.\"codeEnregistrement\"=";	
 	
 $query_description=
 "SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and champs.nom_champ=";

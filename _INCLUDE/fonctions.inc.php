@@ -282,7 +282,8 @@ function ref_colonne_et_valeur ($rubrique)	{
 		// if (DEBUG) echo "<BR> champ : ".$row['nom_champ'];
 		if (!isset($ref[$row['nom_ref']])) {
 			if ($row['orderby'] != "") {$orderby = "ORDER BY \"".$row['orderby']."\"";} else {$orderby = "";}
-			$query="SELECT * FROM ".$row['schema'].".".$row['table_ref']." ".$orderby;
+			if ($row['where_champ'] != "" OR $row['where_value'] != "") {$where = "WHERE ".$row['where_champ']." = '".$row['where_value']."'";} else {$where = "";}
+			$query="SELECT * FROM ".$row['schema'].".".$row['table_ref']." $where $orderby";
 			// if (DEBUG) echo "<BR> $query";
 			$result2=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result2),false);unset($query);
 			// if (DEBUG) echo "<BR> lelel";
