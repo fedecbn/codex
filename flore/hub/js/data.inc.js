@@ -60,7 +60,7 @@
                 "sLast":     "Dernier"
             }
         }, 
-       // "aaSorting": [[3,'asc']],                                            
+       "aaSorting": [[1,'asc']],                                            
         "sDom": '<"top"fl>rt<"bottom"ip>',
             "aoColumns": [                                                    
                 { "sWidth": "5%" },
