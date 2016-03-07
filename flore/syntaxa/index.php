@@ -34,11 +34,12 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 ref_colonne_et_valeur ($id_page);
 
 //test DEBUG
-//var_dump($ref);
+//var_dump($ref['liste_departement']);
+//var_dump($ref[$champ_ref['liste_departement']]);
 //var_dump($ref['st_geo_sigmafacies']);
 //var_dump($ref);
 
-var_dump($ref[$champ_ref['idTerritoire']]);
+//var_dump($ref[$champ_ref['liste_departement']]);
 //var_dump($ref[$champ_ref['idRattachementPVF']]);
 //var_dump($champ_ref['liste_region']);
 //var_dump($ref);
@@ -359,8 +360,8 @@ include ("../commun/add_fiche.php");
 
 			//dans le cas où les tables sont vides (pas d'enregistrement il faut faire une condition sinon l'affichage des données pose problème car le pg_result ne renvoi rien
 			} else {
-				metaform_sel ("Rattachement PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));
-				metaform_sel ("Rattachement PVF 2","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));
+				metaform_sel ("Rattachement PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));
+				metaform_sel ("Rattachement PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));
                 metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'$colname19'".";"),0,"description" ));
 				metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'","","hic_select","");
 			    echo "<br>";
@@ -388,11 +389,11 @@ include ("../commun/add_fiche.php");
 			$colname21="idTerritoire";
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
-			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'",$ref[$champ_ref['liste_geo']],"departement",pg_result($result4,0,"\"$colname21\""),pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
-            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'",pg_result($result4,0,"\"$colname21\""),"departement","");
+			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"$colname21\""),pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
+            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",pg_result($result4,0,"\"$colname21\""),"departement_select","");
 			} else {
-					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'",$ref[$champ_ref['liste_geo']],"departement","",pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
-					metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'","","departement","");
+					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
+					metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'","","departement_select","");
 			}
 			
 			echo ("</fieldset>");

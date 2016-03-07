@@ -273,16 +273,16 @@ function ref_colonne_et_valeur ($rubrique)	{
 	// define ("DEBUG",true);
 	// unset($aColumns);
 	global $db, $ref, $aColumns, $aColumnsExp, $aColumnsTot, $aColumnsSub, $champ_ref;
-
+// "\"$colname18\""
 //------------------------------------------------------------------------------ Récupération des valeurs référentiels
-	$query = "SELECT nom_champ,champ_interface, schema, nom_ref, table_ref, cle, valeur,orderby FROM referentiels.champs RIGHT JOIN referentiels.champs_ref ON referentiel = nom_ref WHERE rubrique_ref = '$rubrique'";
+	$query = "SELECT nom_champ,champ_interface, schema, nom_ref, table_ref, cle, valeur,orderby, champs_ref.where_champ, champs_ref.where_value FROM referentiels.champs RIGHT JOIN referentiels.champs_ref ON referentiel = nom_ref WHERE rubrique_ref = '$rubrique'";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 	while ($row = pg_fetch_assoc ($result)) {
 		// if (DEBUG) echo "<BR> champ : ".$row['nom_champ'];
 		if (!isset($ref[$row['nom_ref']])) {
 			if ($row['orderby'] != "") {$orderby = "ORDER BY \"".$row['orderby']."\"";} else {$orderby = "";}
-			if ($row['where_champ'] != "" OR $row['where_value'] != "") {$where = "WHERE ".$row['where_champ']." = '".$row['where_value']."'";} else {$where = "";}
+			if ($row['where_champ'] != "" OR $row['where_value'] != "") {$where = "WHERE \"".$row['where_champ']."\" = '".$row['where_value']."'";} else {$where = "";}
 			$query="SELECT * FROM ".$row['schema'].".".$row['table_ref']." $where $orderby";
 			// if (DEBUG) echo "<BR> $query";
 			$result2=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result2),false);unset($query);
