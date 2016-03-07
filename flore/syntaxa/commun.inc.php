@@ -34,13 +34,28 @@ SELECT t.*
 	FROM syntaxa.st_correspondance_pvf t
 	WHERE t.\"versionReferentiel\"='v1' and t.\"codeEnregistrementSyntaxon\"=";	
 	
+$query_module_correspondance_pvf2 = "
+SELECT t.*
+	FROM syntaxa.st_correspondance_pvf t
+	WHERE t.\"versionReferentiel\"='v2' and t.\"codeEnregistrementSyntaxon\"=";	
+	
+$query_module_correspondance_hic = "
+SELECT t.*
+	FROM syntaxa.st_correspondance_hic t
+	WHERE t.\"codeEnregistrement\"=";	
+	
+$query_module_correspondance_eunis = "
+SELECT t.*
+	FROM syntaxa.st_correspondance_eunis t
+	WHERE t.\"codeEnregistrement\"=";	
+	
 $query_module_chorologie = "
 SELECT t.*
 	FROM syntaxa.st_chorologie t
 	WHERE t.\"codeEnregistrement\"=";	
 	
 $query_description=
-"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and champs.nom_champ=";
+"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and champs.nom_champ=";
 
 $query_liste = "
 SELECT count(*) OVER() AS total_count,*

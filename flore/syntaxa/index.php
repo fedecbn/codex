@@ -32,13 +32,23 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 //------------------------------------------------------------------------------ REF.
 /*Cette fonction récupère toutes les référentiels utiles pour la page. Les référentiels sons stockés dans l'objet $ref*/
 ref_colonne_et_valeur ($id_page);
+
+//test DEBUG
 //var_dump($ref);
 //var_dump($ref['st_geo_sigmafacies']);
-var_dump($ref['liste_departement']);
+//var_dump($ref);
 
-//var_dump($ref[$champ_ref['idTerritoire']])
-//var_dump($ref[$champ_ref['idRattachementPVF']])
-//var_dump($champ_ref['liste_region'])
+var_dump($ref[$champ_ref['idTerritoire']]);
+//var_dump($ref[$champ_ref['idRattachementPVF']]);
+//var_dump($champ_ref['liste_region']);
+//var_dump($ref);
+//var_dump($ref[$champ_ref['typeSynonymie']]);
+//$table = pg_fetch_array($result); var_dump($table);
+//$colname = pg_field_name($result, 1);
+//$colname="codeEnregistrementSyntax";echo $colname;
+//$val= pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ); echo $val;
+//$val= pg_fetch_result(pg_query ($db,$query_description."'$colname1'".";"),0,"description" );echo $val;
+//$val= pg_fetch_result($result,"\"codeEnregistrementSyntax\"" ); echo $val;
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -204,29 +214,27 @@ include ("../commun/add_fiche.php");
 			$query2= $query_module_biblio.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result2=pg_query($db,$query2) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result2),false);
-			$numrows = pg_numrows($result2);
 			//for($i = 0; $i < $numrows; $i++) { $row = pg_fetch_array($result, $i);echo $row["codeEnregistrementSyntax"];}	
 			
 			$query3= $query_module_correspondance_pvf1.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result3=pg_query($db,$query3) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result3),false);
-			$numrows = pg_numrows($result3);
 			
 			$query4= $query_module_chorologie.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result4=pg_query($db,$query4) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result4),false);
-			$numrows = pg_numrows($result4);
 			
+
+			$query5= $query_module_correspondance_hic.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result5=pg_query($db,$query5) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result5),false);
 			
-			//$table = pg_fetch_array($result);
-			//var_dump($table);
-			//$colname = pg_field_name($result, 1);
-			//$colname="codeEnregistrementSyntax";
-			//echo $colname;
-			//$val= pg_fetch_result(pg_query ($db,$query_description."'$colname1'".";"),0,"description" );
-			//echo $val;
-			//$val= pg_fetch_result($result,"\"codeEnregistrementSyntax\"" );
-			//echo $val;
+			$query6= $query_module_correspondance_eunis.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result6=pg_query($db,$query6) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result6),false);
+
+			
+
 			// Loop through rows in the result set
 			for($i = 0; $i < $numrows2; $i++) { $row = pg_fetch_array($result2, $i);echo $row["codeEnregistrement"];}
 			
@@ -334,18 +342,32 @@ include ("../commun/add_fiche.php");
                 $list_photos[0]=$list_photos[1]="";
                 metaform_sel2 ("Fichier rattaché","","style=width:30em;","<br>",$list_photos,"PHOTO",mysql_result($result,0,"PHOTO"));*/
             echo ("</fieldset>");
-            echo ("</td><td width=50%>");
 		/*------------------------------------------------------------------------------ EDIT fieldset4*/
-            echo ("<fieldset><LEGEND> Correspondances </LEGEND>");
+            echo ("</td><td width=50%>");
+			echo ("<fieldset><LEGEND> Correspondances </LEGEND>");
 			
-			$colname18="idRattachementPVF";
+			$colname18="idRattachementPVF"; $colname19="codeHIC";$colname20="codeEUNIS";
 			$num_rows = pg_num_rows($result3);
 			if ($num_rows > 0) {
-			metaform_sel ("Rattachement PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"$colname18\""), pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));			
-			metaform_sel ("Rattachement PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"$colname18\""), pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));			
+			metaform_sel ("PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"$colname18\""), pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));			
+			metaform_sel ("PVF 2","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result4,0,"\"$colname18\""), pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));	
+            metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic",pg_result($result4,0,"\"$colname19\""),pg_fetch_result(pg_query ($db,$query_description."'$colname19'".";"),0,"description" ));
+            metaform_sel_multi ("HIC Selectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'",pg_result($result4,0,"\"$colname20\""),"hic_select","");
+            echo "<br>";
+			metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'$colname20'".";"),0,"description" ));
+            metaform_sel_multi ("EUNIS Selectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");
 
+			//dans le cas où les tables sont vides (pas d'enregistrement il faut faire une condition sinon l'affichage des données pose problème car le pg_result ne renvoi rien
 			} else {
 				metaform_sel ("Rattachement PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));
+				metaform_sel ("Rattachement PVF 2","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));
+                metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'$colname19'".";"),0,"description" ));
+				metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'","","hic_select","");
+			    echo "<br>";
+				metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'$colname20'".";"),0,"description" ));
+				metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");
+				//metaform_sel ("Rattachement Eunis","style=width:30em;",10,$ref[$champ_ref['codeEUNIS']],"codeEUNIS","", pg_fetch_result(pg_query ($db,$query_description."'$colname20'".";"),0,"description" ));						
+
 			}
 			
 			
@@ -363,12 +385,14 @@ include ("../commun/add_fiche.php");
 		/*------------------------------------------------------------------------------ EDIT fieldset5*/
 
                 echo ("<fieldset><LEGEND>Chorologie</LEGEND>");
-			$colname19="idTerritoire";
-			$num_rows = pg_num_rows($result3);
+			$colname21="idTerritoire";
+			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
-			metaform_sel ("Présence départementale","",30,$ref['liste_departement'],"idTerritoire",pg_result($result3,0,"\"$colname19\""), pg_fetch_result(pg_query ($db,$query_description."'$colname19'".";"),0,"description" ));			
+			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'",$ref[$champ_ref['liste_geo']],"departement",pg_result($result4,0,"\"$colname21\""),pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
+            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'",pg_result($result4,0,"\"$colname21\""),"departement","");
 			} else {
-				metaform_sel ("Présence départementale","",30,$ref['liste_departement'],"idTerritoire","", pg_fetch_result(pg_query ($db,$query_description."'$colname19'".";"),0,"description" ));	
+					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'",$ref[$champ_ref['liste_geo']],"departement","",pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
+					metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement);'","","departement","");
 			}
 			
 			echo ("</fieldset>");
