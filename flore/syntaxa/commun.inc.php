@@ -54,6 +54,16 @@ SELECT t.*
 	FROM syntaxa.st_chorologie t
 	WHERE t.\"codeEnregistrement\"=";	
 	
+$query_module_etage_vegetation = "
+SELECT t.*
+	FROM syntaxa.st_etage_veg t
+	WHERE t.\"codeEnregistrement\"=";	
+	
+$query_module_etage_bioclim = "
+SELECT t.*
+	FROM syntaxa.st_etage_bioclim t
+	WHERE t.\"codeEnregistrement\"=";	
+	
 $query_description=
 "SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and champs.nom_champ=";
 

@@ -234,6 +234,14 @@ include ("../commun/add_fiche.php");
 			$query6= $query_module_correspondance_eunis.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result6=pg_query($db,$query6) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result6),false);
+			
+			$query7= $query_module_etage_vegetation.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result7=pg_query($db,$query7) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result7),false);
+			
+			$query8= $query_module_etage_bioclim.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result8=pg_query($db,$query8) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result8),false);
 
 			
 
@@ -368,9 +376,7 @@ include ("../commun/add_fiche.php");
 				metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'","","hic_select","");
 			    echo "<br>";
 				metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'$colname20'".";"),0,"description" ));
-				metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");
-				//metaform_sel ("Rattachement Eunis","style=width:30em;",10,$ref[$champ_ref['codeEUNIS']],"codeEUNIS","", pg_fetch_result(pg_query ($db,$query_description."'$colname20'".";"),0,"description" ));						
-
+				metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");				
 			}
 		
 			
@@ -396,15 +402,15 @@ include ("../commun/add_fiche.php");
 			echo "<br>";
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
-			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"$colname23\""),pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
-            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",pg_result($result4,0,"\"$colname23\""),"departement_select","");
+			//metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"$colname23\""),pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
+            //metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",pg_result($result4,0,"\"$colname23\""),"departement_select","");
 			echo "<br>";
 			metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole",pg_result($result4,0,"\"$colname23\""),pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
             metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'",pg_result($result4,0,"\"$colname23\""),"region_agricole_select","");
 			} else {
 					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
 					metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'","","departement_select","");
-						echo "<br>";
+					echo "<br>";
 					metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
 					metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'","","region_agricole_select","");
 			}
@@ -433,16 +439,16 @@ include ("../commun/add_fiche.php");
 			echo ("<table><tr><td width=33%>");
 			metaform_text ("Type biologique dominant","",30,"width=100%","typeBiologiqueDom",pg_result($result,0,"\"$colname28\""), pg_fetch_result(pg_query ($db,$query_description."'$colname28'".";"),0,"description" ));
 			echo ("</td><td width=33%>");
-			metaform_sel ("Type physionomique)","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
+			metaform_sel ("Type physionomique)","",30,$ref[$champ_ref['typePhysionomique']],"typePhysionomique",pg_result($result,0,"\"$colname29\""), pg_fetch_result(pg_query ($db,$query_description."'$colname29'".";"),0,"description" ));
 			echo ("</td><td width=33%>");
-			metaform_text ("Aire minimale d'expression","",30,"width=100%","nomSyntaxonRaccourci",pg_result($result,0,"\"$colname6\""), pg_fetch_result(pg_query ($db,$query_description."'$colname6'".";"),0,"description" ));
+			metaform_text ("Aire minimale d'expression","",30,"width=100%","aireMinimale",pg_result($result,0,"\"$colname27\""), pg_fetch_result(pg_query ($db,$query_description."'$colname27'".";"),0,"description" ));
 			echo ("</td></tr></table>"); 
 			echo ("<br>");
 						
 			echo ("<table><tr><td width=33%>");
-			metaform_sel ("Humidité principale","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
+			metaform_sel ("Humidité principale","",30,$ref[$champ_ref['humiditePrincipale']],"humiditePrincipale",pg_result($result,0,"\"$colname31\""), pg_fetch_result(pg_query ($db,$query_description."'$colname31'".";"),0,"description" ));
 			echo ("</td><td width=33%>");
-			metaform_sel ("Humidité secondaire","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
+			metaform_sel ("Humidité secondaire","",30,$ref[$champ_ref['humiditeSecondaire']],"humiditeSecondaire",pg_result($result,0,"\"$colname32\""), pg_fetch_result(pg_query ($db,$query_description."'$colname32'".";"),0,"description" ));
 			echo ("</td><td width=33%>");
 			echo ("</td></tr></table>");
 			echo ("<br>");
@@ -469,11 +475,28 @@ include ("../commun/add_fiche.php");
 			echo ("</tr>");
 			echo("</table><br>");
 			
+			/*Etagement*/
+			$colname38="codeEtageVeg";$colname39="codeEtageBioclim";
+			
+			echo "<br>";
+			$num_rows = pg_num_rows($result4);
+			if ($num_rows > 0) {
+			metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg",pg_result($result4,0,"\"$colname38\""),pg_fetch_result(pg_query ($db,$query_description."'$colname38'".";"),0,"description" ));
+            metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'",pg_result($result4,0,"\"$colname23\""),"etage_veg_select","");
+			echo "<br>";
+			metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim",pg_result($result4,0,"\"$colname39\""),pg_fetch_result(pg_query ($db,$query_description."'$colname39'".";"),0,"description" ));
+            metaform_sel_multi ("Etages bioclimatiques sélectionnés","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'",pg_result($result4,0,"\"$colname39\""),"etage_bioclim_select","");
+			} else {
+					metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'$colname38'".";"),0,"description" ));
+					metaform_sel_multi ("Etages de végétation sélectionnés","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'","","etage_veg_select","");
+						echo "<br>";
+					metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim","",pg_fetch_result(pg_query ($db,$query_description."'$colname39'".";"),0,"description" ));
+					metaform_sel_multi ("Etages bioclimatiques sélectionnés","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'","","etage_bioclim_select","");
+			}
+			
+			echo ("</td></tr></table>");		
 			echo ("</fieldset>");
-        echo ("</td></tr></table>");
-        echo ("<hr>");
-
-
+			echo ("<hr>");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
 			echo ("<div style=\"float:right;\"><br>");
 				if ($mode == "edit") {
