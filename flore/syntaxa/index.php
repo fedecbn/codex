@@ -34,6 +34,7 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 ref_colonne_et_valeur ($id_page);
 
 //test DEBUG
+//var_dump($ref[$champ_ref['periodeDebObsOptimale']]);
 //var_dump($ref['liste_departement']);
 //var_dump($ref[$champ_ref['liste_departement']]);
 //var_dump($ref['st_geo_sigmafacies']);
@@ -348,6 +349,7 @@ include ("../commun/add_fiche.php");
 			echo ("<fieldset><LEGEND> Correspondances </LEGEND>");
 			
 			$colname18="idRattachementPVF"; $colname19="codeHIC";$colname20="codeEUNIS";
+			
 			$num_rows = pg_num_rows($result3);
 			if ($num_rows > 0) {
 			metaform_sel ("PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"$colname18\""), pg_fetch_result(pg_query ($db,$query_description."'$colname18'".";"),0,"description" ));			
@@ -370,7 +372,7 @@ include ("../commun/add_fiche.php");
 				//metaform_sel ("Rattachement Eunis","style=width:30em;",10,$ref[$champ_ref['codeEUNIS']],"codeEUNIS","", pg_fetch_result(pg_query ($db,$query_description."'$colname20'".";"),0,"description" ));						
 
 			}
-			
+		
 			
             echo ("</fieldset>");
 			
@@ -386,22 +388,88 @@ include ("../commun/add_fiche.php");
 		/*------------------------------------------------------------------------------ EDIT fieldset5*/
 
                 echo ("<fieldset><LEGEND>Chorologie</LEGEND>");
-			$colname21="idTerritoire";
+	
+			$colname21="repartitionGenerale";$colname22="repartitionTerritoire";$colname23="idTerritoire";
+			
+			metaform_text_area ("Répartition générale","",57,50,"","repartitionGenerale",pg_result($result,0,"\"$colname21\""), pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
+			metaform_text_area ("Répartition territoire","",57,50,"","repartitionTerritoire",pg_result($result,0,"\"$colname22\""), pg_fetch_result(pg_query ($db,$query_description."'$colname22'".";"),0,"description" ));
+			echo "<br>";
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
-			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"$colname21\""),pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
-            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",pg_result($result4,0,"\"$colname21\""),"departement_select","");
+			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"$colname23\""),pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
+            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",pg_result($result4,0,"\"$colname23\""),"departement_select","");
+			echo "<br>";
+			metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole",pg_result($result4,0,"\"$colname23\""),pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
+            metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'",pg_result($result4,0,"\"$colname23\""),"region_agricole_select","");
 			} else {
-					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'$colname21'".";"),0,"description" ));
+					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
 					metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'","","departement_select","");
+						echo "<br>";
+					metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'$colname23'".";"),0,"description" ));
+					metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'","","region_agricole_select","");
 			}
+
 			
 			echo ("</fieldset>");
 		/*------------------------------------------------------------------------------ EDIT fieldset6*/
+		
+  $colname24="periodeDebObsOptimale";$colname25= "periodeFinObsOptimale";$colname26="rqPhenologie";$colname27="aireMinimale";$colname28="typeBiologiqueDom";
+  $colname29="typePhysionomique";$colname30="rqPhysionomie";$colname31="humiditePrincipale";$colname32="humiditeSecondaire";$colname33="phPrincipal";
+  $colname34="phSecondaire";$colname35="climat";$colname36="descriptionEcologie";$colname37="remarqueVariabilite";
 
-                echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");
-
-                echo ("</fieldset>");
+            
+					echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");
+					
+			metaform_text_area ("Description écologie","",57,50,"","descriptionEcologie",pg_result($result,0,"\"$colname36\""), pg_fetch_result(pg_query ($db,$query_description."'$colname36'".";"),0,"description" ));
+			echo ("<table><tr><td width=33%>");
+			metaform_sel ("Début de période optimale","",30,$ref[$champ_ref['periodeDebObsOptimale']],"periodeDebObsOptimale",pg_result($result,0,"\"$colname24\""), pg_fetch_result(pg_query ($db,$query_description."'$colname24'".";"),0,"description" ));
+			echo ("</td><td width=33%>");
+			metaform_sel ("Fin de période optimale","",30,$ref[$champ_ref['periodeFinObsOptimale']],"periodeFinObsOptimale",pg_result($result,0,"\"$colname25\""), pg_fetch_result(pg_query ($db,$query_description."'$colname25'".";"),0,"description" ));
+			echo ("</td><td width=33%>");
+			metaform_text_area ("Remarque phénologie","",37,30,"","rqPhenologie",pg_result($result,0,"\"$colname26\""), pg_fetch_result(pg_query ($db,$query_description."'$colname26'".";"),0,"description" ));
+			echo ("</td></tr></table>"); 
+			echo ("<br>");
+						
+			echo ("<table><tr><td width=33%>");
+			metaform_text ("Type biologique dominant","",30,"width=100%","typeBiologiqueDom",pg_result($result,0,"\"$colname28\""), pg_fetch_result(pg_query ($db,$query_description."'$colname28'".";"),0,"description" ));
+			echo ("</td><td width=33%>");
+			metaform_sel ("Type physionomique)","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
+			echo ("</td><td width=33%>");
+			metaform_text ("Aire minimale d'expression","",30,"width=100%","nomSyntaxonRaccourci",pg_result($result,0,"\"$colname6\""), pg_fetch_result(pg_query ($db,$query_description."'$colname6'".";"),0,"description" ));
+			echo ("</td></tr></table>"); 
+			echo ("<br>");
+						
+			echo ("<table><tr><td width=33%>");
+			metaform_sel ("Humidité principale","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
+			echo ("</td><td width=33%>");
+			metaform_sel ("Humidité secondaire","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result,0,"\"$colname8\""), pg_fetch_result(pg_query ($db,$query_description."'$colname8'".";"),0,"description" ));
+			echo ("</td><td width=33%>");
+			echo ("</td></tr></table>");
+			echo ("<br>");
+			
+			/*table des valences écologiques*/
+			$liste_valences = array('trophie'=>'trophie','température'=>'temperature', 'luminosité'=>'luminosite','exposition'=>'exposition','salinité'=>'salinite','neige'=>'neige','continentalité'=>'continentalite','ombroclimat'=>'ombroclimat');
+			
+			echo ("<table border=1 width=\"1200\">");
+			echo ("<th style=\"width:5em;\"></th>");			
+			/*en-tête*/
+			foreach ($liste_valences as $label_valence => $champ_valence)	{
+					echo ("<th style=\" text-align: center;	vertical-align: center; width:5em;\">$label_valence</th>");
+					}
+			/*valeurs*/
+			
+				echo ("<tr valign=top>");	
+				echo ("<td style=\" text-align: center;	vertical-align: center;\">valences</td>");
+				foreach ($liste_valences as $label_valence => $champ_valence)	{
+					
+						echo ("<td>");
+						metaform_sel (""," no_lab","width:5em;",$ref[$champ_ref[$champ_valence]],$champ_valence,pg_result($result,0,"\"$champ_valence\""), pg_fetch_result(pg_query ($db,$query_description."'$champ_valence'".";"),0,"description" ));
+						echo ("</td>");
+					}
+			echo ("</tr>");
+			echo("</table><br>");
+			
+			echo ("</fieldset>");
         echo ("</td></tr></table>");
         echo ("<hr>");
 

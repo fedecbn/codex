@@ -677,8 +677,12 @@ function metaform_sel ($label,$descr,$style,$liste,$champ,$val,$tooltip='')
 	echo ("<select class=\"$liste[$val]\" name=\"".$champ."\" id=\"".$champ."\" $extra style=\"$style\" onchange=\"this.className=this.options[this.selectedIndex].className\"/>");
 	
     foreach ($liste as $key => $value) {
-        echo ("<option class=\"$value\" value=\"$key\" ".($key == $val ? "SELECTED" : "")." >".$value."</option>");
+		if ($value == 'non indiqué') {
+		echo ("<option class=\"$value\" selected=\"$key\" ".($key == $val ? "SELECTED" : "")." >".$value."</option>");
 		}
+		else {
+        echo ("<option class=\"$value\" value=\"$key\" ".($key == $val ? "SELECTED" : "")." >".$value."</option>");
+	}}
     
 	echo ("</select><br>");
 }
