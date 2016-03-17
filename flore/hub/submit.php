@@ -150,7 +150,7 @@ if (!empty ($id))
 			$path .= "export/";
 			$tempsource = $from_propre == 'TRUE' ? null : 'temp_';
 			if ($jdd == 'data' OR $jdd == 'taxa')
-				{$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format','$tempsource');";echo $query;}
+				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format','$tempsource');";
 			elseif ($jdd == 'listTaxon')
 				{
 				if ($infrataxon == 'TRUE') $source = 'listtaxoninfra';
@@ -161,7 +161,7 @@ if (!empty ($id))
 					$query = "SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				}
 			else
-				{$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format','$tempsource');";echo $query;}
+				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format','$tempsource');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;
