@@ -23,6 +23,7 @@ $typpush = $_POST['typpush'];
 $typdiff = $_POST['typdiff'];
 $lonely_file = $_POST['lonely_file'] != null ? $_POST['lonely_file'] : 'f';
 $infrataxon = $_POST['infrataxon'] != null ? $_POST['infrataxon'] : 'f';
+$from_propre = $_POST['from_propre'] != null ? $_POST['from_propre'] : 'f';
 $ecraser = $_POST['ecraser'] != null ? $_POST['ecraser'] : 'f';
 $file = $_POST['file'];
 $statut = $_POST['statut'];
@@ -147,8 +148,9 @@ if (!empty ($id))
 		/*EXPORT*/
 		case "export" : {
 			$path .= "export/";
+			$tempsource = $from_propre == 'TRUE' ? null : 'temp_';
 			if ($jdd == 'data' OR $jdd == 'taxa')
-				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format');";
+				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format','$tempsource');";
 			elseif ($jdd == 'listTaxon')
 				{
 				if ($infrataxon == 'TRUE') $source = 'listtaxoninfra';
@@ -159,7 +161,7 @@ if (!empty ($id))
 					$query = "SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				}
 			else
-				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format')";
+				$query = "SELECT * FROM hub_export('$id','$jdd','$path','$format','$tempsource');";
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;

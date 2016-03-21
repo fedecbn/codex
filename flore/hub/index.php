@@ -171,9 +171,10 @@ include ("../commun/add_fiche.php");
 		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		$row = pg_fetch_row($result);$id_cbn = $row[0];	
 		/*Partie boutons*/
-		les_boutons($bouton1,$niveau,$lang,$schema);
-		les_boutons($bouton2,$niveau,$lang,$schema);
-		les_boutons($bouton3,$niveau,$lang,$schema);
+		$test_cbn = $id_cbn == $id ? true : false;
+		les_boutons($bouton1,$niveau,$lang,$schema,$test_cbn);
+		les_boutons($bouton2,$niveau,$lang,$schema,$test_cbn);
+		les_boutons($bouton3,$niveau,$lang,$schema,$test_cbn);
 			echo ("</fieldset>");
 		echo ("</div>");    			
 			

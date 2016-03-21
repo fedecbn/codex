@@ -1548,12 +1548,12 @@ function coupe_txt ($txt,$max) {
     return ($txt);
 }
 
-function les_boutons($array_bouton,$niveau,$lang,$schema) {
+function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 		$db2=sql_connect_hub(SQL_base_hub);
 		echo ("<div style=\"float:left;\" >");  
 		foreach ($array_bouton as $val)	{
 				echo ("<table border=0 width=\"100%\" id=\"action_bdd\">");
-				if ($niveau >= 255 OR ($niveau >= $val["niveau"] AND ($val["cbn"] == FALSE OR ($val["cbn"] == TRUE AND $id_cbn == $id))))
+				if ($niveau >= 255 OR ($niveau >= $val["niveau"] AND ($val["cbn"] == FALSE OR ($val["cbn"] == TRUE AND $test_cbn))))
 					{
 					/*Récupération de la date de dernière réalisation*/
 					$query= "SELECT max(date_log) FROM public.zz_log WHERE typ_log = 'hub_".$val["id"]."' AND lib_schema = '$schema';";

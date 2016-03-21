@@ -360,6 +360,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 					foreach ($jdd[$mode] as $key => $val) 
 						echo ("<option value=\"$key\">".$val."</option>");
 					echo ("</select>");
+					echo ("<BR>");metaform_bool ("...depuis la partie propre",null,"from_propre","t");
 					/*DATA*/
 					echo ("<div id = \"div_data\" style=\"display:none\">");
 						echo ("<BR>");
