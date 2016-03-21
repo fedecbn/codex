@@ -255,6 +255,44 @@ include ("../commun/add_fiche.php");
 	
 	//------------------------------------------------------------------------------ EDIT fieldset1
 	//----------Attention la fonction pg_fetch_result() is case sensitive donc faire attention aux noms de colonnes avec majuscule en les encadrant avec \"\"
+//var_dump($ref);
+//var_dump($ref['st_ref_type_synonymie']);
+//var_dump($ref[$champ_ref["idCritiqueSyntax"]]);
+//var_dump($ref["st_ref_critique"]);
+//var_dump($aColumnsTot['syntaxa']['idCritique']);
+//var_dump($aColumnsTot['syntaxa']['idCritiqueSyntax']);
+//var_dump($aColumnsTot['syntaxa']['exposition']);
+//var_dump($aColumnsTot['syntaxa']);
+//$identite = array('nom' => 'blabla','nom' => 'blibli', 'prenom' => 'Hugo','age' => 19, 'estEtudiant' => true); var_dump($identite['nom']);
+
+$tables = array ('st_syntaxon');
+
+foreach ($tables as $i)	{
+$champs = '';
+			$update ="UPDATE syntaxa.$i SET ";
+			foreach ($aColumnsTot[$id_page] as $key => $val)	{
+//				echo "champ:";var_dump ($key);
+//				echo "table:";var_dump ($val['table_champ']); echo "<br><br>";
+				 /*if ($val['modifiable'] == 't' AND $val['table_champ'] == $i) {
+					/*récupération des champs modifiables*/
+//					$champs .= "\"".$i."\".\"".$val['champ_interface']."\",";
+					/*construction de l'update*/
+//					if ($val['type'] == 'string') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_quote($_POST[$val['champ_interface']],'do').",";
+//						if ($val['type'] == 'val') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_quote($_POST[$val['champ_interface']],'do').",";
+//						if ($val['type'] == 'bool') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_bool($_POST[$val['champ_interface']]).",";
+//						if ($val['type'] == 'int') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_num($_POST[$val['champ_interface']]).",";
+//					}
+			}
+//					$update = rtrim($update,',')." WHERE \"codeEnregistrementSyntax\" = ".$id.";";
+//						echo $update;echo "<br>";
+//					$select="SELECT ".rtrim($champs,',')." FROM syntaxa.$i AS t WHERE \"codeEnregistrementSyntax\"=".$id.";";
+//						echo $select;echo "<br>";
+};
+			/*SUIVI AVANT UPDATE*/
+			//echo $champs;
+
+
+			
 
 
 		/*	echo ("<table border=0 width=\"100%\">");
@@ -278,10 +316,10 @@ include ("../commun/add_fiche.php");
 				metaform_text_area ("Remarque nomenclaturale","",57,50,"","rqNomenclaturale",pg_result($result,0,"\"rqNomenclaturale\""), pg_fetch_result(pg_query ($db,$query_description."'rqNomenclaturale'".";"),0,"description" ));
 				metaform_sel ("Rang syntaxon","","",$ref[$champ_ref["rangSyntaxon"]],"rangSyntaxon",pg_result($result,0,"\"rangSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'rangSyntaxon'".";"),0,"description" ));
 				//metaform_text ("Nom syntaxon sup","",30,"width:30em;","nomSyntaxonSup",pg_result($result,0,"\"nomSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRetenu'".";"),0,"description" ));
-				metaform_text ("Nom français","",30,"width:30em;","idSyntaxonSup",pg_result($result,0,"\"nomFrancaisSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomFrancaisSyntaxon'".";"),0,"description" ));
+				metaform_text ("Nom français","",30,"width:30em;","nomFrancaisSyntaxon",pg_result($result,0,"\"nomFrancaisSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomFrancaisSyntaxon'".";"),0,"description" ));
 				metaform_text_area ("Diagnose courte","",57,50,"","diagnoseCourteSyntaxon",pg_result($result,0,"\"diagnoseCourteSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'diagnoseCourteSyntaxon'".";"),0,"description" ));
-				metaform_sel ("Typicité","",30,$ref[$champ_ref['idCritique']],"idCritique",pg_result($result,0,"\"idCritique\""), pg_fetch_result(pg_query ($db,$query_description."'idCritique'".";"),0,"description" ));
-				metaform_text ("Remarque typicité","",30,"width:30em;","rqCritiqueCritique",pg_result($result,0,"\"rqCritique\""), pg_fetch_result(pg_query ($db,$query_description."'rqCritique'".";"),0,"description" ));
+				metaform_sel ("Typicité","",30,$ref[$champ_ref["idCritiqueSyntax"]],"idCritique",pg_result($result,0,"\"idCritique\""), pg_fetch_result(pg_query ($db,$query_description."'idCritique'".";"),0,"description" ));
+				metaform_text ("Remarque typicité","",30,"width:30em;","rqCritique",pg_result($result,0,"\"rqCritique\""), pg_fetch_result(pg_query ($db,$query_description."'rqCritique'".";"),0,"description" ));
 				
 
 
@@ -340,7 +378,7 @@ include ("../commun/add_fiche.php");
             echo ("</td><td width=50%>");
 			echo ("<fieldset><LEGEND> Correspondances </LEGEND>");
 
-			
+/*			
 			$num_rows = pg_num_rows($result3);
 			if ($num_rows > 0) {
 			metaform_sel ("PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));			
@@ -361,9 +399,10 @@ include ("../commun/add_fiche.php");
 				metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'codeEUNIS'".";"),0,"description" ));
 				metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");				
 			}
+*/			
             echo ("</fieldset>");
 			
-			
+		
 				/* //bout de code a utiliser si on veut aller vers une fiche taxon dans refnat
 				echo ("</td><td>");	
 					if ($niveau >= 128)
@@ -377,11 +416,12 @@ include ("../commun/add_fiche.php");
                 echo ("<fieldset><LEGEND>Chorologie</LEGEND>");	
 			
 			/*répartition territoire et générale*/		
-			metaform_text_area ("Répartition générale","",57,50,"","repartitionGenerale",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
+			
+/*			metaform_text_area ("Répartition générale","",57,50,"","repartitionGenerale",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
 			metaform_text_area ("Répartition territoire","",57,50,"","repartitionTerritoire",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
 			echo "<br>";
 			
-			/*chorologie départementale et autres territoires (table multivariée)*/	
+			/*chorologie départementale et autres territoires (table multivariée)*/	/*
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
 			//metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"idTerritoire\""),pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
@@ -397,7 +437,7 @@ include ("../commun/add_fiche.php");
 					metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'","","region_agricole_select","");
 			}
 
-			
+*/			
 			echo ("</fieldset>");
 		/*------------------------------------------------------------------------------ EDIT fieldset6*/
 		
@@ -405,6 +445,7 @@ include ("../commun/add_fiche.php");
 					echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");
 					
 			/*écologie générale*/		
+			/*
 			metaform_text_area ("Description écologie","",57,50,"","descriptionEcologie",pg_result($result,0,"\"descriptionEcologie\""), pg_fetch_result(pg_query ($db,$query_description."'descriptionEcologie'".";"),0,"description" ));
 			echo ("<table><tr><td width=33%>");
 			metaform_sel ("Début de période optimale","",30,$ref[$champ_ref['periodeDebObsOptimale']],"periodeDebObsOptimale",pg_result($result,0,"\"periodeDebObsOptimale\""), pg_fetch_result(pg_query ($db,$query_description."'periodeDebObsOptimale'".";"),0,"description" ));
@@ -433,18 +474,20 @@ include ("../commun/add_fiche.php");
 			echo ("<br>");
 			
 			/*table des valences écologiques*/
+
 			$liste_valences = array('trophie'=>'trophie','température'=>'temperature', 'luminosité'=>'luminosite','exposition'=>'exposition','salinité'=>'salinite','neige'=>'neige','continentalité'=>'continentalite','ombroclimat'=>'ombroclimat');
 			
 			echo ("<table border=1 width=\"1200\">");
 			echo ("<th style=\"width:5em;\"></th>");			
 					
 					/*en-tête*/
+
 			foreach ($liste_valences as $label_valence => $champ_valence)	{
 					echo ("<th style=\" text-align: center;	vertical-align: center; width:5em;\">$label_valence</th>");
 					}
 					
 					/*valeurs*/
-			
+
 				echo ("<tr valign=top>");	
 				echo ("<td style=\" text-align: center;	vertical-align: center;\">valences</td>");
 				foreach ($liste_valences as $label_valence => $champ_valence)	{
@@ -457,7 +500,7 @@ include ("../commun/add_fiche.php");
 			echo("</table><br>");
 			
 			/*Etagement*/
-			
+			/*
 			echo "<br>";
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
@@ -477,7 +520,8 @@ include ("../commun/add_fiche.php");
 			echo ("Cortège floristique: champ multivarié à la mathieu clair");
 
 			
-			echo ("</td></tr></table>");		
+			echo ("</td></tr></table>");	
+*/			
 			echo ("</fieldset>");
 			echo ("<hr>");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/

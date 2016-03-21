@@ -65,7 +65,7 @@ SELECT t.*
 	WHERE t.\"codeEnregistrement\"=";	
 	
 $query_description=
-"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and champs.nom_champ=";
+"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and table_champ not like 'st_ref%' and champs.nom_champ=";
 
 $query_liste = "
 SELECT count(*) OVER() AS total_count,*
@@ -78,7 +78,8 @@ SELECT t.*
 	JOIN applications.taxons a ON a.uid = t.uid 
 	WHERE a.defaut = TRUE ";
 
-$tables = array ('st_syntaxon');
+//$tables = array ('st_syntaxon','st_etage_bioclim','st_etage_veg','st_chorologie','st_correspondance_eunis','st_correspondance_hic','st_correspondance_pvf');
+
 if (!isset($_POST["etape"])) {$etape = 1;}
 else {$etape = $_POST["etape"];}
 

@@ -32,22 +32,24 @@ if (!empty ($id))
 		{
 		/*SUIVI DES MODIFICATIONS ET UPDATE*/
 		//var_dump($aColumnsTot);
+		$tables = array ('st_syntaxon');
+		/*modification et suivi des modifications pour la table st_syntaxon (univariée)*/
 		foreach ($tables as $i)	{
 			$champs = '';
 			$update ="UPDATE syntaxa.$i SET ";
 			foreach ($aColumnsTot[$id_page] as $key => $val)	{
 				if ($val['modifiable'] == 't' AND $val['table_champ'] == $i) {
 					/*récupération des champs modifiables*/
-					$champs .= "\"".$val['champ_interface']."\",";
+					$champs .= "\"".$i."\".\"".$val['nom_champ']."\",";
 					/*construction de l'update*/
-					if ($val['type'] == 'string') $update .= "\"".$val['champ_interface']."\" = ".sql_format_quote($_POST[$val['champ_interface']],'do').",";
-					if ($val['type'] == 'val') $update .= "\"".$val['champ_interface']."\" = ".sql_format_quote($_POST[$val['champ_interface']],'do').",";
-					if ($val['type'] == 'bool') $update .= "\"".$val['champ_interface']."\" = ".sql_format_bool($_POST[$val['champ_interface']]).",";
-					if ($val['type'] == 'int') $update .= "\"".$val['champ_interface']."\" = ".sql_format_num($_POST[$val['champ_interface']]).",";
-					}
+					if ($val['type'] == 'string') $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
+					if ($val['type'] == 'val') $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
+					if ($val['type'] == 'bool') $update .= "\"".$val['nom_champ']."\" = ".sql_format_bool($_POST[$val['nom_champ']]).",";
+					if ($val['type'] == 'int') $update .= "\"".$val['nom_champ']."\" = ".sql_format_num($_POST[$val['nom_champ']]).",";					}
 				}
 			/*SUIVI AVANT UPDATE*/
-			$select="SELECT ".rtrim($champs,',')." FROM syntaxa.$i AS t WHERE \"codeEnregistrementSyntax\"=".$id.";";
+			echo $champs;
+			$select="SELECT ".rtrim($champs,',')." FROM syntaxa.$i WHERE \"codeEnregistrementSyntax\"=".$id.";";
 			if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);                          // Old values
@@ -64,6 +66,8 @@ if (!empty ($id))
 			if (DEBUG) echo "<br>".$update;
 			$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			}
+			/*modification et suivi des modifications pour les tables des correspondances pvf, hic et eunis (multivariée) en récupérant l'id de l'enregistrement*/
+			
 	
     // $query="UPDATE applications.liste_taxon SET nom_scien= ".frt("nom_sci",$_POST["nom_sci"]).", cd_ref= '".frt("cd_ref",$_POST["cd_ref"])."' WHERE uid = ".$id." AND rubrique_taxon = 'lr';";
     // if (DEBUG) echo "<br>".$query;
