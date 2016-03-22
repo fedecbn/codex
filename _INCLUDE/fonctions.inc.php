@@ -683,6 +683,31 @@ function metaform_sel ($label,$descr,$style,$liste,$champ,$val,$tooltip='')
 	echo ("</select><br>");
 }
 
+function metaform_sel_tableau ($label,$descr,$style,$liste,$champ,$val,$tooltip='')
+{ /* on change juste l'endroit du tooltip pour pouvoir l'afficher en passant sur la cellule quand le label du metaform sel 
+	n'est pas affiché par exemple dans les tableaux de liste déroulante (ex: valences écologiques)
+	listes référentiel: on ajoute une condition qui permet de vérifier que la base ne renvoi pas une valeur null (ex: salinité) afin que $key=$val ne donne pas 0=null is true
+	et donc place le menu déroulant sur 0->"ne supportant pas le sel" en selected par défaut */
+	
+	$class = $val;
+	
+	if (strpos($descr,"no_lab") === false)
+		if (strpos($descr,"bloque") !== false) echo ("<label  class=\"preField_calc\">".$label."</label>");
+		else echo ("<label class=\"preField\">".$label."</label>");
+
+	if (!isset($extra)) $extra = "";		
+	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";}	
+	if (strpos($descr,"bloque") !== false) {$extra .= " disabled ";}	
+	if (strpos($descr,"bloque") !== false AND $val == null) {$extra .= " class=\"bloque\"";}	
+	echo ("<select class=\"$liste[$val]\" name=\"".$champ."\" id=\"".$champ."\" title=\"".$tooltip."\" $extra style=\"$style\" onchange=\"this.className=this.options[this.selectedIndex].className\"/>");
+	
+    foreach ($liste as $key => $value) {
+       echo ("<option class=\"$value\" value=\"$key\" ".(is_null($val)==false && $key == $val ? "SELECTED" : "")." >".$value."</option>");
+	}
+    
+	echo ("</select><br>");
+}
+
 function metaform_check ($label,$descr,$style,$liste,$champ,$liste_reponse,$tooltip='')
 {
 	if (strpos($descr,"no_lab") === false)
