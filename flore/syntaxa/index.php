@@ -256,6 +256,12 @@ include ("../commun/add_fiche.php");
 	//------------------------------------------------------------------------------ EDIT fieldset1
 	//----------Attention la fonction pg_fetch_result() is case sensitive donc faire attention aux noms de colonnes avec majuscule en les encadrant avec \"\"
 //var_dump($ref);
+//var_dump(pg_result($result,0,"\"salinite\""));
+//var_dump(pg_result($result,0,"\"rangSyntaxon\""));
+//var_dump($ref[$champ_ref["salinite"]]);
+//var_dump($ref[$champ_ref["neige"]]);
+//var_dump($ref[$champ_ref["ombroclimat"]]);
+//var_dump($ref[$champ_ref["temperature"]]);
 //var_dump($ref['st_ref_type_synonymie']);
 //var_dump($ref[$champ_ref["idCritiqueSyntax"]]);
 //var_dump($ref["st_ref_critique"]);
@@ -491,9 +497,8 @@ $champs = '';
 				echo ("<tr valign=top>");	
 				echo ("<td style=\" text-align: center;	vertical-align: center;\">valences</td>");
 				foreach ($liste_valences as $label_valence => $champ_valence)	{
-					
 						echo ("<td>");
-						metaform_sel (""," no_lab","width:5em;",$ref[$champ_ref[$champ_valence]],$champ_valence,pg_result($result,0,"\"$champ_valence\""), pg_fetch_result(pg_query ($db,$query_description."'$champ_valence'".";"),0,"description" ));
+						metaform_sel_tableau (""," no_lab","width:5em;",$ref[$champ_ref[$champ_valence]],$champ_valence,pg_result($result,0,"\"$champ_valence\""), pg_fetch_result(pg_query ($db,$query_description."'$champ_valence'".";"),0,"description" ));
 						echo ("</td>");
 					}
 			echo ("</tr>");
