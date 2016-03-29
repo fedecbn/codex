@@ -94,20 +94,68 @@ if (!empty ($id))
     if ($_POST['etape']=="") $_POST['etape']=2;
 //------------------------------------------------------------------------------
 	/*Paramètre à ajouter*/
-	$in["cd_ref"] = sql_format_num ($_POST["cd_ref"]);
-	$in["famille"] = sql_format_quote ($_POST["famille"],'do');
-	$in["nom_sci"] = sql_format_quote ($_POST["nom_sci"],'do');
-	$in["cd_rang"] = sql_format ($_POST["cd_rang"]);
-	$in["nom_verna"] = sql_format_quote ($_POST["nom_verna"],'do');
-	$in["hybride"] = sql_format_bool ($_POST["hybride"],'do');
+	//voir comment ajouter le code enregistrement syntax
 	
-	$rub[$id_page] = 'true';
+	$test_menu=$_POST['idTerritoire'];
+	echo $test_menu ;
+	if ($test_menu=='NI_4') {
+	$message = "Vous devez indiquer un CBN";
+    echo "?><script type='text/javascript'>alert('$message');</script>";
+	}
+	else
+	{
+		//mise à jour de la sequence pour la colonne serial uid (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+	$query="SELECT setval('syntaxa.st_syntaxon_uid_seq ', COALESCE((SELECT MAX(uid)+1 FROM syntaxa.st_syntaxon), 1), false);";
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 	
-	$uid = add_taxon ($in,$rub);
+	//utilisation de l'uid comme compteur pour générer ensuite l'identifiant unique du syntaxon
+	$query= "SELECT MAX(uid) as last_uid FROM syntaxa.st_syntaxon;";
+	//echo $query;
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+	echo "last_uid=".pg_result($result,0,"\"last_uid\"");
+	$last_uid=pg_result($result,0,"\"last_uid\"");
+	settype ($last_uid,"integer");
+	$a=1;
+	$next_uid=$last_uid + $a;
+	echo "next_uid=".$next_uid;
 	
-	add_suivi2($_POST["etape"],$id_user,$uid,"taxons","nom",null,sql_format_num ($_POST["nom_sci"]),'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,$uid,"taxons","uid",null,$uid,'applications','manuel','ajout');	
-}
+	//mise à jour de la sequence pour la colonne serial idChorologie (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+	$query="SELECT setval('syntaxa.\"st_chorologie_idChorologie_seq\" ', COALESCE((SELECT MAX(\"idChorologie\")+1 FROM syntaxa.st_chorologie), 1), false);";
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	
+	$insert="INSERT INTO syntaxa.st_syntaxon (\"idCatalogue\",\"codeEnregistrementSyntax\", \"idSyntaxon\",\"nomSyntaxon\",
+	\"auteurSyntaxon\", \"rangSyntaxon\") VALUES (";
+	$champs= sql_format_quote($_POST['idCatalogue'],'do').",".rtrim ( sql_format_quote($_POST['idCatalogue'],'do'),"'" )."_ajout_codex_".$next_uid."',".sql_format_quote($_POST['idSyntaxon'],'do').",
+	".sql_format_quote($_POST['nomSyntaxon'],'do').",".sql_format_quote($_POST['auteurSyntaxon'],'do').",".sql_format_quote($_POST['rangSyntaxon'],'do').") RETURNING \"codeEnregistrementSyntax\"";
+	$query=$insert.$champs;
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	
+	//var_dump(pg_field_name ($result,0));
+	//var_dump (pg_result($result,0,0));
+	//retourne le resultat de RETURNING \"codeEnregistrementSyntax\""
+	$uid=pg_result($result,0,0);
+	echo $query;
+	echo "<br> uid pour la table suivi is:". $uid;
+	echo "<br> uid pour la table suivi is:". sql_format_quote($uid,'do');
+	
+	
+	$insert="INSERT INTO syntaxa.st_chorologie (\"codeEnregistrement\",\"idTerritoire\") VALUES (";
+	$champs= "'".$uid."',".sql_format_quote($_POST['idTerritoire'],'do').") RETURNING \"idChorologie\"";
+	$query=$insert.$champs;
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	$id_chrologie=pg_result($result,0,0);
+				
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idCatalogue",null,$_POST["idCatalogue"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idTerritoire",null,$_POST["idTerritoire"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idChorologie",null,$id_chrologie,'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","codeEnregistrementSyntax",null,$uid,'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idSyntaxon",null,$_POST["idSyntaxon"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","nomSyntaxon",null,$_POST["nomSyntaxon"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","auteurSyntaxon",null,$_POST["auteurSyntaxon"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","rangSyntaxon",null,$_POST["rangSyntaxon"],'applications','manuel','ajout');
+
+	//add_suivi2($_POST["etape"],$id_user,$uid,"st_syntaxon","codeEnregistrementSyntax",null,$codeEnregistrementSyntax,'applications','manuel','ajout');	
+
 
 /*
 if (!DEBUG) {
@@ -115,9 +163,11 @@ if (!DEBUG) {
     echo ("window.location.replace ( \"index.php\")");
     echo ("</script>");
 }
+
+}
 */
 pg_close ($db);
 
 return (true);
-
+}}
 ?>
