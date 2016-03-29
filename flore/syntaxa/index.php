@@ -163,7 +163,7 @@ switch ($mode) {
 /*------------------------------------------------------------------------------ #CAS AJOUT D'UNE FICHE */
 	case "add" : {
 /*Ajouter L'autocomplétion*/
-include ("../commun/add_fiche.php");
+include ("../syntaxa/add_fiche.php");
     }
     break;
 
@@ -305,7 +305,8 @@ $champs = '';
 			echo ("<tr valign=top ><td width=50%>");*/
 			echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=50%>");
 //                    echo ("<fieldset style=\"width:670px;\" ><LEGEND> Habitat </LEGEND>");
-            echo ("<fieldset ><LEGEND> Nomenclature </LEGEND>");				
+            echo ("<fieldset ><LEGEND> Nomenclature </LEGEND>");
+				metaform_sel ("Catalogue","",30,$ref[$champ_ref["idCatalogue"]],"idCatalogue",pg_result($result,0,"\"idCatalogue\""), pg_fetch_result(pg_query ($db,$query_description."'idCatalogue'".";"),0,"description" ));			
 				metaform_text ("<b>Code de l'enregistrement*</b>"," ",30,"width:30em;","codeEnregistrementSyntax",sql_format_quote(pg_result($result,0,"\"codeEnregistrementSyntax\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'codeEnregistrementSyntax'".";"),0,"description" ));
 				echo ("<br>");
 				metaform_text ("Identifiant du syntaxon"," ",30,"width:30em;","idSyntaxon",pg_result($result,0,"\"idSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'idSyntaxon'".";"),0,"description" ));		
@@ -451,7 +452,7 @@ $champs = '';
 					echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");
 					
 			/*écologie générale*/		
-			/*
+			
 			metaform_text_area ("Description écologie","",57,50,"","descriptionEcologie",pg_result($result,0,"\"descriptionEcologie\""), pg_fetch_result(pg_query ($db,$query_description."'descriptionEcologie'".";"),0,"description" ));
 			echo ("<table><tr><td width=33%>");
 			metaform_sel ("Début de période optimale","",30,$ref[$champ_ref['periodeDebObsOptimale']],"periodeDebObsOptimale",pg_result($result,0,"\"periodeDebObsOptimale\""), pg_fetch_result(pg_query ($db,$query_description."'periodeDebObsOptimale'".";"),0,"description" ));
