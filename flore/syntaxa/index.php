@@ -52,13 +52,7 @@ ref_colonne_et_valeur ($id_page);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.validate.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
-
-
-
-<script type="text/javascript" language="javascript" src="../../flore/syntaxa/js/commun.js"></script>
-<!-- <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/gestion.js"></script> 
- -->
-
+<script type="text/javascript" language="javascript" src="js/commun.js"></script>
 
 <script type="text/javascript" language="javascript" >
 $(document).ready(function(){
@@ -90,12 +84,8 @@ $(document).ready(function(){
 		}
 	}); 
 });
+
 </script> 
-
-
-
-
-<script type="text/javascript" language="javascript" src="js/commun.js"></script>
 
 <?php
 
@@ -421,14 +411,14 @@ $champs = '';
 		/*------------------------------------------------------------------------------ EDIT fieldset5*/
 
                 echo ("<fieldset><LEGEND>Chorologie</LEGEND>");	
-			
 			/*répartition territoire et générale*/		
 			
 /*			metaform_text_area ("Répartition générale","",57,50,"","repartitionGenerale",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
 			metaform_text_area ("Répartition territoire","",57,50,"","repartitionTerritoire",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
 			echo "<br>";
 			
-			/*chorologie départementale et autres territoires (table multivariée)*/	/*
+			/*chorologie départementale et autres territoires (table multivariée)*/	
+			/*
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
 			//metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"idTerritoire\""),pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
@@ -444,8 +434,9 @@ $champs = '';
 					metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'","","region_agricole_select","");
 			}
 
-*/			
+			
 			echo ("</fieldset>");
+			*/
 		/*------------------------------------------------------------------------------ EDIT fieldset6*/
 		
             
