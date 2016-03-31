@@ -42,6 +42,51 @@
             }
             return (false);
 		});
+		
+$( "#enregistrer1-syntaxon-add-button,#enregistrer2-syntaxon-add-button" )
+        .button({
+            text: true
+        })
+        .click(function() {
+            if ($("#form1").valid()) {
+                $("#form1").ajaxSubmit({
+                    url: 'submit.php',
+                    type: "post",
+                    clearForm: true,                                 
+
+                    // beforeSubmit:function(formData, jqForm, options){
+                        // var queryString = $.param(formData); 
+                        // alert ('submit: \n\n' + queryString); 
+                    // },
+
+                    error: function(){
+                        alert ("Erreur AJAX");
+                    },
+                    success: function(e) {
+		            $("#enregistrer-dialog").dialog({
+                        title: 'Enregistrement',
+                        modal: true,
+                        position:['middle',150],
+                		width: 400,
+                		height : 270,
+                    	resizable: false,
+			            buttons: {
+                    		"Nouvelle fiche": function() {
+                                $(this).dialog("close");
+								location.reload();
+							},
+                    		"Liste des syntaxons": function() {
+                                $(this).dialog("close");
+                                window.location.replace ('index.php');
+								// window.close()
+                    	   }
+                        }
+                    });
+                    }
+                });
+            }
+            return (false);
+		});
 
 	$( "#enregistrer1-edit-button,#enregistrer2-edit-button" )
         .button({
