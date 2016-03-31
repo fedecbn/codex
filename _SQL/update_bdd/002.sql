@@ -1,8 +1,10 @@
-﻿CREATE OR REPLACE FUNCTION update_bdd() RETURNS varchar AS $BODY$ BEGIN
+﻿CREATE OR REPLACE FUNCTION update_bdd() RETURNS varchar AS 
+$BODY$ BEGIN
 
 --- 1. Code permettant la mise à jour
--- ex : update...
--- ex : insert...
+ALTER TABLE applications.update_bdd ADD COLUMN descr varchar;
+
+
 
 --- 2. Pour le suivi des mises à jours
 INSERT INTO applications.update_bdd (id, commit, descr, date) VALUES (
@@ -15,4 +17,5 @@ INSERT INTO applications.update_bdd (id, commit, descr, date) VALUES (
 	--- Date (à ne pas modifier)
 	NOW());
 
-RETURN 'OK';END;$BODY$ LANGUAGE plpgsql;SELECT * FROM update_bdd();
+RETURN 'OK';END;$BODY$ LANGUAGE plpgsql;
+SELECT * FROM update_bdd();
