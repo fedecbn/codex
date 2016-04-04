@@ -97,6 +97,17 @@ $(function() {
   });
 });
 
+function concatenatenomcomplet () {
+  var nom = $("#nomSyntaxon");
+  var auteur = $("#auteurSyntaxon");
+  var pr = nom.val() + " " + auteur.val();
+  document.getElementById('nomCompletSyntaxon').value=pr;
+  return (true);
+};
+
+$("#nomSyntaxon").keyup (concatenatenomcomplet);
+$("#auteurSyntaxon").keyup (concatenatenomcomplet);
+
 
 
 /*
