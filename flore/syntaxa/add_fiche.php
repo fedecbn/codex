@@ -23,7 +23,24 @@ $(document).ready(function() {
     });
  
 });
+
 </script>
+
+<script type="text/javascript">
+	function concatenatenomcomplet () {
+		var nom = $("#nomSyntaxon");
+		var pr = nom.val();
+		nom.removeClass("error");
+        document.getElementById('nomCompletSyntaxon').value=pr;
+		return (true);
+	}
+	
+$("#nomCompletSyntaxon").keyup (concatenatenomcomplet);
+</script>
+
+
+
+
 
 <?php
 echo ("<div id=\"$id_page\" >");
@@ -49,6 +66,7 @@ echo ("<input type=\"hidden\" name=\"etape\" id=\"etape2\" value=\"2\">");
 	/*------------------------------------------------------------------------------ EDIT fieldset1*/
 echo ("<fieldset><LEGEND>CBN</LEGEND>");
 				echo ("<br>");
+				echo '<script>concatenatenomcomplet();</script>';
 				//metaform_bool_appared ("Importer un seul fichier ",null,$onchange,null,"lonely_file","f");
 				metaform_sel ("CBN (auteur principal)*","",30,$ref['liste_cbn'],"idTerritoire","", pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
 				metaform_sel ("Présence sur le territoire d'agrément du CBN","",30,$ref[$champ_ref["statutChorologie"]],"statutChorologie","", pg_fetch_result(pg_query ($db,$query_description."'statutChorologie'".";"),0,"description" ));
@@ -61,7 +79,9 @@ echo ("<fieldset><LEGEND>Syntaxonomie</LEGEND>");
 				metaform_text ("Identifiant du syntaxon"," ",30,"width:30em;","idSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'idSyntaxon'".";"),0,"description" ));		
 				metaform_text ("Nom scientifique","",30,"width:30em;","nomSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxon'".";"),0,"description" ));
 				metaform_text ("Auteur","",30,"width:30em;","auteurSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'auteurSyntaxon'".";"),0,"description" ));
-//				metaform_text ("Nom complet du syntaxon"," ",30,"width:30em;","nomCompletSyntaxon",pg_result($result,0,"\"nomCompletSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
+				metaform_text ("Nom complet","",30,"width:30em;","nomCompletSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
+
+				//				metaform_text ("Nom complet du syntaxon"," ",30,"width:30em;","nomCompletSyntaxon",pg_result($result,0,"\"nomCompletSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
 				metaform_sel ("Rang syntaxon","","",$ref[$champ_ref["rangSyntaxon"]],"rangSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'rangSyntaxon'".";"),0,"description" ));
 echo ("</fieldset>");
 

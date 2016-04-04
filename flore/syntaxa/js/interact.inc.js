@@ -65,6 +65,18 @@ $(function() {
 */
 
 
+/*
+function concatenatenomcomplet () {
+		var nom = $("#nomSyntaxon");
+		var pr = nom.val();
+		nom.removeClass("error");
+        document.getElementById('nomCompletSyntaxon').value=pr;
+		return (true);
+	};
+	
+$("#nomCompletSyntaxon").keyup (concatenatenomcomplet);
+
+*/
 
 $(function() {
   var scntDiv = $('#p_scents');
