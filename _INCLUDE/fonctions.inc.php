@@ -1596,4 +1596,28 @@ function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 			echo ("</div>");
 			}
 
+function acces($id_rubrique,$typ_droit,$objet,$droit_user) {
+$db=sql_connect(SQL_base);
+$query= "SELECT role FROM applications.droit WHERE typ_droit = '$typ_droit' AND rubrique = '$id_rubrique' AND objet = '$objet';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$role_necessaire[] = $row[role];
+
+return $role_necessaire;
+// if (array_search($role_necessaire,$droit_user) == false)
+	// return false;
+// else
+	// return true;
+}
+
+function recup_droit($id_user) {
+$db=sql_connect(SQL_base);
+$query= "SELECT * FROM applications.utilisateur_role WHERE id_user = '$id_user';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	foreach ($row as $key => $val)
+		if ($val == 't') $droit[$row['rubrique']][] =  $key;
+
+return $droit;
+}
 ?>
