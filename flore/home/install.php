@@ -36,7 +36,7 @@ $(document).ready(function(){
 			host: { required: "",	minlength: ""},
 			port: { required: "",	minlength: ""},
 			user: { required: "",	minlength: ""},
-			mdp: { required: "",	minlength: ""}
+			mdp:  { required: "",	minlength: ""}
 		}
 	}); 
 	
@@ -279,6 +279,9 @@ case "install-set":	{
 			$sql_file = str_replace("postgres",$_POST["user"],$sql_file);
 			$sql_file = str_replace("test",$_POST["mdp"],$sql_file);
 			$sql_file = str_replace("codex",$_POST["dbname"],$sql_file);
+			
+			/*Ajout à erme de la mise à jour des séquences lors de l'import de données avec UID*/
+			/*SELECT setval('refnat.taxons_uid_seq', COALESCE((SELECT MAX(uid)+1 FROM refnat.taxons), 1), false);*/
 			file_put_contents("../../_INCLUDE/config_sql.inc.php",$sql_file);
 			}
 	

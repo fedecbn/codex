@@ -17,8 +17,6 @@ include ("commun.inc.php");
 define ("DEBUG",TRUE);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 
-var_dump($_SESSION);
-
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);

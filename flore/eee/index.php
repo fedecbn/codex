@@ -115,7 +115,7 @@ switch ($mode) {
 			aff_table_reborn ("onglet1",$onglet["id"][1]);	
 			// aff_table_new ("droit",false,true);			
         echo ("</div>");
-//------------------------------------------------------------------------------ #troisien onglet (DROIT)
+//------------------------------------------------------------------------------ #troisieme onglet (DROIT)
         echo ("<div id=\"".$onglet["id"][2]."\" >");
             echo ("<div id=\"titre2\">".$onglet["sstitre"][2]."</div>");
             echo ("<div style=\"float:right;\">");

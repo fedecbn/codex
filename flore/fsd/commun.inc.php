@@ -66,7 +66,7 @@ $query_discussion = "
 	FROM fsd.discussion a JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn 
 	WHERE uid = ";
 
-	//------------------------------------------------------------------------------ VOCABULAIRE du module
+//------------------------------------------------------------------------------ VOCABULAIRE du module
 // $lang['fr']['fsd']="Dictionnaire de données";
 // $lang['it']['fsd']="";
 
