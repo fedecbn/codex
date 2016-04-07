@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 //------------------------------------------------------------------------------//
 //   home/commun.inc.php                                                        //
 //                                                                              //
@@ -15,8 +15,6 @@ $db=sql_connect (SQL_base);
 define ("DEBUG",false);
 $id_user=$_SESSION['id_user'];	
 
-
-
 $query_rub = "
 	SELECT id_module
 	FROM applications.rubrique
@@ -28,9 +26,10 @@ $query_list="SELECT * FROM applications.rubrique
 	WHERE typ = 'list'
 	AND id_module <> 'syntaxa'
 	ORDER BY pos;";
-		
-$_SESSION["droit_user"] = $droit_user = recup_droit($id_user);
-//var_dump($_SESSION["droit_user"]);
+
+/*Récupération des droits utilisateurs*/	
+$_SESSION["droit_user"] = recup_droit($id_user);
+
 
 //------------------------------------------------------------------------------ PATHS du module
 $result=pg_query ($db,$query_rub) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);

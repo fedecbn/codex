@@ -23,7 +23,6 @@ if (!isset ($_COOKIE["lang_select"])) {                                         
 } 
 else
     $lang_select=$_COOKIE['lang_select'];
- 
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -62,7 +61,7 @@ switch ($action)
 		if (DEBUG) echo ("<br>Cookie = ".$lang_select." ");
 		
 		/*Affichage du header*/
-		if ($_SESSION['EVAL_FLORE'] == "ok" AND acces($id_page,'d1','index',$droit_user[$id_page]) == true)
+		if ($_SESSION['EVAL_FLORE'] == "ok")
 			aff_pres ("home","home_header",FR,false);
 		else {
 			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
@@ -75,11 +74,12 @@ switch ($action)
 		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) {
 			echo ("<div lang=\"fr\" id=\"rubriques\"><center><ul>");
-			if ($_SESSION['EVAL_FLORE'] == "ok" AND acces($row["id_module"],'d1','index',$droit_user[$row["id_module"]]) == true) {
+			$droit_rubrique = acces($row["id_module"],'d1','index',$_SESSION["droit_user"][$row["id_module"]]);
+			if ($_SESSION['EVAL_FLORE'] == "ok" AND $droit_rubrique) {
 				aff_pres ($row["id_module"],"header",FR,false);
 				echo ("<li><div class=\"icon\"><a href=\"".$row['link']."\"><img src=\"../../_GRAPH/".ICONES_SET."/".$row['icone']."\" align=left width=\"48\" height=\"48\" border=\"0\" /></a></div>");
 				echo ("<a href=\"".$row["link"]."\"><strong>".$row["titre"]."</strong>".$row["descr"]."</a></li>");
-				echo ("Droits d'accès à cette rubrique : <b> ".implode($droit_user[$row["id_module"]],',')." </b>");
+				echo ("Droits d'accès à cette rubrique : <b> ".implode($_SESSION["droit_user"][$row["id_module"]],',')." </b>");
 			   aff_pres ($row["id_module"],"footer",FR,false);
 			}
 			echo ("</ul></div>");
@@ -123,10 +123,12 @@ switch ($action)
             echo ("<br><center>");
 //            echo ("<img src=\"../../_GRAPH/theme/home3.png\" width=20 height=600 border=\"0\" align=left >");
 
-			if ($_SESSION['EVAL_FLORE'] == "ok" AND acces("module_admin","d1","index",$droit_user["module_admin"]) == true)  {
+			$droit_module_admin = acces("module_admin","d1","index",$_SESSION["droit_user"]["module_admin"]);
+			if ($_SESSION['EVAL_FLORE'] == "ok" AND $droit_module_admin)  {
                 echo ("<br><a href=\"../module_admin/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/admin.png\" border=\"0\" /><br>".$lang['fr']['Admin']."</a></p>");
             }
-            if ($_SESSION['EVAL_FLORE'] == "ok" AND acces("bugs","d1","index",$droit_user["bugs"]) == true)  {
+			$droit_bugs = acces("bugs","d1","index",$_SESSION["droit_user"]["bugs"]);
+            if ($_SESSION['EVAL_FLORE'] == "ok" AND $droit_bugs)  {
                 echo ("<br><a href=\"../bugs/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/bugs.png\" border=\"0\" /><br>".$lang['fr']['bugs']."</a></p>");
 				echo ("<br>");
 			}
