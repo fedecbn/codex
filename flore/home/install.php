@@ -4,6 +4,7 @@
 //                                                                              //
 //  Version 1.00  13/07/12 - OlGa (CBNMED)                                      //
 //------------------------------------------------------------------------------//
+session_start ();
 require_once ("../../_INCLUDE/fonctions.inc.php");
 ?>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
@@ -116,18 +117,29 @@ case "install-param":	{
 		require_once ("../../_INCLUDE/config_sql.inc.php");		
 		$host = SQL_server;$port = SQL_port;$user = SQL_user;$mdp = SQL_pass;$dbname = SQL_base;
 		$db = connexion ($host,$port,$user,$mdp,$dbname);	
-	
-		foreach ($rub as $key => $val)
-			{
-			$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
-			$schema = pg_query($db,$query);
-			$row = pg_fetch_row($schema);
-			
-			if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
-			elseif (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == TRUE) 	
-										{$rub_ok[$key] = 'f';$desc[$key] = "";}
-			else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
-			}
+
+		// var_dump($_SESSION["droit_user"]);
+		/*D1 : Droit accès à la page*/
+		$base_file = substr(basename(__FILE__),0,-4);
+		$id_page = "home";
+		$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+		if ($droit_page) {
+
+		
+			foreach ($rub as $key => $val)
+				{
+				$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
+				$schema = pg_query($db,$query);
+				$row = pg_fetch_row($schema);
+				
+				if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
+				elseif (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == TRUE) 	
+											{$rub_ok[$key] = 'f';$desc[$key] = "";}
+				else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
+				}
+		//------------------------------------------------------------------------------ SI PAS ACCES 
+			} else require ("../commun/access_denied.php"); 
+
 		}
 	else
 		{
