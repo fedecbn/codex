@@ -9,14 +9,14 @@
 --------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------ INITIALISATION*/ 
 require_once ("../commun/commun.inc.php");
-$id_page = $_SESSION['page'] = "catnat";
+$id_page = $_SESSION['page'] = "fsd";
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);
 $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ CONSTANTES du module
-$id_page = $_SESSION['page'] = "fsd";
+
 $name_page = "Format standard de données";	/*utilisé?*/
 $title = $lang['fr']['titre_web']." - ".$id_page;
 $titre = "Format Standard"; /*utilisé?*/
