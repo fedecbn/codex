@@ -7,7 +7,8 @@
  Interface avec la base de données (modification et ajout)         
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------ INITIALISATION*/ session_start();
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
+session_start();
 include ("commun.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);
