@@ -9,16 +9,16 @@
 
 //------------------------------------------------------------------------------ INIT.
 session_start();
-$_SESSION = array();
-session_destroy();
+// $_SESSION = array();
+// session_destroy();
 
 //------------------------------------------------------------------------------ MAIN
 echo ("<body>");
 
 echo ("<center><br><br><br><br>");
 echo ("<a href=\"../index.php\"><img src=\"../../_GRAPH/acces_denied.jpg\" border=\"0\" /></a><br><br>");
-echo ("<font color=\"#FF0000\" size=\"3\"><b> Après un délai d'inactivité, votre session a expiré.</b></font><br /><br /><br />");
-echo ("<a href=\"../home/index.php\">Cliquez ici pour vous ré-identifier.</a></center>");
+echo ("<font color=\"#FF0000\" size=\"3\"><b> Désolé, vous n'avez pas les droits suffisants pour accéder à cette page</b></font><br /><br /><br />");
+echo ("<a href=\"../home/index.php\"> Retour au menu </a></center>");
 
 echo ("</body></html>");
 die ();
