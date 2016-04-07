@@ -1,23 +1,19 @@
 <?php
-//------------------------------------------------------------------------------//
-//  module_gestion/eee-liste.php                                                 //
-//                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  12/08/14 - MaJ liste                                          //
-//  Version 1.02  21/08/14 - MaJ droits                                         //
-//  Version 1.03  22/08/14 - MaJ liste                                          //
-//  Version 1.04  31/08/14 - MaJ liste (Aj champs)                              //
-//  Version 1.05  08/09/14 - MaJ liste                                          //
-//  Version 1.06  23/09/14 - MaJ sOrder                                         //
-//  Version 1.07  24/09/14 - MaJ columnFilter                                   //
-//------------------------------------------------------------------------------//
-
-//------------------------------------------------------------------------------ INIT.
+/*------------------------------------------------------------------
+--------------------------------------------------------------------
+ Application Codex		                               			  
+ https://github.com/fedecbn/codex					   			  
+--------------------------------------------------------------------
+ source de données pour DataTable         
+--------------------------------------------------------------------
+--------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
 session_start();
 include_once ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
 
@@ -88,5 +84,15 @@ $iTotal = $aResultTotal;
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';
 echo $sOutput;
+	//------------------------------------------------------------------------------ SI PAS ACCES 
+	} else {
+	$sOutput = '{';
+	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
+	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
+	$sOutput .= '"aaData": [ ';
+	$sOutput .= '] }';
+	echo $sOutput;
+	}
 
 ?>

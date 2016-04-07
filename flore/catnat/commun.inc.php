@@ -303,7 +303,6 @@ $langliste['fr']['catnat-popup'][]="Rareté";
 $langliste['fr']['catnat'][]="Endemisme";
 $langliste['fr']['catnat-popup'][]="Endemisme";
 
-//------------------------------------------------------------------------------ FONCTIONS du module
 //------------------------------------------------------------------------------ SI PAS ACCES 
 } else require ("../commun/access_denied.php"); 
 ?>
