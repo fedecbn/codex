@@ -9,22 +9,17 @@
 --------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------ INITIALISATION*/ 
 require_once ("../commun/commun.inc.php");
-$id_page = $_SESSION['page'] = "catnat";
+require_once ("desc.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);
 $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
-$name_page = "Catalogue National";
-$id_page_2 = "droit";
-$title = $lang['fr']['titre_web']." - ".$id_page;
-$titre = "Catalogue National";
-
-
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];
 $config=$_SESSION['id_config'];
+$title = $lang['fr']['titre_web']." - ".$id_page;
 
 $lang_select=$_COOKIE['lang_select'];
 

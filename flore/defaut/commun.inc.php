@@ -7,11 +7,10 @@
                                                       
 //------------------------------------------------------------------------------ CONFIG du module
 require_once ("../commun/commun.inc.php");
+require_once ("desc.inc.php");
+
 
 //------------------------------------------------------------------------------ CONSTANTES du module
-$id_page = $_SESSION['page'] = "defaut";
-$id_page_2 = "defaut_2";
-$name_page = "Rubrique Test";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];

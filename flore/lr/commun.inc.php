@@ -9,21 +9,16 @@
 --------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------ INITIALISATION*/ 
 require_once ("../commun/commun.inc.php");
-$id_page = $_SESSION['page'] = "lr";
+require_once ("desc.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);
 $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ CONSTANTES du module
-$id_page = $_SESSION['page'] = "lr";
-$id_page_2 = "droit";
-$name_page = "Liste rouge";
-$titre = "Liste rouge";
 $id_rub = "lr";
 $rub[$id_rub] = 'true';
 $title = $lang['fr']['titre_web']." - ".$id_page;
-
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];

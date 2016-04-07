@@ -7,11 +7,9 @@
                                                       
 //------------------------------------------------------------------------------ CONFIG du module
 require_once ("../commun/commun.inc.php");
+require_once ("desc.inc.php");
 
 //------------------------------------------------------------------------------ CONSTANTES du module
-$id_page = $_SESSION['page'] = "syntaxa";
-$id_page_2 = "droit";
-$name_page = "Catalogues des végétations";
 
 $niveau=$_SESSION['niveau_'.$id_page];
 $id_user=$_SESSION['id_user'];

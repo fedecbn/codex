@@ -85,7 +85,7 @@ foreach ($less as $element)
 foreach ($dir  as $key => $val)
 	{
 	/*Récupération des noms des pages*/
-	include ("../$val/commun.inc.php");
+	include ("../$val/desc.inc.php");
 	$rub[$val] = $name_page;
 	/*pour la création du compte admin*/
 	$nvx[$val] = "niveau_".$val;
