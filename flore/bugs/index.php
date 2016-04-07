@@ -14,7 +14,6 @@
 //------------------------------------------------------------------------------ INIT.
 session_start();
 include("commun.inc.php");
-if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 
 //------------------------------------------------------------------------------ VAR.
 $niveau=$_SESSION['niveau'];

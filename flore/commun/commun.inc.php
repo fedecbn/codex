@@ -24,5 +24,6 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ FONCTIONS du module
-
+$not_home = substr($_SERVER["PHP_SELF"],strlen($_SERVER["PHP_SELF"])-15) == '/home/index.php' ? false : true;
+if ($_SESSION['EVAL_FLORE'] != "ok" AND $not_home) require ("../commun/access_expired.php");
 ?>

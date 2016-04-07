@@ -14,11 +14,7 @@
 //------------------------------------------------------------------------------//
 // ------------------------------------------------------------------------------ INIT.
 session_start ();
-// var_dump($_SESSION);
-// var_dump($_COOKIE);
-// echo $_COOKIE['SpryMedia_DataTables_data-liste_'];
 include ("commun.inc.php");
-if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
 
 
 //------------------------------------------------------------------------------ VAR.
