@@ -19,6 +19,10 @@ if ($droit_page) {
 $onglet = $_GET['onglet'];
 
 //------------------------------------------------------------------------------ PARMS.
+/*Droit sur les boutons de la dernière colonne*/
+$typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
+$view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
+$edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -76,13 +80,29 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-        if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
-        elseif ($onglet == 'eee_reg')
-			$sOutput .= '"<a class=eee_reg id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",';     
-        else        
-            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
+		if ($onglet == 'eee') {
+			/*boutons*/
+			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid']).'",'; 
+			elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; 
+			else 			$sOutput .= '"",';
+			/*checkbox*/
+			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
+			}
+		elseif ($onglet == 'eee_reg') {
+			/*boutons*/
+			if ($view) 		$sOutput .= '"'.bt_edit($row['uid'],$onglet).'",'; 
+			else 			$sOutput .= '"",';
+			/*checkbox*/
+			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
+			}
+ 
+		// if ($niveau == 1)                                                       // Lecteur
+            // $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
+        // elseif ($onglet == 'eee_reg')
+			// $sOutput .= '"<a class=eee_reg id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",';     
+        // else        
+            // $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
+		// $sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
     	$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );

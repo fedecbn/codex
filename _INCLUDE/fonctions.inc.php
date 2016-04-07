@@ -1596,9 +1596,9 @@ function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 			echo ("</div>");
 			}
 
-function acces($id_rubrique,$typ_droit,$objet,$droit_user) {
+function acces($rubrique,$typ_droit,$objet,$droit_user) {
 $db=sql_connect(SQL_base);
-$query= "SELECT role FROM applications.droit WHERE typ_droit = '$typ_droit' AND rubrique = '$id_rubrique' AND objet = '$objet';";
+$query= "SELECT role FROM applications.droit WHERE typ_droit = '$typ_droit' AND rubrique = '$rubrique' AND objet = '$objet';";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 while ($row = pg_fetch_assoc($result))
 	$role_necessaire = $row["role"];
@@ -1628,4 +1628,19 @@ while ($row = pg_fetch_assoc($result))
 return $droit;
 }
 
+function affichage($typ_droit,$rubrique,$onglet,$objet,$droit_user) {
+$db=sql_connect(SQL_base);
+$query= "SELECT role FROM applications.droit WHERE typ_droit = '$typ_droit' AND rubrique = '$rubrique' AND onglet = '$onglet' AND objet = '$objet';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$role_necessaire = $row["role"];
+
+if (array_search($role_necessaire,$droit_user) === false)
+	return false;
+else
+	return true;
+}
+
+function bt_view($id,$class = 'view') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>';}
+function bt_edit($id,$class = 'edit') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>';}
 ?>
