@@ -1,19 +1,22 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr" >
 <?php
-//------------------------------------------------------------------------------//
-//  bugs/index.php                                                              //
-//                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  13/08/14 - MaJ schémas                                        //
-//------------------------------------------------------------------------------//
-
-//------------------------------------------------------------------------------ INIT.
-session_start();
-include("commun.inc.php");
+/*------------------------------------------------------------------ 
+-------------------------------------------------------------------- 
+ Application Codex                                            
+ https://github.com/fedecbn/codex                      
+-------------------------------------------------------------------- 
+ Page principale          
+-------------------------------------------------------------------- 
+--------------------------------------------------------------------*/ 
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
+session_start ();
+include ("commun.inc.php");
+/*Droit page*/ 
+$base_file = substr(basename(__FILE__),0,-4); 
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]); 
+ 
+if ($droit_page) { 
 
 //------------------------------------------------------------------------------ VAR.
 $niveau=$_SESSION['niveau'];
@@ -136,6 +139,7 @@ echo ("<br /></div>");
 echo ("<div></body></html>");
 pg_close ($db);
 
-//------------------------------------------------------------------------------ FONCTIONS
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 
 ?>
