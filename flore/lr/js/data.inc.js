@@ -191,59 +191,11 @@
             }
         }, 
        "aaSorting": [[2,'asc']],                                               // Nom scientifique 
-        "sDom": '<"top"l>rt<"bottom"ip>',
-            "aoColumns": [
-                { "sWidth": "5%" },                                                           // Etape
-                { "sWidth": "9%" },                                                           // famille
-            	{ "sWidth": "4%" },                                           // CD_REF
-            	{ "sWidth": "15%", "sClass": "nom_taxon" },                     // Nom scientifique 
-                { "sWidth": "5%" },                                                           // Rang
-                { "sWidth": "4%" },                                                       
-                { "sWidth": "2%" },                                                            
-                { "sWidth": "3%" },                                                           // AOO4
-                { "sWidth": "3%" },                                                           // AOO precis+plage
-                { "sWidth": "3%" },                                                           // Nb loc.
-                { "sWidth": "3%" },                                                           // Nb mailles
-        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_A
-        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_B
-        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_C
-        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_D
-        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_fin
-                { "sWidth": "4%" },
-        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_EU
-        		{ "sClass": "uicn","sWidth": "2%" },                          // cat_synt_reg
-        		{ "sWidth": "2%" },                         									// nb_reg_eval
-        		{ "sWidth": "2%" },                         									// notes
-    			{ "sClass": "valid", "sWidth": "5%"  },                                           // UID
-    			{ "sClass": "center","sWidth": "3%","bSortable": false },     // Actions
-        		{ "sClass": "center","sWidth": "3%","bSortable": false }      // Sélect.
-        ]
+       "sDom": '<"top"l>rt<"bottom"ip>',
+      "aoColumns":  descColumns
         }).columnFilter({
             sPlaceHolder: "head:after",
-            aoColumns: [ 
-                { type: "select", values: [{ value: '1', label: 'pré-eval'},{ value: '2', label: 'éval'},{ value: '3', label: 'post-éval'}]},
-                { type: "text" },                                               // Famille
-                { type: "text" },                                               // CD_REF
-                { type: "text" },                                               // Nom scientifique 
-                { type: "select", values: [{ value: 1, label:'ES'},{ value: 2, label: 'SSES'},{ value: 3, label: 'VAR'},{ value: 4, label: 'SVAR'},{ value: 5, label: 'FO'},{ value: 6, label: 'SSFO'}]}, // Rang
-                { type: "select", values: [{ value: 1, label: 'Indigène'},{ value: 2, label: 'Cryptogène'},{ value: 3, label: 'Exotique'}] },                                               //  
-                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non'}] },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                               //  
-                { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                { type: "text" },                                               //  
-                { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                { type: "select", values: [{ value: 'not_zero', label: 'évalué'},{ value: '0', label: 'non évalué'},{ value: '1', label: 'RE'},{ value: '2', label: 'CR*'},{ value: '3', label: 'CR'},{ value: '4', label: 'EN'},{ value: '5', label: 'VU'},{ value: '6', label: 'NT'},{ value: '7', label: 'LC'},{ value: '8', label: 'DD'},{ value: '9', label: 'NE'},{value: '10', label: 'NA'}]},
-                { type: "text" },
-                { type: "text" },
-                { type: "select", values: [{ value: 1, label: 'à réaliser'},{ value: 2, label: 'en cours'},{ value: 3, label: 'réalisée'}]}                                               //  
-			]
+            aoColumns: filterColumns
 		});        
 	oTable.fnSort( [ [0,'desc'] ] );		
 

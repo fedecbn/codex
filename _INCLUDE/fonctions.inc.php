@@ -305,7 +305,10 @@ function ref_colonne_et_valeur ($rubrique)	{
 		// var_dump($champ_ref);
 	
 //------------------------------------------------------------------------------ Récupération des champs de synthèse
-	$query = "SELECT * FROM referentiels.champs WHERE rubrique_champ = '$rubrique' AND pos IS NOT NULL ORDER by pos ";
+	$query = "SELECT * FROM referentiels.champs 
+	WHERE rubrique_champ = '$rubrique' AND pos IS NOT NULL 
+	AND nom_champ <> 'bouton' AND nom_champ <> 'checkbox'
+	ORDER by pos ";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 	while ($row = pg_fetch_assoc ($result)) {
@@ -316,7 +319,10 @@ function ref_colonne_et_valeur ($rubrique)	{
 	pg_free_result ($result);
 
 //------------------------------------------------------------------------------ Récupération des champs d'export
-	$query = "SELECT * FROM referentiels.champs WHERE rubrique_champ = '$rubrique' ORDER by pos";
+	$query = "SELECT * FROM referentiels.champs 
+	WHERE rubrique_champ = '$rubrique' 
+	AND nom_champ <> 'bouton' AND nom_champ <> 'checkbox'
+	ORDER by pos";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 	while ($row = pg_fetch_assoc ($result)) {
@@ -1595,6 +1601,45 @@ function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 				}
 			echo ("</div>");
 			}
+
+function ref_onglet($id_page) {
+$db=sql_connect(SQL_base);
+$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+While ($row = pg_fetch_assoc($result)) {
+	$onglet['id'][] = $row['onglet'];
+	$onglet['nom'][] = $row['nom'];
+	$onglet['ss_titre'][] = $row['ss_titre'];
+	}
+return $onglet;	
+}
+
+function descColumns($id_page) {
+$db=sql_connect(SQL_base);
+$query= "SELECT jvs_desc_column FROM referentiels.champs 
+	WHERE rubrique_champ = '$id_page' AND pos IS NOT NULL 
+	ORDER BY pos;";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$out[] = $row["jvs_desc_column"];
+	
+$descColumns = '['.implode($out,',').']';
+return $descColumns;
+}
+
+function filterColumns($id_page) {
+$db=sql_connect(SQL_base);
+$query= "SELECT jvs_filter_column FROM referentiels.champs 
+	WHERE rubrique_champ = '$id_page' AND pos IS NOT NULL 
+	AND nom_champ <> 'bouton' AND nom_champ <> 'checkbox'
+	ORDER BY pos;";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$out[] = $row["jvs_filter_column"];
+	
+$descColumns = '['.implode($out,',').']';
+return $descColumns;
+}
 
 function acces($rubrique,$typ_droit,$objet,$droit_user) {
 $db=sql_connect(SQL_base);
