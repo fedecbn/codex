@@ -95,7 +95,7 @@ $iTotal = $aResultTotal;
 			}
         elseif ($onglet == 'meta' OR $onglet == 'data' OR $onglet == 'taxa') {
 			/*boutons*/
-			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid'],$onglet).'",'; 
+			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid'],'fsd').'",'; 
 			else 			$sOutput .= '"",';
 			/*checkbox*/
 			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';

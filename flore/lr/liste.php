@@ -78,8 +78,16 @@ $iTotal = $aResultTotal;
 				if ($edit) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
 			else if ($key == 'checkbox')
 				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >",';
-			else if ($key == 'bouton_valid')
-				if ($validate) 	$sOutput .= '"'.bt_validate($row['uid']).'",'; else $sOutput .= '"",';
+			else if ($key == 'validation')
+				$sOutput .= '"'.$row[$key].'<img id=\"validation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/validate.png\"  title=\"validé\" style=\"display:none\" /><img id=\"invalidation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/invalidate.png\"  title=\"validé\" style=\"display:none\" />",';
+			else if ($key == 'bouton_valid') {
+				if ($validate) 	{
+					if ($row['validation'] == null) $sOutput .= '"'.bt_validate($row['uid'],'valid').'",'; 
+					elseif ($row['validation'] == 'valid') $sOutput .= '"'.bt_validate($row['uid'],'invalid').'",'; 
+					elseif ($row['validation'] == 'invalid') $sOutput .= '"'.bt_validate($row['uid'],'revalid').'",'; 
+					}
+					else $sOutput .= '"",';
+				}
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/

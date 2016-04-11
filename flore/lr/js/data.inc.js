@@ -44,6 +44,12 @@
             return JSON.parse( localStorage.getItem('data_'+window.location.pathname) );
 			}, 
 		"fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+			switch (aData[1])                                                  // Cat EU
+            {	
+                case 'à réaliser' : $('td:eq(1)', nRow).addClass('avancement_1'); break;
+                case 'en cours' : $('td:eq(1)', nRow).addClass('avancement_2'); break;
+                case 'réalisée' : $('td:eq(1)', nRow).addClass('avancement_3'); break;
+            }
             switch (aData[3])                                                  // Cat A
             {
                 default : $('td:eq(3)', nRow).addClass('nom_taxon'); break;
@@ -148,7 +154,6 @@
                 case "EX" : $('td:eq(17)', nRow).addClass('UICN_EX'); break;
                 case "NA" : $('td:eq(17)', nRow).addClass('UICN_NA'); break;
                 case "NE" : $('td:eq(17)', nRow).addClass('UICN_NE'); break;
-                break;
             }
             switch (aData[18])                                                  // Cat EU
             {
@@ -164,13 +169,11 @@
                 case "EX" : $('td:eq(18)', nRow).addClass('UICN_EX'); break;
                 case "NA" : $('td:eq(18)', nRow).addClass('UICN_NA'); break;
                 case "NE" : $('td:eq(18)', nRow).addClass('UICN_NE'); break;
-                break;
             }
-			switch (aData[21])                                                  // Cat EU
+			switch (aData[21])                                               
             {	
-                case 'à réaliser' : $('td:eq(21)', nRow).addClass('avancement_1'); break;
-                case 'en cours' : $('td:eq(21)', nRow).addClass('avancement_2'); break;
-                case 'réalisée' : $('td:eq(21)', nRow).addClass('avancement_3'); break;
+                case "valid" : $('td:eq(21)', nRow).addClass('oui'); break;
+                case "invalid" : $('td:eq(21)', nRow).addClass('non'); break;
             }
             return nRow;
         },

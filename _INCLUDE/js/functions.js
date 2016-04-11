@@ -164,6 +164,10 @@ function fnGetSelected( oTableLocal )
         });
     }
 
+  //------------------------------------------------------------------------------ Validation
+    function validateFunc (uid,class_valid) {
+		$(this).load ("../commun/validate.php?uid="+uid+"&class_valid="+class_valid);
+    }
 
 /*<![CDATA[*/
 
@@ -260,5 +264,5 @@ Killeak : corrections pour compatibilite avec IE 6 et 7, Firefox 2 et Safari 2.
       liste.options[i].selected = true;
     }
   }
-//-->
-/*]]>*/
+
+  

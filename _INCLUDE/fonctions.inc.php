@@ -1703,5 +1703,24 @@ else
 
 function bt_view($id,$class = 'view') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>';}
 function bt_edit($id,$class = 'edit') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>';}
-function bt_validate($id) {return '<a class=\"valid\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/pouce_vert_3.png\" title=\"Valider\" ></a><a class=\"invalid\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/pouce_rouge_3.png\" title=\"Invalider\" ></a>';}
+
+function bt_validate($id,$action) {
+
+if ($action == 'valid') {
+	$class1 = 'valid'; $bt1 = 'validate';
+	$class2 = 'invalid'; $bt2 = 'invalidate';
+} elseif ($action == 'invalid') {
+	$class1 = '';$bt1 = 'no_validate';
+	$class2 = 'invalid_chg';$bt2 = 'invalidate';
+} elseif ($action == 'revalid') {
+	$class1 = 'valid_chg';$bt1 = 'validate';
+	$class2 = '';$bt2 = 'no_invalidate';
+} else {
+	$class1 = 'valid'; $bt1 = 'validate';
+	$class2 = 'invalid'; $bt2 = 'invalidate';
+}
+
+return '<a class=\"'.$class1.'\" id=\"'.$id.'\" ><img id=\"valid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt1.'.png\" title=\"Valider\" ></a><a class=\"'.$class2.'\" id=\"'.$id.'\" ><img id=\"invalid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt2.'.png\" title=\"Invalider\" ></a>';
+}
+
 ?>

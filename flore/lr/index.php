@@ -389,7 +389,15 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
     }
     break;
 
+/*------------------------------------------------------------------------------ #CAS VALIDATION */
+case "validate" : {
+include ("../commun/add_fiche.php");
+
 }
+    break;
+
+	
+	}
 
 //------------------------------------------------------------------------------
 echo ("</div>");                                                                // tabs
