@@ -637,18 +637,18 @@ function aff_table_next ($id_onglet,$id_liste) {
     echo ("<br>");
 }*/
 
-function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='')
+function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$placeholder='')
 {
 	
 	if (strpos($descr,"no_lab") === false)
-		if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\" id=\"label_".$champ."\">".$label."</label>");
-		elseif (strpos($descr,"not_display") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\" style=\"$style\">".$label."</label>");
-		else echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\">".$label."</label>");
+		if (strpos($descr,"bloque") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField_calc\" id=\"label_".$champ."\"  placeholder=\"$placeholder\" >".$label."</label>");
+		elseif (strpos($descr,"not_display") !== false) echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\" placeholder=\"$placeholder\" style=\"$style\">".$label."</label>");
+		else echo ("<label title=\"".$tooltip."\" class=\"preField\" id=\"label_".$champ."\"  placeholder=\"$placeholder\" >".$label."</label>");
 
 	if (!isset($extra)) $extra = "";		
 	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
 	if (strpos($descr,"bloque") !== false) {$extra .= " disabled class=\"bloque\"";}
-	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"  size=\"".$long."\" value=\"".$val."\" $extra style=\"$style\"/>");
+	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"   placeholder=\"$placeholder\" size=\"".$long."\" value=\"".$val."\" $extra style=\"$style\"/>");
     echo ("<br>");
 }
 

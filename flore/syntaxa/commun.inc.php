@@ -109,6 +109,7 @@ $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon retenu";
 $langliste['fr']['syntaxa'][]="Identifiant syntaxon supérieur";
 $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supérieur dans le catalogue d'origine";
 
+
 //------------------------------------------------------------------------------ FONCTIONS du module
 
 ?>

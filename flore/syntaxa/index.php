@@ -53,6 +53,7 @@ ref_colonne_et_valeur ($id_page);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 <script type="text/javascript" language="javascript" src="js/commun.js"></script>
 
+<!-- Utilise le jquery validation plugin --> 
 <script type="text/javascript" language="javascript" >
 $(document).ready(function(){
 	$("#form1").validate({
@@ -65,6 +66,17 @@ $(document).ready(function(){
 				required: true,
                 minlength: 2
 			},
+			idCatalogue2: {
+				required: true,
+                minlength: 2
+			},
+			libelleCatalogue2: {
+				required: true,
+                minlength: 2
+			},
+			idTerritoireObligatoire: {
+				required: true
+			},
 			
 /*			niveau_fsd: {
 				required: true,
@@ -75,6 +87,9 @@ $(document).ready(function(){
 		messages: {
 			nomSyntaxon: { required: "Le nom du syntaxon est obligatoire",	minlength: ""},
 			auteurSyntaxon: { required: "L'auteur du syntaxon est obligatoire",	minlength: "La longueur minimale est de 2"},
+			idCatalogue2: { required: "L'identifiant du catalogue est obligatoire",	minlength: "La longueur minimale est de 2"},
+			libelleCatalogue2: { required: "Le libellé du catalogue est obligatoire",	minlength: "La longueur minimale est de 2"},
+			idTerritoireObligatoire: { required: "Le choix d'un CBN d'appartenance est obligatoire"},
 /*			niveau: {
 				required: "",
                 digits: "Valeur numérique"
