@@ -23,6 +23,7 @@ $onglet = 'eval';
 $typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
 $view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
 $edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
+$validate=affichage($typ_droit,$rubrique,$onglet,"validate_fiche",$droit_user);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -72,6 +73,12 @@ $iTotal = $aResultTotal;
 				if ($row['nbm5_post1990_est'] != '') {$sOutput .= '"'.$row['nbm5_post1990_est'].'",';} else {$sOutput .= '"'.$row['nbm5_post1990'].'",';}
 			else if ($key == 'notes')
 				if ($row['notes'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['notes'],"undo_hmtl").'\" ></a>",';} else {$sOutput .= '"",';}
+			else if ($key == 'bouton')
+				if ($edit) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
+			else if ($key == 'checkbox')
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >",';
+			else if ($key == 'bouton_valid')
+				if (!$validate) 	$sOutput .= '"'.bt_validate($row['uid']).'",'; else $sOutput .= '"",';
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
@@ -88,15 +95,8 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-		if ($onglet == 'eval') {
-			/*boutons*/
-			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid']).'",'; 
-			elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; 
-			else 			$sOutput .= '"",';
-			/*checkbox*/
-			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
-			}
-    	$sOutput .= "],";
+		$sOutput = trim($sOutput,',');
+		$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';

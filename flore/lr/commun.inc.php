@@ -39,27 +39,13 @@ $query_module = "
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.$id_rub = TRUE AND t.uid=";
 
-// CASE taxons.endemisme WHEN true THEN 'oui' WHEN false THEN 'non' ELSE '' END as endemisme,
-// $query_liste = "
-	// SELECT count(*) OVER() AS total_count,
-	// taxons.uid,taxons.famille,taxons.cd_ref,taxons.nom_sci,taxons.id_rang,taxons.id_indi,
-	// taxons.endemisme,
-	// chorologie.aoo4,chorologie.aoo_precis,chorologie.id_aoo,chorologie.nbloc_precis,chorologie.id_nbloc,chorologie.nbm5_post1990_est,chorologie.nbm5_post1990,chorologie.nbm5_post2000,chorologie.nbm5_total,chorologie.nbcommune,
-	// evaluation.etape,evaluation.cat_a,evaluation.just_a,evaluation.cat_b,evaluation.just_b,evaluation.cat_c,evaluation.just_c,evaluation.cat_d,evaluation.just_d,evaluation.menace,evaluation.cat_fin,evaluation.just_fin,evaluation.cat_euro , evaluation.cat_synt_reg,evaluation.nb_reg_presence,evaluation.nb_reg_evalue,evaluation.notes,
-	// evaluation.avancement
-	// FROM lr.taxons
-	// LEFT JOIN lr.chorologie ON chorologie.uid=taxons.uid 
-	// LEFT JOIN lr.evaluation ON evaluation.uid=taxons.uid  
-	// LEFT JOIN referentiels.indigenat ON indigenat.id_indi = taxons.id_indi
-	// JOIN refnat.taxons a ON a.uid = taxons.uid 
-	// WHERE a.$id_rub = TRUE ";
-
 $query_liste = "
 	SELECT count(*) OVER() AS total_count,
-	taxons.*,chorologie.*,evaluation.*
+	taxons.*,chorologie.*,evaluation.*, validation.*
 	FROM lr.taxons
 	LEFT JOIN lr.chorologie ON chorologie.uid=taxons.uid 
 	LEFT JOIN lr.evaluation ON evaluation.uid=taxons.uid  
+	LEFT JOIN lr.validation ON validation.uid=taxons.uid  
 	JOIN refnat.taxons a ON a.uid = taxons.uid 
 	WHERE a.$id_rub = TRUE ";
 
@@ -114,7 +100,6 @@ foreach ($onglet["id"] as $val)
 	{
 	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs 
 	WHERE rubrique_champ = '$val' AND pos IS NOT NULL 
-	AND nom_champ <> 'bouton' AND nom_champ <> 'checkbox'
 	ORDER BY pos";
 	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 

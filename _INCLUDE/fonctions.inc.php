@@ -307,7 +307,7 @@ function ref_colonne_et_valeur ($rubrique)	{
 //------------------------------------------------------------------------------ Récupération des champs de synthèse
 	$query = "SELECT * FROM referentiels.champs 
 	WHERE rubrique_champ = '$rubrique' AND pos IS NOT NULL 
-	AND nom_champ <> 'bouton' AND nom_champ <> 'checkbox'
+	
 	ORDER by pos ";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
@@ -605,6 +605,21 @@ function aff_table_reborn ($id_onglet,$id_liste,$actions = true,$check = true) {
     echo ("</tr></tfoot><tbody></tbody></table><br><br>");
 }
 
+function aff_table_next ($id_onglet,$id_liste) {
+    global $lang_select,$langliste;
+
+    $nbre_col=count($langliste[$lang_select][$id_liste]);
+	echo ("<table id=\"".$id_onglet."-liste\" class=\"display\" ><thead><tr>");
+    for ($i=1;$i<=$nbre_col;$i++) 
+        echo ("<th></th>");
+    echo ("</tr><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    echo ("</tr></thead><tfoot><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    echo ("</tr></tfoot><tbody></tbody></table><br><br>");
+}
 
 //------------------------------------------------------------------------------ MétaForm
 
@@ -1174,7 +1189,7 @@ foreach ($colonne as $key => $val )                                       // col
 			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$champ." <> 0";
 		}
 		elseif (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'is_null') {
-			$sWhere .= " AND ".$table.$champ." = IS NULL";
+			$sWhere .= " AND ".$table.$champ." IS NULL";
 			}
 		elseif (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'not_zero') {
 			$sWhere .= " AND ".$table.$champ." <> 0";
@@ -1247,7 +1262,7 @@ foreach ($colonne as $key => $val )                                       // col
 			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$champ." <> 0";
 		}
 		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'is_null') {
-			$sWhere .= " AND ".$table.$champ." = IS NULL";
+			$sWhere .= " AND ".$table.$champ." IS NULL";
 			}
 		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'not_zero') {
 			$sWhere .= " AND ".$table.$champ." <> 0";
@@ -1631,7 +1646,7 @@ function filterColumns($id_page) {
 $db=sql_connect(SQL_base);
 $query= "SELECT jvs_filter_column FROM referentiels.champs 
 	WHERE rubrique_champ = '$id_page' AND pos IS NOT NULL 
-	AND nom_champ <> 'bouton' AND nom_champ <> 'checkbox'
+	AND type <> 'bouton' AND type <> 'checkbox'
 	ORDER BY pos;";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 while ($row = pg_fetch_assoc($result))
@@ -1688,4 +1703,5 @@ else
 
 function bt_view($id,$class = 'view') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>';}
 function bt_edit($id,$class = 'edit') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>';}
+function bt_validate($id) {return '<a class=\"valid\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/pouce_vert_3.png\" title=\"Valider\" ></a><a class=\"invalid\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/pouce_rouge_3.png\" title=\"Invalider\" ></a>';}
 ?>

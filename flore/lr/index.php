@@ -102,7 +102,7 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			aff_table_next ("data",$id_page);			
             // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
 //------------------------------------------------------------------------------ #deuxieme onglet (DROIT)
@@ -121,7 +121,7 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ("droit",false,true);			
+			aff_table_next ("user","droit");			
             // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
     }
@@ -388,7 +388,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
         echo ("</div>");
     }
     break;
-
 
 }
 
