@@ -3,8 +3,8 @@ $BODY$
 DECLARE phase varchar;
 BEGIN
 --- pour tester la fonction
-phase = 'test';
--- phase = 'prod';
+-- phase = 'test';
+phase = 'prod';
 
 --- 1. Code permettant la mise à jour
 --- Mise à jour de la table évaluation pour ajouter les versions de l'évaluation
@@ -61,9 +61,10 @@ INSERT INTO referentiels.champs (rubrique_champ, nom_champ,  nom_champ_synthese,
 DELETE FROM referentiels.champs WHERE rubrique_champ = 'lr' AND  nom_champ = 'bouton_valid';
 INSERT INTO referentiels.champs (rubrique_champ, nom_champ,  nom_champ_synthese, champ_interface, type,  pos, table_champ, table_bd,export_display, modifiable,description, description_longue,jvs_desc_column,jvs_filter_column) VALUES 
 ('lr', 'bouton_valid', 'bouton_valid', 'bouton_valid', 'bouton', 23 , null, null,  TRUE,  TRUE,  '', 'Validation rapide','{ "sClass": "center","sWidth": "5%","bSortable": false }',null);
-
 UPDATE referentiels.champs SET description='Fiche',description_longue='Accès à la fiche' WHERE rubrique_champ='lr' AND nom_champ='bouton';
 UPDATE referentiels.champs SET description='<input type=checkbox class=liste-all value=1 >',description_longue='' WHERE rubrique_champ='lr' AND nom_champ='checkbox';
+
+--- Nouveau champ : validation
 DELETE FROM referentiels.champs WHERE rubrique_champ = 'lr' AND  nom_champ = 'validation';
 INSERT INTO referentiels.champs (rubrique_champ, nom_champ,  nom_champ_synthese, champ_interface, type,  pos, table_champ, table_bd,export_display, modifiable,description, description_longue,jvs_desc_column,jvs_filter_column) VALUES 
 ('lr', 'validation', 'validation', 'validation', 'val', 21, 'validation', 'validation',  TRUE,  TRUE,  'valid.', 'Validation evaluation','{ "sWidth": "5%" }','{ "type": "select", "values": [{ "value": "valid", "label": "Validé"},{ "value": "invalid", "label": "Invalidé"},{ "value" : "is_null", "label": "Non validé"}]}');
@@ -84,9 +85,9 @@ INSERT INTO applications.update_bdd (id, commit, descr, date) VALUES (
 	--- Numero du fichier (à modifier)
 	'013',
 	--- Numéro du dernier commit (à modifier)
-	'5e054ad8854fdff2755ed06e0235b609e2f4cd5b', 
+	'93dbacb2137aea100f6585736eb59261fdbecaad', 
 	--- Description de la modif BDD (à modifier)
-	'Rub LR : Validation',
+	'Rub LR : Validation Part I',
 	--- Date (à ne pas modifier)
 	NOW());
 RETURN 'OK';
