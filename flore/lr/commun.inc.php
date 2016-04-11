@@ -41,7 +41,7 @@ $query_module = "
 
 $query_liste = "
 	SELECT count(*) OVER() AS total_count,
-	taxons.*,chorologie.*,evaluation.*, validation.*
+	chorologie.*,evaluation.*, validation.*,taxons.*
 	FROM lr.taxons
 	LEFT JOIN lr.chorologie ON chorologie.uid=taxons.uid 
 	LEFT JOIN lr.evaluation ON evaluation.uid=taxons.uid  

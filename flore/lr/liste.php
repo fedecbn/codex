@@ -32,7 +32,8 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 //------------------------------------------------------------------------------ REF.
 global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ($id_page);
-		
+
+
 //------------------------------------------------------------------------------ MAIN
 $filters = filter_column_post($aColumns[$id_page]);
 $sLimit = $filters['sLimit'];  
@@ -78,7 +79,7 @@ $iTotal = $aResultTotal;
 			else if ($key == 'checkbox')
 				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >",';
 			else if ($key == 'bouton_valid')
-				if (!$validate) 	$sOutput .= '"'.bt_validate($row['uid']).'",'; else $sOutput .= '"",';
+				if ($validate) 	$sOutput .= '"'.bt_validate($row['uid']).'",'; else $sOutput .= '"",';
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
