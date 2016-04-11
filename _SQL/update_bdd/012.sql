@@ -31,15 +31,11 @@ UPDATE referentiels.champs SET description='Cat<br>C', description_longue = 'Cat
 UPDATE referentiels.champs SET description='Cat<br>D', description_longue = 'Catégorie la plus élévee selon le critère D' WHERE rubrique_champ='lr' AND nom_champ='cat_d';
 UPDATE referentiels.champs SET description='Cat<br>Fin', description_longue = 'Catégorie proposée pour la Liste rouge nationale après ajustement' WHERE rubrique_champ='lr' AND nom_champ='cat_fin';
 UPDATE referentiels.champs SET description='Crit<br>Fin', description_longue = 'Critère(s) proposé(s) pour la Liste rouge nationale' WHERE rubrique_champ='lr' AND nom_champ='just_fin';
-<<<<<<< HEAD
 UPDATE referentiels.champs SET description='Cat<br>EU', description_longue = 'Catégorie UICN à l échelle de l Europe géographique' WHERE rubrique_champ='lr' AND nom_champ='cat_euro';
-=======
-UPDATE referentiels.champs SET description='Cat<br>EU', description_longue = 'Catégorie UICN à l échelle de l Europe géographique' WHERE rubrique_champ='lr' AND nom_champ='cat_euro';
->>>>>>> f1ca3f027cb594485f6733cad78a2e8585f764c1
 UPDATE referentiels.champs SET description='Cat<br>Reg', description_longue = 'Synthèse des Catégories UICN issue des évaluations régionales' WHERE rubrique_champ='lr' AND nom_champ='cat_synt_reg';
 UPDATE referentiels.champs SET description='Nb<br>reg', description_longue = 'Nombre de régions ayant une évaluation régionale pour ce taxon' WHERE rubrique_champ='lr' AND nom_champ='nb_reg_evalue';
 UPDATE referentiels.champs SET description='Note', description_longue = 'Notes explicative évaluation' WHERE rubrique_champ='lr' AND nom_champ='notes';
-UPDATE referentiels.champs SET description='Avancement', description_longue = 'Avancement évaluation' WHERE rubrique_champ='lr' AND nom_champ='avancement';
+UPDATE referentiels.champs SET description='Avanc.', description_longue = 'Avancement évaluation' WHERE rubrique_champ='lr' AND nom_champ='avancement';
 
 
 --- 2. Pour le suivi des mises à jours

@@ -17,8 +17,8 @@ ALTER TABLE referentiels.champs ADD COLUMN jvs_filter_column varchar DEFAULT '{ 
 --- Bouton view,edit et checkbox
 DELETE FROM referentiels.champs WHERE rubrique_champ='lr' AND (nom_champ='bouton' OR nom_champ='checkbox');
 INSERT INTO referentiels.champs (rubrique_champ, nom_champ,  nom_champ_synthese, champ_interface, type,  pos, table_champ, table_bd,export_display, modifiable,description, description_longue) VALUES 
-('lr', 'bouton', 'bouton', 'bouton', 'bouton', (SELECT max(pos)+1 FROM referentiels.champs WHERE rubrique_champ='lr') , null, null,  TRUE,  TRUE,  'bouton', 'bouton'),
-('lr', 'checkbox', 'checkbox', 'checkbox', 'checkbox', (SELECT max(pos)+1 FROM referentiels.champs WHERE rubrique_champ='lr'), null, null,  TRUE,  TRUE,  'checkbox', 'checkbox');
+('lr', 'bouton', 'bouton', 'bouton', 'bouton', 21 , null, null,  TRUE,  TRUE,  'bouton', 'bouton'),
+('lr', 'checkbox', 'checkbox', 'checkbox', 'checkbox', 22, null, null,  TRUE,  TRUE,  'checkbox', 'checkbox');
 
 --- Remplissage
 -- LR
