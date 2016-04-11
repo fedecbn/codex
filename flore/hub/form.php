@@ -1,14 +1,18 @@
 <?php
-//------------------------------------------------------------------------------//
-//  module_admin/user-form.php                                                  //
-//                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  15/08/14 - Aj $user_level                                     //
-//------------------------------------------------------------------------------//
-include("commun.inc.php");
+/*------------------------------------------------------------------
+--------------------------------------------------------------------
+ Application Codex		                               			  
+ https://github.com/fedecbn/codex					   			  
+--------------------------------------------------------------------
+ Formulaire Pop-up         
+--------------------------------------------------------------------
+--------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------ INITIALISATION*/ session_start();
+include ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
 $id = $_GET['id'] != null ? $_GET['id'] : null;
@@ -438,5 +442,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		}
 	}
 else die ("> Pas de résultats !");
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 
 ?>

@@ -342,7 +342,7 @@ if ( $("#mode").val() == 'liste') {
 
 //------------------------------------------------------------------------------ FORM / Submit
 
-			$( "#enregistrer1-add-button,#enregistrer2-add-button" )
+		$( "#enregistrer1-add-button,#enregistrer2-add-button" )
         .button({
             text: true
         })

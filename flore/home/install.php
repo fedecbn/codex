@@ -4,6 +4,7 @@
 //                                                                              //
 //  Version 1.00  13/07/12 - OlGa (CBNMED)                                      //
 //------------------------------------------------------------------------------//
+session_start ();
 require_once ("../../_INCLUDE/fonctions.inc.php");
 ?>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
@@ -36,7 +37,7 @@ $(document).ready(function(){
 			host: { required: "",	minlength: ""},
 			port: { required: "",	minlength: ""},
 			user: { required: "",	minlength: ""},
-			mdp: { required: "",	minlength: ""}
+			mdp:  { required: "",	minlength: ""}
 		}
 	}); 
 	
@@ -85,7 +86,7 @@ foreach ($less as $element)
 foreach ($dir  as $key => $val)
 	{
 	/*Récupération des noms des pages*/
-	include ("../$val/commun.inc.php");
+	include ("../$val/desc.inc.php");
 	$rub[$val] = $name_page;
 	/*pour la création du compte admin*/
 	$nvx[$val] = "niveau_".$val;
@@ -116,18 +117,29 @@ case "install-param":	{
 		require_once ("../../_INCLUDE/config_sql.inc.php");		
 		$host = SQL_server;$port = SQL_port;$user = SQL_user;$mdp = SQL_pass;$dbname = SQL_base;
 		$db = connexion ($host,$port,$user,$mdp,$dbname);	
-	
-		foreach ($rub as $key => $val)
-			{
-			$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
-			$schema = pg_query($db,$query);
-			$row = pg_fetch_row($schema);
-			
-			if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
-			elseif (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == TRUE) 	
-										{$rub_ok[$key] = 'f';$desc[$key] = "";}
-			else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
-			}
+
+		// var_dump($_SESSION["droit_user"]);
+		/*D1 : Droit accès à la page*/
+		$base_file = substr(basename(__FILE__),0,-4);
+		$id_page = "home";
+		$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+		if ($droit_page) {
+
+		
+			foreach ($rub as $key => $val)
+				{
+				$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
+				$schema = pg_query($db,$query);
+				$row = pg_fetch_row($schema);
+				
+				if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
+				elseif (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == TRUE) 	
+											{$rub_ok[$key] = 'f';$desc[$key] = "";}
+				else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
+				}
+		//------------------------------------------------------------------------------ SI PAS ACCES 
+			} else require ("../commun/access_denied.php"); 
+
 		}
 	else
 		{
@@ -279,6 +291,9 @@ case "install-set":	{
 			$sql_file = str_replace("postgres",$_POST["user"],$sql_file);
 			$sql_file = str_replace("test",$_POST["mdp"],$sql_file);
 			$sql_file = str_replace("codex",$_POST["dbname"],$sql_file);
+			
+			/*Ajout à erme de la mise à jour des séquences lors de l'import de données avec UID*/
+			/*SELECT setval('refnat.taxons_uid_seq', COALESCE((SELECT MAX(uid)+1 FROM refnat.taxons), 1), false);*/
 			file_put_contents("../../_INCLUDE/config_sql.inc.php",$sql_file);
 			}
 	

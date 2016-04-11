@@ -1,27 +1,28 @@
 <?php
-//------------------------------------------------------------------------------//
-//  index.php                                                    //
-//                                                                              //
-//  Application WEB 'Codex'                                                      //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  12/08/14 - MaJ fonctions pgSQL                                //
-//  Version 1.02  13/08/14 - MaJ schémas                                        //
-//  Version 1.03  21/08/14 - MaJ droits                                         //
-//  Version 1.10  01/09/14 - MaJ form v2                                        //
-//  Version 1.11  10/09/14 - MaJ form labels                                    //
-//  Version 2.00  29/04/15 - Généralisation                                    //
-//------------------------------------------------------------------------------//
-// ------------------------------------------------------------------------------ INIT.
+/*------------------------------------------------------------------ 
+-------------------------------------------------------------------- 
+ Application Codex                                            
+ https://github.com/fedecbn/codex                      
+-------------------------------------------------------------------- 
+ Page principale          
+-------------------------------------------------------------------- 
+--------------------------------------------------------------------*/ 
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
 session_start ();
-// var_dump($_SESSION);
-// var_dump($_COOKIE);
-// echo $_COOKIE['SpryMedia_DataTables_data-liste_'];
 include ("commun.inc.php");
-if ($_SESSION['EVAL_FLORE'] != "ok") require ("../commun/access_denied.php");
-
-
+/*Droit page*/ 
+$base_file = substr(basename(__FILE__),0,-4); 
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]); 
+ 
+if ($droit_page) { 
 //------------------------------------------------------------------------------ VAR.
+
+//------------------------------------------------------------------------------ JAVASCRIPT
+$descColumns = descColumns($id_page);
+$filterColumns = filterColumns($id_page);	
+echo ('<input type=\'hidden\' name=\'descColumns\' id=\'descColumns\' value=\''.$descColumns.'\'/>');
+echo ('<input type=\'hidden\' name=\'filterColumns\' id=\'filterColumns\' value=\''.$filterColumns.'\'/>');
+
 
 //------------------------------------------------------------------------------ PARMS.
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
@@ -40,6 +41,7 @@ ref_colonne_et_valeur ($id_page);
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
+
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.dataTables.min.js"></script>
@@ -50,6 +52,8 @@ ref_colonne_et_valeur ($id_page);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 
 <script type="text/javascript" language="javascript" src="js/commun.js"></script>
+
+
 <?php
 //------------------------------------------------------------------------------ MAIN
 // html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");
@@ -98,7 +102,7 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			aff_table_next ("data",$id_page);			
             // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
 //------------------------------------------------------------------------------ #deuxieme onglet (DROIT)
@@ -117,7 +121,7 @@ switch ($mode) {
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ("droit",false,true);			
+			aff_table_next ("user","droit");			
             // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
     }
@@ -385,7 +389,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
     }
     break;
 
-
 }
 
 //------------------------------------------------------------------------------
@@ -394,7 +397,7 @@ echo ("</div>");                                                                
 echo ("</body></html>");
 pg_close ($db);
 
-//------------------------------------------------------------------------------ FONCTIONS
-
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 ?>
 

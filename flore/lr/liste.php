@@ -1,27 +1,29 @@
 <?php
-//------------------------------------------------------------------------------//
-//  module_gestion/lr-liste.php                                                 //
-//                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  12/08/14 - MaJ liste                                          //
-//  Version 1.02  21/08/14 - MaJ droits                                         //
-//  Version 1.03  22/08/14 - MaJ liste                                          //
-//  Version 1.04  31/08/14 - MaJ liste (Aj champs)                              //
-//  Version 1.05  08/09/14 - MaJ liste                                          //
-//  Version 1.06  23/09/14 - MaJ sOrder                                         //
-//  Version 1.07  24/09/14 - MaJ columnFilter                                   //
-//------------------------------------------------------------------------------//
-
-//------------------------------------------------------------------------------ INIT.
+/*------------------------------------------------------------------
+--------------------------------------------------------------------
+ Application Codex		                               			  
+ https://github.com/fedecbn/codex					   			  
+--------------------------------------------------------------------
+ source de données pour DataTable         
+--------------------------------------------------------------------
+--------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
 session_start();
-include ("commun.inc.php");
+include_once ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
+$onglet = 'eval';
 
 //------------------------------------------------------------------------------ PARMS.
+/*Droit sur les boutons de la dernière colonne*/
+$typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
+$view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
+$edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
+$validate=affichage($typ_droit,$rubrique,$onglet,"validate_fiche",$droit_user);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -71,6 +73,12 @@ $iTotal = $aResultTotal;
 				if ($row['nbm5_post1990_est'] != '') {$sOutput .= '"'.$row['nbm5_post1990_est'].'",';} else {$sOutput .= '"'.$row['nbm5_post1990'].'",';}
 			else if ($key == 'notes')
 				if ($row['notes'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['notes'],"undo_hmtl").'\" ></a>",';} else {$sOutput .= '"",';}
+			else if ($key == 'bouton')
+				if ($edit) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
+			else if ($key == 'checkbox')
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >",';
+			else if ($key == 'bouton_valid')
+				if (!$validate) 	$sOutput .= '"'.bt_validate($row['uid']).'",'; else $sOutput .= '"",';
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
@@ -87,15 +95,21 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-        if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['uid'].'\" target=\"_blank\"><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
-        else        
-            $sOutput .= '"<a class=edit id=\"'.$row['uid'].'\" target=\"_blank\"><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
-    	$sOutput .= "],";
+		$sOutput = trim($sOutput,',');
+		$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';
 echo $sOutput;
+	//------------------------------------------------------------------------------ SI PAS ACCES 
+	} else {
+	$sOutput = '{';
+	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
+	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
+	$sOutput .= '"aaData": [ ';
+	$sOutput .= '] }';
+	echo $sOutput;
+	}
 
 ?>

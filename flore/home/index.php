@@ -13,7 +13,6 @@
 //------------------------------------------------------------------------------ INIT.
 session_start();
 include ("commun.inc.php");
-define ("DEBUG",false);
 
 //------------------------------------------------------------------------------ PARMS.
 $action=isset ($_POST['action']) ? $_POST['action'] : "";
@@ -24,27 +23,13 @@ if (!isset ($_COOKIE["lang_select"])) {                                         
 } 
 else
     $lang_select=$_COOKIE['lang_select'];
- 
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL ".SQL_server,false);
 
 //------------------------------------------------------------------------------ VAR.
-/*récupération des rubriques*/
-$result=pg_query ($db,$query_rub) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-While ($row = pg_fetch_row($result)) $rubrique[$row[0]] = $row[0];
-
-foreach ($rubrique as $key => $val)
-	{
-	$ref[$val]=isset ($_SESSION['ref_'.$val]) ? $_SESSION['ref_'.$val] : 0;
-	$niveau[$val]=isset ($_SESSION['niveau_'.$val]) ? $_SESSION['niveau_'.$val] : 0;
-	}
-$niveau['all']=isset ($_SESSION['niveau']) ? $_SESSION['niveau'] : 0;
-$ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
-
-$id_user=$_SESSION['id_user'];
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -74,59 +59,76 @@ switch ($action)
 //        echo ("<img src=\"../../_GRAPH/theme/home4.png\" border=\"0\" align=right >");
   		echo ("<div class=\"post\">");
 		if (DEBUG) echo ("<br>Cookie = ".$lang_select." ");
-		if (DEBUG) echo ("<br>Niveau = ".$niveau['all']." ");
-            if ($niveau['all'] == 0) {
-				echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
-				echo ("<div style=\"text-align: center;\" ><img src=\"../../_GRAPH/Dracocephalum_austriacum_L._cbna_JVE.jpg\" width=\"300\" height=\"453\" border=\"0\"></div>");
-				aff_pres ("home","public_header",FR,false);
-				}
-			else
-				aff_pres ("home","home_header",FR,false);
-            echo ("<br/>");
-			
-		foreach ($rubrique as $key => $val)
-			menu_rubrique ($niveau[$val],$val);
-			            
-			aff_pres ("home","home_footer",FR,false);
-							
-			echo ("</div>");                                                    // post
-            echo ("</div>");                                                    // narrowcolumn
+		
+		/*Affichage du header*/
+		if ($_SESSION['EVAL_FLORE'] == "ok")
+			aff_pres ("home","home_header",FR,false);
+		else {
+			echo ("<h1 lang=\"fr\">".EVAL_NOM."</h1>");
+			echo ("<div style=\"text-align: center;\" ><img src=\"../../_GRAPH/Dracocephalum_austriacum_L._cbna_JVE.jpg\" width=\"300\" height=\"453\" border=\"0\"></div>");
+			aff_pres ("home","public_header",FR,false);		
+		}
+		
+		/*Affichage des rubriques*/		
+		$query=$query_list;
+		$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+		while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) {
+			echo ("<div lang=\"fr\" id=\"rubriques\"><center><ul>");
+			$droit_rubrique = acces($row["id_module"],'d1','index',$_SESSION["droit_user"][$row["id_module"]]);
+			if ($_SESSION['EVAL_FLORE'] == "ok" AND $droit_rubrique) {
+				aff_pres ($row["id_module"],"header",FR,false);
+				echo ("<li><div class=\"icon\"><a href=\"".$row['link']."\"><img src=\"../../_GRAPH/".ICONES_SET."/".$row['icone']."\" align=left width=\"48\" height=\"48\" border=\"0\" /></a></div>");
+				echo ("<a href=\"".$row["link"]."\"><strong>".$row["titre"]."</strong>".$row["descr"]."</a></li>");
+				echo ("Droits d'accès à cette rubrique : <b> ".implode($_SESSION["droit_user"][$row["id_module"]],',')." </b>");
+			   aff_pres ($row["id_module"],"footer",FR,false);
+			}
+			echo ("</ul></div>");
+		}
+    
+	    /*Affichage du footer*/     
+		aff_pres ("home","home_footer",FR,false);
+						
+		echo ("</div>");                                                    // post
+		echo ("</div>");                                                    // narrowcolumn
 
+		/*Affichage de la partie pour se logguer*/  	
+		echo ("<div id=\"sidebar\">");
+		echo ("<br><br>");
+		if ($_SESSION['EVAL_FLORE'] != "ok") {
+			echo ("<form method=\"POST\" id=\"form1\" name=\"loginform\" action=\"index.php\" >");
+			echo ("<center><input type=\"hidden\" name=\"action\" value=\"valid\" />");
+			echo ($lang['fr']['Utilisateur']."<br><input type=\"text\" name=\"user_login\" id=\"login\" size=\"20\" maxlength=\"100\" class=\"required\" /><br><br>");
+			echo ($lang['fr']['pass']."<input type=\"password\" name=\"user_pw\" id=\"pw\" size=\"20\" maxlength=\"100\" class=\"required\" /><br><br>");
+			echo ("<button id=\"valider_fr\">Login</button></center>");
+			echo ("</form>");
+			echo ("<center><br>Contacts :<br>");
+			echo ("<br>");
+			echo ("<b>Fédération des Conservatoires botaniques nationaux</b><br><br>");
+			echo ("<a href=\"http://www.fcbn.fr/\" target=\"_blank\">www.fcbn.fr</a><br>");
+			echo ("<br>");
+				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
+				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp\" />");
+				// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
+				echo ("<button id=\"envoi-mdp\" style = \"font-size:10px;\">récuperer mon mot de passe</button></center>");
+				echo ("</form>");
+			echo ("</center>");
+			echo ("<br>");            
+		}  else {                                                           // Session OK
+			echo ("<center>");
+			if ($nom != "") echo ("<b>".$prenom." ".$nom."</b><br>");
+			echo ("<br>".$lang['fr']['login']."</center>");
+			echo ("<br><center><a href=\"logout.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/logout.png\" border=\"0\" /><br>".$lang['fr']['logout']."</a></center>");
+		}
 			
-            echo ("<div id=\"sidebar\">");
-            echo ("<br><br>");
-            if ($_SESSION['EVAL_FLORE'] != "ok") {
-                echo ("<form method=\"POST\" id=\"form1\" name=\"loginform\" action=\"index.php\" >");
-                echo ("<center><input type=\"hidden\" name=\"action\" value=\"valid\" />");
-                echo ($lang['fr']['Utilisateur']."<br><input type=\"text\" name=\"user_login\" id=\"login\" size=\"20\" maxlength=\"100\" class=\"required\" /><br><br>");
-                echo ($lang['fr']['pass']."<input type=\"password\" name=\"user_pw\" id=\"pw\" size=\"20\" maxlength=\"100\" class=\"required\" /><br><br>");
-                echo ("<button id=\"valider_fr\">Login</button></center>");
-                echo ("</form>");
-				echo ("<center><br>Contacts :<br>");
-				echo ("<br>");
-				echo ("<b>Fédération des Conservatoires botaniques nationaux</b><br><br>");
-				echo ("<a href=\"http://www.fcbn.fr/\" target=\"_blank\">www.fcbn.fr</a><br>");
-				echo ("<br>");
-					echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
-					echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp\" />");
-					// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
-					echo ("<button id=\"envoi-mdp\" style = \"font-size:10px;\">récuperer mon mot de passe</button></center>");
-					echo ("</form>");
-				echo ("</center>");
-				echo ("<br>");            
-			}  else {                                                           // Session OK
-    			echo ("<center>");
-                if ($nom != "") echo ("<b>".$prenom." ".$nom."</b><br>");
-    			echo ("<br>".$lang['fr']['login']."</center>");
-                echo ("<br><center><a href=\"logout.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/logout.png\" border=\"0\" /><br>".$lang['fr']['logout']."</a></center>");
-            }
             echo ("<br><center>");
 //            echo ("<img src=\"../../_GRAPH/theme/home3.png\" width=20 height=600 border=\"0\" align=left >");
 
-			if ($niveau['all'] >=1)  {
+			$droit_module_admin = acces("module_admin","d1","index",$_SESSION["droit_user"]["module_admin"]);
+			if ($_SESSION['EVAL_FLORE'] == "ok" AND $droit_module_admin)  {
                 echo ("<br><a href=\"../module_admin/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/admin.png\" border=\"0\" /><br>".$lang['fr']['Admin']."</a></p>");
             }
-            if ($niveau['all'] >=1)  {
+			$droit_bugs = acces("bugs","d1","index",$_SESSION["droit_user"]["bugs"]);
+            if ($_SESSION['EVAL_FLORE'] == "ok" AND $droit_bugs)  {
                 echo ("<br><a href=\"../bugs/index.php\" ><img src=\"../../_GRAPH/".ICONES_SET."/bugs.png\" border=\"0\" /><br>".$lang['fr']['bugs']."</a></p>");
 				echo ("<br>");
 			}

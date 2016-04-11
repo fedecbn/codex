@@ -9,6 +9,8 @@
 //------------------------------------------------------------------------------ CONFIG du module
 require_once ("../commun/commun.inc.php");
 
+$id_page = $_SESSION['page'] = "bugs";
+
 //------------------------------------------------------------------------------ CONSTANTES du module
 $ouinon_txt=array("Non","Oui");
 

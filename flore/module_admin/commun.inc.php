@@ -26,6 +26,8 @@ $ref['all']=isset ($_SESSION['ref']) ? $_SESSION['ref'] : 0;
 
 $id_user = $_SESSION['id_user'];
 
+$id_page = $_SESSION['page'] = "module_admin";
+
 
 //------------------------------------------------------------------------------ PATHS du module
 

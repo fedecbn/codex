@@ -305,7 +305,10 @@ function ref_colonne_et_valeur ($rubrique)	{
 		// var_dump($champ_ref);
 	
 //------------------------------------------------------------------------------ Récupération des champs de synthèse
-	$query = "SELECT * FROM referentiels.champs WHERE rubrique_champ = '$rubrique' AND pos IS NOT NULL ORDER by pos ";
+	$query = "SELECT * FROM referentiels.champs 
+	WHERE rubrique_champ = '$rubrique' AND pos IS NOT NULL 
+	
+	ORDER by pos ";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 	while ($row = pg_fetch_assoc ($result)) {
@@ -316,7 +319,10 @@ function ref_colonne_et_valeur ($rubrique)	{
 	pg_free_result ($result);
 
 //------------------------------------------------------------------------------ Récupération des champs d'export
-	$query = "SELECT * FROM referentiels.champs WHERE rubrique_champ = '$rubrique' ORDER by pos";
+	$query = "SELECT * FROM referentiels.champs 
+	WHERE rubrique_champ = '$rubrique' 
+	AND nom_champ <> 'bouton' AND nom_champ <> 'checkbox'
+	ORDER by pos";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 	while ($row = pg_fetch_assoc ($result)) {
@@ -599,6 +605,21 @@ function aff_table_reborn ($id_onglet,$id_liste,$actions = true,$check = true) {
     echo ("</tr></tfoot><tbody></tbody></table><br><br>");
 }
 
+function aff_table_next ($id_onglet,$id_liste) {
+    global $lang_select,$langliste;
+
+    $nbre_col=count($langliste[$lang_select][$id_liste]);
+	echo ("<table id=\"".$id_onglet."-liste\" class=\"display\" ><thead><tr>");
+    for ($i=1;$i<=$nbre_col;$i++) 
+        echo ("<th></th>");
+    echo ("</tr><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    echo ("</tr></thead><tfoot><tr>");
+    for ($i=0;$i<$nbre_col;$i++) 
+        echo ("<th><a title=\"".$langliste[$lang_select][$id_liste.'-popup'][$i]."\">".$langliste[$lang_select][$id_liste][$i]."</a></th>");
+    echo ("</tr></tfoot><tbody></tbody></table><br><br>");
+}
 
 //------------------------------------------------------------------------------ MétaForm
 
@@ -1168,7 +1189,7 @@ foreach ($colonne as $key => $val )                                       // col
 			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$champ." <> 0";
 		}
 		elseif (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'is_null') {
-			$sWhere .= " AND ".$table.$champ." = IS NULL";
+			$sWhere .= " AND ".$table.$champ." IS NULL";
 			}
 		elseif (pg_escape_string($_GET['sSearch_'.$val['pos']]) == 'not_zero') {
 			$sWhere .= " AND ".$table.$champ." <> 0";
@@ -1241,7 +1262,7 @@ foreach ($colonne as $key => $val )                                       // col
 			if ($val['type'] == 'int') $sWhere .= " AND ".$table.$champ." <> 0";
 		}
 		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'is_null') {
-			$sWhere .= " AND ".$table.$champ." = IS NULL";
+			$sWhere .= " AND ".$table.$champ." IS NULL";
 			}
 		elseif (pg_escape_string($_POST['sSearch_'.$val['pos']]) == 'not_zero') {
 			$sWhere .= " AND ".$table.$champ." <> 0";
@@ -1596,4 +1617,91 @@ function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 			echo ("</div>");
 			}
 
+function ref_onglet($id_page) {
+$db=sql_connect(SQL_base);
+$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+While ($row = pg_fetch_assoc($result)) {
+	$onglet['id'][] = $row['onglet'];
+	$onglet['nom'][] = $row['nom'];
+	$onglet['ss_titre'][] = $row['ss_titre'];
+	}
+return $onglet;	
+}
+
+function descColumns($id_page) {
+$db=sql_connect(SQL_base);
+$query= "SELECT jvs_desc_column FROM referentiels.champs 
+	WHERE rubrique_champ = '$id_page' AND pos IS NOT NULL 
+	ORDER BY pos;";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$out[] = $row["jvs_desc_column"];
+	
+$descColumns = '['.implode($out,',').']';
+return $descColumns;
+}
+
+function filterColumns($id_page) {
+$db=sql_connect(SQL_base);
+$query= "SELECT jvs_filter_column FROM referentiels.champs 
+	WHERE rubrique_champ = '$id_page' AND pos IS NOT NULL 
+	AND type <> 'bouton' AND type <> 'checkbox'
+	ORDER BY pos;";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$out[] = $row["jvs_filter_column"];
+	
+$descColumns = '['.implode($out,',').']';
+return $descColumns;
+}
+
+function acces($rubrique,$typ_droit,$objet,$droit_user) {
+$db=sql_connect(SQL_base);
+$query= "SELECT role FROM applications.droit WHERE typ_droit = '$typ_droit' AND rubrique = '$rubrique' AND objet = '$objet';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$role_necessaire = $row["role"];
+
+if (array_search($role_necessaire,$droit_user) === false)
+	return false;
+else
+	return true;
+}
+
+function recup_droit($id_user) {
+$db=sql_connect(SQL_base);
+
+if ($id_user == null)
+	{
+	$query= "SELECT id_module FROM applications.rubrique";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+	while ($row = pg_fetch_assoc($result))
+		$droit[$row['id_module']][] = 'no_acces';
+	} else {
+$query= "SELECT * FROM applications.utilisateur_role WHERE id_user = '$id_user';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	foreach ($row as $key => $val)
+		if ($val == 't') $droit[$row['rubrique']][] =  $key;
+	}
+return $droit;
+}
+
+function affichage($typ_droit,$rubrique,$onglet,$objet,$droit_user) {
+$db=sql_connect(SQL_base);
+$query= "SELECT role FROM applications.droit WHERE typ_droit = '$typ_droit' AND rubrique = '$rubrique' AND onglet = '$onglet' AND objet = '$objet';";
+$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+while ($row = pg_fetch_assoc($result))
+	$role_necessaire = $row["role"];
+
+if (array_search($role_necessaire,$droit_user) === false)
+	return false;
+else
+	return true;
+}
+
+function bt_view($id,$class = 'view') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>';}
+function bt_edit($id,$class = 'edit') {return '<a class=\"'.$class.'\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>';}
+function bt_validate($id) {return '<a class=\"valid\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/pouce_vert_3.png\" title=\"Valider\" ></a><a class=\"invalid\" id=\"'.$id.'\" ><img src=\"../../_GRAPH/mini/pouce_rouge_3.png\" title=\"Invalider\" ></a>';}
 ?>

@@ -1,23 +1,23 @@
 <?php
-//------------------------------------------------------------------------------//
-//  module_gestion/lr-submit.php                                                //
-//                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  12/08/14 - MaJ fonctions pgSQL                                //
-//  Version 1.02  15/08/14 - MaJ tables                                         //
-//  Version 1.10  01/08/14 - MaJ tables v2                                      //
-//------------------------------------------------------------------------------//
+/*------------------------------------------------------------------
+--------------------------------------------------------------------
+ Application Codex		                               			  
+ https://github.com/fedecbn/codex					   			  
+--------------------------------------------------------------------
+ Interface avec la base de données (modification et ajout)         
+--------------------------------------------------------------------
+--------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
 session_start();
 include ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
 
 //------------------------------------------------------------------------------ PARMS.
 define ("DEBUG",TRUE);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
-
-var_dump($_SESSION);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -30,9 +30,13 @@ global $db, $ref, $champ_ref;
 if (!isset($_POST["etape"])) {$etape = 0;}
 else {$etape = $_POST["etape"];}
 
+
+
+
 //------------------------------------------------------------------------------ EDIT
 if (!empty ($id))                                                               // EDIT
 	{
+	echo "droit OK";
 	if ($niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
 		{
 		/*statut_reg*/
@@ -134,17 +138,12 @@ if (!empty ($id))                                                               
 	} else {                                      
 //------------------------------------------------------------------------------	
 //------------------------------------------------------------------------------ ADD.
-/*Nothing ==> go Refnat*/}
+/*Nothing ==> go Refnat*/
+	}
+	
+	pg_close ($db);
+	return (true);
 
-/*
-if (!DEBUG) {
-    echo ("<script language=\"javascript\" type=\"text/javascript\">");
-    echo ("window.location.replace ( \"index.php\")");
-    echo ("</script>");
-}
-*/
-pg_close ($db);
-
-return (true);
-
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 ?>

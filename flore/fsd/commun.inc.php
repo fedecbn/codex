@@ -1,18 +1,23 @@
 <?php
-//------------------------------------------------------------------------------//
-//   commun.inc.php                                                             //
-//                                                                              //
-//  Version 1.00  24/07/14 - OlGa / CBNMED                                      //
-//------------------------------------------------------------------------------//
-                                                      
-//------------------------------------------------------------------------------ CONFIG du module
+/*------------------------------------------------------------------
+--------------------------------------------------------------------
+ Application Codex		                               			  
+ https://github.com/fedecbn/codex					   			  
+--------------------------------------------------------------------
+ Paramètres de la rubrique         
+--------------------------------------------------------------------
+--------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
 require_once ("../commun/commun.inc.php");
+require_once ("desc.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
 
 //------------------------------------------------------------------------------ CONSTANTES du module
-$id_page = $_SESSION['page'] = "fsd";
-$name_page = "Format standard de données";	/*utilisé?*/
+
 $title = $lang['fr']['titre_web']." - ".$id_page;
-$titre = "Format Standard"; /*utilisé?*/
 
 $onglet = array(
 	"id" => array (
@@ -66,7 +71,7 @@ $query_discussion = "
 	FROM fsd.discussion a JOIN referentiels.cbn z ON a.id_cbn = z.id_cbn 
 	WHERE uid = ";
 
-	//------------------------------------------------------------------------------ VOCABULAIRE du module
+//------------------------------------------------------------------------------ VOCABULAIRE du module
 // $lang['fr']['fsd']="Dictionnaire de données";
 // $lang['it']['fsd']="";
 
@@ -102,6 +107,6 @@ foreach ($onglet["id"] as $val)
 		}
 	}
 
-//------------------------------------------------------------------------------ FONCTIONS du module
-
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 ?>

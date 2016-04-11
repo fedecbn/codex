@@ -1,20 +1,24 @@
 <?php
-//------------------------------------------------------------------------------//
-//  module_gestion/lr-del.php                                                   //
-//                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  12/08/14 - MaJ fonctions pgSQL                                //
-//  Version 1.02  15/08/14 - MaJ tables                                         //
-//------------------------------------------------------------------------------//
-
+/*------------------------------------------------------------------
+--------------------------------------------------------------------
+ Application Codex		                               			  
+ https://github.com/fedecbn/codex					   			  
+--------------------------------------------------------------------
+ Interface avec la base de données (suppression)         
+--------------------------------------------------------------------
+--------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
 session_start();
 include_once ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
 
 //------------------------------------------------------------------------------ PARMS.
 $id=$_POST['id'];
+
+
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -41,7 +45,7 @@ if (!empty ($id))
 		}
     $where=rtrim ($where,"OR ");
 
-    $query="UPDATE refnat.taxons	SET $id_page = false WHERE ".$where.";";
+    $query="UPDATE refnat.taxons SET $id_page = false WHERE ".$where.";";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 
 	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression multi fiches",$where,"taxons,chorologie,evaluation");
@@ -50,4 +54,6 @@ if (!empty ($id))
 pg_close ($db);
 return (true);
 
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 ?>

@@ -1,18 +1,20 @@
 <?php
-//------------------------------------------------------------------------------//
-//  module_gestion/lr-submit.php                                                //
-//                                                                              //
-//  Application WEB 'EVAL'                                                      //
-//  Outil d’aide à l’évaluation de la flore                                     //
-//                                                                              //
-//  Version 1.00  10/08/14 - DariaNet                                           //
-//  Version 1.01  12/08/14 - MaJ fonctions pgSQL                                //
-//  Version 1.02  15/08/14 - MaJ tables                                         //
-//  Version 1.10  01/08/14 - MaJ tables v2                                      //
-//------------------------------------------------------------------------------//
-
+/*------------------------------------------------------------------
+--------------------------------------------------------------------
+ Application Codex		                               			  
+ https://github.com/fedecbn/codex					   			  
+--------------------------------------------------------------------
+ Interface avec la base de données (modification et ajout)         
+--------------------------------------------------------------------
+--------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------ INITIALISATION*/ 
 session_start();
 include ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
+
 define ("DEBUG",TRUE);
 
 //------------------------------------------------------------------------------ PARMS.
@@ -123,6 +125,8 @@ if (!DEBUG) {
 pg_close ($db);
 
 return (true);
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 
 //------------------------------------------------------------------------------ FONCTIONS
 
