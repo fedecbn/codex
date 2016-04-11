@@ -34,7 +34,7 @@ UPDATE referentiels.champs SET description='Crit<br>Fin', description_longue = '
 <<<<<<< HEAD
 UPDATE referentiels.champs SET description='Cat<br>EU', description_longue = 'Catégorie UICN à l échelle de l Europe géographique' WHERE rubrique_champ='lr' AND nom_champ='cat_euro';
 =======
-UPDATE referentiels.champs SET description='Cat<br>EU', description_longue = 'Catégorie UICN à l'échelle de l'Europe géographique' WHERE rubrique_champ='lr' AND nom_champ='cat_euro';
+UPDATE referentiels.champs SET description='Cat<br>EU', description_longue = 'Catégorie UICN à l échelle de l Europe géographique' WHERE rubrique_champ='lr' AND nom_champ='cat_euro';
 >>>>>>> f1ca3f027cb594485f6733cad78a2e8585f764c1
 UPDATE referentiels.champs SET description='Cat<br>Reg', description_longue = 'Synthèse des Catégories UICN issue des évaluations régionales' WHERE rubrique_champ='lr' AND nom_champ='cat_synt_reg';
 UPDATE referentiels.champs SET description='Nb<br>reg', description_longue = 'Nombre de régions ayant une évaluation régionale pour ce taxon' WHERE rubrique_champ='lr' AND nom_champ='nb_reg_evalue';
