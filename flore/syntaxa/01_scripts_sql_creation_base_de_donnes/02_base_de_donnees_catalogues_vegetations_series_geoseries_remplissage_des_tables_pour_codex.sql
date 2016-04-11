@@ -10,7 +10,7 @@ copy syntaxa.referentiel_taxo from 'F:\referentiel_taxo.csv' CSV HEADER encoding
 --------------------------------------------------------------------------------ALIMENTATION DES TABLES DE REFERENTIEL----------------------------------------------------------------
 --table syntaxa.st_annuaire_personnes
 --truncate syntaxa.st_catalogue_description cascade;
-INSERT INTO syntaxa.st_catalogue_description ("identifiantCatalogue", "libelleCatalogue", "id_tri") VALUES ('NI', 'non indiqué',0);
+INSERT INTO syntaxa.st_catalogue_description ("identifiantCatalogue", "libelleCatalogue", "id_tri") VALUES ('NI', 'non encore décrit',0);
 
 
 /*
@@ -52,6 +52,7 @@ INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libType
 INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('GPS', 'géopermasérie', 6);
 INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('NC', 'non connu', 7);
 INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('NI', 'non indiqué', 0);
+INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('SD', 'série ...àcompléter (SD)', 8);
 
 
 --table syntaxa.categorie_seriegeoserie
