@@ -94,9 +94,27 @@ if (!empty ($id))
     if ($_POST['etape']=="") $_POST['etape']=2;
 //------------------------------------------------------------------------------
 	/*Paramètre à ajouter*/
-	//voir comment ajouter le code enregistrement syntax
 	
-		//mise à jour de la sequence pour la colonne serial uid (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+	
+if (!empty($_POST['idCatalogue2'])) {
+
+				
+	//mise à jour de la sequence pour la colonne serial id_tri de st_catalogue_description(en cas d'ajout manuel de données dans la table directement à travers la base de données)
+	$query="SELECT setval('syntaxa.st_catalogue_description_id_tri_seq ', COALESCE((SELECT MAX(uid)+1 FROM syntaxa.st_syntaxon), 1), false);";
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	
+	//description d'un nouveau catalogue dans le cas ou l'option du menu déroulant "non encore décrit" est choisie
+	$insert="INSERT INTO syntaxa.st_catalogue_description (\"identifiantCatalogue\",\"libelleCatalogue\") VALUES (";
+	$champs= rtrim (sql_format_quote($_POST['idCatalogue2'],'do')).",".sql_format_quote($_POST['libelleCatalogue2'],'do').") RETURNING \"identifiantCatalogue\";";
+	$query=	$insert.$champs;
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	
+				} else {
+					
+				echo "un catalogue a été choisi dans le menu déroulant";} 
+			
+	
+	//mise à jour de la sequence pour la colonne serial uid de st_syntaxon (en cas d'ajout manuel de données dans la table directement à travers la base de données)
 	$query="SELECT setval('syntaxa.st_syntaxon_uid_seq ', COALESCE((SELECT MAX(uid)+1 FROM syntaxa.st_syntaxon), 1), false);";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 	
@@ -111,13 +129,14 @@ if (!empty ($id))
 	$next_uid=$last_uid + $a;
 	echo "next_uid=".$next_uid;
 	
-	//mise à jour de la sequence pour la colonne serial idChorologie (en cas d'ajout manuel de données dans la table directement à travers la base de données)
-//	$query="SELECT setval('syntaxa.\"st_chorologie_idChorologie_seq\" ', COALESCE((SELECT MAX(\"idChorologie\")+1 FROM syntaxa.st_chorologie), 1), false);";
-//	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	//mise à jour de la table st_syntaxon
+	if (($_POST['idCatalogue'])=='NI') {$codecatalogue='idCatalogue2';} 
+	else {$codecatalogue='idCatalogue';
+			}  ;
 	
-	$insert="INSERT INTO syntaxa.st_syntaxon (\"codeEnregistrementSyntax\", \"idSyntaxon\",\"nomSyntaxon\",
+	$insert="INSERT INTO syntaxa.st_syntaxon (\"idCatalogue\",\"codeEnregistrementSyntax\", \"idSyntaxon\",\"nomSyntaxon\",
 	\"auteurSyntaxon\",\"nomCompletSyntaxon\",\"rangSyntaxon\") VALUES (";
-	$champs= rtrim ( sql_format_quote($_POST['idTerritoire'],'do'),"'" )."_syntaxon_".$next_uid."',".sql_format_quote($_POST['idSyntaxon'],'do').",
+	$champs= rtrim (sql_format_quote($_POST[$codecatalogue],'do').",". sql_format_quote($_POST['idTerritoireObligatoire'],'do'),"'" )."_syntaxon_".$next_uid."',".sql_format_quote($_POST['idSyntaxon'],'do').",
 	".sql_format_quote($_POST['nomSyntaxon'],'do').",".sql_format_quote($_POST['auteurSyntaxon'],'do').",'".$_POST['nomSyntaxon']." ".$_POST['auteurSyntaxon']."',".sql_format_quote($_POST['rangSyntaxon'],'do').") RETURNING \"codeEnregistrementSyntax\";";
 	$query=	$insert.$champs;
 	
@@ -131,10 +150,12 @@ if (!empty ($id))
 	echo "<br> uid pour la table suivi is:". $uid;
 	echo "<br> uid pour la table suivi is:". sql_format_quote($uid,'do');
 	
-	
+
+	//insertion d'une nouvelle donnée dans la table syntaxa.st_chorologie
 	$insert="INSERT INTO syntaxa.st_chorologie (\"codeEnregistrement\",\"idTerritoire\",\"statutChorologie\") VALUES (";
-	$champs= "'".$uid."',".sql_format_quote($_POST['idTerritoire'],'do').",".sql_format_quote($_POST['statutChorologie'],'do').") RETURNING \"idChorologie\";";
+	$champs= "'".$uid."',".sql_format_quote($_POST['idTerritoireObligatoire'],'do').",".sql_format_quote($_POST['statutChorologie'],'do').") RETURNING \"idChorologie\";";
 	
+	//mise à jour de la sequence pour la colonne serial idChorologie (en cas d'ajout manuel de données dans la table directement à travers la base de données)
 	$query="SELECT setval('syntaxa.\"st_chorologie_idChorologie_seq\" ', COALESCE((SELECT MAX(\"idChorologie\")+1 FROM syntaxa.st_chorologie), 1), false);"
 	.$insert.$champs;
 	
@@ -142,9 +163,13 @@ if (!empty ($id))
 	$id_chrologie=pg_result($result,0,0);
 	
 	//suivi des modifications
-	
-	//add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idCatalogue",null,$_POST["idCatalogue"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idTerritoire",null,$_POST["idTerritoire"],'applications','manuel','ajout');
+	if (!isset($_POST['idCatalogue2'])) {
+	if (!empty($_POST['idCatalogue2'])) {
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","identifiantCatalogue",null,$_POST["idCatalogue2"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","libelleCatalogue",null,$_POST["libelleCatalogue2"],'applications','manuel','ajout');
+	}} else {echo "pas d'insertion de nouveau catalogue dans st_catalogue_description";}
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idCatalogue",null,$_POST["idCatalogue"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idTerritoire",null,$_POST["idTerritoireObligatoire"],'applications','manuel','ajout');
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idChorologie",null,$id_chrologie,'applications','manuel','ajout');
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","statutChorologie",null,$_POST["statutChorologie"],'applications','manuel','ajout');
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","codeEnregistrementSyntax",null,$uid,'applications','manuel','ajout');
