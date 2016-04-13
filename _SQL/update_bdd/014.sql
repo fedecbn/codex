@@ -1,14 +1,20 @@
 ﻿CREATE OR REPLACE FUNCTION update_bdd() RETURNS varchar AS 
 $BODY$ 
 DECLARE phase varchar;
+DECLARE user_codex varchar;
 BEGIN
---- pour tester la fonction
+----------------------------------------------------
+------VARIABLES A DÉFINIR---------------------------
+---## Pour tester la fonction. Une fois que vous souhaiter enregistrer la modif dans la table update_bdd, mettre la phase en "prod" ##--
 -- phase = 'test';
 phase = 'prod';
+---## user_codex est l'utilisateur du codex (décommentez la ligne suivante) ##--
+-- user_codex = 'pg_user';
+----------------------------------------------------
 
 --- 1. Code permettant la mise à jour
 --- Mise à jour de la table évaluation pour ajouter les versions de l'évaluation
-GRANT ALL ON SEQUENCE lr.validation_id_seq  TO pg_user;
+EXECUTE 'GRANT ALL ON SEQUENCE lr.validation_id_seq  TO '||user_codex;
 
 
 --- 2. Pour le suivi des mises à jours

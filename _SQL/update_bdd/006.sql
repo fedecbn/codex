@@ -44,7 +44,7 @@ ELSE END CASE;
 -- Liste rouge
 SELECT id_rubrique INTO test FROM applications.rubrique WHERE id_module = 'lr'; 
 CASE WHEN test IS NOT NULL THEN
-INSERT INTO applications.onglet VALUES ((SELECT id_rubrique FROM applications.rubrique WHERE id_module = 'lr'), 'lr','eval','Evaluation','Liste des taxons');
+INSERT INTO applications.onglet VALUES ((SELECT id_rubrique FROM applications.rubrique WHERE id_module = 'lr'), 'lr','lr','Evaluation','Liste des taxons');
 INSERT INTO applications.onglet VALUES ((SELECT id_rubrique FROM applications.rubrique WHERE id_module = 'lr'), 'lr','valid','Validation','Liste des évaluations');
 INSERT INTO applications.onglet VALUES ((SELECT id_rubrique FROM applications.rubrique WHERE id_module = 'lr'), 'lr','droit','Utilisateurs','Utilisateurs de la rubrique');
 ELSE END CASE;
