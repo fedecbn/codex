@@ -101,6 +101,13 @@ $( "#validate-button" ).button({text: true})
 		return (false);
 	});
 
+	$( "#invalidate-button" ).button({text: true})
+	.click(function() {
+		var sData = oTable.$('input').serialize();
+		invalidateForm ("Invalider des evaluations",500,300,'#dialog',"form.php","submit.php",sData,'invalid');
+		return (false);
+	});
+
 //------------------------------------------------------------------------------ BOUTONS / Exports PDF
 
 $( "#export-PDF-button" )

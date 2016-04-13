@@ -25,16 +25,22 @@ e.setAttribute('src',destination);
 window.document.body.appendChild(e);
 }
 
+affMasqBtn();
+
 function affMasqBtn(){
-    var n = $("input:checked[name='id']").length;                               // Nombre de checkbox cochée
+    var n = $("input:checked[name='id[]']").length;                               // Nombre de checkbox cochée
             console.log (n);
     if(n == 0) {
         $("#export-TXT-button").button('disable');
         $("#export-PDF-button").button('disable');
+        $("#validate-button").button('disable');
+        $("#invalidate-button").button('disable');
         $("#del-button").button('disable'); 
     } else {
         $("#export-TXT-button").button('enable');
         $("#export-PDF-button").button('enable');
+        $("#validate-button").button('enable');
+        $("#invalidate-button").button('enable');
         $("#del-button").button('enable'); 
     }
 }
@@ -166,12 +172,75 @@ function fnGetSelected( oTableLocal )
 
   //------------------------------------------------------------------------------ Validation
     function validateFunc (uid,class_valid) {
-		$(this).load ("../commun/validate.php?"+uid+"&class_valid="+class_valid);
+		$(this).load ("submit.php?mode=validation&"+uid+"&class_valid="+class_valid);
 	}
 
-    function validateFuncplus (uid,class_valid,val_com) {
-		$(this).load ("../commun/validate.php?"+uid+"&class_valid="+class_valid+"&val_com="+val_com);
-	}
+	function invalidateForm (titre,larg,haut,dialogId,formUrl,submitUrl,params,params2) {
+        if (submitUrl != "") {
+        	$(dialogId).dialog({
+                open: function ()
+                {
+                    originalContent = $(dialogId).html();
+                    $(dialogId).load (formUrl);
+                },
+                close : function(event, ui) {
+                    $(dialogId).html(originalContent);
+                },
+                title: titre,
+                modal: true,
+                position:['middle',100],
+        		width: larg,
+        		height : haut,
+            	resizable: false,
+    			buttons: [
+                    { text: "Annuler", 
+						click: function(e) {
+            		      $(dialogId).dialog( "close" ); 
+						}
+					},
+                    { text: "Enregistrer", click: function() {
+                        if ($("#form1").valid()) {
+                            $("#form1",this).ajaxSubmit({
+                                url: submitUrl+"?"+params,
+                                type: "get",
+                                data: { 
+								class_valid : params2,
+								mode : "validation" 
+								},
+                                clearForm: true,
+                                error: function(){
+                                    alert ("Erreur AJAX");
+                                },
+                                success: function(e) {
+                                    $(dialogId).dialog( "close" ); 
+									// window.location.replace ('index.php');
+                                }
+                            });
+						}
+                    }}
+                ]
+            });
+        } else {                                                                // View
+        	$(dialogId).dialog({
+                open: function ()
+                {
+                    $(dialogId).load (formUrl);
+                },
+                title: titre,
+                modal: true,
+                position:['middle',100],
+        		width: larg,
+        		height : haut,
+            	resizable: false,
+    			buttons: [
+                    { text: "Fermer", click: function() {
+            		      $(dialogId).dialog( "close" );
+                    }}
+                ]
+            });
+        }
+    }
+
 
 /*<![CDATA[*/
 

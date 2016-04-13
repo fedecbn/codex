@@ -1722,8 +1722,8 @@ if ($action == 'valid') {
 	$bt2 = 'invalidate';$title2 = 'Invalider';
 }
 
-$boutons = 	'<a class=\"'.$class1.'\" id=\"'.$id.'\" ><img id=\"valid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt1.'.png\" title=\"'.$title1.'\" ></a>'.
-			'<a class=\"'.$class2.'\" id=\"'.$id.'\" ><img id=\"invalid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt2.'.png\" title=\"'.$title2.'\" ></a>';
+$boutons = 	'<a class=\"'.$class1.'\" id=\"'.$id.'\" name=\"valid_'.$id.'\"><img id=\"valid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt1.'.png\" title=\"'.$title1.'\" ></a>'.
+			'<a class=\"'.$class2.'\" id=\"'.$id.'\" name=\"invalid_'.$id.'\"><img id=\"invalid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt2.'.png\" title=\"'.$title2.'\" ></a>';
 
 return $boutons;
 }

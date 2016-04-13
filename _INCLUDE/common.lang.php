@@ -211,5 +211,8 @@ $lang['it']['defaut_2']="";
 $lang['fr']['validate']="Valider";
 $lang['it']['validate']="Valider";
 
+$lang['fr']['invalidate']="Invalider";
+$lang['it']['invalidate']="Invalider";
+
 //------------------------------------------------------------------------------ Form / Groupes FSD
 ?>
