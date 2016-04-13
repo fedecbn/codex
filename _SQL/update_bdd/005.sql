@@ -3,12 +3,20 @@ $BODY$
 DECLARE id_rubrique varchar;
 DECLARE id_onglet varchar;
 DECLARE phase varchar;
+DECLARE user_codex varchar;
 BEGIN
---- pour tester la fonction
+----------------------------------------------------
+------VARIABLES A DÉFINIR---------------------------
+---## Pour tester la fonction. Une fois que vous souhaiter enregistrer la modif dans la table update_bdd, mettre la phase en "prod" ##--
 -- phase = 'test';
 phase = 'prod';
+---## user_codex est l'utilisateur du codex (décommentez la ligne suivante) ##--
+-- user_codex = 'pg_user';
+----------------------------------------------------
 
 --- 1. Code permettant la mise à jour
+CASE WHEN user_codex IS NULL THEN RETURN 'Définir user_codex dans le script'; ELSE
+
 ---------------------------------------------
 -- Création des nouvealles tables pour la gestion des droits
 -- Si un rôle est ajouté, il suffit de rajouter une colonne à cette table
@@ -27,7 +35,7 @@ administrateur boolean DEFAULT FALSE,
 referent boolean DEFAULT FALSE,
 CONSTRAINT user_role_pk PRIMARY KEY (id_user,rubrique)
 );
-GRANT ALL ON TABLE applications.utilisateur_role TO pg_user;
+EXECUTE 'GRANT ALL ON TABLE applications.utilisateur_role TO '||user_codex;
 ---------------------------------------------
 -- C'est ici que l'on fait le lien entre le rôle et le droit (booleen = ce type d'utilisateur a ce type de droit pour cet objet dans cette rubrique).
 ---------------------------------------------
@@ -41,7 +49,7 @@ objet character varying,
 role character varying NOT NULL,
 CONSTRAINT droit_pk PRIMARY KEY (id_droit)
 );
-GRANT ALL ON TABLE applications.droit TO pg_user;
+EXECUTE 'GRANT ALL ON TABLE applications.droit TO '||user_codex;
 ---------------------------------------------
 --- Transfert des droits anciens vers le nouveau modèle
 ---------------------------------------------
@@ -60,6 +68,7 @@ END LOOP;
 INSERT INTO applications.utilisateur_role (id_user, rubrique,lecteur) SELECT id_user, 'home', true FROM applications.utilisateur;
 INSERT INTO applications.utilisateur_role (id_user, rubrique,lecteur) SELECT id_user, 'module_admin', true FROM applications.utilisateur;
 INSERT INTO applications.utilisateur_role (id_user, rubrique,lecteur) SELECT id_user, 'bugs', true FROM applications.utilisateur;
+INSERT INTO applications.utilisateur_role (id_user, rubrique,no_acces) SELECT id_user, 'syntaxa', true FROM applications.utilisateur;
 
 
 ---------------------------------------------
@@ -307,5 +316,6 @@ RETURN 'OK';
 ELSE RETURN 'Verifier la phase dans le code';
 END CASE;
 
+END CASE;
 END;$BODY$ LANGUAGE plpgsql;
 SELECT * FROM update_bdd();

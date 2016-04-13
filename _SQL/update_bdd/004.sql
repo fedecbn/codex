@@ -7,6 +7,10 @@ BEGIN
 phase = 'prod';
 
 --- 1. Code permettant la mise à jour
+--mise à jour des sequences pour la table applications.rubrique
+PERFORM setval('applications.rubrique_id_rubrique_seq ', COALESCE((SELECT MAX(id_rubrique)+1 FROM applications.rubrique), 1), false);
+PERFORM setval('applications.pres_id_pres_seq ', COALESCE((SELECT MAX(id_pres)+1 FROM applications.pres), 1), false);
+
 -- Ajout de la rubrique Syntaxa dans les tables
 DELETE FROM applications.rubrique WHERE id_module = 'syntaxa';
 INSERT INTO applications.rubrique(id_module, pos, icone, titre, descr, niveau, link, lang)

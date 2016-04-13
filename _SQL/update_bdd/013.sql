@@ -1,10 +1,16 @@
 ﻿CREATE OR REPLACE FUNCTION update_bdd() RETURNS varchar AS 
 $BODY$ 
 DECLARE phase varchar;
+DECLARE user_codex varchar;
 BEGIN
---- pour tester la fonction
+----------------------------------------------------
+------VARIABLES A DÉFINIR---------------------------
+---## Pour tester la fonction. Une fois que vous souhaiter enregistrer la modif dans la table update_bdd, mettre la phase en "prod" ##--
 -- phase = 'test';
 phase = 'prod';
+---## user_codex est l'utilisateur du codex (décommentez la ligne suivante) ##--
+-- user_codex = 'pg_user';
+----------------------------------------------------
 
 --- 1. Code permettant la mise à jour
 --- Mise à jour de la table évaluation pour ajouter les versions de l'évaluation
@@ -17,15 +23,15 @@ INSERT INTO referentiels.champs (rubrique_champ, nom_champ,  nom_champ_synthese,
 --- tables validation
 DROP TABLE IF EXISTS lr.validation;
 CREATE TABLE lr.validation (id serial NOT NULL,uid integer,etape varchar,version integer,id_user varchar,validation varchar,val_com varchar,dat_val timestamp,CONSTRAINT val_pk PRIMARY KEY (id));
-GRANT ALL ON TABLE lr.validation TO pg_user;
+EXECUTE 'GRANT ALL ON TABLE lr.validation TO '||user_codex;
 
 DROP TABLE IF EXISTS lr.presence_tag;
 CREATE TABLE lr.presence_tag (uid integer NOT NULL,typ_geo varchar,cd_geo varchar,CONSTRAINT presence_tag_pk PRIMARY KEY (uid,typ_geo,cd_geo));
-GRANT ALL ON TABLE lr.presence_tag TO pg_user;
+EXECUTE 'GRANT ALL ON TABLE lr.presence_tag TO '||user_codex;
 
 DROP TABLE IF EXISTS lr.validation_globale;
 CREATE TABLE lr.validation_globale (uid integer NOT NULL,nbval int,nbvalcbn int,listval varchar,listvalcbn varchar,nbinval int,nbinvalcbn int,listinval varchar,listinvalcbn varchar,nbpot int,nbpotcbn int,listpot varchar,listpotcbn varchar,CONSTRAINT validation_globale_pk PRIMARY KEY (uid));
-GRANT ALL ON TABLE lr.validation_globale TO pg_user;
+EXECUTE 'GRANT ALL ON TABLE lr.validation_globale TO '||user_codex;
 
 --- description tables validation
 DELETE FROM referentiels.champs WHERE rubrique_champ = 'valid_lr' AND (table_champ = 'validation' OR table_champ = 'presence_tag' OR table_champ = 'validation_globale');
