@@ -18,6 +18,10 @@
 //------------------------------------------------------------------------------ INIT.
 session_start();
 include_once ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
 
@@ -90,5 +94,16 @@ $iTotal = $aResultTotal;
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';
 echo $sOutput;
+
+	//------------------------------------------------------------------------------ SI PAS ACCES 
+	} else {
+	$sOutput = '{';
+	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
+	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
+	$sOutput .= '"aaData": [ ';
+	$sOutput .= '] }';
+	echo $sOutput;
+	}
 
 ?>

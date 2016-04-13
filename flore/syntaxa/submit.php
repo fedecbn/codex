@@ -12,6 +12,11 @@
 //------------------------------------------------------------------------------//
 session_start();
 include ("commun.inc.php");
+/*D1 : Droit accès à la page*/
+$base_file = substr(basename(__FILE__),0,-4);
+$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
+if ($droit_page) {
+
 
 //------------------------------------------------------------------------------ PARMS.
 define ("DEBUG",true);
@@ -194,6 +199,8 @@ if (!DEBUG) {
 pg_close ($db);
 
 return (true);
+//------------------------------------------------------------------------------ SI PAS ACCES 
+} else require ("../commun/access_denied.php"); 
 
 
 ?>

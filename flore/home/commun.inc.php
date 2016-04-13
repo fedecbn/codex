@@ -24,7 +24,6 @@ $query_rub = "
 
 $query_list="SELECT * FROM applications.rubrique 
 	WHERE typ = 'list'
-	AND id_module <> 'syntaxa'
 	ORDER BY pos;";
 
 /*Récupération des droits utilisateurs*/	
