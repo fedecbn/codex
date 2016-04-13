@@ -76,10 +76,8 @@ $iTotal = $aResultTotal;
 				if ($row['notes'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['notes'],"undo_hmtl").'\" ></a>",';} else {$sOutput .= '"",';}
 			else if ($key == 'bouton')
 				if ($edit) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
-			else if ($key == 'checkbox')
-				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >",';
-			else if ($key == 'validation')
-				$sOutput .= '"'.$row[$key].'<img id=\"validation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/validate.png\"  title=\"validé\" style=\"display:none\" /><img id=\"invalidation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/invalidate.png\"  title=\"validé\" style=\"display:none\" />",';
+			else if ($key == 'checkbox') $sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
+			else if ($key == 'validation') $sOutput .= '"'.$row[$key].'<img id=\"validation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/validate.png\"  title=\"validé\" style=\"display:none\" /><img id=\"invalidation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/invalidate.png\"  title=\"validé\" style=\"display:none\" />",';
 			else if ($key == 'bouton_valid') {
 				if ($validate) 	{
 					if ($row['validation'] == null) $sOutput .= '"'.bt_validate($row['uid'],'valid').'",'; 

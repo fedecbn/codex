@@ -24,8 +24,8 @@
         return (false);
 	});
 
-    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".valid,.valid_chg", function ($e) {
-		validateFunc($(this).attr('id'),$(this).attr('class'));
+    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".valid", function ($e) {
+		validateFunc("id[]="+$(this).attr('id'),$(this).attr('class'));
 		document.getElementById("validation_"+$(this).attr('id')).style.display = "";
 		document.getElementById("invalidation_"+$(this).attr('id')).style.display = "none";
 		document.getElementById("valid_"+$(this).attr('id')).src = "../../_GRAPH/mini/no_validate.png";
@@ -33,8 +33,8 @@
         return (false);
 	});
 
-    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".invalid,.invalid_chg", function ($e) {
-		validateFunc($(this).attr('id'),$(this).attr('class'));
+    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".invalid", function ($e) {
+		validateFunc("id[]="+$(this).attr('id'),$(this).attr('class'));
 		document.getElementById("validation_"+$(this).attr('id')).style.display = "none";
 		document.getElementById("invalidation_"+$(this).attr('id')).style.display = "";
 		document.getElementById("valid_"+$(this).attr('id')).src = "../../_GRAPH/mini/validate.png";

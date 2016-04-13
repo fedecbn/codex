@@ -208,7 +208,8 @@ $lang['it']['defaut']="";
 $lang['fr']['defaut_2']="Onglet n°2";
 $lang['it']['defaut_2']="";
 
-
+$lang['fr']['validate']="Valider";
+$lang['it']['validate']="Valider";
 
 //------------------------------------------------------------------------------ Form / Groupes FSD
 ?>

@@ -93,12 +93,10 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau >= 128) 
-                    echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				if ($niveau >= 128) 
-					echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) 
-                    echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                if ($niveau >= 255) echo ("<button id=\"validate-button\"> ".$lang[$lang_select]['validate']."</button>&nbsp;&nbsp;");
+                if ($niveau >= 128) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                if ($niveau >= 255) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/

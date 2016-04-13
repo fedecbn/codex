@@ -166,8 +166,12 @@ function fnGetSelected( oTableLocal )
 
   //------------------------------------------------------------------------------ Validation
     function validateFunc (uid,class_valid) {
-		$(this).load ("../commun/validate.php?uid="+uid+"&class_valid="+class_valid);
-    }
+		$(this).load ("../commun/validate.php?"+uid+"&class_valid="+class_valid);
+	}
+
+    function validateFuncplus (uid,class_valid,val_com) {
+		$(this).load ("../commun/validate.php?"+uid+"&class_valid="+class_valid+"&val_com="+val_com);
+	}
 
 /*<![CDATA[*/
 

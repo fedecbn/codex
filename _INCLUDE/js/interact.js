@@ -77,6 +77,30 @@ $( "#maj-from-taxa-button" )
 		window.location.replace ('index.php?m=maj');
 	});
 
+$( "#validate-button" ).button({text: true})
+	.click(function() {
+		var sData = oTable.$('input').serialize();
+		if (sData != "") {
+			validateFunc(sData,'valid');
+			$("#dialog").dialog({
+				open: function () {$(this).html("<br><center><b>Evaluations Validés<b></center>")},         
+				title: "Validation",
+				modal: true,
+				position:['middle',200],
+				width: 300,
+				height: 160,
+				resizable: false,
+				buttons: {
+					"OK": function() {
+						$(this).dialog( "close" );
+						window.location.replace ('index.php');
+					}
+				}
+			});
+		}
+		return (false);
+	});
+
 //------------------------------------------------------------------------------ BOUTONS / Exports PDF
 
 $( "#export-PDF-button" )
