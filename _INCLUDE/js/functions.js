@@ -213,7 +213,7 @@ function fnGetSelected( oTableLocal )
                                 },
                                 success: function(e) {
                                     $(dialogId).dialog( "close" ); 
-									// window.location.replace ('index.php');
+									window.location.replace ('index.php');
                                 }
                             });
 						}

@@ -74,6 +74,8 @@ $iTotal = $aResultTotal;
 				if ($row['nbm5_post1990_est'] != '') {$sOutput .= '"'.$row['nbm5_post1990_est'].'",';} else {$sOutput .= '"'.$row['nbm5_post1990'].'",';}
 			else if ($key == 'notes')
 				if ($row['notes'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['notes'],"undo_hmtl").'\" ></a>",';} else {$sOutput .= '"",';}
+			else if ($key == 'val_com')
+				if ($row['val_com'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['val_com'],"undo_hmtl").'\" ></a>",';} else {$sOutput .= '"",';}
 			else if ($key == 'bouton')
 				if ($edit) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
 			else if ($key == 'checkbox') $sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
