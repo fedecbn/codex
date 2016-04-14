@@ -31,8 +31,7 @@ ref_colonne_et_valeur ($id_page);
 
 /*Droit sur les boutons*/
 $typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
-$view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
-$edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
+$save=affichage($typ_droit,$rubrique,$onglet,"save_fiche",$droit_user);
 $validate=affichage($typ_droit,$rubrique,$onglet,"validate_fiche",$droit_user);
 
 

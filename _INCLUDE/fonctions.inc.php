@@ -1688,6 +1688,27 @@ while ($row = pg_fetch_assoc($result))
 return $droit;
 }
 
+function ref_droit($id_user,$typ_droit,$rubrique,$onglet) {
+$db=sql_connect(SQL_base);
+
+if ($id_user == null)
+	{
+	$query= "SELECT objet, role FROM applications.droit a
+		WHERE typ_droit = '$typ_droit' AND rubrique = '$rubrique' AND onglet = '$onglet'";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+	while ($row = pg_fetch_assoc($result))
+		$droit[$row['objet']][] = false;
+	} else {
+	$query= "SELECT objet, role, z.*  FROM applications.droit a JOIN applications.utilisateur_role z ON a.rubrique = z.rubrique
+		WHERE typ_droit = '$typ_droit' AND a.rubrique = '$rubrique' AND onglet = '$onglet' AND id_user = '$id_user';";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+	while ($row = pg_fetch_assoc($result))
+		if ($row[$row['role']] == 't') $droit[$row['objet']] = true; else $droit[$row['objet']] = false;
+	}
+	
+	return $droit;
+}
+
 function affichage($typ_droit,$rubrique,$onglet,$objet,$droit_user) {
 $db=sql_connect(SQL_base);
 $query= "SELECT role FROM applications.droit WHERE typ_droit = '$typ_droit' AND rubrique = '$rubrique' AND onglet = '$onglet' AND objet = '$objet';";

@@ -28,7 +28,6 @@ $lang_select=$_COOKIE['lang_select'];
 
 $onglet = ref_onglet($id_rub);
 
-
 //------------------------------------------------------------------------------ QUERY du module
 $query_module = "
 	SELECT t.*,c.*,e.*, f.indi_cal  

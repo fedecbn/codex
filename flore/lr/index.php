@@ -39,6 +39,11 @@ ref_colonne_et_valeur ($id_page);
 // $ref['etape'] = array(0 =>"",1=>"pré-eval",2=>"éval",3=>"post-éval");
 // $ref['endemisme'] = array("" =>"",f=>"NON",t=>"<b>OUI</b>");
 
+/*Droits*/
+$typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+
+
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
 
@@ -93,11 +98,11 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau >= 255) echo ("<button id=\"validate-button\"> ".$lang[$lang_select]['validate']."</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) echo ("<button id=\"invalidate-button\"> ".$lang[$lang_select]['invalidate']."</button>&nbsp;&nbsp;");
-                if ($niveau >= 128) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                if ($droit['validate_fiche']) echo ("<button id=\"validate-button\"> ".$lang[$lang_select]['validate']."</button>&nbsp;&nbsp;");
+                if ($droit['validate_fiche']) echo ("<button id=\"invalidate-button\"> ".$lang[$lang_select]['invalidate']."</button>&nbsp;&nbsp;");
+                if ($droit['to-refnat']) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				if ($droit['export_fiche']) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                if ($droit['del_fiche']) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -111,12 +116,9 @@ switch ($mode) {
                 echo "Droit d'utilisation de la rubrique";
             echo ("</div>");
             echo ("<div style=\"float:right;\">");
-                // if ($niveau >= 128) 
-                    // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				// if ($niveau >= 64) 
-					// echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                // if ($niveau >= 255) 
-                    // echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                // if ($niveau >= 128)  echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				// if ($niveau >= 64)  echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                // if ($niveau >= 255)  echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -142,6 +144,7 @@ include ("../commun/add_fiche.php");
 if ($niveau <= 64) $desc = " bloque"; else $disa = $desc;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
+
 //------------------------------------------------------------------------------ EDIT LR EN TETE
         echo ("<div id=\"$id_page\" >");
         echo ("</div>");
@@ -149,14 +152,6 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
         echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
         echo ("<div style=\"float:left;\">");
             echo ("<font size=5 color=#008C8E >".$lang[$lang_select]['edit_fiche']."</font>");
-        echo ("</div>");
-        echo ("<div style=\"float:right;\">");
-            if ($mode == "edit") {
-                echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-                echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
-            } else {
-                echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
-            }
         echo ("</div>");
 		
         if (isset($_GET['id']) & !empty($_GET['id'])) {                         // Modifier
@@ -174,10 +169,15 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 				{$desc2 .= " bloque";} else	{$desc2 .= $desc;}
 
 		if (pg_result($result,0,"etape") == null) {$etape = 1;}
-		else {$etape =pg_result($result,0,"etape");}
+			else {$etape =pg_result($result,0,"etape");}
 		
 		if (pg_result($result,0,"avancement") == null) {$avancement = 1;}
-		else {$avancement =pg_result($result,0,"avancement");}
+			else {$avancement =pg_result($result,0,"avancement");}
+
+        echo ("<div style=\"float:right;\">");
+            if ($droit['save_fiche']) echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+            if ($droit['retour_fiche']) echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
+        echo ("</div>");
 		
         echo ("<br>");
         echo ("<center>");
