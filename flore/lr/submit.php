@@ -29,6 +29,14 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 global $db, $ref, $aColumns, $aColumnsExp, $aColumnsTot, $aColumnsSub, $champ_ref;
 ref_colonne_et_valeur ($id_page);
 
+/*Droit sur les boutons*/
+$typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
+$view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
+$edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
+$validate=affichage($typ_droit,$rubrique,$onglet,"validate_fiche",$droit_user);
+
+
+
 switch ($mode) {
 //------------------------------------------------------------------------------	
 //------------------------------------------------------------------------------ 
@@ -41,6 +49,7 @@ switch ($mode) {
 		$_POST['cat_fin'] = 10;
 		}
 
+	/*changment d'étape*/
 	if (!isset($_POST["etape"])) {$etape = 1;}
 	else {$etape = $_POST["etape"];}
 
@@ -117,27 +126,26 @@ switch ($mode) {
 
 	foreach($id as $uid) {
 	//------------------------------------------------------------------------------ Query
-	$query = "SELECT evaluation.etape, evaluation.version, validation FROM lr.evaluation 
+	$query = "SELECT evaluation.etape, evaluation.version,evaluation.avancement, validation FROM lr.evaluation 
 	LEFT JOIN lr.validation ON evaluation.uid = validation.uid
 	WHERE evaluation.uid=$uid ;";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	$row = pg_fetch_assoc($result);
-	// echo "<BR>validation initiale ".$row['validation'];
 	//------------------------------------------------------------------------------ MAIN
-	if ($class_valid == 'valid') {
+	if ($row['avancement'] == 3 AND $class_valid == 'valid') {
 		if ($row['validation'] == null) $query = "INSERT INTO lr.validation(uid, etape, version, id_user, validation, val_com, dat_val) VALUES ($uid, '".$row['etape']."', ".$row['version'].", '$id_user', 'valid', null, NOW());";
-		else $query = "UPDATE lr.validation SET validation='valid', val_com=null,  dat_val=NOW() WHERE uid=$uid AND etape= '".$row['etape']."' AND version=".$row['version']." AND id_user='$id_user';";
+		else $query = "UPDATE lr.validation SET validation='valid', val_com=null,  dat_val=NOW() WHERE uid=$uid AND etape= ".$row['etape']." AND version=".$row['version']." AND id_user='$id_user';";
 		echo "<BR>$uid validé";
 		}
-	elseif ($class_valid == 'invalid') {
+	elseif ($row['avancement'] == 3 AND $class_valid == 'invalid') {
 		if ($row['validation'] == null) $query = "INSERT INTO lr.validation(uid, etape, version, id_user, validation, val_com, dat_val) VALUES ($uid, '".$row['etape']."', ".$row['version'].", '$id_user', 'invalid', '$val_com', NOW());";
-		else $query = "UPDATE lr.validation SET validation='invalid', val_com= $val_com,  dat_val=NOW() WHERE uid=$uid AND etape='".$row['etape']."' AND version=".$row['version']." AND id_user='$id_user';";
+		else $query = "UPDATE lr.validation SET validation='invalid', val_com= $val_com,  dat_val=NOW() WHERE uid=$uid AND etape=".$row['etape']." AND version=".$row['version']." AND id_user='$id_user';";
 		echo "<BR>$uid invalidé";
 		// echo "<BR>$query";
 		}
 	else {
 		$query = "SELECT 1;";
-		echo "<BR>$uid Rien";
+		echo "<BR>$uid non traité";
 	}
 	
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
