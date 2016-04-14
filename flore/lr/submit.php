@@ -131,7 +131,7 @@ switch ($mode) {
 		}
 	elseif ($class_valid == 'invalid') {
 		if ($row['validation'] == null) $query = "INSERT INTO lr.validation(uid, etape, version, id_user, validation, val_com, dat_val) VALUES ($uid, '".$row['etape']."', ".$row['version'].", '$id_user', 'invalid', '$val_com', NOW());";
-		else $query = "UPDATE lr.validation SET validation='invalid', val_com= '$val_com',  dat_val=NOW() WHERE uid=$uid AND etape='".$row['etape']."' AND version=".$row['version']." AND id_user='$id_user';";
+		else $query = "UPDATE lr.validation SET validation='invalid', val_com= $val_com,  dat_val=NOW() WHERE uid=$uid AND etape='".$row['etape']."' AND version=".$row['version']." AND id_user='$id_user';";
 		echo "<BR>$uid invalidé";
 		// echo "<BR>$query";
 		}

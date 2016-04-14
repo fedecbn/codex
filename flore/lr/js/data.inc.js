@@ -56,9 +56,9 @@
             }
             switch (aData[5])                                                  // Cat A
             {
-                case "Indigène" : $('td:eq(5)', nRow).addClass('Indigène'); break;
-                case "Cryptogène" : $('td:eq(5)', nRow).addClass('Cryptogène'); break;
-                case "Exotique" : $('td:eq(5)', nRow).addClass('Exotique'); break;
+                case "I" : $('td:eq(5)', nRow).addClass('Indigène'); break;
+                case "I?" : $('td:eq(5)', nRow).addClass('Cryptogène'); break;
+                case "E" : $('td:eq(5)', nRow).addClass('Exotique'); break;
             }
             switch (aData[6])                                                  // Cat A
             {

@@ -1706,24 +1706,24 @@ function bt_edit($id,$class = 'edit') {return '<a class=\"'.$class.'\" id=\"'.$i
 
 function bt_validate($id,$action) {
 
-$class1 = 'valid';$class2 = 'invalid';
+
 
 if ($action == 'valid') {
-	$bt1 = 'validate'; $title1 = 'Valider';
-	$bt2 = 'invalidate'; $title2 = 'Invalider';
+	$class1 = 'valid';$bt1 = 'validate'; $title1 = 'Valider';
+	$class2 = 'invalid';$bt2 = 'invalidate'; $title2 = 'Invalider';
 } elseif ($action == 'invalid') {
-	$bt1 = 'no_validate'; $title1 = '';
-	$bt2 = 'invalidate';$title2 = 'Invalider';
+	$class1 = '';$bt1 = 'no_validate'; $title1 = '';
+	$class2 = 'invalid';$bt2 = 'invalidate';$title2 = 'Invalider';
 } elseif ($action == 'revalid') {
-	$bt1 = 'validate';$title1 = 'Valider';
-	$bt2 = 'no_invalidate';$title2 = '';
+	$class1 = 'valid';$bt1 = 'validate';$title1 = 'Valider';
+	$class2 = '';$bt2 = 'no_invalidate';$title2 = '';
 } else {
-	$bt1 = 'validate';$title1 = 'Valider';
-	$bt2 = 'invalidate';$title2 = 'Invalider';
+	$class1 = 'valid';$bt1 = 'validate';$title1 = 'Valider';
+	$class2 = 'invalid';$bt2 = 'invalidate';$title2 = 'Invalider';
 }
 
-$boutons = 	'<a class=\"'.$class1.'\" id=\"'.$id.'\" name=\"valid_'.$id.'\"><img id=\"valid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt1.'.png\" title=\"'.$title1.'\" ></a>'.
-			'<a class=\"'.$class2.'\" id=\"'.$id.'\" name=\"invalid_'.$id.'\"><img id=\"invalid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt2.'.png\" title=\"'.$title2.'\" ></a>';
+$boutons = 	'<a class=\"'.$class1.'\" id=\"valida_'.$id.'\" value=\"'.$id.'\"><img id=\"valid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt1.'.png\" title=\"'.$title1.'\" ></a>'.
+			'<a class=\"'.$class2.'\" id=\"invalida_'.$id.'\" value=\"'.$id.'\"><img id=\"invalid_'.$id.'\" src=\"../../_GRAPH/mini/'.$bt2.'.png\" title=\"'.$title2.'\" ></a>';
 
 return $boutons;
 }

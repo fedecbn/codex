@@ -26,24 +26,24 @@
 	});
 
     $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".valid", function ($e) {
-		validateFunc("id[]="+$(this).attr('id'),$(this).attr('class'));
-		document.getElementById("validation_"+$(this).attr('id')).style.display = "";
-		document.getElementById("invalidation_"+$(this).attr('id')).style.display = "none";
-		document.getElementById("valid_"+$(this).attr('id')).src = "../../_GRAPH/mini/no_validate.png";
-		document.getElementById("invalid_"+$(this).attr('id')).src = "../../_GRAPH/mini/invalidate.png";
-		document.getElementsByName("valid_"+$(this).attr('id')).removeClass = "validate";
-		document.getElementsByName("invalid_"+$(this).attr('id')).addClass = "invalidate";
+		validateFunc("id[]="+$(this).attr('value'),$(this).attr('class'));
+		document.getElementById("validation_"+$(this).attr('value')).style.display = "";
+		document.getElementById("invalidation_"+$(this).attr('value')).style.display = "none";
+		document.getElementById("valid_"+$(this).attr('value')).src = "../../_GRAPH/mini/no_validate.png";
+		document.getElementById("invalid_"+$(this).attr('value')).src = "../../_GRAPH/mini/invalidate.png";
+		document.getElementById("invalida_"+$(this).attr('value')).className = "invalid";
+		$(this).removeClass("valid");
         return (false);
 	});
 
     $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".invalid", function ($e) {
-		invalidateForm ("Invalider des evaluations",500,300,'#dialog',"form.php","submit.php",$(this).attr('id'),'invalid');
-		document.getElementById("validation_"+$(this).attr('id')).style.display = "none";
-		document.getElementById("invalidation_"+$(this).attr('id')).style.display = "";
-		document.getElementById("valid_"+$(this).attr('id')).src = "../../_GRAPH/mini/validate.png";
-		document.getElementById("invalid_"+$(this).attr('id')).src = "../../_GRAPH/mini/no_invalidate.png";
-		document.getElementsByName("valid_"+$(this).attr('id')).addClass = "validate";
-		document.getElementsByName("invalid_"+$(this).attr('id')).removeClass = "invalidate";		
+		invalidateForm ("Invalider des evaluations",500,300,'#dialog',"form.php","submit.php","id[]="+$(this).attr('value'),'invalid');
+		// document.getElementById("validation_"+$(this).attr('value')).style.display = "none";
+		// document.getElementById("invalidation_"+$(this).attr('value')).style.display = "";
+		// document.getElementById("valid_"+$(this).attr('value')).src = "../../_GRAPH/mini/validate.png";
+		// document.getElementById("invalid_"+$(this).attr('value')).src = "../../_GRAPH/mini/no_invalidate.png";
+		// document.getElementById("valida_"+$(this).attr('value')).className = "valid";
+		// $(this).removeClass("invalid");		
         return (false);
 	});
 
