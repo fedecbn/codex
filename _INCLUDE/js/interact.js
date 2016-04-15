@@ -83,7 +83,7 @@ $( "#validate-button" ).button({text: true})
 		if (sData != "") {
 			validateFunc(sData,'valid');
 			$("#dialog").dialog({
-				open: function () {$(this).html("<br><center><b>Evaluations Validés<b></center>")},         
+				open: function () {$(this).html("<br><center><b>Evaluations validées<b></center>")},         
 				title: "Validation",
 				modal: true,
 				position:['middle',200],

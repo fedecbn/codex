@@ -44,7 +44,7 @@ $query_liste = "
 	FROM lr.taxons
 	LEFT JOIN lr.chorologie ON chorologie.uid=taxons.uid 
 	LEFT JOIN lr.evaluation ON evaluation.uid=taxons.uid  
-	LEFT JOIN lr.validation ON validation.uid=taxons.uid  AND evaluation.etape = validation.etape AND evaluation.version = validation.version
+	LEFT JOIN lr.validation ON validation.uid=taxons.uid  AND evaluation.etape = validation.etape_val AND evaluation.version = validation.version_val
 	JOIN refnat.taxons a ON a.uid = taxons.uid 
 	WHERE a.$id_rub = TRUE ";
 

@@ -26,7 +26,6 @@ $typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_pag
 
 $typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
 $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
-// var_dump($droit);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);

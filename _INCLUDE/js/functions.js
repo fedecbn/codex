@@ -175,6 +175,42 @@ function fnGetSelected( oTableLocal )
 		$(this).load ("submit.php?mode=validation&"+uid+"&class_valid="+class_valid);
 	}
 
+	function changeEtape(id,action) {
+		$.ajax({
+			method: "GET",
+			url: "submit.php",
+			data: {
+				id: id,
+				mode: "etape",
+				action: action
+				},
+			error: function(){
+				alert ("Erreur AJAX");
+			},
+			success: function(e) {
+				$("#enregistrer-dialog").dialog({
+					title: 'Changement de phase',
+					modal: true,
+					position:['middle',150],
+					width: 400,
+					height : 270,
+					resizable: false,
+					buttons: {
+						"Retour à la fiche": function() {
+							location.reload();
+							$(this).dialog("close");
+					   },
+						"Liste des taxons": function() {
+							$(this).dialog("close");
+							window.location.replace ('index.php');
+							// window.close()
+					   }
+					}
+				});
+			}
+		});
+	}
+		
 	function invalidateForm (titre,larg,haut,dialogId,formUrl,submitUrl,params,params2) {
 		$(dialogId).dialog({
 			open: function ()

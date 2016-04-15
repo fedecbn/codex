@@ -140,8 +140,6 @@ include ("../commun/add_fiche.php");
 /*Récupération des référentiels ==> ref_champ ($table,$index,$valeur,$orderby)*/
 // include ("./lr-ref.php");		
 /*Gestion des niveau de droit*/
-if ($niveau <= 64) $desc = " bloque"; else $disa = $desc;
-if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
 
 //------------------------------------------------------------------------------ EDIT LR EN TETE
@@ -162,43 +160,41 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
             if (pg_num_rows ($result)) {
-			$hybride = pg_result($result,0,"hybride");
-			$exotique = pg_result($result,0,"id_indi");
-			if ($hybride == 't' or $exotique == 3)		/*Gestion des hybrides et exotiques*/
-				{$desc2 .= " bloque";} else	{$desc2 .= $desc;}
-
+			
 		if (pg_result($result,0,"etape") == null) {$etape = 1;}
 			else {$etape =pg_result($result,0,"etape");}
 		
 		if (pg_result($result,0,"avancement") == null) {$avancement = 1;}
 			else {$avancement =pg_result($result,0,"avancement");}
 
-        echo ("<div style=\"float:right;\">");
-            if ($droit['save_fiche']) echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-            if ($droit['retour_fiche']) echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
-        echo ("</div>");
-		
-        echo ("<br>");
-        echo ("<center>");
-   	    echo ("<div id=\"radio1\">");                                         
-            echo ("Etape 
-                <input type=\"radio\" name=\"etape\" id=\"etape1\" value=\"1\" ".($etape==1 ? "checked=\"true\"" : "")." $disa><label for=\"etape1\">Pré-évaluation</label>
-                <input type=\"radio\" name=\"etape\" id=\"etape2\" value=\"2\" ".($etape==2 ? "checked=\"true\"" : "")." $disa><label for=\"etape2\">Évaluation</label>
-                <input type=\"radio\" name=\"etape\" id=\"etape3\" value=\"3\" ".($etape==3 ? "checked=\"true\"" : "")." $disa><label for=\"etape3\">Post-évaluation</label><br>");
-        echo ("</div>");
-        echo ("</center>");
+		if ($niveau <= 64 OR $avancement == 3) $desc = " bloque"; else $disa = $desc;
+		if ($niveau <= 64 OR $avancement == 3) $disa = "disabled"; else $disa = null;
+			
+		$hybride = pg_result($result,0,"hybride");
+		$exotique = pg_result($result,0,"id_indi");
+		if ($hybride == 't' or $exotique == 3)		/*Gestion des hybrides et exotiques*/
+			{$desc2 .= " bloque";} else	{$desc2 .= $desc;}
 
 		
-		echo ("<center>");
-		echo ("<div id=\"radio2\">");
-			echo ("Avancement
-			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement1\" value=\"1\" ".($avancement==1 ? "checked=\"true\"" : "")." ><label for=\"avancement1\">À réaliser</label>
-			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement2\" value=\"2\" ".($avancement==2 ? "checked=\"true\"" : "")." ><label for=\"avancement2\">En cours</label>
-			<input type=\"radio\" $disa name=\"avancement\" id=\"avancement3\" value=\"3\" ".($avancement==3 ? "checked=\"true\"" : "")." ><label for=\"avancement3\">Réalisée</label>");
-		echo ("</div>"); 
-		echo ("</center>");
+		echo ("<br><br>");
+
+				
+		echo ("<div style=\"float:left;\">");
+            if ($droit['clore_version_fiche'] AND ($avancement == 1 OR $avancement == 2)) echo ("<button id=\"clore-version-button\" value=\"$id\" >".$lang[$lang_select]['clore-version']."</button> ");
+            if ($droit['open_version_fiche'] AND $avancement == 3) echo ("<button id=\"open-version-button\" value=\"$id\">".$lang[$lang_select]['open-version']."</button> ");
+            if ($droit['clore_etape_fiche']) echo ("<button id=\"clore-etape-button\" value=\"$id\">".$lang[$lang_select]['clore-etape']."</button> ");
+			$font_size = "1.3em";
+			echo "<span style=\"font-size:$font_size;\" >Phase : </span>";
+			echo "<span class=\"avancement_$etape\" style=\"font-size:$font_size;\" >".$ref["etape"][$etape]." </span>";
+			echo "<span class=\"avancement_$avancement\" style=\"font-size:$font_size;\" >".$ref["avancement"][$avancement]."</span>";
+        echo ("</div>");
 		
-		
+        echo ("<div style=\"float:right;\">");
+            if ($droit['save_fiche'] AND ($avancement == 1 OR $avancement == 2)) echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+            if ($droit['retour_fiche']) echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
+        echo ("</div>");
+
+		echo ("<br><br>");
 //------------------------------------------------------------------------------ EDIT LR GRP1
 		echo ("<div id=\"radio3\">");    
         echo ("<fieldset><LEGEND>".$lang[$lang_select]['groupe_lr_1']."</LEGEND>");
@@ -214,7 +210,10 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 					if ($niveau >= 128)
 						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
 				echo ("</td></tr></table>");
-			echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
+				if ($niveau <= 64) echo ("<label class=\"preField_calc\">Commentaires sur le taxon</label>"); else echo ("<label class=\"preField\">Commentaires sur le taxon</label>");
+				if ($niveau <= 64) echo ("<textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
+						else echo ("<textarea name=\"commentaire\" $disa style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
+			// echo ("<br><label class=\"preField\">Commentaires sur le taxon</label><textarea name=\"commentaire\" style=\"width:70em;\" rows=\"2\" >".sql_format_quote(pg_result($result,0,"commentaire"),'undo')."</textarea><br><br>");
 			echo ("</fieldset>");
 //------------------------------------------------------------------------------ EDIT LR GRP2 
         echo ("<fieldset><LEGEND> ".$lang[$lang_select]['groupe_lr_2']."</LEGEND>");
