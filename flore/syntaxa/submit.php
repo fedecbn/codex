@@ -10,7 +10,6 @@
 //  Version 1.02  15/08/14 - MaJ tables                                         //
 //  Version 1.10  01/08/14 - MaJ tables v2                                      //
 //------------------------------------------------------------------------------//
-session_start();
 include ("commun.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);

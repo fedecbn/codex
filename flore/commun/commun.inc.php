@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------//
                                                       
 //------------------------------------------------------------------------------ CONFIG du module
+session_start ();
 if (file_exists("../../_INCLUDE/config_sql.inc.php") == TRUE)	require_once ("../../_INCLUDE/config_sql.inc.php"); else require_once ("../../_INCLUDE/config_sql.inc.example.php");
 require_once ("../../_INCLUDE/constants.inc.php");
 require_once ("../../_INCLUDE/fonctions.inc.php");

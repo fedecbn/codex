@@ -8,11 +8,9 @@
 //  Version 1.00  10/08/14 - DariaNet                                           //
 //  Version 1.01  21/08/14 - MaJ query                                          //
 //------------------------------------------------------------------------------//
-
 include ("../../_INCLUDE/config_sql.inc.php");
 include ("../../_INCLUDE/fonctions.inc.php");
 include_once ("commun.inc.php");
-session_start();
 
 //------------------------------------------------------------------------------ PARMS.
 $id_user=$_SESSION['id_user'];

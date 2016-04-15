@@ -8,7 +8,6 @@
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
 /*------------------------------------------------------------------------------ INITIALISATION*/ 
-session_start();
 include ("commun.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);
@@ -30,16 +29,15 @@ global $db, $ref, $aColumns, $aColumnsExp, $aColumnsTot, $aColumnsSub, $champ_re
 ref_colonne_et_valeur ($id_page);
 
 /*Droit sur les boutons*/
-$typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
-$save=affichage($typ_droit,$rubrique,$onglet,"save_fiche",$droit_user);
-$validate=affichage($typ_droit,$rubrique,$onglet,"validate_fiche",$droit_user);
+$typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 
 
 
 switch ($mode) {
 //------------------------------------------------------------------------------	
 //------------------------------------------------------------------------------ 
-	case "liste" : {
+	case "fiche" : {
 	//------------------------------------------------------------------------------ PARMS.
 
 	$id = isset($_POST['id']) ? $_POST['id'] : "";
@@ -147,11 +145,13 @@ switch ($mode) {
 		echo "<BR>$uid non traité";
 	}
 	
-$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
-}
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	}
 
 	}
 	break;
+
+	
 }
 pg_close ($db);
 

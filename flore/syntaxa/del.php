@@ -9,8 +9,6 @@
 //  Version 1.01  12/08/14 - MaJ fonctions pgSQL                                //
 //  Version 1.02  15/08/14 - MaJ tables                                         //
 //------------------------------------------------------------------------------//
-
-session_start();
 include_once ("commun.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);

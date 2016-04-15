@@ -9,9 +9,7 @@
 //  Version 1.01  15/08/14 - Aj $user_level                                     //
 //  Version 1.02  18/08/14 - MaJ query                                          //
 //------------------------------------------------------------------------------//
-
 //----------------------------------------------------------------------------- INIT.
-session_start();
 require_once ("../../_INCLUDE/config_sql.inc.php");
 require_once ("../../_INCLUDE/fonctions.inc.php");
 require_once ("../../_INCLUDE/constants.inc.php");
