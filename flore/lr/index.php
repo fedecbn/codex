@@ -195,6 +195,7 @@ include ("../commun/add_fiche.php");
 			$font_size = "1.3em";
 			echo "<span style=\"font-size:$font_size;\" >Phase : </span>";
 			echo "<span class=\"avancement_$etape\" style=\"font-size:$font_size;\" >".$ref["etape"][$etape]." </span>";
+			if ($version != 1) echo "<span style=\"font-size:$font_size;\" > - version ".$version." - </span>";
 			echo "<span class=\"avancement_$avancement\" style=\"font-size:$font_size;\" >".$ref["avancement"][$avancement]."</span>";
         echo ("</div>");
 		

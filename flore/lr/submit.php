@@ -168,7 +168,7 @@ switch ($mode) {
 	elseif ($droit['open_version_fiche'] AND $action == 'open_version')
 		$query = "UPDATE lr.evaluation SET avancement = 2, version = version + 1 WHERE uid = $id;";
 	elseif ($droit['clore_etape_fiche'] AND $action == 'clore_etape')
-		$query = "UPDATE lr.evaluation SET avancement = 1, etape = etape + 1 WHERE uid = $id;";
+		$query = "UPDATE lr.evaluation SET avancement = 1, version = 1, etape = etape + 1 WHERE uid = $id;";
 	
 	echo "<BR>".$query;
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
