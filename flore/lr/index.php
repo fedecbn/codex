@@ -160,10 +160,19 @@ include ("../commun/add_fiche.php");
 
             $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
             if (pg_num_rows ($result)) {
-			
+		
+		/*etape*/	
 		if (pg_result($result,0,"etape") == null) {$etape = 1;}
 			else {$etape =pg_result($result,0,"etape");}
+		echo ("<input type=\"hidden\" name=\"etape\" value=\"".$etape."\" />");
+
+		/*version*/
+		if (pg_result($result,0,"version") == null) {$version = 1;}
+			else {$version =pg_result($result,0,"version");}
+		echo ("<input type=\"hidden\" name=\"version\" value=\"".$version."\" />");
+
 		
+		/*avancement*/
 		if (pg_result($result,0,"avancement") == null) {$avancement = 1;}
 			else {$avancement =pg_result($result,0,"avancement");}
 

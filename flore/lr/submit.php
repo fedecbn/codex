@@ -166,7 +166,7 @@ switch ($mode) {
 	elseif ($droit['clore_version_fiche'] AND $action == 'clore_version')
 		$query = "UPDATE lr.evaluation SET avancement = 3 WHERE uid = $id;";
 	elseif ($droit['open_version_fiche'] AND $action == 'open_version')
-		$query = "UPDATE lr.evaluation SET avancement = 2 WHERE uid = $id;";
+		$query = "UPDATE lr.evaluation SET avancement = 2, version = version + 1 WHERE uid = $id;";
 	elseif ($droit['clore_etape_fiche'] AND $action == 'clore_etape')
 		$query = "UPDATE lr.evaluation SET avancement = 1, etape = etape + 1 WHERE uid = $id;";
 	
