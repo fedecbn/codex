@@ -44,6 +44,10 @@ ref_colonne_et_valeur ($id_page);
 //$colname = pg_field_name($result, 1);
 //$val= pg_fetch_result($result,"\"codeEnregistrementSyntax\"" ); echo $val;
 
+/*Droits*/
+$typ_droit='d2';$rubrique=$id_page;$onglet = 'syntaxa';
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
@@ -150,11 +154,9 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau >= 128) 
-                    echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-                echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) 
-                    echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                if ($droit['add_fiche']) echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+                if ($droit['export_fiche']) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                if ($droit['del_fiche']) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			
@@ -193,12 +195,8 @@ include ("../syntaxa/add_fiche.php");
             echo ("<font size=5 color=#2D8946 >".$lang[$lang_select]['edit_fiche']."</font>");
         echo ("</div>");
         echo ("<div style=\"float:right;\">");
-            if ($mode == "edit") {
-                echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-                echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
-            } else {
-                echo ("<button id=\"retour3-button\">".$lang[$lang_select]['retour']."</button> ");
-            }
+            if ($droit['save_fiche']) echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+            if ($droit['retour_fiche']) echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
 		echo ("</div>");
 		if (isset($_GET['id']) & !empty($_GET['id'])) { 
             $id="'".$_GET['id']."'";
@@ -540,12 +538,8 @@ $champs = '';
 			echo ("<hr>");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
 			echo ("<div style=\"float:right;\"><br>");
-				if ($mode == "edit") {
-					echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-					echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
-				} else {
-					echo ("<button id=\"retour4-button\">".$lang[$lang_select]['retour']."</button> ");
-				}
+				if ($droit['save_fiche']) echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+				if ($droit['retour_fiche']) echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
 				echo ("</div>");
 				echo ("</form>");
 				} else fatal_error ("ID ".$id." > Vide !",false);
