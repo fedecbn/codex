@@ -87,6 +87,9 @@ else {$etape = $_POST["etape"];}
 
 	
 // ------------------------------------------------------------------------------ Vocabulaire du module
+$lang['fr']['syntaxa']="Liste des syntaxons";
+
+
 
 $lang['fr']['titre']="Codex - Rubrique Catalogue des végétations";
 

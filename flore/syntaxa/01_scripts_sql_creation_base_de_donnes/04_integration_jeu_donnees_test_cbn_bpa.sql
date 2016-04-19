@@ -526,7 +526,7 @@ CREATE TABLE public.serie_geoserie_envoi_cbnbpa_mars_2016
   num_type_serie character varying,
   lib_type_serie character varying,
   code_type_serie character varying,
-  nom_type_serie character varying,
+  nom_serie character varying,
   id_serie2 character varying
 
 )WITH (  OIDS=FALSE);
@@ -536,4 +536,10 @@ GRANT ALL ON TABLE public.serie_geoserie_envoi_cbnbpa_mars_2016 TO postgres;
 
 copy public.serie_geoserie_envoi_cbnbpa_mars_2016 from 'D:\jeu_donnees_test_cbn_bpa\serie_geoserie_envoi_mars_2016.csv' CSV HEADER encoding 'LATIN1' DELIMITER E';'  ;
 
+
+
+
+----jointure des données envoyées précédemment et des données actuelles
+
+select a.*, b.nom_serie from st_serie_petitegeoserie a left outer join public.serie_geoserie_envoi_cbnbpa_mars_2016 b on a."nomCompletSerieGeoserie"=b.nom_serie; 
 
