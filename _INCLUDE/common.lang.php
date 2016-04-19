@@ -214,5 +214,14 @@ $lang['it']['validate']="Valider";
 $lang['fr']['invalidate']="Invalider";
 $lang['it']['invalidate']="Invalider";
 
+$lang['fr']['clore-version']="Lancer validation";
+$lang['it']['clore-version']="Lancer validation";
+
+$lang['fr']['open-version']="Modifier l'évaluation";
+$lang['it']['open-version']="Modifier l'évaluation";
+
+$lang['fr']['clore-etape']="Clore l'étape";
+$lang['it']['clore-etape']="Clore l'étape";
+
 //------------------------------------------------------------------------------ Form / Groupes FSD
 ?>

@@ -21,6 +21,7 @@
 
  //------------------------------------------------------------------------------ UI / Activation des onglets
 
+	 
     var $tabs = $("#tabs").tabs();
 
     if ( $("#mode").val() == 'liste') {
@@ -39,6 +40,33 @@
 
 
 	//------------------------------------------------------------------------------ FORM / Plages
+
+$( "#clore-version-button,#clore-version2-button").button({
+            text: true
+        })
+        .click(function(event) {
+			event.preventDefault();
+			changeEtape($(this).attr('value'),'clore_version');
+			});
+			
+$( "#open-version-button,#open-version2-button").button({
+            text: true
+        })
+        .click(function(event) {
+			event.preventDefault();
+			changeEtape($(this).attr('value'),'open_version');
+			});
+
+$( "#clore-etape-button,#clore-etape2-button").button({
+            text: true
+        })
+        .click(function(event) {
+			event.preventDefault();
+			changeEtape($(this).attr('value'),'clore_etape')
+			});
+
+
+	
 // function enable_champ() {
 // var hybride_oui=$("input[id=hybride1]:checked").val();	
 // var indi=$("#id_indi").val();					

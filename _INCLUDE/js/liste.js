@@ -25,7 +25,8 @@
         return (false);
 	});
 
-    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".valid", function ($e) {
+    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".valid", function (event) {
+		event.preventDefault();
 		validateFunc("id[]="+$(this).attr('value'),$(this).attr('class'));
 		document.getElementById("validation_"+$(this).attr('value')).style.display = "";
 		document.getElementById("invalidation_"+$(this).attr('value')).style.display = "none";
@@ -36,7 +37,8 @@
         return (false);
 	});
 
-    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".invalid", function ($e) {
+    $('#data-liste,#onglet0-liste,#onglet1-liste,#onglet2-liste,#onglet3-liste').on("click",".invalid", function (event) {
+		event.preventDefault();
 		invalidateForm ("Invalider des evaluations",500,300,'#dialog',"form.php","submit.php","id[]="+$(this).attr('value'),'invalid');
 		// document.getElementById("validation_"+$(this).attr('value')).style.display = "none";
 		// document.getElementById("invalidation_"+$(this).attr('value')).style.display = "";

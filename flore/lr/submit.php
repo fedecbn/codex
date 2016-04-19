@@ -111,6 +111,10 @@ switch ($mode) {
 		} else {                                                                        
 	/*Nothing ==> go Refnat*/
 		}
+		
+		/*Avancement*/
+		$query = "UPDATE lr.evaluation SET avancement = 2 WHERE uid = $id;";
+		$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	}
 	break;
 
@@ -130,15 +134,14 @@ switch ($mode) {
 	$row = pg_fetch_assoc($result);
 	//------------------------------------------------------------------------------ MAIN
 	if ($row['avancement'] == 3 AND $class_valid == 'valid') {
-		if ($row['validation'] == null) $query = "INSERT INTO lr.validation(uid, etape, version, id_user, validation, val_com, dat_val) VALUES ($uid, '".$row['etape']."', ".$row['version'].", '$id_user', 'valid', null, NOW());";
-		else $query = "UPDATE lr.validation SET validation='valid', val_com=null,  dat_val=NOW() WHERE uid=$uid AND etape= ".$row['etape']." AND version=".$row['version']." AND id_user='$id_user';";
+		if ($row['validation'] == null) $query = "INSERT INTO lr.validation(uid, etape_val, version_val, id_user, validation, val_com, dat_val) VALUES ($uid, '".$row['etape']."', ".$row['version'].", '$id_user', 'valid', null, NOW());";
+		else $query = "UPDATE lr.validation SET validation='valid', val_com=null,  dat_val=NOW() WHERE uid=$uid AND etape_val= ".$row['etape']." AND version_val=".$row['version']." AND id_user='$id_user';";
 		echo "<BR>$uid validé";
 		}
 	elseif ($row['avancement'] == 3 AND $class_valid == 'invalid') {
-		if ($row['validation'] == null) $query = "INSERT INTO lr.validation(uid, etape, version, id_user, validation, val_com, dat_val) VALUES ($uid, '".$row['etape']."', ".$row['version'].", '$id_user', 'invalid', '$val_com', NOW());";
-		else $query = "UPDATE lr.validation SET validation='invalid', val_com= $val_com,  dat_val=NOW() WHERE uid=$uid AND etape=".$row['etape']." AND version=".$row['version']." AND id_user='$id_user';";
+		if ($row['validation'] == null) $query = "INSERT INTO lr.validation(uid, etape_val, version_val, id_user, validation, val_com, dat_val) VALUES ($uid, '".$row['etape']."', ".$row['version'].", '$id_user', 'invalid', $val_com, NOW());";
+		else $query = "UPDATE lr.validation SET validation='invalid', val_com= $val_com,  dat_val=NOW() WHERE uid=$uid AND etape_val=".$row['etape']." AND version_val=".$row['version']." AND id_user='$id_user';";
 		echo "<BR>$uid invalidé";
-		// echo "<BR>$query";
 		}
 	else {
 		$query = "SELECT 1;";
@@ -151,6 +154,26 @@ switch ($mode) {
 	}
 	break;
 
+	case "etape" : {
+	$id=$_GET['id']; 
+	$action=$_GET['action']; 
+	echo "<BR>".$action;
+	$db=sql_connect(SQL_base);
+	var_dump($droit);
+	
+	if ($droit['save_fiche'] AND $action == 'save')
+		$query = "UPDATE lr.evaluation SET avancement = 2 WHERE uid = $id;";
+	elseif ($droit['clore_version_fiche'] AND $action == 'clore_version')
+		$query = "UPDATE lr.evaluation SET avancement = 3 WHERE uid = $id;";
+	elseif ($droit['open_version_fiche'] AND $action == 'open_version')
+		$query = "UPDATE lr.evaluation SET avancement = 2, version = version + 1 WHERE uid = $id;";
+	elseif ($droit['clore_etape_fiche'] AND $action == 'clore_etape')
+		$query = "UPDATE lr.evaluation SET avancement = 1, version = 1, etape = etape + 1 WHERE uid = $id;";
+	
+	echo "<BR>".$query;
+	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	}
+	break;
 	
 }
 pg_close ($db);
