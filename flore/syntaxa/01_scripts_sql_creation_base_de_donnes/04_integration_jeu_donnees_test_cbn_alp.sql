@@ -108,7 +108,7 @@ CREATE TABLE syntaxa.temp_st_collaborateur("idCollaborateur" character varying,"
 
 
 
-------------------------------------------------------------------------------REMPLISSAGE DES TABLES-----------------------------------------------------------------
+------------------------------------------------------------------------------ALIMENTATION DES TABLES-----------------------------------------------------------------
 
 -----retrouver le nom de toutes les tables du schema
 
@@ -259,13 +259,34 @@ select * from syntaxa.fsd_syntaxa;
 -------------------------------------------------------------------------------------------
 
 --creation des tables permanentes
-DROP FUNCTION IF EXISTS hub_import(libSchema varchar, jdd varchar, path varchar);
+--DROP FUNCTION IF EXISTS hub_import(libSchema varchar, jdd varchar, path varchar);
 
 CREATE OR REPLACE FUNCTION hub_import(libSchema varchar, jdd varchar, path varchar) RETURNS integer AS 
 $BODY$ DECLARE libTable varchar; DECLARE i varchar; BEGIN
 --- Commande
 CASE WHEN jdd = 'syntaxa' THEN 
 	FOR libTable in EXECUTE 'SELECT DISTINCT tbl_name FROM syntaxa.fsd_'||jdd||' where tbl_name in (''st_annuaire_organismes'',''st_annuaire_personnes'', ''st_catalogue_description'', ''st_collaborateur'', ''st_correspondance_pvf'', ''st_cortege_syntaxonomique'', ''st_geo_sigmafacies'', ''st_serie_petitegeoserie'' , ''st_suivi_enregistrement'', ''st_syntaxon'');'
+		LOOP 
+		EXECUTE 'TRUNCATE "'||libSchema||'".temp_'||libTable||'';
+		EXECUTE 'COPY "'||libSchema||'".temp_'||libTable||' FROM '''||path||'std_'||libTable||'.csv'' HEADER CSV DELIMITER '';'' ENCODING ''LATIN1'';';  
+		END LOOP;
+END CASE;
+
+RETURN 1; END; $BODY$  LANGUAGE plpgsql;
+
+
+select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_alp/');
+select * from syntaxa.temp_st_syntaxon;
+
+------------------------
+--juste retester CBN BPA
+-------------------------
+
+CREATE OR REPLACE FUNCTION hub_import(libSchema varchar, jdd varchar, path varchar) RETURNS integer AS 
+$BODY$ DECLARE libTable varchar; DECLARE i varchar; BEGIN
+--- Commande
+CASE WHEN jdd = 'syntaxa' THEN 
+	FOR libTable in EXECUTE 'SELECT DISTINCT tbl_name FROM syntaxa.fsd_'||jdd||' where tbl_name in ( ''st_geo_sigmafacies'',''st_serie_petitegeoserie'',''st_cortege_syntaxonomique'');'
 		LOOP 
 		EXECUTE 'TRUNCATE "'||libSchema||'".temp_'||libTable||'';
 		EXECUTE 'COPY "'||libSchema||'".temp_'||libTable||' FROM '''||path||'std_'||libTable||'.csv'' HEADER CSV DELIMITER '';'' ENCODING ''UTF8'';';  
@@ -275,9 +296,8 @@ END CASE;
 RETURN 1; END; $BODY$  LANGUAGE plpgsql;
 
 
-select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_alp/');
-
-select * from syntaxa.temp_st_syntaxon;
+--select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_alp/');
+select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_bpa/');
 
 
 
@@ -346,107 +366,41 @@ select * from syntaxa.st_syntaxon;
 
 --REMPLISSAGE TABLE DES SERIES et GEOSERIES
 
---truncate syntaxa.st_serie_petitegeoserie cascade;
---select * from hub_add('syntaxa','syntaxa',array['st_serie_petitegeoserie']);
+--delete from syntaxa.st_serie_petitegeoserie where "idCatalogue"='SYNTAXA_DEP_ISERE_1';
 
+--select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_alp/');
 
-insert into syntaxa.st_serie_petitegeoserie("idCatalogue" ,"codeEnregistrementSerieGeoserie" ,"idSerieGeoserie" ,"nomSerieGeoserie" ,"auteurSerieGeoserie" ,"nomCompletSerieGeoserie" ,
-"remarqueNomenclaturale" ,"typeSynonymie" ,"idSerieGeoserieRetenu" ,"nomSerieGeoserieRetenu" ,"nomSerieGeoserieRaccourci" ,"idSerieGeoserieSup" ,"codeTypeSerieGeoserie" ,
-"codeCategorieSerieGeoserie" ,"codeRangSerieGeoserie" ,"nomFrancaisSerieGeoserie" ,"diagnoseCourteSerieGeoserie" ,confusion ,"confusionRemarque" ,"repartitionGenerale" ,"repartitionTerritoire" ,
-"aireMinimale" ,"typePhysionomique" ,"lithologiePedologieHumus" ,geomorphologie ,"humiditePrincipale" ,"humiditeSecondaire" ,"phPrincipal" ,"phSecondaire" ,
-exposition ,"descriptionEcologie" ,"remarqueVariabilite","remarqueRarete" ,"etatConservation")
-select 
-'SYNTAXA_REG_CENTRE_1' as "idCatalogue",
-"codeEnregistrementSerieGeoserie" ,
-"idSerieGeoserie",
-"nomSerieGeoserie",
-"auteurSerieGeoserie",
-"nomSerieGeoserie" as "nomCompletSerieGeoserie",
-'' as "remarqueNomenclaturale",
-'' as "typeSynonymie",
-'idSerieGeoserie' as "idSerieGeoserieRetenu",
-'' as "nomSerieGeoserieRetenu" ,
-'' as "nomSerieGeoserieRaccourci" ,
-'' as "idSerieGeoserieSup" ,
-case when "codeTypeSerieGeoserie"='série' then 'S' when "codeTypeSerieGeoserie"='géosérie' then 'GS' when "codeTypeSerieGeoserie"='curtasérie' then 'CS' when "codeTypeSerieGeoserie"='géopermasérie' then 'GS' else "codeTypeSerieGeoserie" end as "codeTypeSerieGeoserie",
-case when "codeCategorieSerieGeoserie"='climatophile' then 'CLI' when "codeCategorieSerieGeoserie"='édaphoxérophile' then 'EDAX' when "codeCategorieSerieGeoserie"='temporhygrophile' or "codeCategorieSerieGeoserie"='topoaérohygrophile' then 'TEMH' when "codeCategorieSerieGeoserie"='édaphohygrophile' then 'EDAH'else "codeCategorieSerieGeoserie" end as "codeCategorieSerieGeoserie",
-'NI' as "codeRangSerieGeoserie" ,
-"nomFrancaisSerieGeoserie" ,
-"diagnoseCourteSerieGeoserie" ,
-'' as confusion ,
-'' as "confusionRemarque" ,
-"repartitionGenerale" ,
-"repartitionTerritoire" ,
-0 as "aireMinimale" ,
-'' as "typePhysionomique" ,
-"lithologiePedologieHumus" as "lithologiePedologieHumus" ,
-geomorphologie ,
-"humiditePrincipale" ,
-"humiditeSecondaire"  ,
-"phPrincipal" , 
-"phSecondaire" , 
-case when exposition ='Aucune' then 'aucune' when exposition ='variable' then 'var' when exposition ='Dominante sud' then 'DS' when exposition ='ouest, est et sud' then 'OES' when exposition ='Dominante sud, parfois au nord' then 'DSN' when exposition ='nord' or exposition='nord ' then 'N' else "exposition" end as exposition ,
-"descriptionEcologie" ,
-"remarqueVariabilite" ,
-"remarqueRarete" ,
-"etatConservation"
- from syntaxa.temp_st_serie_petitegeoserie;
- 
+select * from hub_add('syntaxa','syntaxa',array['st_serie_petitegeoserie']);
 
---REMPLISSAGE TABLE DES SIGMAFACIES
+select * from syntaxa.st_serie_petitegeoserie;
+
+--REMPLISSAGE TABLE DES FACIES
+
 --select * from hub_add('syntaxa','syntaxa',array['st_geo_sigmafacies']);
+--select * from syntaxa.st_geo_sigmafacies;
 
---truncate syntaxa.st_geo_sigmafacies cascade
---select * from hub_add('syntaxa','syntaxa',array['st_geo_sigmafacies']);
+insert into syntaxa.st_geo_sigmafacies ("idGeosigmafacies","codeEnregistrementSerieGeoserie","codeFacies","libelleGeoSigmafacies","dominance","usage","remarqueVariabilite" )
+select "idGeosigmafacies",min("codeEnregistrementSerieGeoserie") as "codeEnregistrementSerieGeoserie" ,"codeFacies","libelleGeoSigmafacies","dominance","usage","remarqueVariabilite" 
+from syntaxa.temp_st_geo_sigmafacies 
+group by "idGeosigmafacies","codeFacies","libelleGeoSigmafacies","dominance","usage","remarqueVariabilite" 
 
-insert into syntaxa.st_geo_sigmafacies
-( "idGeosigmafacies", "codeEnregistrementSerieGeoserie" , "codeFacies" , "libelleGeoSigmafacies",  "usage", "dominance","remarqueVariabilite")
-select 
-"idGeosigmafacies", 
-"codeEnregistrementSerieGeoserie", 
-case when "codeFacies" ='Aquatique' then 'AQUA' 
-when "codeFacies" ='Chaméphytique' then 'CHAM' 
-when "codeFacies" ='Complexe de recolonisation' then 'RCOL' 
-when "codeFacies" ='Cultural' then 'C' 
-when "codeFacies" ='Cultural - agriculture' then 'CAGR' 
-when "codeFacies" ='Cultural - ligniculture' then 'CLIG' 
-when "codeFacies" ='Forestier' or "codeFacies" ='forestier' then 'FOR' 
-when "codeFacies" ='Forestier mâture' then 'FORM' 
-when "codeFacies" ='Forestier pionnier' then 'FORP' 
-when "codeFacies" ='Herbacé haut' then 'HERB' 
-when "codeFacies" ='Minéral peu végétalisé' then 'MINV' 
-when "codeFacies" ='Pelousaire' then 'PELO' 
-when "codeFacies" ='Prairial' then 'P' 
-when "codeFacies" ='Prairial gras' then 'PG' 
-when "codeFacies" ='Prairial maigre' then 'PM' 
-when "codeFacies" ='Tourbière' then 'TOUR'
-else "codeFacies"
-end as "codeFacies" , 
-"libelleGeoSigmafacies",  
-dominance,
-usage,
-"remarqueVariabilite"
- from syntaxa.temp_st_geo_sigmafacies sf;
- 
- select * from syntaxa.temp_st_geo_sigmafacies 
- --select * from syntaxa.st_geo_sigmafacies order by "codeEnregistrementSerieGeoserie" asc, "idGeosigmafacies" asc , "codeFacies" asc;
- 
- 
- --REMPLISSAGE TABLE COMPOSYNTAXONOMIQUE
 
-insert into syntaxa.st_cortege_syntaxonomique ("codeEnregistrementCortegeSyntax" , "idGeosigmafacies" ,  "libelleGeoSigmafacies" ,  "codeEnregistrementSyntax" ,  "idSyntaxonRetenu" ,  "nomSyntaxonRetenu",  "rqSyntaxon" ,  "pourcentageTheoriqSyntax",  "codeTeteSerie" )
-select
-'CBNBPA_cortegesyntax_'||row_number()over(order by "idGeosigmafacies" asc) as "codeEnregistrementCortegeSyntax",
-"idGeosigmafacies",
-(select "libelleGeoSigmafacies" from syntaxa.st_geo_sigmafacies where "idGeosigmafacies"=cs."idGeosigmafacies") as "libelleGeoSigmafacies" ,
-s."codeEnregistrementSyntax" ,
-cs."idSyntaxonRetenu" ,
-cs."nomSyntaxonRetenu" ,
-"rqSyntaxon",
-0 as "pourcentageTheoriqSyntax" ,
-case when "codeTeteSerie"='nc' then 'NI' else "codeTeteSerie" end as "codeTeteSerie"
-from  syntaxa.temp_st_cortege_syntaxonomique cs inner join syntaxa.st_syntaxon s on (cs."nomSyntaxonRetenu"=s."nomSyntaxonRetenu")
-where "idGeosigmafacies" <> '#N/A';
+
+--REMPLISSAGE CORTEGE SYNTAXONOMIQUE
+
+--select * from hub_add('syntaxa','syntaxa',array['st_cortege_syntaxonomique']);
+
+insert into syntaxa.st_cortege_syntaxonomique
+select cs."codeEnregistrementCortegeSyntax",cs."idGeosigmafacies",cs."libelleGeoSigmafacies",
+  cs."codeEnregistrementSyntax", cs."idSyntaxonRetenu", cs."nomSyntaxonRetenu",
+  cs."rqSyntaxon", cs."pourcentageTheoriqSyntax"::integer, cs."codeTeteSerie"
+from syntaxa.temp_st_cortege_syntaxonomique cs 
+inner join syntaxa.st_geo_sigmafacies si on (cs."idGeosigmafacies"=si."idGeosigmafacies"); --on ne conserve que les sigmafacies effectivements présents dans l'export du CBN Alpin
+
+
+select * from syntaxa.st_cortege_syntaxonomique;
+
+--insert into syntaxa.st_cortege_syntaxonomique 
 
 
 /*
@@ -460,7 +414,7 @@ il reste ces colonnes du modèle CBN BPA a intégrer...
 );
 */
 
-
+/*
  --REMPLISSAGE TABLES ANNUAIRES,  SUIVI ENREGISTREMENT
  
 select * from hub_add('syntaxa','syntaxa',array['st_annuaire_personnes', 'st_annuaire_organismes', 'st_suivi_enregistrement', 'st_collaborateur']);
@@ -504,6 +458,7 @@ row_number()over(order by "codeEnregistrement" asc) as "idChorologie" ,
 	"repartitionTerritoire" 
 from syntaxa.st_serie_petitegeoserie
 ) as foo
-
-
 ;
+
+*/
+

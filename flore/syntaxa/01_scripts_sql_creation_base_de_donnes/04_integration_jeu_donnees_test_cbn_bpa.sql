@@ -497,3 +497,43 @@ from syntaxa.st_serie_petitegeoserie
 
 
 ;
+
+
+------------------------------------MISE A JOUR MARS 2016-------------------------------------------------
+
+drop table if exists public.facies_envoi_cbnbpa_mars_2016;
+CREATE TABLE public.facies_envoi_cbnbpa_mars_2016
+(
+  id_facies character varying,
+  id_serie character varying,
+  nom_facies character varying,
+  num_type_facies character varying,
+  type_facies character varying,
+  codeFacies character varying
+)WITH (  OIDS=FALSE);
+ALTER TABLE public.facies_envoi_cbnbpa_mars_2016  OWNER TO postgres;
+GRANT ALL ON TABLE public.facies_envoi_cbnbpa_mars_2016 TO postgres;
+
+
+copy public.facies_envoi_cbnbpa_mars_2016 from 'D:\jeu_donnees_test_cbn_bpa\facies_envoi_mars_2016.csv' CSV HEADER encoding 'LATIN1' DELIMITER E';'  ;
+
+
+drop table if exists public.serie_geoserie_envoi_cbnbpa_mars_2016;
+CREATE TABLE public.serie_geoserie_envoi_cbnbpa_mars_2016
+(
+  id_serie character varying,
+  id_serie_ref character varying,
+  num_type_serie character varying,
+  lib_type_serie character varying,
+  code_type_serie character varying,
+  nom_type_serie character varying,
+  id_serie2 character varying
+
+)WITH (  OIDS=FALSE);
+ALTER TABLE public.serie_geoserie_envoi_cbnbpa_mars_2016  OWNER TO postgres;
+GRANT ALL ON TABLE public.serie_geoserie_envoi_cbnbpa_mars_2016 TO postgres;
+
+
+copy public.serie_geoserie_envoi_cbnbpa_mars_2016 from 'D:\jeu_donnees_test_cbn_bpa\serie_geoserie_envoi_mars_2016.csv' CSV HEADER encoding 'LATIN1' DELIMITER E';'  ;
+
+

@@ -52,7 +52,7 @@ INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libType
 INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('GPS', 'géopermasérie', 6);
 INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('NC', 'non connu', 7);
 INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('NI', 'non indiqué', 0);
-INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('SD', 'série ...àcompléter (SD)', 8);
+INSERT INTO syntaxa.st_ref_type_seriegeoserie ("codeTypeSerieGeoserie", "libTypeSerieGeoserie", id_tri) VALUES ('SD', 'série dérivée', 8);
 
 
 --table syntaxa.categorie_seriegeoserie
@@ -615,29 +615,31 @@ INSERT INTO syntaxa.st_ref_type_stade("codeTypeStade","libTypeStade") VALUES ('N
 --table syntaxa.st_ref_type_facies
 truncate syntaxa.st_ref_type_facies cascade;
 
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PGF', 'Prairial gras fauché', 'Prairial gras (eutrophe) fauché', 1);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PGP', 'Prairial gras paturé', 'Prairial gras (eutrophe) paturé', 2);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PMF', 'Prairial maigre fauché', 'Prairial maigre (méso et oligotrophe) fauché', 3);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PMP', 'Prairial maigre paturé', 'Prairial maigre (méso et oligotrophe) paturé', 4);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PELO', 'Pelousaire', 'Pelousaire (oligotrophile y compris hygrophile)', 5);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('HERB', 'Herbacé haut', 'Herbacé haut (roselières, mégaphorbiaies, grandes cariçaies, ourlets)', 6);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PGF', 'Prairial gras fauché', 'Faciès dominé à plus de 75% par des prairies vivaces eutrophe et fauchées', 1);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PGP', 'Prairial gras paturé', 'Faciès dominé à plus de 75% par des prairies vivaces eutrophe et pâturées', 2);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PMF', 'Prairial maigre fauché', 'Faciès dominé à plus de 75% par des prairies vivaces mésotrophes et fauchées', 3);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PMP', 'Prairial maigre paturé', 'Faciès de végétation dominé à plus de 75% par des prairies vivaces mésotrophes et pâturées', 4);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PELO', 'Pelousaire', ' Faciès de végétation dominé à plus de 75% par des pelouses vivaces(oligotrophile y compris hygrophile)', 5);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('HERB', 'Herbacé haut', 'Faciès dominé à plus de 75% par des végétations herbacée à forte biomasse nettement élevée au dessus du sol, de type mégaphorbiaies, roselières, magnocariçaies et ourlets, les ligneux étant absent ou représentant moins de 25%', 6);
 INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('TOUR', 'Tourbière', 'Tourbière (perma et curta séries de marais)', 7);
 INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('RCOL', 'Recolonisation', 'Complexe de recolonisation (l’ensemble des ourlets et/ou pré-manteaux et/ou fourrés doit atteindre 75%, les ligneux doivent couvrir plus de 25%)', 8);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('BOCA', 'Bocager', 'Bocager', 9);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PREB', 'Pré-boisé', 'Pré-boisé', 10);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('BOCA', 'Bocager', 'Système prairial avec réseau relativement dense de haies. Les seuils et la définition de ce type ne sont pas encore très stabilisé au sein du groupe de travail.', 9);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PREB', 'Pré-boisé', 'Faciès de pelouses généralement pâturées, piquetée d''éléments arborés dont le recouvrement est voisin de 50%', 10);
 INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('FORM', 'Forestier mâture', 'Forestier mâture', 11);
 INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('FORP', 'Forestier pionnier', 'Forestier pionnier', 12);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('CHAM', 'Chaméphytique', 'Chaméphytique', 13);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('MINV', 'Minéral peu végétalisé', 'Minéral peu végétalisé (complexe d’éboulis, dalles rocheuses, parois, falaises)', 14);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('CAGR', 'Cultural agriculture', 'Cultural agriculture', 15);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('CLIG', 'Cultural ligniculture', 'Cultural ligniculture', 16);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('AQUA', 'Aquatique', 'Aquatique', 17);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PG', 'Prairial gras', 'Prairial gras', 18);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PM', 'Prairial maigre', 'Prairial maigre', 19);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('P', 'Prairial', 'Prairial', 20);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('FOR', 'Forestier', 'Forestier', 21);
-INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('C', 'Cultural', 'Cultural', 22);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('CHAM', 'Chaméphytique', 'Faciès dominé à plus de 75% par des végétations de landes', 13);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('MINV', 'Minéral peu végétalisé', 'Faciès à végétation très éparses établie en situation d''éboulis, de dalles rocheuses, de parois ou de falaises', 14);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('CAGR', 'Cultural agriculture', 'Faciès dominés par des cultures herbacée (généralement annuelle), au sein desquelles la végétation adventices se développe plus ou moins de manière éparse', 15);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('CLIG', 'Cultural ligniculture', 'Faciès dominés par des cultures vivaces de ligneux (plantations d''arbres, vignes), au sein desquelles la végétation "adventice" se développe plus ou moins de manière éparse', 16);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('AQUA', 'Aquatique', 'Faciès dominé à plus de 75% par une lame d''eau libre plus ou moins colonisée par des végétations d''hydrophytes, auquel peut s''associer 25% de végétation diverse (herbacée ou ligneuse et/ou), généralement établie en ceinture de la pièce d''eau et largement dépendant d''elle.', 17);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PG', 'Prairial gras', 'Faciès dominé à plus de 75% par des prairies vivaces eutrophe, fauchées et/ou pâturées', 18);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('PM', 'Prairial maigre', 'Faciès dominé à plus de 75% par des prairies vivaces mésotrophes, fauchées et/ou pâturées', 19);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('P', 'Prairial', 'Faciès dominé à plus de 75% par des prairies vivaces mésotrophes et/ou eutrophe, fauchées et/ou pâturées', 20);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('FOR', 'Forestier', 'Faciès dominé par des végétations arborée généralement à hauteur de 75%, les clairières et coupes associées représentant moins de 25 %', 21);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('C', 'Cultural', 'Faciès dominés par des cultures, au sein desquelles la végétation "adventice" se développe plus ou moins de manière éparse', 22);
+INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('ARBU', 'Arbustif', 'Faciès dominé à plus de 75% par des végétations arbustives', 23);
 INSERT INTO syntaxa.st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_tri) VALUES ('NI', 'non indiqué', 'non indiqué', 0);
+
 
 /*
 alter table syntaxa.st_ref_type_facies drop column if exists id_tri;

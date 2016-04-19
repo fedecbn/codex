@@ -11,9 +11,22 @@ WITH (
 );
 ALTER TABLE syntaxa.images
   OWNER TO postgres;
+ 
+ 
+ 
+insert into syntaxa.images ("codeEnregistrementSerieGeoserie", chemin_img, "typeImage")
+select "codeEnregistrementSerieGeoserie",
+'FCBN_CODEX\\036_CATVEG\\ireport\\illustrations_fiches\\photo_presentation\\illustration_geoserie_1.png' as chemin_img , 
+'photo principale' as "typeImage"
+from syntaxa.st_serie_petitegeoserie where "idCatalogue"='SYNTAXA_DEP_ISERE_1'
+union
+select "codeEnregistrementSerieGeoserie",
+'FCBN_CODEX\\036_CATVEG\\ireport\\illustrations_fiches\\schema_dynamique\\diagnostique_dynamique1.jpg' as chemin_img , 
+'schema dynamique' as "typeImage"
+from syntaxa.st_serie_petitegeoserie where "idCatalogue"='SYNTAXA_DEP_ISERE_1'
+;
   
-  
- INSERT INTO images ("codeEnregistrementSerieGeoserie", chemin_img, "typeImage") VALUES ('CBNBPA_sigmasyntaxon_S4', 'FCBN_CODEX\\036_CATVEG\\ireport\\illustrations_fiches\\photo_presentation\\illustration_geoserie_1.png', 'photo principale');
+INSERT INTO images ("codeEnregistrementSerieGeoserie", chemin_img, "typeImage") VALUES ('CBNBPA_sigmasyntaxon_S4', 'FCBN_CODEX\\036_CATVEG\\ireport\\illustrations_fiches\\photo_presentation\\illustration_geoserie_1.png', 'photo principale');
 INSERT INTO images ("codeEnregistrementSerieGeoserie", chemin_img, "typeImage") VALUES ('CBNBPA_sigmasyntaxon_S5', 'FCBN_CODEX\\036_CATVEG\\ireport\\illustrations_fiches\\photo_presentation\\illustration_geoserie_2.jpg', 'photo principale');
 INSERT INTO images ("codeEnregistrementSerieGeoserie", chemin_img, "typeImage") VALUES ('CBNBPA_sigmasyntaxon_S6', 'FCBN_CODEX\\036_CATVEG\\ireport\\illustrations_fiches\\photo_presentation\\illustration_geoserie_1.jpg', 'photo principale');
 INSERT INTO images ("codeEnregistrementSerieGeoserie", chemin_img, "typeImage") VALUES ('CBNBPA_sigmasyntaxon_S7', 'FCBN_CODEX\\036_CATVEG\\ireport\\illustrations_fiches\\photo_presentation\\illustration_geoserie_1.jpg', 'photo principale');
