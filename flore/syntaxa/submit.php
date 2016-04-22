@@ -112,6 +112,7 @@ if (!empty($_POST['idCatalogue2'])) {
 	$champs= rtrim (sql_format_quote($_POST['idCatalogue2'],'do')).",".sql_format_quote($_POST['libelleCatalogue2'],'do').") RETURNING \"identifiantCatalogue\";";
 	$query=	$insert.$champs;
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
+	echo $query;
 	
 				} else {
 					
@@ -167,11 +168,11 @@ if (!empty($_POST['idCatalogue2'])) {
 	$id_chrologie=pg_result($result,0,0);
 	
 	//suivi des modifications
-	if (!isset($_POST['idCatalogue2'])) {
+	if (isset($_POST['idCatalogue2'])) {
 	if (!empty($_POST['idCatalogue2'])) {
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","identifiantCatalogue",null,$_POST["idCatalogue2"],'applications','manuel','ajout');
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","libelleCatalogue",null,$_POST["libelleCatalogue2"],'applications','manuel','ajout');
-	}} else {echo "pas d'insertion de nouveau catalogue dans st_catalogue_description";}
+	}} else {echo "</br> pas d'insertion de nouveau catalogue dans st_catalogue_description";}
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idCatalogue",null,$_POST["idCatalogue"],'applications','manuel','ajout');
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idTerritoire",null,$_POST["idTerritoireObligatoire"],'applications','manuel','ajout');
 	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idChorologie",null,$id_chrologie,'applications','manuel','ajout');
