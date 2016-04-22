@@ -19,7 +19,7 @@ INSERT INTO applications.onglet VALUES ((SELECT id_rubrique FROM applications.ru
 INSERT INTO applications.onglet VALUES ((SELECT id_rubrique FROM applications.rubrique WHERE id_module = 'syntaxa'), 'syntaxa','droit','Utilisateurs','Utilisateurs de la rubrique');
 
 --- droit
-DELETE FROM applications.droit WHERE typ_droit = 'd2' AND rubrique = 'rubrique';
+DELETE FROM applications.droit WHERE typ_droit = 'd2' AND rubrique = 'syntaxa';
 INSERT INTO applications.droit (typ_droit, rubrique,onglet,objet,role) VALUES ('d2','syntaxa','syntaxa','view_fiche','lecteur');
 INSERT INTO applications.droit (typ_droit, rubrique,onglet,objet,role) VALUES ('d2','syntaxa','syntaxa','edit_fiche','participant');
 INSERT INTO applications.droit (typ_droit, rubrique,onglet,objet,role) VALUES ('d2','syntaxa','syntaxa','del_fiche','gestionnaire');
