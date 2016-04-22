@@ -1,11 +1,9 @@
 <script type="text/javascript">
 //fonction qui permet de ne faire apparaitre le bouton enregistrer que si un CBN a été choisi (permet la construction de l'identifiant unique)
-
+  
 $(document).ready(function() { 
-	// on cache le bouton par défaut 
-    //$('#enregistrer1-add-button').hide();
-	//$('#enregistrer2-add-button').hide();
-    $('#table_catalogue').show();
+	// on ajoute un tableau avec deux nouveaux input text sur lesquels on peut appliquer la méthode validate du jquery validation plugin 
+    $('#table_1').append('<table id=table_catalogue><tr><td><label title=\"Identifiant du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_idCatalogue2"\">Identifiant du Catalogue</label><input type="text" id="idCatalogue2" size="30" style=\"width:30em;\" name="idCatalogue2" value="" placeholder="exemple: SIGMASYNTAXA_REG_CENTRE_1" /></td><td><label title=\"Libellé du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_libelleCatalogue2"\">Libellé du catalogue</label><input type="text" id="libelleCatalogue2" size="40" style=\"width:40em;\" name="libelleCatalogue2" value="" placeholder="exemple: Catalogue des séries et géoséries de la région Centre" /></td></p>');
      
 	
     $('select[name="idCatalogue"]').change(function() { // lorsqu'on change de valeur dans la liste du menu déroulant
@@ -13,14 +11,11 @@ $(document).ready(function() {
      
         if(valeur != '') { // si non vide
             if(valeur == 'NI') { // si différent de "non indiqué"
-				// on montre la case
-                $('#table_catalogue').show();
-
-	
+				// on ajoute un tableau avec deux nouveaux input text
+    $('#table_1').append('<table id=table_catalogue><tr><td><label title=\"Identifiant du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_idCatalogue2"\">Identifiant du Catalogue</label><input type="text" id="idCatalogue2" size="30" style=\"width:30em;\" name="idCatalogue2" value="" placeholder="exemple: SIGMASYNTAXA_REG_CENTRE_1" /></td><td><label title=\"Libellé du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_libelleCatalogue2"\">Libellé du catalogue</label><input type="text" id="libelleCatalogue2" size="40" style=\"width:40em;\" name="libelleCatalogue2" value="" placeholder="exemple: Catalogue des séries et géoséries de la région Centre" /></td></p>');
             } else {
-				// on cache la case
-                $('#table_catalogue').hide(); 
-				//voir pour remplacer par remove (pour que le validateur jquery ne soit pas bloquant (quand on cache il agit toujours)				
+				// on supprime le tableau avec les deux nouveaux input text (on ne peux pas utiliser hide et show sinon jquery validate est bloquant)
+				$('#table_catalogue').remove(); 				
             }
         }
     });	
@@ -63,17 +58,9 @@ $array_cbn=array_merge($array_ajout,$array_cbn);
 
 echo ("<fieldset><LEGEND>CBN</LEGEND>");
 				echo ("<br>");
-				echo ("<table><tr><td>");
+				echo ("<table id=table_1><tr><td>");
 				//metaform_bool_appared ("Importer un seul fichier ",null,$onchange,null,"lonely_file","f");
 				metaform_sel ("Catalogue","",30,$ref[$champ_ref["idCatalogue"]],"idCatalogue","", pg_fetch_result(pg_query ($db,$query_description."'idCatalogue'".";"),0,"description" ));			
-				echo ("</td><td>");
-				//echo ("<button id=\"addInput\">Ajouter un catalogue</button> ");
-				echo ("</td></tr></table>");
-				
-				echo ("<table id=table_catalogue><tr><td>");
-				metaform_text ("Identifiant du catalogue"," ",30,"width:30em;","idCatalogue2",'', pg_fetch_result(pg_query ($db,$query_description."'idCatalogue'".";"),0,"description" ),'exemple: SIGMASYNTAXA_REG_CENTRE_1');		
-				echo ("</td><td>");
-				metaform_text ("Libelle du catalogue"," ",30,"width:30em;","libelleCatalogue2",'', pg_fetch_result(pg_query ($db,$query_description."'libelleCatalogue'".";"),0,"description" ));		
 				echo ("</td></tr></table>");
 				
 				metaform_sel ("CBN (auteur principal)*","",30,$array_cbn,"idTerritoireObligatoire","", pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
@@ -89,7 +76,7 @@ echo ("<fieldset><LEGEND>Syntaxonomie</LEGEND>");
 				metaform_text ("Auteur","",30,"width:30em;","auteurSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'auteurSyntaxon'".";"),0,"description" ));
 				metaform_text ("Nom complet"," bloque",30,"width:30em;","nomCompletSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
 
-				//				metaform_text ("Nom complet du syntaxon"," ",30,"width:30em;","nomCompletSyntaxon",pg_result($result,0,"\"nomCompletSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
+				//metaform_text ("Nom complet du syntaxon"," ",30,"width:30em;","nomCompletSyntaxon",pg_result($result,0,"\"nomCompletSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
 				metaform_sel ("Rang syntaxon","","",$ref[$champ_ref["rangSyntaxon"]],"rangSyntaxon",'', pg_fetch_result(pg_query ($db,$query_description."'rangSyntaxon'".";"),0,"description" ));
 echo ("</fieldset>");
 
