@@ -15,6 +15,7 @@ $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ PARMS.
+$id_user=$_SESSION['id_user'];
 $id=$_POST['id'];
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
@@ -39,7 +40,7 @@ if (!empty ($id))
    	add_suivi2(1,$id_user,$id,"st_syntaxon",'codeEnregistrementSyntax',$id,null,$id_page,'manuel','suppr');
 	add_suivi2(1,$id_user,$id,"st_chorologie",'codeEnregistrementSyntax',$id,null,$id_page,'manuel','suppr');
 
-	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression fiche",$id,"syntaxa");
+	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression fiche",$id,"syntaxon");
 	
 	
 } elseif (strlen($_POST['select']) > 0) {
@@ -60,7 +61,7 @@ if (!empty ($id))
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 
     add_suivi2(1,$id_user,$where,"taxons","uid",$id,null,$id_page,'manuel','suppr');
-	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression multi fiches",$where,"taxons,chorologie,evaluation");
+	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression multi fiches",$where,"syntaxon");
 	
 	
 }

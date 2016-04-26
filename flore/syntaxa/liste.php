@@ -46,7 +46,8 @@ $sWhere = $filters['sWhere'];
 //------------------------------------------------------------------------------ QUERY
 $query= $query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
 
- //echo "<br>".$query;
+//echo "<br>".$query;
+
 
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 if (pg_num_rows ($result)) 
@@ -61,9 +62,10 @@ $iTotal = $aResultTotal;
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
 	$sOutput .= '"aaData": [ ';
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
-	{
+	{ 
 		$sOutput .= "[";
 		foreach ($aColumns[$id_page] as $key => $value) {
+			//echo $row['codeEnregistrementSyntax'] ;
 		/*---------------*/
 		/*cas paticuliers*/
 		/*---------------*/
@@ -87,7 +89,7 @@ $iTotal = $aResultTotal;
             $sOutput .= '"<a class=view id=\"'.$row['codeEnregistrementSyntax'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
         else        
             $sOutput .= '"<a class=edit id=\"'.$row['codeEnregistrementSyntax'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['codeEnregistrementSyntax'].'\" >"';
+		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['codeEnregistrementSyntax'].'\" >"';
     	$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
