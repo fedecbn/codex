@@ -3,7 +3,7 @@
   
 $(document).ready(function() { 
 	// on ajoute un tableau avec deux nouveaux input text sur lesquels on peut appliquer la méthode validate du jquery validation plugin 
-    $('#table_1').append('<table id=table_catalogue><tr><td><label title=\"Identifiant du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_idCatalogue2"\">Identifiant du Catalogue</label><input type="text" id="idCatalogue2" size="30" style=\"width:30em;\" name="idCatalogue2" value="" placeholder="exemple: SIGMASYNTAXA_REG_CENTRE_1" /></td><td><label title=\"Libellé du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_libelleCatalogue2"\">Libellé du catalogue</label><input type="text" id="libelleCatalogue2" size="40" style=\"width:40em;\" name="libelleCatalogue2" value="" placeholder="exemple: Catalogue des séries et géoséries de la région Centre" /></td></p>');
+    $('#table_1').append('<table id=table_catalogue><tr><td><label title=\"Identifiant du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_idCatalogue2"\">Identifiant du Catalogue</label><input type="text" id="idCatalogue2" size="30" style=\"width:30em;\" name="idCatalogue2" value="" placeholder="exemple: SYNTAXA_REG_CENTRE_1" /></td><td><label title=\"Libellé du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_libelleCatalogue2"\">Libellé du catalogue</label><input type="text" id="libelleCatalogue2" size="40" style=\"width:40em;\" name="libelleCatalogue2" value="" placeholder="exemple: Catalogue des syntaxons de la région Centre" /></td></p>');
      
 	
     $('select[name="idCatalogue"]').change(function() { // lorsqu'on change de valeur dans la liste du menu déroulant
@@ -12,7 +12,7 @@ $(document).ready(function() {
         if(valeur != '') { // si non vide
             if(valeur == 'NI') { // si différent de "non indiqué"
 				// on ajoute un tableau avec deux nouveaux input text
-    $('#table_1').append('<table id=table_catalogue><tr><td><label title=\"Identifiant du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_idCatalogue2"\">Identifiant du Catalogue</label><input type="text" id="idCatalogue2" size="30" style=\"width:30em;\" name="idCatalogue2" value="" placeholder="exemple: SIGMASYNTAXA_REG_CENTRE_1" /></td><td><label title=\"Libellé du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_libelleCatalogue2"\">Libellé du catalogue</label><input type="text" id="libelleCatalogue2" size="40" style=\"width:40em;\" name="libelleCatalogue2" value="" placeholder="exemple: Catalogue des séries et géoséries de la région Centre" /></td></p>');
+    $('#table_1').append('<table id=table_catalogue><tr><td><label title=\"Identifiant du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_idCatalogue2"\">Identifiant du Catalogue</label><input type="text" id="idCatalogue2" size="30" style=\"width:30em;\" name="idCatalogue2" value="" placeholder="exemple: SYNTAXA_REG_CENTRE_1" /></td><td><label title=\"Libellé du catalogue d\'appartenance de l\'enregistrement\" class=\"preField\" id=\"label_libelleCatalogue2"\">Libellé du catalogue</label><input type="text" id="libelleCatalogue2" size="40" style=\"width:40em;\" name="libelleCatalogue2" value="" placeholder="exemple: Catalogue des syntaxons de la région Centre" /></td></p>');
             } else {
 				// on supprime le tableau avec les deux nouveaux input text (on ne peux pas utiliser hide et show sinon jquery validate est bloquant)
 				$('#table_catalogue').remove(); 				
@@ -62,7 +62,6 @@ echo ("<fieldset><LEGEND>CBN</LEGEND>");
 				//metaform_bool_appared ("Importer un seul fichier ",null,$onchange,null,"lonely_file","f");
 				metaform_sel ("Catalogue","",30,$ref[$champ_ref["idCatalogue"]],"idCatalogue","", pg_fetch_result(pg_query ($db,$query_description."'idCatalogue'".";"),0,"description" ));			
 				echo ("</td></tr></table>");
-				
 				metaform_sel ("CBN (auteur principal)*","",30,$array_cbn,"idTerritoireObligatoire","", pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
 				metaform_sel ("Présence sur le territoire d'agrément du CBN","",30,$ref[$champ_ref["statutChorologie"]],"statutChorologie","", pg_fetch_result(pg_query ($db,$query_description."'statutChorologie'".";"),0,"description" ));
 				//metaform_sel ("Catalogue","",30,$ref[$champ_ref["idCatalogue"]],"idCatalogue",'', pg_fetch_result(pg_query ($db,$query_description."'idCatalogue'".";"),0,"description" ));

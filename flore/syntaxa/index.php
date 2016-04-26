@@ -48,6 +48,8 @@ ref_colonne_et_valeur ($id_page);
 $typ_droit='d2';$rubrique=$id_page;$onglet = 'syntaxa';
 $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 
+//var_dump($droit);
+//var_dump($droit_page);
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
@@ -276,38 +278,7 @@ include ("../syntaxa/add_fiche.php");
 //var_dump($aColumnsTot['syntaxa']);
 //$identite = array('nom' => 'blabla','nom' => 'blibli', 'prenom' => 'Hugo','age' => 19, 'estEtudiant' => true); var_dump($identite['nom']);
 
-$tables = array ('st_syntaxon');
 
-foreach ($tables as $i)	{
-$champs = '';
-			$update ="UPDATE syntaxa.$i SET ";
-			foreach ($aColumnsTot[$id_page] as $key => $val)	{
-//				echo "champ:";var_dump ($key);
-//				echo "table:";var_dump ($val['table_champ']); echo "<br><br>";
-				 /*if ($val['modifiable'] == 't' AND $val['table_champ'] == $i) {
-					/*récupération des champs modifiables*/
-//					$champs .= "\"".$i."\".\"".$val['champ_interface']."\",";
-					/*construction de l'update*/
-//					if ($val['type'] == 'string') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_quote($_POST[$val['champ_interface']],'do').",";
-//						if ($val['type'] == 'val') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_quote($_POST[$val['champ_interface']],'do').",";
-//						if ($val['type'] == 'bool') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_bool($_POST[$val['champ_interface']]).",";
-//						if ($val['type'] == 'int') $update .= "\"".$i."\".\"".$val['champ_interface']."\" = ".sql_format_num($_POST[$val['champ_interface']]).",";
-//					}
-			}
-//					$update = rtrim($update,',')." WHERE \"codeEnregistrementSyntax\" = ".$id.";";
-//						echo $update;echo "<br>";
-//					$select="SELECT ".rtrim($champs,',')." FROM syntaxa.$i AS t WHERE \"codeEnregistrementSyntax\"=".$id.";";
-//						echo $select;echo "<br>";
-};
-			/*SUIVI AVANT UPDATE*/
-			//echo $champs;
-
-
-			
-
-
-		/*	echo ("<table border=0 width=\"100%\">");
-			echo ("<tr valign=top ><td width=50%>");*/
 			echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=50%>");
 //                    echo ("<fieldset style=\"width:670px;\" ><LEGEND> Habitat </LEGEND>");
             echo ("<fieldset ><LEGEND> Nomenclature </LEGEND>");
@@ -428,12 +399,12 @@ $champs = '';
                 echo ("<fieldset><LEGEND>Chorologie</LEGEND>");	
 			/*répartition territoire et générale*/		
 			
-/*			metaform_text_area ("Répartition générale","",57,50,"","repartitionGenerale",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
+			metaform_text_area ("Répartition générale","",57,50,"","repartitionGenerale",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
 			metaform_text_area ("Répartition territoire","",57,50,"","repartitionTerritoire",pg_result($result,0,"\"repartitionGenerale\""), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
 			echo "<br>";
 			
 			/*chorologie départementale et autres territoires (table multivariée)*/	
-			/*
+			
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
 			//metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"idTerritoire\""),pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
@@ -451,7 +422,7 @@ $champs = '';
 
 			
 			echo ("</fieldset>");
-			*/
+
 		/*------------------------------------------------------------------------------ EDIT fieldset6*/
 		
             

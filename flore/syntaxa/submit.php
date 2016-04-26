@@ -77,7 +77,7 @@ if (!empty ($id))
     // if (DEBUG) echo "<br>".$query;
     // $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
-		add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Saisie edit fiche",$id,"lr");
+		add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Saisie edit fiche",$id,"syntaxa");
 		}
 	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
 		{
