@@ -524,12 +524,12 @@ CREATE TABLE syntaxa.st_syntaxon(
 
 );
 
-GRANT ALL PRIVILEGES ON syntaxa.st_syntaxon TO user_codex;
-grant all on TABLE syntaxa.st_syntaxon_uid_seq TO user_codex;
-
 
 alter table syntaxa.st_syntaxon add column uid serial not null;
 COMMENT ON COLUMN syntaxa.st_syntaxon.uid IS 'Autoincrément pour les besoins de l''application codex';
+
+GRANT ALL PRIVILEGES ON syntaxa.st_syntaxon TO user_codex;
+grant all on TABLE syntaxa.st_syntaxon_uid_seq TO user_codex;
 -- Sequence: refnat.taxons_uid_seq
  
 -- DROP SEQUENCE refnat.taxons_uid_seq;

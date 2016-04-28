@@ -10,8 +10,9 @@ copy syntaxa.referentiel_taxo from 'F:\referentiel_taxo.csv' CSV HEADER encoding
 --------------------------------------------------------------------------------ALIMENTATION DES TABLES DE REFERENTIEL----------------------------------------------------------------
 --table syntaxa.st_annuaire_personnes
 --truncate syntaxa.st_catalogue_description cascade;
-INSERT INTO syntaxa.st_catalogue_description ("identifiantCatalogue", "libelleCatalogue", "id_tri") VALUES ('NI', 'non encore décrit',0);
 
+INSERT INTO syntaxa.st_catalogue_description ("identifiantCatalogue", "libelleCatalogue", "id_tri") VALUES ('NI', 'non encore décrit',0);
+/*alter table syntaxa.st_catalogue_description add column id_tri serial;*/
 
 /*
 alter table syntaxa.st_catalogue_description drop column if exists id_tri;
@@ -8406,6 +8407,8 @@ INSERT INTO syntaxa.liste_geo("id_territoire","code_type_territoire","code_terri
 INSERT INTO syntaxa.liste_geo("id_territoire","code_type_territoire","code_territoire","libelle_territoire", "id_tri") VALUES ('RA_543','RA','103','ZONE LEGUMIERE DE LA PENEPLAINE SUD','687');
 INSERT INTO syntaxa.liste_geo("id_territoire","code_type_territoire","code_territoire","libelle_territoire", "id_tri") VALUES ('RA_544','RA','196','ZONE MARAICHERE DE LYON','688');
 INSERT INTO syntaxa.liste_geo("id_territoire","code_type_territoire","code_territoire","libelle_territoire", "id_tri") VALUES ('NI_4','CBN','non indiqué','non indiqué','0');
+INSERT INTO syntaxa.liste_geo("id_territoire","code_type_territoire","code_territoire","libelle_territoire", "id_tri") VALUES ('CBIG','CBN','IG','CB des Iles de Guadeloupe','689');
+INSERT INTO syntaxa.liste_geo("id_territoire","code_type_territoire","code_territoire","libelle_territoire", "id_tri") VALUES ('FCBN','CBN','FCBN','Fédération des conservatoires botaniques nationaux','690');
 
-
+update syntaxa.st_annuaire_personnes set id_tri= 0 where "idPersonne"='SYNTAXA_pers_nc';
 
