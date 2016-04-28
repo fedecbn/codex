@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /*------------------------------------------------------------------
 --------------------------------------------------------------------
  Application Codex		                               			  
@@ -16,53 +16,72 @@ if ($droit_page) {
 
 //------------------------------------------------------------------------------ PARMS.
 $id_user=$_SESSION['id_user'];
-$id=$_POST['id'];
+
+//variable contenant l'identifiant du syntaxon quand une seule checkbox est cochée (on debug les crochets qui sont passés en UTF8
+$id=str_replace('id%5B%5D=','',$_POST['select']);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ MAIN
-if (!empty ($id)) 
-{
-    $query="	
-	DELETE FROM syntaxa.st_syntaxon WHERE \"codeEnregistrementSyntax\"=$id;
-	DELETE FROM syntaxa.st_chorologie WHERE \"codeEnregistrementSyntax\"=$id;
-	";
+//DEBUG si id ne renvoi rien
+/*
+if (empty ($id)) {echo "id est vide";
+print_r( $_POST['id'] );
+foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />'; }
+*/
 
-	// INSERT INTO 
-	// INSERT INTO (uid) VALUES ($uid);
-	// INSERT INTO liste_rouge.chorologie(uid) VALUES ($uid);
-	// INSERT INTO liste_rouge.evaluation(uid) VALUES ($uid);
+	
+if (!empty ($id)) 
+if (strpos($id, '&') === false) 
+{ 
+echo "blabla";
+    $where .= "\"codeEnregistrementSyntax\"='".$id."'";
+	$where2 .= "\"codeEnregistrement\"='".$id."'";
+	$query="	
+	DELETE FROM syntaxa.st_syntaxon WHERE $where;
+	DELETE FROM syntaxa.st_chorologie WHERE $where2;
+	";
+	echo "</br>".$query;
+	echo "</br>id=".sql_format_quote($id,'do');
+	echo "</br>id='".$id."'";
 
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 		
-   	add_suivi2(1,$id_user,$id,"st_syntaxon",'codeEnregistrementSyntax',$id,null,$id_page,'manuel','suppr');
-	add_suivi2(1,$id_user,$id,"st_chorologie",'codeEnregistrementSyntax',$id,null,$id_page,'manuel','suppr');
 
-	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression fiche",$id,"syntaxon");
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_syntaxon","codeEnregistrementSyntax",$id,null,'syntaxa','manuel','suppr');
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_chorologie","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
+
+	//add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression fiche",$id,"syntaxon");
+	
 	
 	
 } elseif (strlen($_POST['select']) > 0) {
-    $pairs=explode ("&",$_POST['select']);
+    echo "<br> blibli";
+   $pairs=explode ("&",str_replace('%5B%5D','[]',$_POST['select']));
     foreach ($pairs as $key=>$value){
-        $id = ltrim ($value,"id=");
-		$where .= "\"codeEnregistrementSyntax\"=".$id." OR ";
-		add_suivi2(1,$id_user,$id,'st_syntaxon','codeEnregistrementSyntax',$id,null,'syntaxa','manuel','suppr');
+        $id = ltrim ($value,"id[]=");
+		$where .= "\"codeEnregistrementSyntax\"='".$id."' OR ";
+		$where2 .= "\"codeEnregistrement\"='".$id."' OR ";
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),'st_syntaxon','codeEnregistrementSyntax',$id,null,$id_page,'manuel','suppr');
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),'st_chorologie','codeEnregistrement',$id,null,$id_page,'manuel','suppr');
 		}
     $where=rtrim ($where,"OR ");
+	$where2=rtrim ($where2,"OR ");
 
-	    $query="
+	$query="
 	DELETE FROM syntaxa.st_syntaxon WHERE $where;
-	DELETE FROM syntaxa.st_chorologie WHERE $where;
+	DELETE FROM syntaxa.st_chorologie WHERE $where2;
 	";
-
-    // $query="UPDATE refnat.taxons	SET $id_page = false WHERE ".$where.";";
+	echo "where=".$where;
+	echo "where2=".$where;
+	echo $query;
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 
-    add_suivi2(1,$id_user,$where,"taxons","uid",$id,null,$id_page,'manuel','suppr');
+   // add_suivi2(1,$id_user,$where,"taxons","uid",$id,null,$id_page,'manuel','suppr');
 	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression multi fiches",$where,"syntaxon");
-	
+
 	
 }
 pg_close ($db);
