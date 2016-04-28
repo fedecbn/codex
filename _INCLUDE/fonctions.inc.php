@@ -414,7 +414,7 @@ function add_suivi2 ($etape,$id_user,$uid,$table,$champ,$valeur_1,$valeur_2,$rub
 	
 	/*valeur_1 = VALEUR INITIALE*/
 	// var_dump($valeur_1);
-	if (($valeur_1 == null) OR (!empty($valeur_1)))
+	if (($valeur_1 == null) OR (empty($valeur_1)))
 		{
 		$valeur_1 = null;
 		$libelle1 = null;
