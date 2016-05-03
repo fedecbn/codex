@@ -203,27 +203,29 @@ include ("../syntaxa/add_fiche.php");
 		if (isset($_GET['id']) & !empty($_GET['id'])) { 
             $id="'".$_GET['id']."'";
             echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
+			
+			
+        /*-----------------Requêtes de l'application-------------*/
             		
 			$query= $query_module.$id.";";
 			//echo $query;
 			$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 			$numrows = pg_numrows($result);
 			//for($i = 0; $i < $numrows; $i++) { $row = pg_fetch_array($result, $i);echo $row["codeEnregistrementSyntax"];}			
-			
+
+			//QUERY CORRESPONDANCES BIBLIO
 			$query2= $query_module_biblio.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result2=pg_query($db,$query2) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result2),false);
 			//for($i = 0; $i < $numrows; $i++) { $row = pg_fetch_array($result, $i);echo $row["codeEnregistrementSyntax"];}	
 			
+			
+			
+			//QUERY CORRESPONDANCES PHYTOSOCIOLOGIE et HABITATS
 			$query3= $query_module_correspondance_pvf1.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result3=pg_query($db,$query3) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result3),false);
 			
-			$query4= $query_module_chorologie.$id.";";				
-			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
-			$result4=pg_query($db,$query4) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result4),false);
-			
-
 			$query5= $query_module_correspondance_hic.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result5=pg_query($db,$query5) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result5),false);
@@ -232,6 +234,46 @@ include ("../syntaxa/add_fiche.php");
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result6=pg_query($db,$query6) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result6),false);
 			
+			
+			
+			//QUERY CHOROLOGIE et STATUTS DE PRESENCE
+			//toutes les lignes enregistrées dans st_chorologie pour ce syntaxon
+			$query4= $query_module_chorologie.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result4=pg_query($db,$query4) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result4),false);
+			
+			//toutes les lignes du type territoire "DEP" enregistrées dans st_chorologie pour ce syntaxon
+			$where= "and \"code_type_territoire\"='DEP'";
+			$query_departement= $query_module_chorologie.$id.$where.";";
+			$result_departement=pg_query($db,$query_departement) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_departement),false);
+					//organisation en tableau utilisable par la fonction metaform_sel_multi de type idTerritoire => libelle_territoire (ex: 'DEP_971' => string 'Guadeloupe' (length=10)) 
+					while ($row=pg_fetch_array ($result_departement,NULL,PGSQL_ASSOC))
+					$output[$row["idTerritoire"]]=$row["libelle_territoire"];
+					$result_departement_enregistre = $output;
+					//var_dump($result_departement_enregistre);
+		
+			//var_dump(pg_fetch_array ($result_departement,NULL,PGSQL_ASSOC));
+			
+			//toutes les lignes du type territoire "RA" enregistrées dans st_chorologie pour ce syntaxon
+			$where= "and \"code_type_territoire\"='RA'";
+			$query_region_agr= $query_module_chorologie.$id.$where.";";
+			$result_region_agr=pg_query($db,$query_region_agr) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_region_agr),false);
+					//organisation en tableau utilisable par la fonction metaform_sel_multi de type idTerritoire => libelle_territoire (ex: 'RA_234' => string 'LEVEZOU' (length=7)) 
+					while ($row=pg_fetch_array ($result_region_agr,NULL,PGSQL_ASSOC))
+					$output2[$row["idTerritoire"]]=$row["libelle_territoire"];
+					$result_region_agr_enregistre = $output2;
+					//var_dump($result_region_agr_enregistre);
+			
+			
+			
+			$query9 =$query_liste_statuts_cbn.$id.";";
+			$result9=pg_query ($db,$query9) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+			$liste_statut_presence = pg_fetch_all($result9);
+			//var_dump($liste_statut_presence);
+			//var_dump(pg_fetch_array($result9));
+			
+			
+			//QUERY ETAGES
 			$query7= $query_module_etage_vegetation.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result7=pg_query($db,$query7) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result7),false);
@@ -240,7 +282,10 @@ include ("../syntaxa/add_fiche.php");
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result8=pg_query($db,$query8) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result8),false);
 
+
+
 			
+
 
 			// Loop through rows in the result set
 			for($i = 0; $i < $numrows2; $i++) { $row = pg_fetch_array($result2, $i);echo $row["codeEnregistrement"];}
@@ -266,8 +311,6 @@ include ("../syntaxa/add_fiche.php");
 //var_dump(pg_result($result,0,"\"salinite\""));
 //var_dump(pg_result($result,0,"\"rangSyntaxon\""));
 //var_dump($ref[$champ_ref["salinite"]]);
-//var_dump($ref[$champ_ref["neige"]]);
-//var_dump($ref[$champ_ref["ombroclimat"]]);
 //var_dump($ref[$champ_ref["temperature"]]);
 //var_dump($ref['st_ref_type_synonymie']);
 //var_dump($ref[$champ_ref["idCritiqueSyntax"]]);
@@ -353,6 +396,7 @@ include ("../syntaxa/add_fiche.php");
             echo ("</fieldset>");
 		/*------------------------------------------------------------------------------ EDIT fieldset3*/
             echo ("<fieldset><LEGEND> Fichier rattaché (photo numérique) </LEGEND>");
+			    echo ("<a><input type=\"file\" name=\"file_image\" /></a>");
                /* $list_photos=scandir (PNM_PHOTO_PATH);
                 $list_photos[0]=$list_photos[1]="";
                 metaform_sel2 ("Fichier rattaché","","style=width:30em;","<br>",$list_photos,"PHOTO",mysql_result($result,0,"PHOTO"));*/
@@ -404,21 +448,37 @@ include ("../syntaxa/add_fiche.php");
 			echo "<br>";
 			
 			/*chorologie départementale et autres territoires (table multivariée)*/	
-			
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
-			//metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement",pg_result($result4,0,"\"idTerritoire\""),pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
-            //metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",pg_result($result4,0,"\"idTerritoire\""),"departement_select","");
-			echo "<br>";
-			metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole",pg_result($result4,0,"\"idTerritoire\""),pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
-            metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'",pg_result($result4,0,"\"idTerritoire\""),"region_agricole_select","");
+			echo ("<BR><BR>");
+			echo ("<table class = \"basic_table\">");
+			echo ("<tr><td colspan=2>Statuts de présence enregistrés pour ce syntaxon</td></tr>");
+			echo ("<tr><td><b>Libellé territoire</b></td><td><b>Statut de présence</b></td></tr>");
+			foreach ($liste_statut_presence as $key => $val)
+				echo ("<tr><td>".$val["libelle_territoire"]."</td><td>".$val["statutChorologie"]."</td></tr>");
+			echo ("</table>");
+			}
+			
+			
+			$num_rows_dep = pg_num_rows($result_departement);
+			$num_rows_rag = pg_num_rows($result_region_agr);
+			if ($num_rows_dep > 0) {
+			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
+            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",$result_departement_enregistre,"departement_select","");
 			} else {
 					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
 					metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'","","departement_select","");
+			}
+			echo "<br>";
+			
+			if ($num_rows_rag > 0) {
+			metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
+            metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'",$result_region_agr_enregistre,"region_agricole_select","");
+			 } else {
 					echo "<br>";
 					metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
 					metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'","","region_agricole_select","");
-			}
+			 }
 
 			
 			echo ("</fieldset>");

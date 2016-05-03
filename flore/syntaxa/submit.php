@@ -35,6 +35,8 @@ if (!empty ($id))
 	if ($niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
 		{
 		/*SUIVI DES MODIFICATIONS ET UPDATE*/
+		foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
+		
 		//var_dump($aColumnsTot);
 		$tables = array ('st_syntaxon');
 		/*modification et suivi des modifications pour la table st_syntaxon (univariée)*/

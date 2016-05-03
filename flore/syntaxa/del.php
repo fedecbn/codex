@@ -17,7 +17,8 @@ if ($droit_page) {
 //------------------------------------------------------------------------------ PARMS.
 $id_user=$_SESSION['id_user'];
 
-//variable contenant l'identifiant du syntaxon quand une seule checkbox est cochée (on debug les crochets qui sont passés en UTF8
+/*variable contenant l'identifiant du syntaxon quand une seule checkbox est cochée 
+(on retire le nom de la checkbox, à noter que les crochets sont passés percent encoding normalement utilisé pour faire passer des paramètres à un url %5B%5D )*/
 $id=str_replace('id%5B%5D=','',$_POST['select']);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
@@ -34,9 +35,10 @@ foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />'; }
 
 	
 if (!empty ($id)) 
+//id reçois $_POST['select'], quand plusieurs checkbox sont cochées alors on a une chaine de caractère du type "name1=valeur1&name2=valeur2" sinon on a juste " name1=valeur1"
 if (strpos($id, '&') === false) 
 { 
-echo "blabla";
+echo "une seule case est cochée";
     $where .= "\"codeEnregistrementSyntax\"='".$id."'";
 	$where2 .= "\"codeEnregistrement\"='".$id."'";
 	$query="	
@@ -53,12 +55,14 @@ echo "blabla";
 	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_syntaxon","codeEnregistrementSyntax",$id,null,'syntaxa','manuel','suppr');
 	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_chorologie","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
 
-	//add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression fiche",$id,"syntaxon");
+	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression une fiche",$where,"syntaxon");
 	
 	
 	
-} elseif (strlen($_POST['select']) > 0) {
-    echo "<br> blibli";
+} 
+//elseif (strlen($_POST['select']) > 0) {
+	else {
+    echo "<br> plusieurs cases cochées";
    $pairs=explode ("&",str_replace('%5B%5D','[]',$_POST['select']));
     foreach ($pairs as $key=>$value){
         $id = ltrim ($value,"id[]=");
@@ -79,7 +83,6 @@ echo "blabla";
 	echo $query;
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 
-   // add_suivi2(1,$id_user,$where,"taxons","uid",$id,null,$id_page,'manuel','suppr');
 	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression multi fiches",$where,"syntaxon");
 
 	

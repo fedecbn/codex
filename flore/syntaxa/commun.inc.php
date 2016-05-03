@@ -52,9 +52,11 @@ SELECT t.*
 	WHERE t.\"codeEnregistrement\"=";	
 	
 $query_module_chorologie = "
-SELECT t.*
-	FROM syntaxa.st_chorologie t
-	WHERE t.\"codeEnregistrement\"=";	
+SELECT ch.\"idTerritoire\", li.\"libelle_territoire\" FROM syntaxa.st_chorologie ch
+inner join 
+(select * from  syntaxa.liste_geo) li
+on ch.\"idTerritoire\"=li.\"id_territoire\" 
+WHERE \"codeEnregistrement\" = ";
 	
 $query_module_etage_vegetation = "
 SELECT t.*
@@ -68,6 +70,14 @@ SELECT t.*
 	
 $query_description=
 "SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and table_champ not like 'st_ref%' and champs.nom_champ=";
+
+$query_liste_statuts_cbn=
+"SELECT li.\"libelle_territoire\", ch.\"statutChorologie\"  FROM syntaxa.st_chorologie ch
+inner join 
+(select \"id_territoire\", \"libelle_territoire\", \"code_type_territoire\" from  syntaxa.liste_geo order by \"code_type_territoire\"='CBN' asc ) as li 
+on ch.\"idTerritoire\"=li.\"id_territoire\" 
+WHERE \"codeEnregistrement\" = ";
+
 
 $query_liste = "
 SELECT count(*) OVER() AS total_count,*
