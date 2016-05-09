@@ -14,12 +14,12 @@ phase = 'test';
 -- user_codex = 'pg_user';
 ----------------------------------------------------
 
-tableau_array = ARRAY['refnat','hub','eee','catnat','fsd','syntaxa','lsi'];
+tableau_array = ARRAY['refnat','hub','eee','catnat','fsd','syntaxa','lsi','eee_reg','data','taxa','meta'];
 FOREACH rub IN ARRAY tableau_array LOOP
 EXECUTE 'DELETE FROM referentiels.champs WHERE rubrique_champ='''||rub||''' AND (nom_champ=''bouton'' OR nom_champ=''checkbox'');';
 EXECUTE 'INSERT INTO referentiels.champs (rubrique_champ, nom_champ,  nom_champ_synthese, champ_interface, type,  pos, table_champ, table_bd,export_display, modifiable,description, description_longue,jvs_desc_column) VALUES  
 ('''||rub||''', ''bouton'', ''bouton'', ''bouton'', ''bouton'', (SELECT max(pos)+1 FROM referentiels.champs WHERE rubrique_champ='''||rub||''') , null, null,  TRUE,  TRUE,  ''Fiche'', ''Accès à la fiche'',''{ "sClass": "center","sWidth": "3%","bSortable": false }''), 
-('''||rub||''', ''checkbox'', ''checkbox'', ''checkbox'', ''checkbox'', (SELECT max(pos)+1 FROM referentiels.champs WHERE rubrique_champ='''||rub||'''), null, null,  TRUE,  TRUE,  ''<input type=checkbox class=liste-all value=1 >'', ''Selectionner tout'',''{ "sClass": "center","sWidth": "3%","bSortable": false }''); 
+('''||rub||''', ''checkbox'', ''checkbox'', ''checkbox'', ''checkbox'', (SELECT max(pos)+2 FROM referentiels.champs WHERE rubrique_champ='''||rub||'''), null, null,  TRUE,  TRUE,  ''<input type=checkbox class=liste-all value=1 >'', ''Selectionner tout'',''{ "sClass": "center","sWidth": "3%","bSortable": false }''); 
 ';
 END LOOP;
 
