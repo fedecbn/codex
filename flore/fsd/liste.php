@@ -20,9 +20,8 @@ $class = $onglet == 'fsd' ? 'edit' : 'fsd';
 
 //------------------------------------------------------------------------------ PARMS.
 /*Droit sur les boutons de la dernière colonne*/
-$typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
-$view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
-$edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
+$typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -68,6 +67,10 @@ $iTotal = $aResultTotal;
 				if (!empty($row['vocaCtrl'])) {$sOutput .= '"<img class=\"vocactrl\" id=\"'.sql_format_quote($row['vocaCtrl'],'undo_table').'\" src=\"../../_GRAPH/mini/fiche-icon.png\" title=\"'.sql_format_quote($row['vocaCtrl'],'undo_table').'\" >",';} else {$sOutput .= '"",';}
 			elseif ($key == 'discussion')
 				if (!empty($row['discussion'])) {$sOutput .= '"<img class=\"discussion\" id=\"'.sql_format_quote($row['discussion'],'undo_table').'\" src=\"../../_GRAPH/mini/attention-icon.png\" title=\"'.sql_format_quote($row['discussion'],'undo_table').'\" >",';} else {$sOutput .= '"",';}
+			else if ($key == 'bouton')
+				if ($droit['edit_fiche']) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($droit['view_fiche']) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
+			else if ($key == 'checkbox') 
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
@@ -84,22 +87,8 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-		if ($onglet == 'fsd') {
-			/*boutons*/
-			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid']).'",'; 
-			elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; 
-			else 			$sOutput .= '"",';
-			/*checkbox*/
-			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
-			}
-        elseif ($onglet == 'meta' OR $onglet == 'data' OR $onglet == 'taxa') {
-			/*boutons*/
-			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid'],'fsd').'",'; 
-			else 			$sOutput .= '"",';
-			/*checkbox*/
-			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
-			}
-    	$sOutput .= "],";
+		$sOutput = trim($sOutput,',');
+		$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';

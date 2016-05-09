@@ -31,6 +31,10 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 /*Cette fonction récupère toutes les référentiels utiles pour la page. Les référentiels sons stockés dans l'objet $ref*/
 ref_colonne_et_valeur ($id_page);
 
+/*Droits*/
+$typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery.min.js"></script>
@@ -87,17 +91,14 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau >= 128) 
-                    echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-					echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) 
-                    echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
-                if ($niveau >= 512) 
-                    echo ("<button id=\"maj-from-taxa-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");        
+                if ($droit['to-refnat']) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				if ($droit['export_fiche']) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                if ($droit['del_fiche']) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                if ($droit['maj-from-taxa-button']) echo ("<button id=\"maj-from-taxa-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_reborn ("onglet1",'catnat');
+			aff_table_next ("onglet1",'catnat');
 			// aff_table ($id_page."-liste",true,true);			
 		echo ("</div>");
 /*------------------------------------------------------------------------------ #fiche*/
@@ -107,16 +108,10 @@ switch ($mode) {
                 echo "Droit d'utilisation de la rubrique";
             echo ("</div>");
             echo ("<div style=\"float:right;\">");
-                // if ($niveau >= 128) 
-                    // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				// if ($niveau >= 64) 
-					// echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                // if ($niveau >= 255) 
-                    // echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_reborn ("user","droit");
+			aff_table_next ("user","droit");
         echo ("</div>");    }
     break;
 

@@ -34,6 +34,7 @@ ref_colonne_et_valeur ($id_page);
 if ($niveau <= 64) $desc = " bloque"; else $disa = $desc;
 if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 
+
 /*A généraliser dans les référentiels*/
 $format = array("character varying"=>"character varying","float"=>"float","integer"=>"integer","boolean"=>"boolean","date"=>"date");
 $oblig = array(""=>"","Oui"=>"Oui","Oui si"=>"Oui si","Non"=>"Non","NSP"=>"NSP");
@@ -74,12 +75,16 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$onglet["id"][0]."_".$id_user.".csv\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
+			
+			/*Droits*/
+			$typ_droit='d2';$rubrique=$id_page;
+			$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet["id"][0]);
             /*Boutons*/
 			echo ("<div style=\"float:right;\">");
-				if ($niveau >= 128) echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
-                if ($niveau >= 512) echo ("<button id=\"figer-version-button\"> ".$lang[$lang_select]['maj_taxa']."</button>&nbsp;&nbsp;");
+                if ($droit['add-button']) echo ("<button id=\"invalidate-button\"> ".$lang[$lang_select]['invalidate']."</button>&nbsp;&nbsp;");
+				if ($droit['export_fiche']) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                if ($droit['del_fiche']) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                if ($droit['figer-version-button']) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -90,7 +95,6 @@ switch ($mode) {
 		echo ("<div id=\"titre2\">".$onglet["sstitre"][1]."</div>");
             /*Boutons*/
             echo ("<div style=\"float:right;\">");
-				// if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -101,7 +105,6 @@ switch ($mode) {
 		echo ("<div id=\"titre2\">".$onglet["sstitre"][2]."</div>");
             /*Boutons*/
             echo ("<div style=\"float:right;\">");
-				// if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
@@ -112,7 +115,6 @@ switch ($mode) {
 		echo ("<div id=\"titre2\">".$onglet["sstitre"][3]."</div>");
             /*Boutons*/
             echo ("<div style=\"float:right;\">");
-				// if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
 			echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/

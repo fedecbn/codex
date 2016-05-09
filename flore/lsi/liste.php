@@ -18,6 +18,10 @@ if ($droit_page) {
 //------------------------------------------------------------------------------ VAR.
 $onglet = 'news';
 
+/*Droit sur les boutons de la dernière colonne*/
+$typ_droit='d2';$rubrique=$id_page;
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+
 //------------------------------------------------------------------------------ PARMS.
 /*Droit sur les boutons de la dernière colonne*/
 $typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
@@ -64,9 +68,16 @@ $iTotal = $aResultTotal;
 		$sOutput .= "[";
 		foreach ($aColumns[$id_page] as $key => $value) {
 		/*---------------*/
+		/*cas paticuliers*/
+		/*---------------*/
+			if ($key == 'bouton')
+				if ($droit['edit_fiche']) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($droit['view_fiche']) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
+			else if ($key == 'checkbox') 
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
+		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
-			if (!empty($ref[$champ_ref[$key]]))
+			else if (!empty($ref[$champ_ref[$key]]))
 				$sOutput .= '"'.$ref[$champ_ref[$key]][$row[$key]].'",';
 		/*---------------*/
 		/*cas général sans référentiel*/
@@ -77,15 +88,8 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-		if ($onglet == 'news') {
-			/*boutons*/
-			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid']).'",'; 
-			elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; 
-			else 			$sOutput .= '"",';
-			/*checkbox*/
-			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
-			}
-    	$sOutput .= "],";
+		$sOutput = trim($sOutput,',');
+		$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';

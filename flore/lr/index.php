@@ -106,7 +106,6 @@ switch ($mode) {
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
 			aff_table_next ("data",$id_page);			
-            // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
 //------------------------------------------------------------------------------ #deuxieme onglet (DROIT)
         echo ("<div id=\"droit\" >");
@@ -115,14 +114,10 @@ switch ($mode) {
                 echo "Droit d'utilisation de la rubrique";
             echo ("</div>");
             echo ("<div style=\"float:right;\">");
-                // if ($niveau >= 128)  echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				// if ($niveau >= 64)  echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                // if ($niveau >= 255)  echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
 			aff_table_next ("user","droit");			
-            // aff_table ($id_page."-liste",true,true);
         echo ("</div>");
     }
     break;

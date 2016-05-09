@@ -75,30 +75,20 @@ $lang['it']['voir_lsi']="";
 
 
 //------------------------------------------------------------------------------ CHAMPS du module
-$langliste['fr'][$id_page][]="Id";
-$langliste['fr'][$id_page.'-popup'][]="Identifiant";
 
-$langliste['fr'][$id_page][]="Thématique";
-$langliste['fr'][$id_page.'-popup'][]="Thématique de la news";
+foreach ($onglet["id"] as $val)
+	{
+	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs 
+	WHERE rubrique_champ = '$val' AND pos IS NOT NULL 
+	ORDER BY pos";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-$langliste['fr'][$id_page][]="Titre";
-$langliste['fr'][$id_page.'-popup'][]="Titre de la news";
-
-$langliste['fr'][$id_page][]="Extrait";
-$langliste['fr'][$id_page.'-popup'][]="Extrait de la news";
-
-$langliste['fr'][$id_page][]="Mots clés";
-$langliste['fr'][$id_page.'-popup'][]="Mots clés";
-
-$langliste['fr'][$id_page][]="Lien";
-$langliste['fr'][$id_page.'-popup'][]="Lien hypertexte";
-
-$langliste['fr'][$id_page][]="Lien 2";
-$langliste['fr'][$id_page.'-popup'][]="Lien hypertexte 2";
-
-$langliste['fr'][$id_page][]="Date";
-$langliste['fr'][$id_page.'-popup'][]="Date de publication";
-
+	While ($row = pg_fetch_row($result)) 
+		{
+		$langliste['fr'][$val][]= $row[1];
+		$langliste['fr'][$val.'-popup'][]= $row[2];
+		}
+	}
 
 
 //------------------------------------------------------------------------------ SI PAS ACCES 
