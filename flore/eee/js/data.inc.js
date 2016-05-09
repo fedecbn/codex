@@ -67,47 +67,10 @@
         }, 
         // "aaSorting": [[3,'asc']],                                               // Nom scientifique 
         "sDom": '<"top"l>rt<"bottom"ip>',
-            "aoColumns": [                                                        
-                { "sWidth": "6%" },
-            	{ "sWidth": "20%" },
-            	{ "sWidth": "5%" },
-            	{ "sWidth": "4%" },
-                { "sWidth": "4%" },
-                { "sWidth": "4%" },
-                { "sWidth": "4%" },
-                { "sWidth": "4%" },
-                { "sWidth": "4%" },
-                { "sClass": "eval","sWidth": "6%"},
-				{ "sClass": "eval","sWidth": "8%" },
-    			{ "sWidth": "6%" },
-                { "sWidth": "5%" },
-                { "sWidth": "5%" },
-                { "sWidth": "3%" },
-    			{ "sWidth": "3%" },
-        		{ "sClass": "center","sWidth": "3%","bSortable": false },
-    			{ "sClass": "center","sWidth": "3%","bSortable": false },
-        		{ "sClass": "center","sWidth": "3%","bSortable": false }
-        ]
+            "aoColumns": descColumns
         }).columnFilter({
             sPlaceHolder: "head:after",
-            aoColumns: [ 
-                { type: "text" },
-                { type: "text" },                                               // 
-                { type: "select", values: ['ES','SSES','VAR','SVAR','FO','SSFO']}, // 
-                { type: "select", values: ['oui','non']  },                                               //  
-                { type: "select", values: ['oui','non']  },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                               //  
-                { type: "text" },                                                                                             
-                { type: "select", values: [{ value: 'not_null', label: 'évalué'},{ value: 'Insuffisamment documenté', label: 'Insuffisamment documenté'},{ value: 'FAIBLE', label: 'FAIBLE'},{ value: 'INTERMEDIAIRE', label: 'INTERMEDIAIRE'},{ value: 'FORT', label: 'FORT'}]},                                    
-                { type: "text" },                                              //                                            //  
-                { type: "select", values: [{ value: 'pcpl', label: 'principale'},{ value: 'annexe', label: 'annexe'}]},                                    
-                { type: "select", values: [{ value: 'emerg', label: 'emmergent'},{ value: 'non_emerg', label: 'nom_emergent'}]},
-                { type: "select", values: [{ value: 'avere_local', label: 'localement'},{ value: 'avere_ailleurs', label: 'ailleurs'},{ value: 'non_avere', label: 'non avere'}]},                                               //  
-                { type: "text" }                                               //  
-			]
+            aoColumns: filterColumns
 		});        
 	oTable.fnSort( [ [1,'asc'] ] );		
 

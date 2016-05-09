@@ -35,8 +35,6 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 //------------------------------------------------------------------------------ REF.
 global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ($id_page);
-// $ref['etape'] = array(0 =>"",1=>"pré-eval",2=>"éval",3=>"post-éval");
-// $ref['endemisme'] = array("" =>"",f=>"NON",t=>"<b>OUI</b>");
 
 /*Droits*/
 $typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';

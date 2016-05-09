@@ -62,7 +62,7 @@ $iTotal = $aResultTotal;
 		/*cas paticuliers*/
 		/*---------------*/
 			if 	($key == 'gbif_url')	
-				if (!empty($row['gbif_url'])) {$sOutput .= '"<a href=\"'.$row['gbif_url'].'\" id=\"gbif\"  target=\"_blank\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"lien gbif\" ></a>",';} else {$sOutput .= '"",';}
+				if (!empty($row['gbif_url'])) {$sOutput .= '"<a href=\"'.$row['gbif_url'].'\" id=\"gbif\"  target=\"_blank\" ><img src=\"../../_GRAPH/mini/gbif.png\" title=\"lien gbif\" ></a>",';} else {$sOutput .= '"",';}
 			else if ($key == 'eval_expert')
 				if ($row['eval_expert'] != '') {$sOutput .= '"<a class=lr-view id=\"'.sql_format_quote($row['eval_expert'],'undo_table').'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['eval_expert'],'undo_table').'\" ></a>",';} else {$sOutput .= '"",';}
 			else if ($key == 'bouton')

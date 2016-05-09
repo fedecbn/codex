@@ -17,6 +17,12 @@ if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
 
+//------------------------------------------------------------------------------ JAVASCRIPT
+$descColumns = descColumns($id_page);
+$filterColumns = filterColumns($id_page);	
+echo ('<input type=\'hidden\' name=\'descColumns\' id=\'descColumns\' value=\''.$descColumns.'\'/>');
+echo ('<input type=\'hidden\' name=\'filterColumns\' id=\'filterColumns\' value=\''.$filterColumns.'\'/>');
+
 //------------------------------------------------------------------------------ PARMS.
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
 if (isset($_GET['o']) & !empty($_GET['o'])) $o=$_GET['o'];

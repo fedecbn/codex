@@ -30,6 +30,9 @@ $id_user=$_SESSION['id_user'];
 $config=$_SESSION['id_config'];
 $lang_select=$_COOKIE['lang_select'];
 
+
+$onglet = ref_onglet($id_page);
+
 //------------------------------------------------------------------------------ QUERY du module
 $query_liste = "
 SELECT count(*) OVER() AS total_count,news.id,news.id_subject,title,abstract,string_agg(libelle_tag,' / ') as libelle_tag,link,link_2,date

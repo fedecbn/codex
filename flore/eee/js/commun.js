@@ -8,6 +8,11 @@ d = new Date();
 var j = d.getDate();
 var h = d.getHours();  
 
+/*Récupération des descriptions pour data.js*/
+// alert(document.getElementById('filterColumns').value);
+var descColumns = JSON.parse(document.getElementById('descColumns').value);
+var filterColumns = JSON.parse(document.getElementById('filterColumns').value);
+
 $(document).ready(function(){
 	include("../../_INCLUDE/js/interact.js?"+j+h)  
 	include("../../_INCLUDE/js/functions.js?"+j+h)	
