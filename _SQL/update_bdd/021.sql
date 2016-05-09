@@ -8,8 +8,8 @@ BEGIN
 ----------------------------------------------------
 ------VARIABLES A DÉFINIR---------------------------
 ---## Pour tester la fonction. Une fois que vous souhaiter enregistrer la modif dans la table update_bdd, mettre la phase en "prod" ##--
-phase = 'test';
--- phase = 'prod';
+-- phase = 'test';
+phase = 'prod';
 ---## user_codex est l'utilisateur du codex (décommentez la ligne suivante si besoin) ##--
 -- user_codex = 'pg_user';
 ----------------------------------------------------
