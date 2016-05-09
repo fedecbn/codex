@@ -6,8 +6,8 @@ BEGIN
 ----------------------------------------------------
 ------VARIABLES A DÉFINIR---------------------------
 ---## Pour tester la fonction. Une fois que vous souhaiter enregistrer la modif dans la table update_bdd, mettre la phase en "prod" ##--
-phase = 'test';
--- phase = 'prod';
+-- phase = 'test';
+phase = 'prod';
 ---## user_codex est l'utilisateur du codex (décommentez la ligne suivante si besoin) ##--
 -- user_codex = 'pg_user';
 ----------------------------------------------------
@@ -113,9 +113,9 @@ INSERT INTO applications.update_bdd (id, commit, descr, date) VALUES (
 	--- Numero du fichier (à modifier)
 	'022',
 	--- Numéro du dernier commit (à modifier)
-	'', 
+	'9f7353eee5c023e029be566bddca364e05f67576', 
 	--- Description de la modif BDD (à modifier)
-	'Metamodele description amélioré',
+	'Metamodele description referentiel.champ améliorée',
 	--- Date (à ne pas modifier)
 	NOW());
 RETURN 'OK';
