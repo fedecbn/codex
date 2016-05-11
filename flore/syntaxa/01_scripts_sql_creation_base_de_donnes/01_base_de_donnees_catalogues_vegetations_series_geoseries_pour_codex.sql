@@ -90,7 +90,7 @@ COMMENT ON COLUMN syntaxa.liste_geo."id_territoire" IS 'identifiant unique du te
 COMMENT ON COLUMN syntaxa.liste_geo."code_type_territoire" IS 'code du type de territoire (RA:région agricole, DEP: département, REG: région)';
 COMMENT ON COLUMN syntaxa.liste_geo."code_territoire" IS 'Code du territoire dans son référentiel d''origine (ex: insee pour les départements)';
 COMMENT ON COLUMN syntaxa.liste_geo."libelle_territoire" IS 'Libellé du territoire dans son référentiel d''origine (ex: insee pour les départements)';
-
+COMMENT ON COLUMN syntaxa.liste_geo.id_tri is 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
 
 
 -- Table: taxa.referentiel_taxo
@@ -154,6 +154,7 @@ COMMENT ON COLUMN syntaxa.st_catalogue_description."typeCatalogue" IS 'Type de c
 COMMENT ON COLUMN syntaxa.st_catalogue_description."dateCreationCatalogue" IS 'date de création du catalogue de vegetation';
 COMMENT ON COLUMN syntaxa.st_catalogue_description."dateMiseAJourCatalogue" IS 'date de dernière mise à jour du catalogue de vegetation';
 COMMENT ON COLUMN syntaxa.st_catalogue_description."idCollaborateurCatalogue" IS 'identifiant vers une table contenant les noms des CBN ou autres organismes ayant collaborés à la réalisation du catalogue';
+COMMENT ON COLUMN syntaxa.st_catalogue_description."idTerritoireCatalogue" IS 'identifiant unique du territoire utilisé pour décrire la validité spatiale du catalogue, fait référence à la table liste_geo';
 COMMENT ON COLUMN syntaxa.st_catalogue_description."codeTypeTerritoireCatalogue" IS 'Code du type de territoire utilisé pour décrire la validité spatiale du catalogue, autrement dit emprise totale du catalogue ( CBN,régionale, nationale, autre…)';
 COMMENT ON COLUMN syntaxa.st_catalogue_description."codeTerritoireCatalogue" IS 'Code du territoire utilisé pour décrire de validité spatiale du catalogue, lié au référentiel territorial utilisé';
 COMMENT ON COLUMN syntaxa.st_catalogue_description."libelleTerritoireCatalogue" IS 'Nom du territoire  utilisé pour décrire la validité spatiale du catalogue ';
@@ -501,7 +502,7 @@ CREATE TABLE syntaxa.st_syntaxon(
 	"periodeDebObsOptimale" text,
 	"periodeFinObsOptimale" text,
 	"rqPhenologie" text,
-	"aireMinimale" integer,
+	"aireMinimale" text,
 	"typeBiologiqueDom" text,
 	"typePhysionomique" text,
 	"rqPhysionomie" text,
@@ -524,12 +525,25 @@ CREATE TABLE syntaxa.st_syntaxon(
 
 );
 
+/* A vérifier mais j'ai changé le type de la colonne aireMinimale 
+alter table syntaxa.st_syntaxon drop column "aireMinimale"; 
+alter table syntaxa.st_syntaxon add column "aireMinimale" text;
+pour l'application qui ne prenait pas encore en compte le type float
+
+du coup il faut lancer un 
+update referentiels.champs set type='string' where nom_champ='aireMinimale' and table_champ='st_syntaxon' ;
+
+Dans la table des référentiels*/
 
 alter table syntaxa.st_syntaxon add column uid serial not null;
 COMMENT ON COLUMN syntaxa.st_syntaxon.uid IS 'Autoincrément pour les besoins de l''application codex';
 
 GRANT ALL PRIVILEGES ON syntaxa.st_syntaxon TO user_codex;
 grant all on TABLE syntaxa.st_syntaxon_uid_seq TO user_codex;
+
+
+
+
 -- Sequence: refnat.taxons_uid_seq
  
 -- DROP SEQUENCE refnat.taxons_uid_seq;
@@ -1070,6 +1084,7 @@ CREATE TABLE syntaxa.st_annuaire_personnes(
 	"idPersonne" text,
 	prenom text,
 	nom text,
+	id_tri serial NOT NULL,
 	CONSTRAINT "idPersonne_pkey" PRIMARY KEY ("idPersonne")
 
 );
@@ -1078,6 +1093,7 @@ COMMENT ON TABLE syntaxa.st_annuaire_personnes IS 'Table d''annuaire qui recense
 COMMENT ON COLUMN syntaxa.st_annuaire_personnes."idPersonne" IS 'Identifiant unique de la personne';
 COMMENT ON COLUMN syntaxa.st_annuaire_personnes."prenom" IS 'Prénom de la personne';
 COMMENT ON COLUMN syntaxa.st_annuaire_personnes."nom" IS 'Nom de la personne';
+COMMENT ON COLUMN syntaxa.st_annuaire_personnes.id_tri is 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
 -- ddl-end --
 
 
