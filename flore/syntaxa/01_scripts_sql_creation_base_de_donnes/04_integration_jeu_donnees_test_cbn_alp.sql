@@ -360,7 +360,9 @@ select * from hub_add('syntaxa','syntaxa',array['st_catalogue_description']);
 select * from syntaxa.st_catalogue_description;
 
 --REMPLISSAGE TABLE DES SYNTAXONS
-
+--supression des données existantes 
+--delete from syntaxa.st_syntaxon where "idCatalogue"='SYNTAXA_DEP_ISERE_1';
+--SYNTAXA_DEP_ISERE_1
 select * from hub_add('syntaxa','syntaxa',array['st_syntaxon']);
 select * from syntaxa.st_syntaxon;
 

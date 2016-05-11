@@ -30,13 +30,17 @@ ref_colonne_et_valeur ($id_page);
 global $db, $ref, $champ_ref;
 
 //------------------------------------------------------------------------------ EDIT
-if (!empty ($id))                                                               
-	{
-	if ($niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
-		{
+if (!empty ($id)) 
+	{ echo "id n'est pas vide"; echo $niveau;
+//	if ($niveau >= 128)	/*Seulement les évaluateurs et au dessus*/
+//		{ echo "niveau >128";
+			
 		/*SUIVI DES MODIFICATIONS ET UPDATE*/
-		foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
+		if (DEBUG) foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
 		
+		
+//-----------------------------------------------------EDITION DE LA TABLE SYNTAXON---------------------------------------------------------------------------
+//----------------------------------------------------creation de des variables contenant le texte de l' update et les champs du select-------------------------------		
 		//var_dump($aColumnsTot);
 		$tables = array ('st_syntaxon');
 		/*modification et suivi des modifications pour la table st_syntaxon (univariée)*/
@@ -47,32 +51,159 @@ if (!empty ($id))
 				if ($val['modifiable'] == 't' AND $val['table_champ'] == $i) {
 					/*récupération des champs modifiables*/
 					$champs .= "\"".$i."\".\"".$val['nom_champ']."\",";
+					/*verification que l'appli reçoit bien  $val['nom_champ']==='nomCompletSyntaxon' */
+					//echo "1:".$val['nom_champ'];
+					//if ($val['nom_champ']!=='nomCompletSyntaxon') echo " is nomComplet is false<br>";
+					//if ($val['nom_champ']==='nomCompletSyntaxon') echo " is nomComplet is true<br>";
+					
 					/*construction de l'update*/
-					if ($val['type'] == 'string') $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
+					if ($val['type'] == 'string' and $val['nom_champ']!=='nomCompletSyntaxon' and $val['nom_champ']!=='idRattachementPVF' ) $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
 					if ($val['type'] == 'val') $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
 					if ($val['type'] == 'bool') $update .= "\"".$val['nom_champ']."\" = ".sql_format_bool($_POST[$val['nom_champ']]).",";
 					if ($val['type'] == 'int') $update .= "\"".$val['nom_champ']."\" = ".sql_format_num($_POST[$val['nom_champ']]).",";					}
 				}
+			//echo "<br> voici l'update avant trim <bre>".$update	;
+					/*on ajoute le nom complet car parfois ne fonctionne pas en formulaire*/
+			//si on avait pas ajouté le nomComplet en bout de la variable update, il aurait fallu supprimer la virgule générée par la boucle (d'où le rtrim initial)		
+			//$update = rtrim($update,',')." WHERE \"codeEnregistrementSyntax\" = ".$id.";";
+			$update .= " \"nomCompletSyntaxon\" = '".$_POST['nomSyntaxon']." ".$_POST['auteurSyntaxon']."' ";
+			
+					/*on ajoute la condition sur le code de l'enregistrement*/
+			$update .= "WHERE \"codeEnregistrementSyntax\"=".$id.";";
+			if (DEBUG) echo "<br> update = ".$update;
+
+		
+//-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
+	
 			/*SUIVI AVANT UPDATE*/
-			echo $champs;
+			if (DEBUG) echo "<br> liste des champs = ". $champs;
+			
 			$select="SELECT ".rtrim($champs,',')." FROM syntaxa.$i WHERE \"codeEnregistrementSyntax\"=".$id.";";
 			if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
-			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);                          // Old values
+			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);  
+			var_dump($backup);
+			// Old values
+			foreach ($backup as $field => $val_1) {
+				if ($field != 'nomCompletSyntaxon') $val_2 = $_POST[$field];
+				if ($field == 'nomCompletSyntaxon') $val_2 = $_POST['nomSyntaxon']." ".$_POST['auteurSyntaxon'];
+				if ($val_1 == 't') $val_1 = "TRUE";
+				if ($val_1 == 'f') $val_1 = "FALSE";
+				$modif = check_modif($val_1,$val_2,$field);
+				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
+				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,$i,$field,$val_1,$val_2,$id_page,'manuel',$modif);
+				} 		
+//-----------------------------------------------------------lancement de la requête de mise à jour-------------------				
+			/*UPDATE*/
+
+			if (DEBUG) echo "<br>".$update;
+			$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			pg_free_result($result);
+					
+			}
+//-----------------------------------------------------------EDITION DE LA TABLE DE RATTACHEMENT
+//-----------------------------------------------------------backup qui enregistre l'état des champs en base avant l'enregistrement---------------------
+
+$select="SELECT \"idRattachementPVF\" FROM syntaxa.st_correspondance_pvf WHERE \"codeEnregistrementSyntaxon\"=".$id.";";
+
+if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
+			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);  
+			echo "<br>var_dump de backup:";var_dump($backup);
+			// Old values
 			foreach ($backup as $field => $val_1) {
 				$val_2 = $_POST[$field];
 				if ($val_1 == 't') $val_1 = "TRUE";
 				if ($val_1 == 'f') $val_1 = "FALSE";
 				$modif = check_modif($val_1,$val_2,$field);
 				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
-				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,$i,$field,$val_1,$val_2,$id_page,'manuel',$modif);
-				} 
-			/*UPDATE*/
-			$update = rtrim($update,',')." WHERE \"codeEnregistrementSyntax\" = ".$id.";";
-			if (DEBUG) echo "<br>".$update;
-			$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
-			}
-			/*modification et suivi des modifications pour les tables des correspondances pvf, hic et eunis (multivariée) en récupérant l'id de l'enregistrement*/
+				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,'st_correspondance_pvf',$field,$val_1,$val_2,$id_page,'manuel',$modif);
+				} 	
+$update="update syntaxa.st_correspondance_pvf set \"idRattachementPVF\"=$val_2 where	\"codeEnregistrementSyntaxon\"=".$id.";";		
+if (DEBUG) echo "<br>".$update;
+$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
+pg_free_result($result);
+					
+
+
+
+
+			
+//-----------------------------------------------------------EDITION DE LA TABLE DE CHOROLOGIE-------------------------------------------
+//-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
+//
+//ATTENTION AU MOMENT DE L'EDITION, SI L ENREGISTREMENT NEXISTE PAS C UN INSERT SINON C UN UPDATE!
+/*
+select "codeEnregistrement","idTerritoire", "statutChorologie","idTerritoire" from syntaxa.st_chorologie ch
+inner join syntaxa.liste_geo li
+on ch."idTerritoire"=li."id_territoire"
+where li.code_type_territoire='DEP' and "codeEnregistrement"='CBIG_syntaxon_3964' ;
+
+*/
+	$query="SELECT \"idTerritoire\" FROM syntaxa.st_chorologie ch inner join syntaxa.liste_geo li on ch.\"idTerritoire\"=li.id_territoire WHERE li.code_type_territoire='DEP' and \"codeEnregistrement\"=".$id.";";
+echo $query;
+	//	$query="SELECT id_tag FROM ".SQL_schema_lsi.".coor_news_tag cnt WHERE cnt.id=".$id.";";
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	$i=0;
+	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+		{
+		$dep_base[$i]=$row["idTerritoire"];
+		$i++;
+		}
+	//echo "<br>dep_base 0=".$dep_base[0];
+	//echo "<br>dep_base 1 =".$dep_base[1];
+
+	/*déclaration quand la variable est vide*/
+
+	if (empty($dep_base)) {$dep_base = array();}
+	if (empty($_POST["departement_select"])) {$_POST["departement_select"] = array();}
+	
+	// pg_free_result ($result); 
+
+//-------------------------------------------------------------- mise à jour de la table chorologie avec les nouvelles valeurs de départements ---------------------
+
+
+$supp = array_diff($dep_base, $_POST["departement_select"]);
+$add = array_diff($_POST["departement_select"],$dep_base);
+var_dump($supp);
+var_dump($add);
+
+if (!empty($supp))
+	{
+   foreach ($supp as $field => $val)
+		{
+		$val="'".$val."'";
+		$query.= "DELETE FROM syntaxa.st_chorologie WHERE (\"codeEnregistrement\",\"idTerritoire\") = ($id,$val); ";
+		add_suivi2($etape,$id_user,$id,'st_chorologie','idTerritoire',$val,'',$id_page,'manuel','suppr');
+		}
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	//mise à jour de la table de suivi
+
+	
+	}
+	
+if (!empty($add))
+	{
+   foreach ($add as $field => $val)
+		{
+   if (DEBUG) echo "valeur=".$val."<br>";
+   $val="'".$val."'";
+   $query.="INSERT INTO syntaxa.st_chorologie (\"codeEnregistrement\",\"idTerritoire\") VALUES ($id,$val); ";
+   add_suivi2($etape,$id_user,$id,'st_chorologie','idTerritoire','',$val,$id_page,'manuel','ajout');
+		}
+	if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+
+	}
+
+
+
+
+
+			/*modification et suivi des modifications pour la table des départements=chorologie voir comment faire (elle est multivariée) en récupérant l'id de l'enregistrement*/
+			/*même chose pour Eunis*/
 			
 	
     // $query="UPDATE applications.liste_taxon SET nom_scien= ".frt("nom_sci",$_POST["nom_sci"]).", cd_ref= '".frt("cd_ref",$_POST["cd_ref"])."' WHERE uid = ".$id." AND rubrique_taxon = 'lr';";
@@ -80,9 +211,9 @@ if (!empty ($id))
     // $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
 		add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Saisie edit fiche",$id,"syntaxa");
-		}
-	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
-		{
+//		}
+//	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
+/*		{ echo "niveau >64";
 		if (isset($_POST['commentaire_eval']))	{
 			if (!empty($_POST['commentaire_eval'])) {
 				$result=pg_query ($db,$query_user." AND id_user = '$id_user'") or die ("Erreur pgSQL : ".pg_result_error ($result));
@@ -95,7 +226,10 @@ if (!empty ($id))
 				}
 			}
 		}
-	} else {                                                                     //  ADD
+		*/
+		
+	} else {   echo "id est vide";
+                                                                  //  ADD
 //------------------------------------------------------------------------------ Valeurs numériques
     if ($_POST['etape']=="") $_POST['etape']=2;
 //------------------------------------------------------------------------------

@@ -695,16 +695,35 @@ COMMENT ON COLUMN syntaxa.st_ref_statut_chorologie.id_tri is'Colonne de tri pour
 -- object: syntaxa.st_correspondance_pvf | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_correspondance_pvf cascade;
 CREATE TABLE syntaxa.st_correspondance_pvf(
-	"idCorrespondancePVF" text,
+	"idCorrespondancePVF" serial not null,
 	"idRattachementPVF" integer,
 	"codeEnregistrementSyntaxon" text,
-	"codeReferentiel" text,
+--	"codeReferentiel" text,
 	"versionReferentiel" text,
-	"identifiantSyntaxonRetenu" text,
-	"nomSyntaxonRetenu" text,
+--	"identifiantSyntaxonRetenu" text,
+--	"nomSyntaxonRetenu" text,
 	CONSTRAINT "idCorrespondancePVF_pkey" PRIMARY KEY ("idCorrespondancePVF")
 
 );
+/*
+alter table syntaxa.st_correspondance_pvf drop column "codeReferentiel";
+alter table syntaxa.st_correspondance_pvf drop column "identifiantSyntaxonRetenu";
+alter table syntaxa.st_correspondance_pvf drop column "nomSyntaxonRetenu";
+*/
+
+/* A vérifier mais j'ai changé le type de la colonne idCorrespondancePVF 
+alter table syntaxa.st_correspondance_pvf drop column "idCorrespondancePVF"; 
+alter table syntaxa.st_correspondance_pvf add column "idCorrespondancePVF" serial not null;
+pour l'application qui ne prenait pas encore en compte le type float
+
+du coup il faut lancer un 
+update referentiels.champs set type='string' where nom_champ='idCorrespondancePVF' and table_champ='st_correspondance_pvf' ;
+
+Dans la table des référentiels*/
+
+
+
+alter table syntaxa.st_correspondance_pvf  
 -- ddl-end --
 COMMENT ON TABLE syntaxa.st_correspondance_pvf IS 'Table de correspondance avec la typologie du PVF (PVF1 et PVF2)';
 COMMENT ON COLUMN syntaxa.st_correspondance_pvf."idCorrespondancePVF" IS 'identifiant unique pour la table de correspondance';
@@ -819,7 +838,7 @@ CREATE TABLE syntaxa.st_ref_hic(
 COMMENT ON TABLE syntaxa.st_ref_hic IS 'Référentiel des habitats de la directive habitat (N2000)';
 COMMENT ON COLUMN syntaxa.st_ref_hic."codeHIC" IS 'code de l''habitat Natura 2000';
 COMMENT ON COLUMN syntaxa.st_ref_hic."libHIC" IS 'libellé de l''habitat Natura 2000';
-COMMENT ON COLUMN syntaxa.st_ref_pvf.id_tri is 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
+COMMENT ON COLUMN syntaxa.st_ref_hic.id_tri is 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
 -- ddl-end --
 
 
