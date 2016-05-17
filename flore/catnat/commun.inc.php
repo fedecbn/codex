@@ -25,6 +25,8 @@ $lang_select=$_COOKIE['lang_select'];
 
 if (ON_Server == 'no') $path = 'D:/'; else $path = '/home/export_pgsql/';
 
+$onglet = ref_onglet($id_page);
+
 //------------------------------------------------------------------------------ QUERY du module
 $query_module = "
 	SELECT * FROM catnat.taxons_nat t
@@ -268,35 +270,19 @@ $lang['it']['groupe_catnat_3']="";
 // $lang['it']['groupe_catnat_4']="";
 
 //------------------------------------------------------------------------------ CHAMPS du module
-$langliste['fr']['catnat'][]="CD REF";
-$langliste['fr']['catnat-popup'][]="CD REF";
+foreach ($onglet["id"] as $val)
+	{
+	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs 
+	WHERE rubrique_champ = '$val' AND pos IS NOT NULL 
+	ORDER BY pos";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-$langliste['fr']['catnat'][]="Famille";
-$langliste['fr']['catnat-popup'][]="Famille";
-
-$langliste['fr']['catnat'][]="Nom scientifique";
-$langliste['fr']['catnat-popup'][]="Nom scientifique";
-
-$langliste['fr']['catnat'][]="Rang";
-$langliste['fr']['catnat-popup'][]="Rang";
-
-$langliste['fr']['catnat'][]="Nom vernaculaire";
-$langliste['fr']['catnat-popup'][]="Nom vernaculaire";
-
-$langliste['fr']['catnat'][]="Hybride";
-$langliste['fr']['catnat-popup'][]="Hybride";
-
-$langliste['fr']['catnat'][]="Indigénat";
-$langliste['fr']['catnat-popup'][]="Indigenat";
-
-$langliste['fr']['catnat'][]="Liste Rouge";
-$langliste['fr']['catnat-popup'][]="Liste Rouge";
-
-$langliste['fr']['catnat'][]="Rareté";
-$langliste['fr']['catnat-popup'][]="Rareté";
-
-$langliste['fr']['catnat'][]="Endemisme";
-$langliste['fr']['catnat-popup'][]="Endemisme";
+	While ($row = pg_fetch_row($result)) 
+		{
+		$langliste['fr'][$val][]= $row[1];
+		$langliste['fr'][$val.'-popup'][]= $row[2];
+		}
+	}
 
 //------------------------------------------------------------------------------ SI PAS ACCES 
 } else require ("../commun/access_denied.php"); 

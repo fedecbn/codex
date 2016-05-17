@@ -37,6 +37,11 @@ ref_colonne_et_valeur ($id_page);
 //var_dump($champ_ref);
 //var_dump($ref['codeEnregistrementSyntax']);
 // var_dump($ref['nomSyntaxonRetenu']);
+
+/*Droit sur les boutons de la dernière colonne*/
+$typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+
 //------------------------------------------------------------------------------ FILTERS
 $filters = filter_column($aColumns[$id_page]);
 $sLimit = $filters['sLimit'];  
@@ -69,12 +74,16 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*cas paticuliers*/
 		/*---------------*/
+			if ($key == 'bouton')
+				if ($droit['edit_fiche']) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($droit['view_fiche']) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
+			else if ($key == 'checkbox') 
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
 
 		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
 			// else if (!empty($ref[$key]))
-			if (!empty($ref[$champ_ref[$key]]))
+			else if (!empty($ref[$champ_ref[$key]]))
 				$sOutput .= '"'.$ref[$champ_ref[$key]][$row[$key]].'",';
 		/*---------------*/
 		/*cas général sans référentiel*/
@@ -85,12 +94,8 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-        if ($niveau == 1)                                                       // Lecteur
-            $sOutput .= '"<a class=view id=\"'.$row['codeEnregistrementSyntax'].'\" ><img src=\"../../_GRAPH/mini/view-icon.png\" title=\"Consulter\" ></a>",'; 
-        else        
-            $sOutput .= '"<a class=edit id=\"'.$row['codeEnregistrementSyntax'].'\" ><img src=\"../../_GRAPH/mini/edit-icon.png\" title=\"Modifier\" ></a>",'; 
-		$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['codeEnregistrementSyntax'].'\" >"';
-    	$sOutput .= "],";
+		$sOutput = trim($sOutput,',');
+		$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';

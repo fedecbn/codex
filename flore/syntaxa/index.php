@@ -114,7 +114,7 @@ $(document).ready(function(){
 
 //-------------------------------------------------------------------------------- INIT CSS
 
- echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../flore/syntaxa/css/syntaxa.css\" />");
+echo ("<link rel=\"stylesheet\" type=\"text/css\" href=\"../../flore/syntaxa/css/syntaxa.css\" />");
  
 // /*------------------------------------------------------------------------------ MAIN*/
 html_header ("utf-8","table_eval.css","jquery-te-1.4.0.css");

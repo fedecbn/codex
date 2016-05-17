@@ -17,6 +17,12 @@ if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
 
+//------------------------------------------------------------------------------ JAVASCRIPT
+$descColumns = descColumns($id_page);
+$filterColumns = filterColumns($id_page);	
+echo ('<input type=\'hidden\' name=\'descColumns\' id=\'descColumns\' value=\''.$descColumns.'\'/>');
+echo ('<input type=\'hidden\' name=\'filterColumns\' id=\'filterColumns\' value=\''.$filterColumns.'\'/>');
+
 //------------------------------------------------------------------------------ PARMS.
 $mode = isset($_GET['m']) ? $_GET['m'] : "liste";
 if (isset($_GET['o']) & !empty($_GET['o'])) $o=$_GET['o'];
@@ -84,13 +90,13 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($niveau >= 128) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-                if ($niveau >= 128) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                if ($niveau >= 255) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
+                if ($droit['to-refnat']) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+				if ($droit['export_fiche']) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
+                if ($droit['del_fiche']) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_reborn ("onglet0",$onglet["id"][0]);	
+			aff_table_next ("onglet0",$onglet["id"][0]);	
 			// aff_table_new ($id_page,true,true);			
 			// aff_table ($id_page."-liste",true,true);			
 		echo ("</div>");
@@ -98,32 +104,20 @@ switch ($mode) {
         echo ("<div id=\"".$onglet["id"][1]."\" >");
             echo ("<div id=\"titre2\">".$onglet["sstitre"][1]."</div>");
             echo ("<div style=\"float:right;\">");
-                // if ($niveau >= 128) 
-                    // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				// if ($niveau >= 64) 
-					// echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                // if ($niveau >= 255) 
-                    // echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_reborn ("onglet1",$onglet["id"][1]);	
+			aff_table_next ("onglet1",$onglet["id"][1]);	
 			// aff_table_new ("droit",false,true);			
         echo ("</div>");
 //------------------------------------------------------------------------------ #troisieme onglet (DROIT)
         echo ("<div id=\"".$onglet["id"][2]."\" >");
             echo ("<div id=\"titre2\">".$onglet["sstitre"][2]."</div>");
             echo ("<div style=\"float:right;\">");
-                // if ($niveau >= 128) 
-                    // echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
-				// if ($niveau >= 64) 
-					// echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
-                // if ($niveau >= 255) 
-                    // echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_reborn ("user",$onglet["id"][2]);	
+			aff_table_next ("user",$onglet["id"][2]);	
 			// aff_table_new ("droit",false,true);			
         echo ("</div>");
     }

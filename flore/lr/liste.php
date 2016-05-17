@@ -19,11 +19,6 @@ $onglet = 'eval';
 
 //------------------------------------------------------------------------------ PARMS.
 /*Droit sur les boutons de la dernière colonne*/
-$typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
-// $view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
-// $edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
-// $validate=affichage($typ_droit,$rubrique,$onglet,"validate_fiche",$droit_user);
-
 $typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
 $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 
@@ -79,9 +74,9 @@ $iTotal = $aResultTotal;
 			else if ($key == 'val_com')
 				if ($row['val_com'] != '') {$sOutput .= '"<a id=\"'.$row['uid'].'\" ><img src=\"../../_GRAPH/mini/info-icon.png\" title=\"'.sql_format_quote($row['val_com'],"undo_list").'\" ></a>",';} else {$sOutput .= '"",';}
 			else if ($key == 'bouton')
-				// if ($edit) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
 				if ($droit['edit_fiche']) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($droit['view_fiche']) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
-			else if ($key == 'checkbox') $sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
+			else if ($key == 'checkbox') 
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
 			else if ($key == 'validation') {
 				// $sOutput .= '"'.$row[$key].'<img id=\"validation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/validate.png\"  title=\"validé\" style=\"display:none\" /><img id=\"invalidation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/invalidate.png\"  title=\"validé\" style=\"display:none\" />",';
 					if ($row['validation'] == 'valid') $sOutput .= '"<img id=\"validation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/validate.png\"  title=\"validé\" style=\"\" /><img id=\"invalidation_'.$row['uid'].'\" src=\"../../_GRAPH/mini/invalidate.png\"  title=\"validé\" style=\"display:none\" />",';

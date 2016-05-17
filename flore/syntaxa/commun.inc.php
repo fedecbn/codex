@@ -21,6 +21,8 @@ $config=$_SESSION['id_config'];
 
 $lang_select=$_COOKIE['lang_select'];
 
+$onglet = ref_onglet($id_page);
+
 $query_module = "
 SELECT t.* 
 	FROM syntaxa.st_syntaxon t 
@@ -105,27 +107,42 @@ $lang['fr']['titre']="Codex - Rubrique Catalogue des végétations";
 
 $lang['fr']['liste_taxons']="Liste des syntaxons";
 
-$langliste['fr']['syntaxa'][]="Code enregistrement";
-$langliste['fr']['syntaxa-popup'][]="Identifiant unique du Syntaxon dans le catalogue partagé ";
+// $langliste['fr']['syntaxa'][]="Code enregistrement";
+// $langliste['fr']['syntaxa-popup'][]="Identifiant unique du Syntaxon dans le catalogue partagé ";
 
-$langliste['fr']['syntaxa'][]="Identifiant syntaxon";
-$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon dans le catalogue d'origine";
+// $langliste['fr']['syntaxa'][]="Identifiant syntaxon";
+// $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon dans le catalogue d'origine";
 
-$langliste['fr']['syntaxa'][]="Nom scientifique syntaxon";
-$langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon";
+// $langliste['fr']['syntaxa'][]="Nom scientifique syntaxon";
+// $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon";
 
-$langliste['fr']['syntaxa'][]="Rang syntaxon retenu";
-$langliste['fr']['syntaxa-popup'][]="Rang du syntaxon";
+// $langliste['fr']['syntaxa'][]="Rang syntaxon retenu";
+// $langliste['fr']['syntaxa-popup'][]="Rang du syntaxon";
 
-$langliste['fr']['syntaxa'][]="Identifiant syntaxon retenu";
-$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon retenu dans le catalogue d'origine";
+// $langliste['fr']['syntaxa'][]="Identifiant syntaxon retenu";
+// $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon retenu dans le catalogue d'origine";
 
-$langliste['fr']['syntaxa'][]="Nom scientifique syntaxon retenu";
-$langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon retenu";
+// $langliste['fr']['syntaxa'][]="Nom scientifique syntaxon retenu";
+// $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon retenu";
 
-$langliste['fr']['syntaxa'][]="Identifiant syntaxon supérieur";
-$langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supérieur dans le catalogue d'origine";
+// $langliste['fr']['syntaxa'][]="Identifiant syntaxon supérieur";
+// $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supérieur dans le catalogue d'origine";
 
+foreach ($onglet["id"] as $val)
+	{
+	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs 
+	WHERE rubrique_champ = '$val' AND pos IS NOT NULL 
+	ORDER BY pos";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+
+	While ($row = pg_fetch_row($result)) 
+		{
+		$langliste['fr'][$val][]= $row[1];
+		$langliste['fr'][$val.'-popup'][]= $row[2];
+		}
+	}
+
+	
 
 //------------------------------------------------------------------------------ SI PAS ACCES 
 } else require ("../commun/access_denied.php"); 

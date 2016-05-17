@@ -23,6 +23,8 @@ $title = $lang['fr']['titre_web']." - ".$id_page;
 
 $lang_select=$_COOKIE['lang_select'];
 
+$onglet = ref_onglet($id_page);
+
 //------------------------------------------------------------------------------ QUERY du module
 $query_module = "
 SELECT t.* 
@@ -71,51 +73,20 @@ $lang['it']['voir_refnat']="";
 
 
 //------------------------------------------------------------------------------ CHAMPS du module
-$langliste['fr']['refnat'][]="Cdnom";
-$langliste['fr']['refnat-popup'][]="CD NOM";
 
-$langliste['fr']['refnat'][]="Cdref";
-$langliste['fr']['refnat-popup'][]="CD REF";
+foreach ($onglet["id"] as $val)
+	{
+	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs 
+	WHERE rubrique_champ = '$val' AND pos IS NOT NULL 
+	ORDER BY pos";
+	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 
-$langliste['fr']['refnat'][]="Nom complet";
-$langliste['fr']['refnat-popup'][]="Nom complet";
-
-$langliste['fr']['refnat'][]="Rang";
-$langliste['fr']['refnat-popup'][]="Rang";
-
-$langliste['fr']['refnat'][]="Famille";
-$langliste['fr']['refnat-popup'][]="Famille";
-
-$langliste['fr']['refnat'][]="Groupe taxo";
-$langliste['fr']['refnat-popup'][]="Groupe taxonomique systématique / fonctionnel";
-
-$langliste['fr']['refnat'][]="Biogéo";
-$langliste['fr']['refnat-popup'][]="Statut biogéographique en France métropolitaine";
-
-$langliste['fr']['refnat'][]="v2";
-$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v2";
-
-$langliste['fr']['refnat'][]="v3";
-$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v3";
-
-$langliste['fr']['refnat'][]="v4";
-$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v4";
-
-$langliste['fr']['refnat'][]="v5";
-$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v5";
-
-$langliste['fr']['refnat'][]="v6";
-$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v6";
-
-$langliste['fr']['refnat'][]="v7";
-$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v7";
-
-$langliste['fr']['refnat'][]="v8";
-$langliste['fr']['refnat-popup'][]="Présent dans TAXREF v8";
-
-$langliste['fr']['refnat'][]="Modif";
-$langliste['fr']['refnat-popup'][]="Proposition de modifications réalisée";
-
+	While ($row = pg_fetch_row($result)) 
+		{
+		$langliste['fr'][$val][]= $row[1];
+		$langliste['fr'][$val.'-popup'][]= $row[2];
+		}
+	}
 //------------------------------------------------------------------------------ SI PAS ACCES 
 } else require ("../commun/access_denied.php"); 
 

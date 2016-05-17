@@ -16,13 +16,13 @@ if ($droit_page) {
 
 
 //------------------------------------------------------------------------------ VAR.
-$onglet = 'news';
+// $onglet = 'news';
+$onglet = 'lsi';
 
-//------------------------------------------------------------------------------ PARMS.
 /*Droit sur les boutons de la dernière colonne*/
-$typ_droit='d2';$rubrique=$id_page;$droit_user = $_SESSION['droit_user'][$id_page];
-$view=affichage($typ_droit,$rubrique,$onglet,"view_fiche",$droit_user);
-$edit=affichage($typ_droit,$rubrique,$onglet,"edit_fiche",$droit_user);
+$typ_droit='d2';$rubrique=$id_page;
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
@@ -64,9 +64,16 @@ $iTotal = $aResultTotal;
 		$sOutput .= "[";
 		foreach ($aColumns[$id_page] as $key => $value) {
 		/*---------------*/
+		/*cas paticuliers*/
+		/*---------------*/
+			if ($key == 'bouton')
+				if ($droit['edit_fiche']) 	$sOutput .= '"'.bt_edit($row['id']).'",';  elseif ($droit['view_fiche']) 	$sOutput .= '"'.bt_view($row['id']).'",'; else $sOutput .= '"",';
+			else if ($key == 'checkbox') 
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['id'].'\" >",';
+		/*---------------*/
 		/*cas général avec référentiel*/
 		/*---------------*/
-			if (!empty($ref[$champ_ref[$key]]))
+			else if (!empty($ref[$champ_ref[$key]]))
 				$sOutput .= '"'.$ref[$champ_ref[$key]][$row[$key]].'",';
 		/*---------------*/
 		/*cas général sans référentiel*/
@@ -77,15 +84,8 @@ $iTotal = $aResultTotal;
 		/*---------------*/
 		/*dernières colonnes*/
 		/*---------------*/
-		if ($onglet == 'news') {
-			/*boutons*/
-			if ($edit) 		$sOutput .= '"'.bt_edit($row['uid']).'",'; 
-			elseif ($view) 	$sOutput .= '"'.bt_view($row['uid']).'",'; 
-			else 			$sOutput .= '"",';
-			/*checkbox*/
-			$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id value=\"'.$row['uid'].'\" >"';
-			}
-    	$sOutput .= "],";
+		$sOutput = trim($sOutput,',');
+		$sOutput .= "],";
 	}
 	$sOutput = substr_replace( $sOutput, "", -1 );
 	$sOutput .= '] }';
