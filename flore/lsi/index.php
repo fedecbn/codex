@@ -87,7 +87,7 @@ switch ($mode) {
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$id_export\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
-                if ($droit['add_fiche']) echo ("<button id=\"to-refnat\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
+                if ($droit['add_fiche']) echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");
 				if ($droit['export_fiche']) echo ("<button id=\"export-TXT-button\">".$lang[$lang_select]['export']." (TXT)</button>&nbsp;&nbsp;");
                 if ($droit['del_fiche']) echo ("<button id=\"del-button\"> ".$lang[$lang_select]['del']."</button>&nbsp;&nbsp;");
             echo ("</div><br><br>");
