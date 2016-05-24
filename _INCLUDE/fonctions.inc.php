@@ -1664,7 +1664,7 @@ while ($row = pg_fetch_assoc($result))
 	$role_necessaire = $row["role"];
 
 if ($droit_user == null)
-	return false
+	return false;
 elseif (array_search($role_necessaire,$droit_user) === false)
 	return false;
 else
@@ -1719,7 +1719,7 @@ while ($row = pg_fetch_assoc($result))
 	$role_necessaire = $row["role"];
 
 if ($droit_user == null)
-	return false
+	return false;
 elseif (array_search($role_necessaire,$droit_user) === false)
 	return false;
 else
