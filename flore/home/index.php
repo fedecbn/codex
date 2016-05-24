@@ -79,7 +79,7 @@ switch ($action)
 				echo ("<li><div class=\"icon\"><a href=\"".$row['link']."\"><img src=\"../../_GRAPH/".ICONES_SET."/".$row['icone']."\" align=left width=\"48\" height=\"48\" border=\"0\" /></a></div>");
 				echo ("<a href=\"".$row["link"]."\"><strong>".$row["titre"]."</strong>".$row["descr"]."</a></li>");
 				echo ("Droits d'accès à cette rubrique : <b> ".implode($_SESSION["droit_user"][$row["id_module"]],',')." </b>");
-			   aff_pres ($row["id_module"],"footer",FR,false);
+				aff_pres ($row["id_module"],"footer",FR,false);
 			}
 			echo ("</ul></div>");
 		}

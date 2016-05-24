@@ -1663,7 +1663,9 @@ $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error 
 while ($row = pg_fetch_assoc($result))
 	$role_necessaire = $row["role"];
 
-if (array_search($role_necessaire,$droit_user) === false)
+if ($droit_user == null)
+	return false
+elseif (array_search($role_necessaire,$droit_user) === false)
 	return false;
 else
 	return true;
@@ -1716,7 +1718,9 @@ $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error 
 while ($row = pg_fetch_assoc($result))
 	$role_necessaire = $row["role"];
 
-if (array_search($role_necessaire,$droit_user) === false)
+if ($droit_user == null)
+	return false
+elseif (array_search($role_necessaire,$droit_user) === false)
 	return false;
 else
 	return true;
