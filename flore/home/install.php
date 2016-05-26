@@ -99,7 +99,9 @@ $nvx_admin = implode(",", $nvx);
 $nvx_admin_cpt = implode(",", $nvx_cpt);
 $ref_admin = implode(",", $ref);
 $ref_admin_cpt = implode(",", $ref_cpt);
-$query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
+// $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
+$query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
+// $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
 $pos = 0;
 
@@ -133,7 +135,7 @@ case "install-param":	{
 				$row = pg_fetch_row($schema);
 				
 				if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
-				elseif (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == TRUE) 	
+				elseif (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql") == TRUE) 	
 											{$rub_ok[$key] = 'f';$desc[$key] = "";}
 				else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
 				}
@@ -180,7 +182,7 @@ case "install-param":	{
 					$rub_ok["refnat"] = 't';
 					foreach ($rub as $key => $val)
 						{
-						if (file_exists("../../_DATA/bdd_codex_archi_".$key.".sql") == FALSE) {$desc[$key] = " bloque";}
+						if (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql") == FALSE) $desc[$key] = " bloque";
 						metaform_bool ($val,$desc[$key],$key,$rub_ok[$key]);
 						// metaform_bool ($val,$desc[$key],$key."_data",$rub_ok[$key]);
 						echo ("<BR>");
@@ -245,12 +247,13 @@ case "install-set":	{
 		
 		if ($row[0] != "1")
 			{
-			$archi = "../../_DATA/bdd_codex_archi_$key.sql";
-			$data = "../../_DATA/bdd_codex_data_$key.sql";
+			$archi = "../../_SQL/bdd_codex_archi_$key.sql";
+			$data = "../../_SQL/bdd_codex_data_$key.sql";
 			$query = create_query($archi,$user_codex);
 			$query .= create_query($data,$user_codex);
 			$query .= $query_admin;
-			$query .= create_query("../../_DATA/bdd_codex_referentiels.sql",$user_codex);
+			$query .= create_query("../../_SQL/bdd_codex_archi_referentiels.sql",$user_codex);
+			$query .= create_query("../../_SQL/bdd_codex_data_referentiels.sql",$user_codex);
 			$result = pg_query($conn_codex,$query);
 			}
 		
@@ -261,8 +264,8 @@ case "install-set":	{
 				{
 				if ($_POST[$key] == 'TRUE')
 					{
-					$archi = "../../_DATA/bdd_codex_archi_$key.sql";
-					$data = "../../_DATA/bdd_codex_data_$key.sql";
+					$archi = "../../_SQL/bdd_codex_archi_$key.sql";
+					$data = "../../_SQL/bdd_codex_data_$key.sql";
 					$query = create_query($archi,$user_codex);
 					$query .= create_query($data,$user_codex);
 					$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";
