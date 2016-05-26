@@ -69,9 +69,25 @@ $query_module_etage_bioclim = "
 SELECT t.*
 	FROM syntaxa.st_etage_bioclim t
 	WHERE t.\"codeEnregistrement\"=";	
-	
+
+//requete qui va chercher les commentaires sur les champs dans les tables système de postgresql (la description)
 $query_description=
-"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and table_champ not like 'st_ref%' and champs.nom_champ=";
+"SELECT  CASE WHEN col_description(oid, ordinal_position) is null THEN '' ELSE col_description(oid, ordinal_position) END as description
+		FROM 	(SELECT columns.table_name AS table_name, columns.column_name AS nom_colonne,columns.ordinal_position FROM information_schema.columns
+					ORDER BY columns.ordinal_position
+				) sub
+		
+		JOIN (SELECT c.relname AS table_name, n.nspname, c.oid
+   FROM pg_class c
+   LEFT JOIN pg_namespace n ON n.oid = c.relnamespace
+   LEFT JOIN pg_tablespace t ON t.oid = c.reltablespace
+  ORDER BY c.relname) as mtd_liste_table USING(table_name)
+  where oid in (SELECT c.oid FROM pg_class c LEFT JOIN pg_namespace n ON n.oid = c.relnamespace LEFT JOIN pg_tablespace t ON t.oid = c.reltablespace
+WHERE c.relkind = ANY(CASE WHEN n.nspname = 'dgi' OR n.nspname = 'public' THEN array['r'] ELSE array['r','v'] END) AND c.relname NOT LIKE 'geometry%'
+AND c.relname NOT LIKE 'temp_%' AND c.relname <> 'views' AND n.nspname IN ('syntaxa') )
+and sub.table_name not in ('fsd_syntaxa')
+and sub.nom_colonne=";
+//"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and table_champ not like 'st_ref%' and champs.nom_champ=";
 
 $query_liste_statuts_cbn=
 "SELECT li.\"libelle_territoire\", ch.\"statutChorologie\"  FROM syntaxa.st_chorologie ch
@@ -107,28 +123,30 @@ $lang['fr']['titre']="Codex - Rubrique Catalogue des végétations";
 
 $lang['fr']['liste_taxons']="Liste des syntaxons";
 
-// $langliste['fr']['syntaxa'][]="Code enregistrement";
-// $langliste['fr']['syntaxa-popup'][]="Identifiant unique du Syntaxon dans le catalogue partagé ";
+ $langliste['fr']['syntaxa'][]="Code enregistrement";
+ $langliste['fr']['syntaxa-popup'][]="Identifiant unique du Syntaxon dans le catalogue partagé ";
 
-// $langliste['fr']['syntaxa'][]="Identifiant syntaxon";
-// $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon dans le catalogue d'origine";
+ $langliste['fr']['syntaxa'][]="Identifiant syntaxon";
+ $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon dans le catalogue d'origine";
 
-// $langliste['fr']['syntaxa'][]="Nom scientifique syntaxon";
-// $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon";
+ $langliste['fr']['syntaxa'][]="Nom scientifique syntaxon";
+ $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon";
 
-// $langliste['fr']['syntaxa'][]="Rang syntaxon retenu";
-// $langliste['fr']['syntaxa-popup'][]="Rang du syntaxon";
+ $langliste['fr']['syntaxa'][]="Rang syntaxon retenu";
+ $langliste['fr']['syntaxa-popup'][]="Rang du syntaxon";
 
-// $langliste['fr']['syntaxa'][]="Identifiant syntaxon retenu";
-// $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon retenu dans le catalogue d'origine";
+ $langliste['fr']['syntaxa'][]="Identifiant syntaxon retenu";
+ $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon retenu dans le catalogue d'origine";
 
-// $langliste['fr']['syntaxa'][]="Nom scientifique syntaxon retenu";
-// $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon retenu";
+ $langliste['fr']['syntaxa'][]="Nom scientifique syntaxon retenu";
+ $langliste['fr']['syntaxa-popup'][]="Nom complet du syntaxon retenu";
 
-// $langliste['fr']['syntaxa'][]="Identifiant syntaxon supérieur";
-// $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supérieur dans le catalogue d'origine";
+ $langliste['fr']['syntaxa'][]="Identifiant syntaxon supérieur";
+ $langliste['fr']['syntaxa-popup'][]="Identifiant du syntaxon supérieur dans le catalogue d'origine";
 
-foreach ($onglet["id"] as $val)
+
+
+/*foreach ($onglet["id"] as $val)
 	{
 	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs 
 	WHERE rubrique_champ = '$val' AND pos IS NOT NULL 
@@ -141,6 +159,7 @@ foreach ($onglet["id"] as $val)
 		$langliste['fr'][$val.'-popup'][]= $row[2];
 		}
 	}
+	*/
 
 	
 
