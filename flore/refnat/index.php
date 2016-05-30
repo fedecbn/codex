@@ -297,14 +297,15 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 	$flag = 0;
 	
 	/*Nomenclature*/
-	$select_fcbn["Nomenclature"] = $select1["Nomenclature"] = $select2["Nomenclature"] = $select3["Nomenclature"] = $select4["Nomenclature"] = " ,cd_nom::text, cd_ref::text, lb_nom, lb_auteur, nom_complet, nom_valide, nom_vern, nom_vern_eng";
+	$select_fcbn["Nomenclature"] = $select0["Nomenclature"] = $select1["Nomenclature"] = $select2["Nomenclature"] = $select3["Nomenclature"] = $select4["Nomenclature"] = " ,cd_nom::text, cd_ref::text, lb_nom, lb_auteur, nom_complet, nom_valide, nom_vern, nom_vern_eng";
 	
 	/*Taxonomie*/
-	$select_fcbn["Taxonomie"] = $select1["Taxonomie"] = $select2["Taxonomie"] = $select3["Taxonomie"] =", cd_taxsup::text, rang, regne, phylum, classe, ordre, famille";
-	$select4["Taxonomie"] = ", '-' as cd_taxsup, rang, regne, phylum, classe, ordre, famille";
+	$select_fcbn["Taxonomie"] = $select0["Taxonomie"] =", cd_sup::text, cd_taxsup::text, rang, regne, phylum, classe, ordre, famille";
+	$select1["Taxonomie"] = $select2["Taxonomie"] = $select3["Taxonomie"] =", '-' as cd_sup, cd_taxsup::text, rang, regne, phylum, classe, ordre, famille";
+	$select4["Taxonomie"] = ", '-' as cd_sup, '-' as cd_taxsup, rang, regne, phylum, classe, ordre, famille";
 	
 	/*Répartition*/
-	$select_fcbn["Répartition"] = $select1["Répartition"] = $select2["Répartition"] = ", fr, gf, mar, gua, sm, sb, spm, may, epa, reu, taaf, pf, nc, wf, cli, habitat::text";
+	$select_fcbn["Répartition"] = $select0["Répartition"] = $select1["Répartition"] = $select2["Répartition"] = ", fr, gf, mar, gua, sm, sb, spm, may, epa, reu, taaf, pf, nc, wf, cli, habitat::text";
 	$select3["Répartition"] = ", fr, gf, mar, gua, smsb as sm, smsb as sb, spm, may, epa, reu, taaf, pf, nc, wf, cli, habitat";
 	// $select4["Répartition"] = ", fr, 'non prévu dans cette version' as gf, mar, gua, smsb as sm, smsb as sb, spm, may, 'non prévu dans cette version' as habitat,'non prévu dans cette version' as epa, reu, taaf, 'non prévu dans cette version' as pf, 'non prévu dans cette version' as nc, 'non prévu dans cette version' as wf, 'non prévu dans cette version' as cli";
 	$select4["Répartition"] = ", fr, '-' as gf, mar, gua, smsb as sm, smsb as sb, spm, may, '-' as habitat,'-' as epa, reu, taaf, '-' as pf, '-' as nc, '-' as wf, '-' as cli";
@@ -314,7 +315,16 @@ if ($niveau <= 64) $disa = "disabled"; else $disa = null;
 	echo ("<fieldset><LEGEND>Correspondance avec TAXREF</LEGEND>");
 	foreach ($etude as $num => $length)
 		{
-		$requete = "SELECT * FROM (SELECT 'vRéseauCBN' as version $select_fcbn[$num] FROM refnat.taxons v8 WHERE uid = '$id'	UNION ALL SELECT 'v8' as version $select1[$num] FROM refnat.taxrefv80_utf8 v8 WHERE cd_nom = '$cd_nom'	UNION ALL SELECT 'v7' as version $select1[$num] FROM refnat.taxrefv70_utf8 v7 WHERE cd_nom = '$cd_nom' UNION ALL SELECT 'v6' as version $select1[$num] FROM refnat.taxrefv60_utf8 v6 WHERE cd_nom = '$cd_nom' UNION ALL SELECT 'v5' as version $select1[$num] FROM refnat.taxrefv50_utf8 v5 WHERE cd_nom = '$cd_nom' UNION ALL SELECT 'v4' as version $select2[$num] FROM refnat.taxrefv40_utf8 v4 WHERE cd_nom = '$cd_nom' UNION ALL SELECT 'v3' as version $select3[$num] FROM refnat.taxrefv30_utf8 v3 WHERE cd_nom = '$cd_nom' UNION ALL SELECT 'v2' as version $select4[$num] FROM refnat.taxrefv20_utf8 v2 WHERE cd_nom = '$cd_nom') as analyse_cd_nom ORDER BY version ASC";
+		$requete = "SELECT * FROM (SELECT 'vRéseauCBN' as version $select_fcbn[$num] FROM refnat.taxons v9 WHERE uid = '$id'
+		UNION ALL SELECT 'v9' as version $select0[$num] FROM refnat.taxrefv90_utf8 v9 WHERE cd_nom = '$cd_nom'	
+		UNION ALL SELECT 'v8' as version $select1[$num] FROM refnat.taxrefv80_utf8 v8 WHERE cd_nom = '$cd_nom'	
+		UNION ALL SELECT 'v7' as version $select1[$num] FROM refnat.taxrefv70_utf8 v7 WHERE cd_nom = '$cd_nom' 
+		UNION ALL SELECT 'v6' as version $select1[$num] FROM refnat.taxrefv60_utf8 v6 WHERE cd_nom = '$cd_nom' 
+		UNION ALL SELECT 'v5' as version $select1[$num] FROM refnat.taxrefv50_utf8 v5 WHERE cd_nom = '$cd_nom' 
+		UNION ALL SELECT 'v4' as version $select2[$num] FROM refnat.taxrefv40_utf8 v4 WHERE cd_nom = '$cd_nom' 
+		UNION ALL SELECT 'v3' as version $select3[$num] FROM refnat.taxrefv30_utf8 v3 WHERE cd_nom = '$cd_nom'
+		UNION ALL SELECT 'v2' as version $select4[$num] FROM refnat.taxrefv20_utf8 v2 WHERE cd_nom = '$cd_nom') 
+		as analyse_cd_nom ORDER BY version ASC";
 
 		$result=pg_query ($db,$requete) or die ("Erreur pgSQL : ".$requete);
 		$entete=pg_fetch_array ($result,NULL,PGSQL_ASSOC);
