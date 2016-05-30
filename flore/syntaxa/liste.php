@@ -33,13 +33,13 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 //------------------------------------------------------------------------------ REF.		
 global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ($id_page);
-// var_dump($aColumns[$id_page]);
+//var_dump($aColumns[$id_page]);
 //var_dump($champ_ref);
 //var_dump($ref['codeEnregistrementSyntax']);
 // var_dump($ref['nomSyntaxonRetenu']);
 
 /*Droit sur les boutons de la dernière colonne*/
-$typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
+$typ_droit='d2';$rubrique=$id_page;$onglet = 'syntaxa';
 $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 
 //------------------------------------------------------------------------------ FILTERS
