@@ -914,6 +914,7 @@ DROP TABLE IF EXISTS syntaxa."st_ref_etage_veg" cascade;
 CREATE TABLE syntaxa."st_ref_etage_veg"(
 	"codeEtageVeg" text,
 	"libEtageVeg" text,
+	"libLongEtageVeg" text,
 	id_tri serial,
 	CONSTRAINT "codeEtageVeg_pkey" PRIMARY KEY ("codeEtageVeg")
 
@@ -922,6 +923,7 @@ CREATE TABLE syntaxa."st_ref_etage_veg"(
 COMMENT ON TABLE syntaxa."st_ref_etage_veg" IS 'Référentiel des étages de végétation proposé par le réseau';
 COMMENT ON COLUMN syntaxa."st_ref_etage_veg"."codeEtageVeg" IS 'code de l''étage de végétation';
 COMMENT ON COLUMN syntaxa."st_ref_etage_veg"."libEtageVeg" IS 'libellé de l''étage de végétation';
+COMMENT ON COLUMN syntaxa."st_ref_etage_veg"."libLongEtageVeg" IS 'libellé long de l''étage de végétation';
 COMMENT ON COLUMN syntaxa."st_ref_etage_veg".id_tri is 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
 -- ddl-end --
 

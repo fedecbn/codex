@@ -308,27 +308,32 @@ select * from syntaxa.st_ref_etage_bioclim;
 -- table syntaxa.
 --table syntaxa.st_ref_etage_veg
 truncate syntaxa.st_ref_etage_veg cascade;
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('L ', 'littoral', 1);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('CL ', 'circalittoral', 2);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('IL ', 'infralittoral', 3);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('ML ', 'mediolittoral', 4);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('SL ', 'supralittoral', 5);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('P ', 'planitiaire', 6);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('C', 'collinéen', 7);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('C inf ', 'collinéen inférieur', 8);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('C sup ', 'collinéen supérieur', 9);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('SMT', 'submontagnard', 10);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('MT', 'montagnard', 11);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('MT inf ', 'montagnard inférieur', 12);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('MT sup ', 'montagnard supérieur', 13);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('SA ', 'subalpin', 14);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('A', 'alpin', 15);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('N ', 'nival', 16);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('TMD ', 'thermoméditerranéen', 17);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('MD', 'mésoméditerranéen', 18);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('SMD', 'subméditerranéen', 19);
-INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg", id_tri) VALUES ('NC', 'non connu', 0);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('L ', 'littoral','littoral', 1);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('CL ', 'circalittoral','circalittoral', 2);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('IL ', 'infralittoral','infralittoral', 3);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('ML ', 'mediolittoral','mediolittoral', 4);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('SL ', 'supralittoral','supralittoral', 5);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('P ', 'planitiaire','planitiaire', 6);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('C', 'collinéen','collinéen',  7);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('C inf ', 'collinéen inférieur','collinéen inférieur', 8);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('C sup ', 'collinéen supérieur','collinéen supérieur', 9);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('SMT', 'submontagnard','submontagnard', 10);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('MT', 'montagnard', 'montagnard', 11);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('MT inf ', 'montagnard inférieur', 'montagnard inférieur', 12);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('MT sup ', 'montagnard supérieur', 'montagnard supérieur', 13);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('SA ', 'subalpin','subalpin', 14);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('A', 'alpin', 'alpin', 15);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('N ', 'nival', 'nival', 16);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('TMD ', 'thermoméditerranéen', 'thermoméditerranéen', 17);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('MD', 'mésoméditerranéen', 'mésoméditerranéen', 18);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('MD inf', 'mésoméditerranéen inf', 'mésoméditerranéen inf', 19);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('MD sup', 'mésoméditerranéen sup', 'mésoméditerranéen sup', 20);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('SMD', 'subméditerranéen', 'subméditerranéen', 21);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('SPMD','supramediterranéen', 'supramediterranéen', 22);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('COMD','cryo-oroméditerranéen', 'cryo-oroméditerranéen', 23);
+INSERT INTO syntaxa.st_ref_etage_veg ("codeEtageVeg", "libEtageVeg","libLongEtageVeg", id_tri) VALUES ('NC', 'non connu',  'non connu',0);
 
+--liste corse d'après Jacques Gamisans
 
 
 /*

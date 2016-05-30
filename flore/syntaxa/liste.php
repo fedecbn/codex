@@ -75,9 +75,9 @@ $iTotal = $aResultTotal;
 		/*cas paticuliers*/
 		/*---------------*/
 			if ($key == 'bouton')
-				if ($droit['edit_fiche']) 	$sOutput .= '"'.bt_edit($row['uid']).'",';  elseif ($droit['view_fiche']) 	$sOutput .= '"'.bt_view($row['uid']).'",'; else $sOutput .= '"",';
+				if ($droit['edit_fiche']) 	$sOutput .= '"'.bt_edit($row['codeEnregistrementSyntax']).'",';  elseif ($droit['view_fiche']) 	$sOutput .= '"'.bt_view($row['codeEnregistrementSyntax']).'",'; else $sOutput .= '"",';
 			else if ($key == 'checkbox') 
-				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['uid'].'\" >",';
+				$sOutput .= '"<input type=checkbox class=\"liste-one\" name=id[] value=\"'.$row['codeEnregistrementSyntax'].'\" >",';
 
 		/*---------------*/
 		/*cas général avec référentiel*/
