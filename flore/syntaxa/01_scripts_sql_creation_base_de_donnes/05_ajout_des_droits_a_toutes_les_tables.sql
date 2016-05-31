@@ -72,5 +72,6 @@ GRANT ALL PRIVILEGES ON syntaxa.st_syntaxon TO user_codex;
 grant all on TABLE syntaxa."st_chorologie_idChorologie_seq" TO user_codex;
 grant all on TABLE syntaxa."st_catalogue_description_id_tri_seq" TO user_codex;
 grant all on TABLE syntaxa.st_syntaxon_uid_seq TO user_codex;
+grant all on TABLE syntaxa."idCorrespondancePVF_seq" TO user_codex;
 
 

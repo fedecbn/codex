@@ -92,7 +92,8 @@ if (!empty ($id))
 				$modif = check_modif($val_1,$val_2,$field);
 				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
 				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,$i,$field,$val_1,$val_2,$id_page,'manuel',$modif);
-				} 		
+				} 	
+			
 //-----------------------------------------------------------lancement de la requête de mise à jour-------------------				
 			/*UPDATE*/
 
@@ -101,33 +102,89 @@ if (!empty ($id))
 			pg_free_result($result);
 					
 			}
-//-----------------------------------------------------------EDITION DE LA TABLE DE RATTACHEMENT
-//-----------------------------------------------------------backup qui enregistre l'état des champs en base avant l'enregistrement---------------------
+//-----------------------------------------------------------EDITION DE LA TABLE DE RATTACHEMENT AU PVF
 
-$select="SELECT \"idRattachementPVF\" FROM syntaxa.st_correspondance_pvf WHERE \"codeEnregistrementSyntaxon\"=".$id.";";
+//-----------------------------------------------------------POUR LES DONNEES PVF1
+//---backup qui enregistre l'état des champs en base avant l'enregistrement (version v1 du référentiel)---------------------
 
+$select="SELECT \"idRattachementPVF\" FROM syntaxa.st_correspondance_pvf WHERE \"versionReferentiel\"='v1' and \"codeEnregistrementSyntaxon\"=".$id.";";
 if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
-			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC);  
-			echo "<br>var_dump de backup:";var_dump($backup);
-			// Old values
+			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC); 
+			$num_rows = pg_num_rows($result);
+//s'il y a déjà des correspondances avec le pvf1 enregistrées pour ce syntaxon alors on fait une mise à jour des données, sinon on insert de nouvelles données
+			if ($num_rows > 0) {			
+			//echo "<br>var_dump de backup:";var_dump($backup);
+			// renvoi un tableau pour le développeur qui montre les anciennes valeurs et les nouvelles, rempli la table de suivi
 			foreach ($backup as $field => $val_1) {
-				$val_2 = $_POST[$field];
+				$val_2 = $_POST[$field.'1'];
 				if ($val_1 == 't') $val_1 = "TRUE";
 				if ($val_1 == 'f') $val_1 = "FALSE";
 				$modif = check_modif($val_1,$val_2,$field);
 				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
 				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,'st_correspondance_pvf',$field,$val_1,$val_2,$id_page,'manuel',$modif);
+				
+			//mise à jour des données dans la table de correspondance entre les syntaxons et le pvf
+				$update="update syntaxa.st_correspondance_pvf set \"idRattachementPVF\"=$val_2 where \"versionReferentiel\"='v1' and \"codeEnregistrementSyntaxon\"=".$id.";";	
+				if (DEBUG) echo "<br>".$update;
+				$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
+				pg_free_result($result);
 				} 	
-$update="update syntaxa.st_correspondance_pvf set \"idRattachementPVF\"=$val_2 where	\"codeEnregistrementSyntaxon\"=".$id.";";		
-if (DEBUG) echo "<br>".$update;
-$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
-pg_free_result($result);
-					
+			} else {
+				//mise à jour de la sequence pour la colonne serial idRattachementPVF (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+			$query="SELECT setval('syntaxa.\"idCorrespondancePVF_seq\" ', COALESCE((SELECT MAX(\"idCorrespondancePVF\")+1 FROM syntaxa.st_correspondance_pvf), 1), false);";
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			pg_free_result($result);
+			//insertion d'une nouvelle valeur dans la table de correspondance entre le syntaxon et le pvf (ici nouvelle valeur de rattachement au pvf1)
+			$insert="INSERT INTO syntaxa.st_correspondance_pvf (\"idRattachementPVF\",\"codeEnregistrementSyntaxon\",\"versionReferentiel\") VALUES (";
+			$champs= sql_format_quote($_POST['idRattachementPVF1'],'do').",".$_POST['id'].",'v1') RETURNING \"idRattachementPVF\";";
+			$query=	$insert.$champs;
+			echo "<br>".$query;
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			pg_free_result($result);
+			echo "<br> un nouveau rattachement pvf ajouté en base <br>";
+				}	
+				
+//-----------------------------------------------------------POUR LES DONNEES PVF2
+//---backup qui enregistre l'état des champs en base avant l'enregistrement (version v2 du référentiel)---------------------
 
-
-
-
+$select="SELECT \"idRattachementPVF\" FROM syntaxa.st_correspondance_pvf WHERE \"versionReferentiel\"='v2' and \"codeEnregistrementSyntaxon\"=".$id.";";
+if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
+			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC); 
+			$num_rows = pg_num_rows($result);
+//s'il y a déjà des correspondances avec le pvf1 enregistrées pour ce syntaxon alors on fait une mise à jour des données, sinon on insert de nouvelles données
+			if ($num_rows > 0) {			
+			//echo "<br>var_dump de backup:";var_dump($backup);
+			// renvoi un tableau pour le développeur qui montre les anciennes valeurs et les nouvelles, rempli la table de suivi
+			foreach ($backup as $field => $val_1) {
+				$val_2 = $_POST[$field.'2'];
+				if ($val_1 == 't') $val_1 = "TRUE";
+				if ($val_1 == 'f') $val_1 = "FALSE";
+				$modif = check_modif($val_1,$val_2,$field);
+				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
+				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,'st_correspondance_pvf',$field,$val_1,$val_2,$id_page,'manuel',$modif);
+				
+			//mise à jour des données dans la table de correspondance entre les syntaxons et le pvf
+				$update="update syntaxa.st_correspondance_pvf set \"idRattachementPVF\"=$val_2 where \"versionReferentiel\"='v2' and \"codeEnregistrementSyntaxon\"=".$id.";";	
+				if (DEBUG) echo "<br>".$update;
+				$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
+				pg_free_result($result);
+				} 	
+			} else {
+				//mise à jour de la sequence pour la colonne serial idRattachementPVF (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+			$query="SELECT setval('syntaxa.\"idCorrespondancePVF_seq\" ', COALESCE((SELECT MAX(\"idCorrespondancePVF\")+1 FROM syntaxa.st_correspondance_pvf), 1), false);";
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			pg_free_result($result);
+			//insertion d'une nouvelle valeur dans la table de correspondance entre le syntaxon et le pvf (ici nouvelle valeur de rattachement au pvf2)
+			$insert="INSERT INTO syntaxa.st_correspondance_pvf (\"idRattachementPVF\",\"codeEnregistrementSyntaxon\",\"versionReferentiel\") VALUES (";
+			$champs= sql_format_quote($_POST['idRattachementPVF2'],'do').",".$_POST['id'].",'v2') RETURNING \"idRattachementPVF\";";
+			$query=	$insert.$champs;
+			echo "<br>".$query;
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			pg_free_result($result);
+			echo "<br> un nouveau rattachement pvf ajouté en base <br>";
+				}	
 			
 //-----------------------------------------------------------EDITION DE LA TABLE DE CHOROLOGIE-------------------------------------------
 //-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------

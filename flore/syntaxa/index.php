@@ -413,18 +413,20 @@ include ("../syntaxa/add_fiche.php");
 			$num_rows_pvf2 = pg_num_rows($result3bis);
 			
 			if ($num_rows_pvf1 > 0) {
-			metaform_sel ("PVF 1","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));			
+			//echo pg_result($result3,0,"\"idRattachementPVF\"");
+			metaform_sel ("Rattachement PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF1",pg_result($result3,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));			
 			} else 
 			{
-			metaform_sel ("Rattachement PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
+			metaform_sel ("PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF1","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
 			}
 			echo "<br>";
 			
 			if ($num_rows_pvf2 > 0) {
-			metaform_sel ("PVF 2","",30,$ref[$champ_ref['idRattachementPVF']],"idRattachementPVF",pg_result($result3bis,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));	
+			//echo pg_result($result3bis,0,"\"idRattachementPVF\"");
+			metaform_sel (" Rattachement PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF2",pg_result($result3bis,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));	
 			//dans le cas où les tables sont vides (pas d'enregistrement il faut faire une condition sinon l'affichage des données pose problème car le pg_result ne renvoi rien
 			} else {
-				metaform_sel ("Rattachement PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
+				metaform_sel ("PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF2","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
 			}
 			echo "<br>";
 			
