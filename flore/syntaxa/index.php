@@ -277,10 +277,17 @@ include ("../syntaxa/add_fiche.php");
 			//var_dump(pg_fetch_array($result9));
 			
 			
-			//QUERY ETAGES
+			//QUERY ETAGES VEGETATION
 			$query7= $query_module_etage_vegetation.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
-			$result7=pg_query($db,$query7) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result7),false);
+			$result_etage_veg=pg_query($db,$query7) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result7),false);
+			
+			//organisation en tableau utilisable par la fonction metaform_sel_multi de type codeEtageVeg => libEtageVeg (ex: 'L' => string 'littoral' (length=10)) 
+					while ($row=pg_fetch_array ($result_etage_veg,NULL,PGSQL_ASSOC))
+					$output3[$row["codeEtageVeg"]]=$row["libEtageVeg"];
+					$result_etage_veg_enregistre = $output3;
+					//var_dump($result_etage_veg);
+					
 			
 			$query8= $query_module_etage_bioclim.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
@@ -572,28 +579,34 @@ include ("../syntaxa/add_fiche.php");
 			echo("</table><br>");
 			
 			/*Etagement*/
-			/*
+			
+			$num_rows_etag = pg_num_rows($result4);
+//			$num_rows_rag = pg_num_rows($result_region_agr);
+			if ($num_rows_etag > 0) {
+			metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
+            metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'",$result_etage_veg_enregistre,"etage_veg_select","");
+			} else {
+					metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
+					metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'","","etage_veg_select","");
+			}
+			echo "<br>";
+/*			
 			echo "<br>";
 			$num_rows = pg_num_rows($result4);
 			if ($num_rows > 0) {
-			metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg",pg_result($result4,0,"\"codeEtageVeg\""),pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
-            metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'",pg_result($result4,0,"\"nomSyntaxon3\""),"etage_veg_select","");
-			echo "<br>";
 			metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim",pg_result($result4,0,"\"codeEtageBioclim\""),pg_fetch_result(pg_query ($db,$query_description."'codeEtageBioclim'".";"),0,"description" ));
             metaform_sel_multi ("Etages bioclimatiques sélectionnés","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'",pg_result($result4,0,"\"codeEtageBioclim\""),"etage_bioclim_select","");
 			} else {
-					metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
-					metaform_sel_multi ("Etages de végétation sélectionnés","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'","","etage_veg_select","");
-						echo "<br>";
 					metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageBioclim'".";"),0,"description" ));
 					metaform_sel_multi ("Etages bioclimatiques sélectionnés","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'","","etage_bioclim_select","");
 			}
 			echo "<br>";
+*/
 			echo ("Cortège floristique: champ multivarié à la mathieu clair");
 
 			
 			echo ("</td></tr></table>");	
-*/			
+			
 			echo ("</fieldset>");
 			echo ("<hr>");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/

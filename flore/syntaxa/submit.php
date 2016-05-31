@@ -57,7 +57,7 @@ if (!empty ($id))
 					//if ($val['nom_champ']==='nomCompletSyntaxon') echo " is nomComplet is true<br>";
 					
 					/*construction de l'update*/
-					if ($val['type'] == 'string' and $val['nom_champ']!=='nomCompletSyntaxon' and $val['nom_champ']!=='idRattachementPVF' ) $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
+					if ($val['type'] == 'string' and $val['nom_champ']!=='nomCompletSyntaxon') $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
 					if ($val['type'] == 'val') $update .= "\"".$val['nom_champ']."\" = ".sql_format_quote($_POST[$val['nom_champ']],'do').",";
 					if ($val['type'] == 'bool') $update .= "\"".$val['nom_champ']."\" = ".sql_format_bool($_POST[$val['nom_champ']]).",";
 					if ($val['type'] == 'int') $update .= "\"".$val['nom_champ']."\" = ".sql_format_num($_POST[$val['nom_champ']]).",";					}
@@ -132,7 +132,7 @@ if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 				} 	
 			} else {
 				//mise à jour de la sequence pour la colonne serial idRattachementPVF (en cas d'ajout manuel de données dans la table directement à travers la base de données)
-			$query="SELECT setval('syntaxa.\"idCorrespondancePVF_seq\" ', COALESCE((SELECT MAX(\"idCorrespondancePVF\")+1 FROM syntaxa.st_correspondance_pvf), 1), false);";
+			$query="SELECT setval('syntaxa.\"st_correspondance_pvf_idCorrespondancePVF_seq\" ', COALESCE((SELECT MAX(\"idCorrespondancePVF\")+1 FROM syntaxa.st_correspondance_pvf), 1), false);";
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			pg_free_result($result);
 			//insertion d'une nouvelle valeur dans la table de correspondance entre le syntaxon et le pvf (ici nouvelle valeur de rattachement au pvf1)
@@ -173,7 +173,7 @@ if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 				} 	
 			} else {
 				//mise à jour de la sequence pour la colonne serial idRattachementPVF (en cas d'ajout manuel de données dans la table directement à travers la base de données)
-			$query="SELECT setval('syntaxa.\"idCorrespondancePVF_seq\" ', COALESCE((SELECT MAX(\"idCorrespondancePVF\")+1 FROM syntaxa.st_correspondance_pvf), 1), false);";
+			$query="SELECT setval('syntaxa.\"st_correspondance_pvf_idCorrespondancePVF_seq\" ', COALESCE((SELECT MAX(\"idCorrespondancePVF\")+1 FROM syntaxa.st_correspondance_pvf), 1), false);";
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			pg_free_result($result);
 			//insertion d'une nouvelle valeur dans la table de correspondance entre le syntaxon et le pvf (ici nouvelle valeur de rattachement au pvf2)
@@ -254,13 +254,72 @@ if (!empty($add))
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
 	}
+	
+			
+//-----------------------------------------------------------EDITION DE LA TABLE DES ETAGES DE VEGETATION-------------------------------------------
+//-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
+//
+//ATTENTION AU MOMENT DE L'EDITION, SI L ENREGISTREMENT NEXISTE PAS C UN INSERT SINON C UN UPDATE!
+
+	$query="SELECT \"codeEtageVeg\" FROM syntaxa.st_etage_veg where \"codeEnregistrement\"=".$id.";";
+echo $query;
+	//	$query="SELECT id_tag FROM ".SQL_schema_lsi.".coor_news_tag cnt WHERE cnt.id=".$id.";";
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	$i=0;
+	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+		{
+		$etag_veg_base[$i]=$row["codeEtageVeg"];
+		$i++;
+		}
+	//echo "<br>etag_veg_base 0=".$etag_veg_base[0];
+	//echo "<br>etag_veg_base 1 =".$etag_veg_base[1];
+
+	/*déclaration quand la variable est vide*/
+
+	if (empty($etag_veg_base)) {$etag_veg_base = array();}
+	if (empty($_POST["etage_veg_select"])) {$_POST["etage_veg_select"] = array();}
+	
+	// pg_free_result ($result); 
+
+//-------------------------------------------------------------- mise à jour de la table chorologie avec les nouvelles valeurs de départements ---------------------
 
 
+$supp = array_diff($etag_veg_base, $_POST["etage_veg_select"]);
+$add = array_diff($_POST["etage_veg_select"],$etag_veg_base);
+var_dump($supp);
+var_dump($add);
 
+if (!empty($supp))
+	{
+   foreach ($supp as $field => $val)
+		{
+		$val="'".$val."'";
+		$query.= "DELETE FROM syntaxa.st_etage_veg WHERE (\"codeEnregistrement\",\"codeEtageVeg\") = ($id,$val); ";
+		add_suivi2($etape,$id_user,$id,'st_etage_veg','codeEtageVeg',$val,'',$id_page,'manuel','suppr');
+		}
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	//mise à jour de la table de suivi
 
+	
+	}
+	
+if (!empty($add))
+	{
+   foreach ($add as $field => $val)
+		{
+   if (DEBUG) echo "valeur=".$val."<br>";
+   $val="'".$val."'";
+   $query.="INSERT INTO syntaxa.st_etage_veg (\"codeEnregistrement\",\"codeEtageVeg\") VALUES ($id,$val); ";
+   add_suivi2($etape,$id_user,$id,'st_etage_veg','codeEtageVeg','',$val,$id_page,'manuel','ajout');
+		}
+	if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
-			/*modification et suivi des modifications pour la table des départements=chorologie voir comment faire (elle est multivariée) en récupérant l'id de l'enregistrement*/
-			/*même chose pour Eunis*/
+	}
+
+//----------------------------------------------------------------------------------------------------------------------------------------
 			
 	
     // $query="UPDATE applications.liste_taxon SET nom_scien= ".frt("nom_sci",$_POST["nom_sci"]).", cd_ref= '".frt("cd_ref",$_POST["cd_ref"])."' WHERE uid = ".$id." AND rubrique_taxon = 'lr';";
@@ -284,7 +343,7 @@ if (!empty($add))
 			}
 		}
 		*/
-		
+//---------------------------------------------------------------ENREGISTREMENT DANS LE CADRE D'UN NOUVEL AJOUT DE FICHE 		
 	} else {   echo "id est vide";
                                                                   //  ADD
 //------------------------------------------------------------------------------ Valeurs numériques

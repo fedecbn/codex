@@ -894,7 +894,7 @@ COMMENT ON COLUMN syntaxa.st_ref_physio."libFdPhysioN3" IS 'Nom du poste de nome
 -- object: syntaxa.st_etage_veg | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_etage_veg cascade;
 CREATE TABLE syntaxa.st_etage_veg(
-	"idCorresEtageveg" text,
+	"idCorresEtageveg" serial not null,
 	"codeEnregistrement" text,
 	"codeEtageVeg" text,
 	"libEtageVeg" text,
@@ -1909,8 +1909,9 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 */
 
-
-
+--ces clefs posent problème car si j'enregistre avec l'application des étages de végétation pour un syntaxon il me dit que le syntaxon n'existe pas dans la table
+--syntaxa.st_serie_petitegeoserie et viole donc la contrainte de clé étrangère « codeEnregistrement_fkey2 »  
+/*
 -- object: "codeEnregistrement_fkey1" | type: CONSTRAINT --
 -- ALTER TABLE syntaxa.st_etage_veg DROP CONSTRAINT "codeEnregistrement_fkey1";
 ALTER TABLE syntaxa.st_etage_veg ADD CONSTRAINT "codeEnregistrement_fkey1" FOREIGN KEY ("codeEnregistrement")
@@ -1925,7 +1926,7 @@ ALTER TABLE syntaxa.st_etage_veg ADD CONSTRAINT "codeEnregistrement_fkey2" FOREI
 REFERENCES syntaxa.st_serie_petitegeoserie ("codeEnregistrementSerieGeoserie") MATCH FULL
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
-
+*/
 
 -- object: "codeEtageVeg_fkey" | type: CONSTRAINT --
 -- ALTER TABLE syntaxa.st_etage_veg DROP CONSTRAINT "codeEtageVeg_fkey";

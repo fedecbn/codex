@@ -61,9 +61,12 @@ on ch.\"idTerritoire\"=li.\"id_territoire\"
 WHERE \"codeEnregistrement\" = ";
 	
 $query_module_etage_vegetation = "
-SELECT t.*
-	FROM syntaxa.st_etage_veg t
-	WHERE t.\"codeEnregistrement\"=";	
+SELECT t.\"codeEtageVeg\", li.\"libEtageVeg\" 
+FROM syntaxa.st_etage_veg t
+inner join 
+(select * from  syntaxa.st_ref_etage_veg) li
+on t.\"codeEtageVeg\"=li.\"codeEtageVeg\" 
+WHERE t.\"codeEnregistrement\"=";	
 	
 $query_module_etage_bioclim = "
 SELECT t.*
