@@ -102,6 +102,56 @@ if (!empty ($id))
 			pg_free_result($result);
 					
 			}
+			
+//-----------------------------------------------------------EDITION DE LA TABLE DE RATTACHEMENT A LA BIBLIO
+
+//---backup qui enregistre l'état des champs de la table st_biblio en base de données, avant l'enregistrement de la fiche ---------------------
+
+$select="SELECT \"libPublication\" FROM syntaxa.st_biblio WHERE \"codeEnregistrement\"=".$id.";";
+if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
+			$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			$backup=pg_fetch_array ($result,NULL,PGSQL_ASSOC); 
+			$num_rows = pg_num_rows($result);
+//s'il y a déjà des références biblio enregistrées pour ce syntaxon alors on fait une mise à jour des données, sinon on insert de nouvelles données
+			if ($num_rows > 0) {			
+			//echo "<br>var_dump de backup:";var_dump($backup);
+			// renvoi un tableau pour le développeur qui montre les anciennes valeurs et les nouvelles, rempli la table de suivi
+			foreach ($backup as $field => $val_1) {
+				$val_2 = $_POST[$field];
+				if ($val_1 == 't') $val_1 = "TRUE";
+				if ($val_1 == 'f') $val_1 = "FALSE";
+				$modif = check_modif($val_1,$val_2,$field);
+				// if (DEBUG) echo ("<BR> $field  ->  $val_1  | $val_2");
+				if ($modif != 'vide' AND $modif != 'identiques') add_suivi2($etape,$id_user,$id,'st_biblio',$field,$val_1,$val_2,$id_page,'manuel',$modif);
+				
+			//mise à jour des données dans la table de correspondance entre les syntaxons et leur biblio
+				$update="update syntaxa.st_biblio set \"libPublication\"='$val_2',\"urlPublication\"= ".sql_format_quote($_POST[urlPublication],'do').",\"codePublication\"=".sql_format_quote($_POST[codePublication],'do')." where \"libPublication\"='$val_1' and \"codeEnregistrement\"=".$id.";";	
+				if (DEBUG) echo "<br>".$update;
+				$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
+				pg_free_result($result);
+				} 	
+			} else {
+				//mise à jour de la sequence pour la colonne serial idRattachementPVF (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+			$query="SELECT setval('syntaxa.\"st_biblio_idBiblio_seq\" ', COALESCE((SELECT MAX(\"idBiblio\")+1 FROM syntaxa.st_biblio), 1), false);";
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			pg_free_result($result);
+			//insertion d'une nouvelle valeur dans la table de correspondance entre le syntaxon et le pvf (ici nouvelle valeur de rattachement au pvf1)
+			$insert="INSERT INTO syntaxa.st_biblio (\"libPublication\",\"urlPublication\",\"codePublication\") VALUES (";
+			$champs= sql_format_quote($_POST['libPublication'],'do').",".sql_format_quote($_POST['urlPublication'],'do').",".sql_format_quote($_POST['codePublication'],'do').") RETURNING \"idBiblio\";";
+			$query=	$insert.$champs;
+			echo "<br>".$query;
+			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+			
+				//récupérer le resultat de RETURNING \"idBiblio\""
+				$idbiblio=pg_result($result,0,0);
+			pg_free_result($result);
+			
+			echo "<br> un nouveau rattachement biblio ajouté en base <br>";
+			add_suivi2($etape,$id_user,$id,'st_biblio','idBiblio','',$idbiblio,$id_page,'manuel','ajout');
+			add_suivi2($etape,$id_user,$id,'st_biblio','libPublication','',$_POST['libPublication'],$id_page,'manuel','ajout');
+			add_suivi2($etape,$id_user,$id,'st_biblio','urlPublication','',$_POST['urlPublication'],$id_page,'manuel','ajout');
+			add_suivi2($etape,$id_user,$id,'st_biblio','codePublication','',$_POST['codePublication'],$id_page,'manuel','ajout');
+				}	
 //-----------------------------------------------------------EDITION DE LA TABLE DE RATTACHEMENT AU PVF
 
 //-----------------------------------------------------------POUR LES DONNEES PVF1
@@ -143,6 +193,7 @@ if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			pg_free_result($result);
 			echo "<br> un nouveau rattachement pvf ajouté en base <br>";
+			add_suivi2($etape,$id_user,$id,'st_correspondance_pvf','idRattachementPVF',null,$_POST['idRattachementPVF1'],$id_page,'manuel','ajout');
 				}	
 				
 //-----------------------------------------------------------POUR LES DONNEES PVF2
@@ -184,6 +235,7 @@ if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			pg_free_result($result);
 			echo "<br> un nouveau rattachement pvf ajouté en base <br>";
+			add_suivi2($etape,$id_user,$id,'st_correspondance_pvf','idRattachementPVF',null,$_POST['idRattachementPVF2'],$id_page,'manuel','ajout');
 				}	
 			
 //-----------------------------------------------------------EDITION DE LA TABLE DE CHOROLOGIE-------------------------------------------
@@ -199,7 +251,6 @@ where li.code_type_territoire='DEP' and "codeEnregistrement"='CBIG_syntaxon_3964
 */
 	$query="SELECT \"idTerritoire\" FROM syntaxa.st_chorologie ch inner join syntaxa.liste_geo li on ch.\"idTerritoire\"=li.id_territoire WHERE li.code_type_territoire='DEP' and \"codeEnregistrement\"=".$id.";";
 echo $query;
-	//	$query="SELECT id_tag FROM ".SQL_schema_lsi.".coor_news_tag cnt WHERE cnt.id=".$id.";";
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	$i=0;
@@ -263,7 +314,6 @@ if (!empty($add))
 
 	$query="SELECT \"codeEtageVeg\" FROM syntaxa.st_etage_veg where \"codeEnregistrement\"=".$id.";";
 echo $query;
-	//	$query="SELECT id_tag FROM ".SQL_schema_lsi.".coor_news_tag cnt WHERE cnt.id=".$id.";";
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	$i=0;
@@ -422,19 +472,19 @@ if (!empty($_POST['idCatalogue2'])) {
 	//suivi des modifications
 	if (isset($_POST['idCatalogue2'])) {
 	if (!empty($_POST['idCatalogue2'])) {
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","identifiantCatalogue",null,$_POST["idCatalogue2"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","libelleCatalogue",null,$_POST["libelleCatalogue2"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","identifiantCatalogue",null,$_POST["idCatalogue2"],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_catalogue_description","libelleCatalogue",null,$_POST["libelleCatalogue2"],'syntaxa','manuel','ajout');
 	}} else {echo "</br> pas d'insertion de nouveau catalogue dans st_catalogue_description";}
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idCatalogue",null,$_POST["idCatalogue"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idTerritoire",null,$_POST["idTerritoireObligatoire"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idChorologie",null,$id_chrologie,'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","statutChorologie",null,$_POST["statutChorologie"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","codeEnregistrementSyntax",null,$uid,'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idSyntaxon",null,$_POST["idSyntaxon"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","nomSyntaxon",null,$_POST["nomSyntaxon"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","auteurSyntaxon",null,$_POST["auteurSyntaxon"],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","nomCompletSyntaxon",null,$_POST['nomSyntaxon']." ".$_POST['auteurSyntaxon'],'applications','manuel','ajout');
-	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","rangSyntaxon",null,$_POST["rangSyntaxon"],'applications','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idCatalogue",null,$_POST["idCatalogue"],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idTerritoire",null,$_POST["idTerritoireObligatoire"],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","idChorologie",null,$id_chrologie,'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_chorologie","statutChorologie",null,$_POST["statutChorologie"],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","codeEnregistrementSyntax",null,$uid,'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","idSyntaxon",null,$_POST["idSyntaxon"],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","nomSyntaxon",null,$_POST["nomSyntaxon"],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","auteurSyntaxon",null,$_POST["auteurSyntaxon"],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","nomCompletSyntaxon",null,$_POST['nomSyntaxon']." ".$_POST['auteurSyntaxon'],'syntaxa','manuel','ajout');
+	add_suivi2($_POST["etape"],$id_user,sql_format_quote($uid,'do'),"st_syntaxon","rangSyntaxon",null,$_POST["rangSyntaxon"],'syntaxa','manuel','ajout');
 
 /*
 if (!DEBUG) {

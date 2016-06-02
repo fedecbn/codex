@@ -276,6 +276,10 @@ include ("../syntaxa/add_fiche.php");
 			//var_dump($liste_statut_presence);
 			//var_dump(pg_fetch_array($result9));
 			
+			//QUERY BIBLIO
+			$query_biblio= $query_module_biblio.$id.";";				
+			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
+			$result_biblio=pg_query($db,$query_biblio) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_biblio),false);
 			
 			//QUERY ETAGES VEGETATION
 			$query7= $query_module_etage_vegetation.$id.";";				
@@ -288,7 +292,7 @@ include ("../syntaxa/add_fiche.php");
 					$result_etage_veg_enregistre = $output3;
 					//var_dump($result_etage_veg);
 					
-			
+			//QUERY ETAGES BIOBLIM
 			$query8= $query_module_etage_bioclim.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result8=pg_query($db,$query8) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result8),false);
@@ -363,25 +367,22 @@ include ("../syntaxa/add_fiche.php");
 			
 		/*------------------------------------------------------------------------------ EDIT fieldset2*/
 			echo ("<fieldset  ><LEGEND> Bibliographie </LEGEND>");
-                /*On utilise ici le résultat de la query_biblio (result2) pour avoir accès à la table st_biblio*/
-/*		
-					$colname1="idBiblio";idSyntaxon="libPublication";auteurSyntaxon="urlPublication";
-					nomCompletSyntaxon="codePublication";
-	
-			echo ("<fieldset><LEGEND>Bibliographie</LEGEND>");
-*/				
-/*			 
-			 
-				echo ("<table border=0 width=\"100%\"><tr valign=top >");
-				echo ("<td style=\"width: 350px;\">");
-				metaform_text ("Identifiant de la ressource","no_lab",20,"","codeEnregistrementSyntax",sql_format_quote(pg_result($result2,0,"\"$colname1\"" ),'undo_text'));
-				echo ("</td><td>");
-				metaform_text ("Libellé de la ressource"," no_lab",20,"","idSyntaxon",pg_result($result,0,"\"nomSyntaxon\""));
-				echo ("</td><td>");		
-				metaform_text ("url de la référence"," no_lab",20,"","idSyntaxonRetenu",pg_result($result,0,"\"idSyntaxon\""));				
-				echo ("</td></tr></table>");
+                /*On utilise ici le résultat de la query_biblio pour avoir accès à la table st_biblio*/
+			
+				$num_rows_biblio = pg_num_rows($result_biblio);
+				if ($num_rows_biblio > 0) {
+				metaform_text_area ("Libellé de la ressource","",57,50,"","libPublication",sql_format_quote(pg_result($result_biblio,0,"\"libPublication\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'libPublication'".";"),0,"description" ));	
+				metaform_text_url ("url de la ressource","",20,"","urlPublication",pg_result($result_biblio,0,"\"urlPublication\""), pg_fetch_result(pg_query ($db,$query_description."'urlPublication'".";"),0,"description" ));
+				metaform_text ("Identifiant de la ressource","",20,"","codePublication",pg_result($result_biblio,0,"\"codePublication\""), pg_fetch_result(pg_query ($db,$query_description."'codePublication'".";"),0,"description" ));
+				}
+				else {
+					metaform_text_area ("Libellé de la ressource","",57,50,"","libPublication",'', pg_fetch_result(pg_query ($db,$query_description."'libPublication'".";"),0,"description" ));
+					metaform_text_url ("url de la ressource","",20,"","urlPublication",'', pg_fetch_result(pg_query ($db,$query_description."'urlPublication'".";"),0,"description" ));
+					metaform_text ("Identifiant de la ressource","",20,"","codePublication",'', pg_fetch_result(pg_query ($db,$query_description."'codePublication'".";"),0,"description" ));
+				}
 				echo ("</fieldset>");
-*/				
+					
+				
 /*
 			echo ("<tr valign=top ><td width=50%>");
 			echo ("<fieldset><LEGEND>Bibliographie</LEGEND>");

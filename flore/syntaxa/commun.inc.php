@@ -73,6 +73,12 @@ SELECT t.*
 	FROM syntaxa.st_etage_bioclim t
 	WHERE t.\"codeEnregistrement\"=";	
 
+$query_module_biblio = "
+SELECT t.\"codePublication\", t.\"libPublication\",t.\"urlPublication\"
+FROM syntaxa.st_biblio t
+WHERE t.\"codeEnregistrement\"=";	
+
+
 //requete qui va chercher les commentaires sur les champs dans les tables système de postgresql (la description)
 $query_description=
 "SELECT  CASE WHEN col_description(oid, ordinal_position) is null THEN '' ELSE col_description(oid, ordinal_position) END as description
@@ -88,7 +94,7 @@ $query_description=
   where oid in (SELECT c.oid FROM pg_class c LEFT JOIN pg_namespace n ON n.oid = c.relnamespace LEFT JOIN pg_tablespace t ON t.oid = c.reltablespace
 WHERE c.relkind = ANY(CASE WHEN n.nspname = 'dgi' OR n.nspname = 'public' THEN array['r'] ELSE array['r','v'] END) AND c.relname NOT LIKE 'geometry%'
 AND c.relname NOT LIKE 'temp_%' AND c.relname <> 'views' AND n.nspname IN ('syntaxa') )
-and sub.table_name not in ('fsd_syntaxa')
+and sub.table_name not in ('fsd_syntaxa','st_serie_petitegeoserie')
 and sub.nom_colonne=";
 //"SELECT champs.description FROM referentiels.champs WHERE rubrique_champ = 'syntaxa' and table_champ <>'st_serie_petitegeoserie' and table_champ not like 'st_ref%' and champs.nom_champ=";
 
