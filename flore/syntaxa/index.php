@@ -580,7 +580,7 @@ include ("../syntaxa/add_fiche.php");
 			echo("</table><br>");
 			
 			/*Etagement*/
-			
+			echo ("<br>ETAGEMENT <hr>");
 			$num_rows_etag = pg_num_rows($result4);
 //			$num_rows_rag = pg_num_rows($result_region_agr);
 			if ($num_rows_etag > 0) {
@@ -603,10 +603,9 @@ include ("../syntaxa/add_fiche.php");
 			}
 			echo "<br>";
 */
-			echo ("Cortège floristique: champ multivarié à la mathieu clair");
+			/*Cortège floristique*/
+			echo ("<br>CORTEGE FLORISTIQUE <hr>");
 
-			
-			echo ("</td></tr></table>");	
 			
 			echo ("</fieldset>");
 			echo ("<hr>");
