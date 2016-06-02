@@ -15,6 +15,7 @@ $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ PARMS.
+define ("DEBUG",true);
 $id_user=$_SESSION['id_user'];
 
 /*variable contenant l'identifiant du syntaxon quand une seule checkbox est cochée 
@@ -38,22 +39,27 @@ if (!empty ($id))
 //id reçois $_POST['select'], quand plusieurs checkbox sont cochées alors on a une chaine de caractère du type "name1=valeur1&name2=valeur2" sinon on a juste " name1=valeur1"
 if (strpos($id, '&') === false) 
 { 
-echo "une seule case est cochée";
+	if (DEBUG) echo "une seule case est cochée";
     $where .= "\"codeEnregistrementSyntax\"='".$id."'";
 	$where2 .= "\"codeEnregistrement\"='".$id."'";
+	$where3 .= "\"codeEnregistrementSyntaxon\"='".$id."'";
 	$query="	
 	DELETE FROM syntaxa.st_syntaxon WHERE $where;
 	DELETE FROM syntaxa.st_chorologie WHERE $where2;
+	DELETE FROM syntaxa.st_biblio WHERE $where2;
+	DELETE FROM syntaxa.st_correspondance_pvf WHERE $where3;
 	";
-	echo "</br>".$query;
-	echo "</br>id=".sql_format_quote($id,'do');
-	echo "</br>id='".$id."'";
+	if (DEBUG)  echo "</br>".$query;
+	if (DEBUG)  echo "</br>id=".sql_format_quote($id,'do');
+	if (DEBUG)  echo "</br>id='".$id."'";
 
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 		
 
 	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_syntaxon","codeEnregistrementSyntax",$id,null,'syntaxa','manuel','suppr');
 	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_chorologie","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_biblio","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_pvf","codeEnregistrementSyntaxon",$id,null,'syntaxa','manuel','suppr');
 
 	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression une fiche",$where,"syntaxon");
 	
@@ -62,24 +68,31 @@ echo "une seule case est cochée";
 } 
 //elseif (strlen($_POST['select']) > 0) {
 	else {
-    echo "<br> plusieurs cases cochées";
-   $pairs=explode ("&",str_replace('%5B%5D','[]',$_POST['select']));
+	if (DEBUG) echo "<br> plusieurs cases cochées";
+    $pairs=explode ("&",str_replace('%5B%5D','[]',$_POST['select']));
     foreach ($pairs as $key=>$value){
         $id = ltrim ($value,"id[]=");
 		$where .= "\"codeEnregistrementSyntax\"='".$id."' OR ";
 		$where2 .= "\"codeEnregistrement\"='".$id."' OR ";
+		$where3 .= "\"codeEnregistrementSyntaxon\"='".$id."' OR ";
 		add_suivi2(1,$id_user,sql_format_quote($id,'do'),'st_syntaxon','codeEnregistrementSyntax',$id,null,$id_page,'manuel','suppr');
 		add_suivi2(1,$id_user,sql_format_quote($id,'do'),'st_chorologie','codeEnregistrement',$id,null,$id_page,'manuel','suppr');
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_biblio","codeEnregistrement",$id,null,$id_page,'manuel','suppr');
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_pvf","codeEnregistrementSyntaxon",$id,null,$id_page,'manuel','suppr');
 		}
     $where=rtrim ($where,"OR ");
 	$where2=rtrim ($where2,"OR ");
+	$where3=rtrim ($where3,"OR ");
 
 	$query="
 	DELETE FROM syntaxa.st_syntaxon WHERE $where;
 	DELETE FROM syntaxa.st_chorologie WHERE $where2;
+	DELETE FROM syntaxa.st_biblio WHERE $where2;
+	DELETE FROM syntaxa.st_correspondance_pvf WHERE $where3;
 	";
-	echo "where=".$where;
-	echo "where2=".$where;
+	if (DEBUG)  echo "<br> effacé de st_syntaxon=".$where;
+	if (DEBUG)  echo "<br> effacé de st_chorologie et biblio=".$where2;
+	if (DEBUG)  echo "<br> effacé de st_correspondance_pvf where3=".$where3;
 	echo $query;
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
 
