@@ -230,13 +230,13 @@ include ("../syntaxa/add_fiche.php");
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result3bis=pg_query($db,$query3bis) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result3bis),false);
 			
-			$query5= $query_module_correspondance_hic.$id.";";				
+			$query_hic= $query_module_correspondance_hic.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
-			$result5=pg_query($db,$query5) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result5),false);
+			$result_hic=pg_query($db,$query_hic) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_hic),false);
 			
-			$query6= $query_module_correspondance_eunis.$id.";";				
+			$query_eunis= $query_module_correspondance_eunis.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
-			$result6=pg_query($db,$query6) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result6),false);
+			$result_eunis=pg_query($db,$query_eunis) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_eunis),false);
 			
 			
 			
@@ -284,7 +284,7 @@ include ("../syntaxa/add_fiche.php");
 			//QUERY ETAGES VEGETATION
 			$query7= $query_module_etage_vegetation.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
-			$result_etage_veg=pg_query($db,$query7) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result7),false);
+			$result_etage_veg=pg_query($db,$query7) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_etage_veg),false);
 			
 			//organisation en tableau utilisable par la fonction metaform_sel_multi de type codeEtageVeg => libEtageVeg (ex: 'L' => string 'littoral' (length=10)) 
 					while ($row=pg_fetch_array ($result_etage_veg,NULL,PGSQL_ASSOC))
@@ -415,6 +415,7 @@ include ("../syntaxa/add_fiche.php");
 		/*------------------------------------------------------------------------------ EDIT fieldset4*/
             echo ("</td><td width=50%>");
 			echo ("<fieldset><LEGEND> Correspondances </LEGEND>");
+			echo ("<br>PHYTOSOCIOLOGIE <hr>");
 
 		
 			$num_rows_pvf1 = pg_num_rows($result3);
@@ -436,9 +437,29 @@ include ("../syntaxa/add_fiche.php");
 			} else {
 				metaform_sel ("PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF2","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
 			}
+			
+			echo ("<br>HABITATS<hr>");
+			
+			$num_rows_hic = pg_num_rows($result_hic);
+			if ($num_rows_hic > 0) {
+			metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
+            metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'",$result_hic,"departement_select","");
+			} else {
+					metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
+					metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'","","hic_select","");
+			}
 			echo "<br>";
 			
-			
+			$num_rows_eunis = pg_num_rows($result_eunis);
+			if ($num_rows_eunis > 0) {
+			metaform_sel_multi ("Rattachement Eunis","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeHIC']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
+            metaform_sel_multi ("Eunis sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'",$result_eunis,"departement_select","");
+			} else {
+					metaform_sel_multi ("Rattachement Eunis","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeHIC']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
+					metaform_sel_multi ("Eunis sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");
+			}
+			echo "<br>";
+
 			
 			         //   metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic",pg_result($result4,0,"\"codeHIC\""),pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
           //  metaform_sel_multi ("HIC Selectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'",pg_result($result4,0,"\"rqPhysionomie\""),"hic_select","");
