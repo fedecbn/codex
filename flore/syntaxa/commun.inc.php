@@ -44,13 +44,20 @@ SELECT t.*
 	WHERE t.\"versionReferentiel\"='v2' and t.\"codeEnregistrementSyntaxon\"=";	
 	
 $query_module_correspondance_hic = "
-SELECT t.*
+SELECT t.\"codeHIC\", ref.\"libHIC\",t.\"typeEnregistrement\"
 	FROM syntaxa.st_correspondance_hic t
+	inner join 
+	(select * from  syntaxa.st_ref_hic) ref
+	on t.\"codeHIC\"=ref.\"codeHIC\" 
 	WHERE t.\"codeEnregistrement\"=";	
 	
+	
 $query_module_correspondance_eunis = "
-SELECT t.*
+SELECT t.\"codeEUNIS\", ref.\"libEUNIS\",t.\"typeEnregistrement\"
 	FROM syntaxa.st_correspondance_eunis t
+	inner join 
+	(select * from  syntaxa.st_ref_eunis) ref
+	on t.\"codeEUNIS\"=ref.\"codeEUNIS\" 
 	WHERE t.\"codeEnregistrement\"=";	
 	
 $query_module_chorologie = "
@@ -67,11 +74,14 @@ inner join
 (select * from  syntaxa.st_ref_etage_veg) li
 on t.\"codeEtageVeg\"=li.\"codeEtageVeg\" 
 WHERE t.\"codeEnregistrement\"=";	
-	
+
 $query_module_etage_bioclim = "
-SELECT t.*
-	FROM syntaxa.st_etage_bioclim t
-	WHERE t.\"codeEnregistrement\"=";	
+SELECT t.\"codeEtageBioclim\", li.\"libEtageBioclim\" 
+FROM syntaxa.st_etage_bioclim t
+inner join 
+(select * from  syntaxa.st_ref_etage_bioclim) li
+on t.\"codeEtageBioclim\"=li.\"codeEtageBioclim\" 
+WHERE t.\"codeEnregistrement\"=";	
 
 $query_module_biblio = "
 SELECT t.\"codePublication\", t.\"libPublication\",t.\"urlPublication\"

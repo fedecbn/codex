@@ -596,13 +596,14 @@ function eval () {
         var aoo=$("#id_aoo").val ();
 		var hybride_oui=$("input[id=hybride1]:checked").val();						
 		var indi=$("#id_indi").val();
-        if (menace == ''  && aoo==0 && nbloc==0)				{document.getElementById('cat_d2').value=0;document.getElementById('cat_d2').className="";document.getElementById('crit_d2').value='';}
-        else if (menace == '' || (aoo==0 && nbloc==0))			{document.getElementById('cat_d2').value=8;document.getElementById('cat_d2').className="DD";document.getElementById('crit_d2').value='';}
-        else if (menace == 'TRUE' && (aoo!=0 && aoo <=3))		{document.getElementById('cat_d2').value=5;document.getElementById('cat_d2').className="VU";document.getElementById('crit_d2').value='menace et aoo < 20km²';}
-        else if (menace == 'TRUE' && (nbloc==2 || nbloc == 1))	{document.getElementById('cat_d2').value=5;document.getElementById('cat_d2').className="VU";document.getElementById('crit_d2').value='menace et nb de localité <=5';}			
-        else if (menace == 'TRUE' && aoo!=0 && aoo <=4)			{document.getElementById('cat_d2').value=6;document.getElementById('cat_d2').className="NT";document.getElementById('crit_d2').value='menace et aoo < 30km²';}		
-        else if (menace == 'FALSE' && aoo!=0 && aoo <=3)		{document.getElementById('cat_d2').value=6;document.getElementById('cat_d2').className="NT";document.getElementById('crit_d2').value='pas de menace et aoo < 20km²';}			
-        else													{document.getElementById('cat_d2').value=7;document.getElementById('cat_d2').className="LC";document.getElementById('crit_d2').value='';}
+        if (menace == ''  && aoo==0 && nbloc==0)					{document.getElementById('cat_d2').value=0;document.getElementById('cat_d2').className="";document.getElementById('crit_d2').value='';}
+        else if (menace == '' || (aoo==0 && nbloc==0))				{document.getElementById('cat_d2').value=8;document.getElementById('cat_d2').className="DD";document.getElementById('crit_d2').value='';}
+        else if (menace == 'TRUE' && (aoo!=0 && aoo <=3))			{document.getElementById('cat_d2').value=5;document.getElementById('cat_d2').className="VU";document.getElementById('crit_d2').value='menace et aoo < 20km²';}
+        else if (menace == 'TRUE' && (nbloc==2 || nbloc == 1))		{document.getElementById('cat_d2').value=5;document.getElementById('cat_d2').className="VU";document.getElementById('crit_d2').value='menace et nb de localité <=5';}			
+        else if (menace == 'TRUE' && aoo!=0 && aoo <=4)				{document.getElementById('cat_d2').value=6;document.getElementById('cat_d2').className="NT";document.getElementById('crit_d2').value='menace et aoo < 30km²';}		
+        else if (menace == 'FALSE' && aoo!=0 && aoo <=3)			{document.getElementById('cat_d2').value=6;document.getElementById('cat_d2').className="NT";document.getElementById('crit_d2').value='pas de menace et aoo < 20km²';}			
+        else if (menace == 'FALSE' && nbloc==2)						{document.getElementById('cat_d2').value=6;document.getElementById('cat_d2').className="NT";document.getElementById('crit_d2').value='pas de menace et Nb de localités =<5';}			
+        else														{document.getElementById('cat_d2').value=7;document.getElementById('cat_d2').className="LC";document.getElementById('crit_d2').value='';}
 		if (hybride_oui != 'TRUE' && indi != '3')	catd ();
 		return (true);
     }

@@ -2415,12 +2415,16 @@ INSERT INTO syntaxa.st_ref_hic ("codeHIC", "libHIC", id_tri) VALUES ('9590', 'Fo
 INSERT INTO syntaxa.st_ref_hic ("codeHIC", "libHIC", id_tri) VALUES ('95A0', 'Pinèdes oro-méditerranéennes d''altitude', 273);
 INSERT INTO syntaxa.st_ref_hic ("codeHIC", "libHIC", id_tri) VALUES ('NI', 'non indiqué', 0);
 
+update syntaxa.st_ref_hic set "libHIC"="codeHIC"||': '||"libHIC" --where "codeHIC"='1'
+
 /*
 alter table syntaxa.st_ref_hic drop column if exists id_tri;
 alter table syntaxa.st_ref_hic add column id_tri serial;
 update syntaxa.st_ref_hic set id_tri=0 where "codeHIC"='NI';
 select * from syntaxa.st_ref_hic;
 */
+
+
 
 ---------------------------------------------------------------------REFERENTIELS HABITATS
 --table syntaxa.st_ref_eunis
@@ -7711,6 +7715,7 @@ INSERT INTO syntaxa.st_ref_eunis ("codeEUNIS", "libEUNIS", id_tri) VALUES ('H3.2
 INSERT INTO syntaxa.st_ref_eunis ("codeEUNIS", "libEUNIS", id_tri) VALUES ('H3.2H', 'Bare inland basaltic and ultra-basic cliffs', 5282);
 INSERT INTO syntaxa.st_ref_eunis ("codeEUNIS", "libEUNIS", id_tri) VALUES ('NI', 'non indiqué', 0);
 
+update syntaxa.st_ref_hic set "libHIC"="codeEUNIS"||': '||"libEUNIS" --where "codeEUNIS"='1'
 
 /*
 alter table syntaxa.st_ref_eunis drop column if exists id_tri;

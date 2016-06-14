@@ -808,11 +808,11 @@ COMMENT ON COLUMN syntaxa.st_ref_pvf.id_tri is 'Colonne de tri pour les menus d�
 -- object: syntaxa.st_correspondance_hic | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_correspondance_hic cascade;
 CREATE TABLE syntaxa.st_correspondance_hic(
-	"idCorresHIC" integer,
+	"idCorresHIC" serial not null,
 	"codeEnregistrement" text,
 	"typeEnregistrement" text,
 	"codeHIC" text,
-	"libHIC" text,
+	--"libHIC" text,
 	"rqHIC" text
 );
 -- ddl-end --
@@ -821,7 +821,7 @@ COMMENT ON COLUMN syntaxa.st_correspondance_hic."idCorresHIC" IS 'identifiant un
 COMMENT ON COLUMN syntaxa.st_correspondance_hic."codeEnregistrement" IS 'code de l'' enregistrement de syntaxon, du syntaxon dans le cadre d''un cortège syntaxonomique, du (geo)sigmafacies ou SeriePetiteGeoserie';
 COMMENT ON COLUMN syntaxa.st_correspondance_hic."typeEnregistrement" IS 'indique s''il s''agit d''un enregistrement de syntaxon, syntaxon de cortège, (geo)sigmafacies ou SeriePetiteGeoserie';
 COMMENT ON COLUMN syntaxa.st_correspondance_hic."codeHIC" IS 'code de l''habitat Natura 2000 concerné par la correspondance';
-COMMENT ON COLUMN syntaxa.st_correspondance_hic."libHIC" IS 'libellé de l''habitat Natura 2000 concerné par la correspondance';
+--COMMENT ON COLUMN syntaxa.st_correspondance_hic."libHIC" IS 'libellé de l''habitat Natura 2000 concerné par la correspondance';
 COMMENT ON COLUMN syntaxa.st_correspondance_hic."rqHIC" IS 'champ libre de remarque à propos du rattachement au code HIC';
 -- ddl-end --
 
@@ -930,7 +930,7 @@ COMMENT ON COLUMN syntaxa."st_ref_etage_veg".id_tri is 'Colonne de tri pour les 
 -- object: syntaxa.st_etage_bioclim | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_etage_bioclim cascade;
 CREATE TABLE syntaxa.st_etage_bioclim(
-	"idCorresEtageBioclim" text,
+	"idCorresEtageBioclim" serial not null,
 	"codeEnregistrement" text,
 	"codeEtageBioclim" text,
 	"libEtageBioclim" text,
@@ -964,7 +964,7 @@ COMMENT ON COLUMN syntaxa.st_ref_etage_bioclim.id_tri is 'Colonne de tri pour le
 -- object: syntaxa.st_biblio | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_biblio cascade;
 CREATE TABLE syntaxa.st_biblio(
-	"idBiblio" text,
+	"idBiblio" serial not null,
 	"codeEnregistrement" text,
 	"libPublication" text,
 	"urlPublication" text,
@@ -1287,11 +1287,11 @@ COMMENT ON COLUMN syntaxa.st_ref_rivasmartinez_ombroclimat.id_tri is'Colonne de 
 -- object: syntaxa.st_correspondance_eunis | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_correspondance_eunis cascade;
 CREATE TABLE syntaxa.st_correspondance_eunis(
-	"idCorresEUNIS" text,
+	"idCorresEUNIS" serial not null,
 	"codeEnregistrement" text,
 	"typeEnregistrement" text,
 	"codeEUNIS" text,
-	"libEUNIS" text,
+--	"libEUNIS" text,
 	"rqEUNIS" text,
 	CONSTRAINT "idCorrespondanceEUNIS_pkey" PRIMARY KEY ("idCorresEUNIS")
 
@@ -1302,7 +1302,7 @@ COMMENT ON COLUMN syntaxa.st_correspondance_eunis."idCorresEUNIS" IS 'identifian
 COMMENT ON COLUMN syntaxa.st_correspondance_eunis."codeEnregistrement" IS 'code de l'' enregistrement de syntaxon, (geo)sigmafacies ou SeriePetiteGeoserie';
 COMMENT ON COLUMN syntaxa.st_correspondance_eunis."typeEnregistrement" IS 'indique s''il s''agit d''un enregistrement de syntaxon, (geo)sigmafacies ou SeriePetiteGeoserie';
 COMMENT ON COLUMN syntaxa.st_correspondance_eunis."codeEUNIS" IS 'code de l''habitat EUNIS concerné par la correspondance';
-COMMENT ON COLUMN syntaxa.st_correspondance_eunis."libEUNIS" IS 'libellé de l''habitat EUNIS concerné par la correspondance';
+--COMMENT ON COLUMN syntaxa.st_correspondance_eunis."libEUNIS" IS 'libellé de l''habitat EUNIS concerné par la correspondance';
 COMMENT ON COLUMN syntaxa.st_correspondance_eunis."rqEUNIS" IS 'champ libre de remarque à propos du rattachement au code HIc';
 -- ddl-end --
 
@@ -1820,7 +1820,7 @@ REFERENCES syntaxa.referentiel_taxo (id_rattachement_referentiel) MATCH FULL
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
-
+/*
 -- object: "codeEnregistrement_fkey1" | type: CONSTRAINT --
 -- ALTER TABLE syntaxa.st_correspondance_hic DROP CONSTRAINT "codeEnregistrement_fkey1";
 
@@ -1853,7 +1853,7 @@ ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
 
-
+*/
 
 
 

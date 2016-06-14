@@ -48,6 +48,10 @@ if (strpos($id, '&') === false)
 	DELETE FROM syntaxa.st_chorologie WHERE $where2;
 	DELETE FROM syntaxa.st_biblio WHERE $where2;
 	DELETE FROM syntaxa.st_correspondance_pvf WHERE $where3;
+	DELETE FROM syntaxa.st_correspondance_eunis WHERE $where2;
+	DELETE FROM syntaxa.st_correspondance_hic WHERE $where2;
+	DELETE FROM syntaxa.st_etage_veg WHERE $where2;
+	DELETE FROM syntaxa.st_etage_bioclim WHERE $where2;
 	";
 	if (DEBUG)  echo "</br>".$query;
 	if (DEBUG)  echo "</br>id=".sql_format_quote($id,'do');
@@ -60,6 +64,10 @@ if (strpos($id, '&') === false)
 	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_chorologie","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
 	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_biblio","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
 	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_pvf","codeEnregistrementSyntaxon",$id,null,'syntaxa','manuel','suppr');
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_eunis","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_hic","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_etage_veg","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
+	add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_etage_bioclim","codeEnregistrement",$id,null,'syntaxa','manuel','suppr');
 
 	add_log ("log",5,$id_user,getenv("REMOTE_ADDR"),"Suppression une fiche",$where,"syntaxon");
 	
@@ -79,6 +87,10 @@ if (strpos($id, '&') === false)
 		add_suivi2(1,$id_user,sql_format_quote($id,'do'),'st_chorologie','codeEnregistrement',$id,null,$id_page,'manuel','suppr');
 		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_biblio","codeEnregistrement",$id,null,$id_page,'manuel','suppr');
 		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_pvf","codeEnregistrementSyntaxon",$id,null,$id_page,'manuel','suppr');
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_eunis","codeEnregistrement",$id,null,$id_page,'manuel','suppr');
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_correspondance_hic","codeEnregistrement",$id,null,$id_page,'manuel','suppr');
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_etage_veg","codeEnregistrement",$id,null,$id_page,'manuel','suppr');
+		add_suivi2(1,$id_user,sql_format_quote($id,'do'),"st_etage_bioclim","codeEnregistrement",$id,null,$id_page,'manuel','suppr');
 		}
     $where=rtrim ($where,"OR ");
 	$where2=rtrim ($where2,"OR ");
@@ -89,6 +101,10 @@ if (strpos($id, '&') === false)
 	DELETE FROM syntaxa.st_chorologie WHERE $where2;
 	DELETE FROM syntaxa.st_biblio WHERE $where2;
 	DELETE FROM syntaxa.st_correspondance_pvf WHERE $where3;
+	DELETE FROM syntaxa.st_correspondance_eunis WHERE $where2;
+	DELETE FROM syntaxa.st_correspondance_hic WHERE $where2;
+	DELETE FROM syntaxa.st_etage_veg WHERE $where2;
+	DELETE FROM syntaxa.st_etage_bioclim WHERE $where2;
 	";
 	if (DEBUG)  echo "<br> effacé de st_syntaxon=".$where;
 	if (DEBUG)  echo "<br> effacé de st_chorologie et biblio=".$where2;

@@ -37,6 +37,13 @@ if (!empty ($id))
 			
 		/*SUIVI DES MODIFICATIONS ET UPDATE*/
 		if (DEBUG) foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
+		echo "<br> hic";var_dump($_POST["hic"]);
+		echo "<br> hic select";var_dump($_POST["hic_select"]);
+		echo "<br> departement select";var_dump($_POST["departement_select"]);
+		echo "<br> etage veg";var_dump($_POST["etage_veg"]);
+		echo "<br> etage veg select";var_dump($_POST["etage_veg_select"]);
+		echo "<br> eunis";var_dump($_POST["eunis"]);
+		echo "<br> eunis select";var_dump($_POST["eunis_select"]);
 		
 		
 //-----------------------------------------------------EDITION DE LA TABLE SYNTAXON---------------------------------------------------------------------------
@@ -136,8 +143,8 @@ if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 			pg_free_result($result);
 			//insertion d'une nouvelle valeur dans la table de correspondance entre le syntaxon et le pvf (ici nouvelle valeur de rattachement au pvf1)
-			$insert="INSERT INTO syntaxa.st_biblio (\"libPublication\",\"urlPublication\",\"codePublication\") VALUES (";
-			$champs= sql_format_quote($_POST['libPublication'],'do').",".sql_format_quote($_POST['urlPublication'],'do').",".sql_format_quote($_POST['codePublication'],'do').") RETURNING \"idBiblio\";";
+			$insert="INSERT INTO syntaxa.st_biblio (\"codeEnregistrement\",\"libPublication\",\"urlPublication\",\"codePublication\") VALUES (";
+			$champs= $id.",".sql_format_quote($_POST['libPublication'],'do').",".sql_format_quote($_POST['urlPublication'],'do').",".sql_format_quote($_POST['codePublication'],'do').") RETURNING \"idBiblio\";";
 			$query=	$insert.$champs;
 			echo "<br>".$query;
 			$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
@@ -238,6 +245,138 @@ if (DEBUG) echo "<br>".$select; //affichage en mode debug de la variable select
 			add_suivi2($etape,$id_user,$id,'st_correspondance_pvf','idRattachementPVF',null,$_POST['idRattachementPVF2'],$id_page,'manuel','ajout');
 				}	
 			
+
+//-----------------------------------------------------------EDITION DE LA TABLE DES HIC-------------------------------------------
+//-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
+//
+//ATTENTION AU MOMENT DE L'EDITION, SI L ENREGISTREMENT NEXISTE PAS C UN INSERT SINON C UN UPDATE!
+
+	$query="SELECT \"codeHIC\" FROM syntaxa.st_correspondance_hic where \"codeEnregistrement\"=".$id.";";
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	$i=0;
+	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+		{
+		$hic_base[$i]=$row["codeHIC"];
+		$i++;
+		}
+	//echo "<br>hic_base 0=".$hic_base[0];
+	//echo "<br>hic_base 1 =".$hic_base[1];
+
+	/*déclaration quand la variable est vide*/
+
+	if (empty($hic_base)) {$hic_base = array();}
+	if (empty($_POST["hic_select"])) {$_POST["hic_select"] = array();}
+	pg_free_result ($result);
+  
+
+//-------------------------------------------------------------- mise à jour de la table st_correspondance_hic avec les nouvelles valeurs d'hic ---------------------
+
+
+$supp = array_diff($hic_base, $_POST["hic_select"]);
+$add = array_diff($_POST["hic_select"],$hic_base);
+var_dump($supp);
+var_dump($add);
+
+if (!empty($supp))
+	{
+   foreach ($supp as $field => $val)
+		{
+		$val="'".$val."'";
+		$query.= "DELETE FROM syntaxa.st_correspondance_hic WHERE (\"codeEnregistrement\",\"codeHIC\") = ($id,$val); ";
+		add_suivi2($etape,$id_user,$id,'st_correspondance_hic','codeHIC',$val,'',$id_page,'manuel','suppr');
+		}
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	pg_free_result ($result); 
+	//mise à jour de la table de suivi
+
+	
+	}
+	
+if (!empty($add))
+	{
+   foreach ($add as $field => $val)
+		{
+   if (DEBUG) echo "valeur=".$val."<br>";
+   $val="'".$val."'";
+   $query.="INSERT INTO syntaxa.st_correspondance_hic (\"codeEnregistrement\",\"typeEnregistrement\",\"codeHIC\") VALUES ($id,'syntaxon',$val); ";
+   add_suivi2($etape,$id_user,$id,'st_correspondance_hic','codeHIC','',$val,$id_page,'manuel','ajout');
+		}
+	if (DEBUG) echo "<br> query de HIC".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	pg_free_result ($result); 
+
+	}
+	
+	
+
+//-----------------------------------------------------------EDITION DE LA TABLE DES EUNIS-------------------------------------------
+//-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
+//
+//ATTENTION AU MOMENT DE L'EDITION, SI L ENREGISTREMENT NEXISTE PAS C UN INSERT SINON C UN UPDATE!
+
+/*
+	$query="SELECT \"codeEUNIS\" FROM syntaxa.st_correspondance_eunis where \"codeEnregistrement\"=".$id.";";
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	$i=0;
+	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+		{
+		$eunis_base[$i]=$row["codeEUNIS"];
+		$i++;
+		}
+	//echo "<br>eunis_base 0=".$eunis_base[0];
+	//echo "<br>eunis_base 1 =".$eunis_base[1];
+
+	/*déclaration quand la variable est vide*/
+/*
+	if (empty($eunis_base)) {$eunis_base = array();}
+	if (empty($_POST["eunis_select"])) {$_POST["eunis_select"] = array();}
+	pg_free_result ($result);
+  
+
+//-------------------------------------------------------------- mise à jour de la table st_correspondance_eunis avec les nouvelles valeurs d'eunis ---------------------
+
+
+$supp = array_diff($eunis_base, $_POST["eunis_select"]);
+$add = array_diff($_POST["eunis_select"],$eunis_base);
+var_dump($supp);
+var_dump($add);
+
+if (!empty($supp))
+	{
+   foreach ($supp as $field => $val)
+		{
+		$val="'".$val."'";
+		$query.= "DELETE FROM syntaxa.st_correspondance_eunis WHERE (\"codeEnregistrement\",\"codeEUNIS\") = ($id,$val); ";
+		add_suivi2($etape,$id_user,$id,'st_correspondance_eunis','codeEUNIS',$val,'',$id_page,'manuel','suppr');
+		}
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	pg_free_result ($result); 
+	//mise à jour de la table de suivi
+
+	
+	}
+	
+if (!empty($add))
+	{
+   foreach ($add as $field => $val)
+		{
+   if (DEBUG) echo "valeur=".$val."<br>";
+   $val="'".$val."'";
+   $query.="INSERT INTO syntaxa.st_correspondance_eunis (\"codeEnregistrement\",\"typeEnregistrement\",\"codeEUNIS\") VALUES ($id,'syntaxon',$val); ";
+   add_suivi2($etape,$id_user,$id,'st_correspondance_eunis','codeEUNIS','',$val,$id_page,'manuel','ajout');
+		}
+	if (DEBUG) echo "<br> query de eunis".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	pg_free_result ($result); 
+
+	}
+
+	*/
+
 //-----------------------------------------------------------EDITION DE LA TABLE DE CHOROLOGIE-------------------------------------------
 //-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
 //
@@ -248,9 +387,8 @@ inner join syntaxa.liste_geo li
 on ch."idTerritoire"=li."id_territoire"
 where li.code_type_territoire='DEP' and "codeEnregistrement"='CBIG_syntaxon_3964' ;
 
-*/
+*/  
 	$query="SELECT \"idTerritoire\" FROM syntaxa.st_chorologie ch inner join syntaxa.liste_geo li on ch.\"idTerritoire\"=li.id_territoire WHERE li.code_type_territoire='DEP' and \"codeEnregistrement\"=".$id.";";
-echo $query;
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	$i=0;
@@ -267,7 +405,7 @@ echo $query;
 	if (empty($dep_base)) {$dep_base = array();}
 	if (empty($_POST["departement_select"])) {$_POST["departement_select"] = array();}
 	
-	// pg_free_result ($result); 
+	 pg_free_result ($result); 
 
 //-------------------------------------------------------------- mise à jour de la table chorologie avec les nouvelles valeurs de départements ---------------------
 
@@ -287,6 +425,7 @@ if (!empty($supp))
 		}
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	pg_free_result ($result);
 	//mise à jour de la table de suivi
 
 	
@@ -301,19 +440,18 @@ if (!empty($add))
    $query.="INSERT INTO syntaxa.st_chorologie (\"codeEnregistrement\",\"idTerritoire\") VALUES ($id,$val); ";
    add_suivi2($etape,$id_user,$id,'st_chorologie','idTerritoire','',$val,$id_page,'manuel','ajout');
 		}
-	if (DEBUG) echo "<br>".$query;
+	if (DEBUG) echo "<br> query de departement".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
-
+	pg_free_result ($result);
 	}
-	
-			
+
+
 //-----------------------------------------------------------EDITION DE LA TABLE DES ETAGES DE VEGETATION-------------------------------------------
 //-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
 //
 //ATTENTION AU MOMENT DE L'EDITION, SI L ENREGISTREMENT NEXISTE PAS C UN INSERT SINON C UN UPDATE!
 
 	$query="SELECT \"codeEtageVeg\" FROM syntaxa.st_etage_veg where \"codeEnregistrement\"=".$id.";";
-echo $query;
     if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 	$i=0;
@@ -332,7 +470,7 @@ echo $query;
 	
 	// pg_free_result ($result); 
 
-//-------------------------------------------------------------- mise à jour de la table chorologie avec les nouvelles valeurs de départements ---------------------
+//-------------------------------------------------------------- mise à jour de la table st_etage_veg avec les nouvelles valeurs d'étages ---------------------
 
 
 $supp = array_diff($etag_veg_base, $_POST["etage_veg_select"]);
@@ -361,6 +499,8 @@ if (!empty($add))
 		{
    if (DEBUG) echo "valeur=".$val."<br>";
    $val="'".$val."'";
+   //mise à jour de la sequence pour la colonne serial idChorologie (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+   $query="SELECT setval('syntaxa.\"st_etage_veg_idCorresEtageveg_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageveg\")+1 FROM syntaxa.st_etage_veg), 1), false);";
    $query.="INSERT INTO syntaxa.st_etage_veg (\"codeEnregistrement\",\"codeEtageVeg\") VALUES ($id,$val); ";
    add_suivi2($etape,$id_user,$id,'st_etage_veg','codeEtageVeg','',$val,$id_page,'manuel','ajout');
 		}
@@ -368,6 +508,70 @@ if (!empty($add))
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 
 	}
+	
+
+//-----------------------------------------------------------EDITION DE LA TABLE DES ETAGES BIOCLIMATIQUES-------------------------------------------
+//-----------------------------------------------------------	backup qui enregistre l'état des champs en base, avant l'enregistrement-----------------
+//
+//ATTENTION AU MOMENT DE L'EDITION, SI L ENREGISTREMENT NEXISTE PAS C UN INSERT SINON C UN UPDATE!
+
+	$query="SELECT \"codeEtageBioclim\" FROM syntaxa.st_etage_bioclim where \"codeEnregistrement\"=".$id.";";
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	$i=0;
+	while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC))
+		{
+		$etag_bioclim_base[$i]=$row["codeEtageBioclim"];
+		$i++;
+		}
+	//echo "<br>etag_bioclim_base 0=".$etag_bioclim_base[0];
+	//echo "<br>etag_bioclim_base 1 =".$etag_bioclim_base[1];
+
+	/*déclaration quand la variable est vide*/
+
+	if (empty($etag_bioclim_base)) {$etag_bioclim_base = array();}
+	if (empty($_POST["etage_bioclim_select"])) {$_POST["etage_bioclim_select"] = array();}
+	
+	// pg_free_result ($result); 
+
+//-------------------------------------------------------------- mise à jour de la table st_etage_veg avec les nouvelles valeurs d'étages ---------------------
+
+
+$supp = array_diff($etag_bioclim_base, $_POST["etage_bioclim_select"]);
+$add = array_diff($_POST["etage_bioclim_select"],$etag_bioclim_base);
+var_dump($supp);
+var_dump($add);
+
+if (!empty($supp))
+	{
+   foreach ($supp as $field => $val)
+		{
+		$val="'".$val."'";
+		$query.= "DELETE FROM syntaxa.st_etage_bioclim WHERE (\"codeEnregistrement\",\"codeEtageBioclim\") = ($id,$val); ";
+		add_suivi2($etape,$id_user,$id,'st_etage_bioclim','codeEtageBioclim',$val,'',$id_page,'manuel','suppr');
+		}
+    if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+	//mise à jour de la table de suivi
+
+	
+	}
+	
+if (!empty($add))
+	{
+   foreach ($add as $field => $val)
+		{
+   if (DEBUG) echo "valeur=".$val."<br>";
+   $val="'".$val."'";
+   $query="SELECT setval('syntaxa.\"st_etage_bioclim_idCorresEtageBioclim_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageBioclim\")+1 FROM syntaxa.st_etage_veg), 1), false);";
+   $query.="INSERT INTO syntaxa.st_etage_bioclim (\"codeEnregistrement\",\"codeEtageBioclim\") VALUES ($id,$val); ";
+   add_suivi2($etape,$id_user,$id,'st_etage_bioclim','codeEtageBioclim','',$val,$id_page,'manuel','ajout');
+		}
+	if (DEBUG) echo "<br>".$query;
+    $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+
+	}
+
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 			
