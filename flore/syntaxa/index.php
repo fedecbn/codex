@@ -153,7 +153,7 @@ switch ($mode) {
                 echo ($lang[$lang_select]["liste_taxons"]);
             echo ("</div>");
             echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
-            echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
+            echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
             echo ("<div style=\"float:right;\">");
                 if ($droit['add_fiche']) echo ("<button id=\"add-button\">".$lang[$lang_select]['ajouter']."</button>&nbsp;&nbsp;");

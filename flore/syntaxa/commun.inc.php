@@ -120,13 +120,19 @@ $query_liste = "
 SELECT count(*) OVER() AS total_count,*
 	FROM syntaxa.st_syntaxon
 	";
-	
-$query_export = "
-SELECT t.* 
-	FROM defaut.uid t 
-	JOIN applications.taxons a ON a.uid = t.uid 
-	WHERE a.defaut = TRUE ";
 
+/*QUERY query_export est la query qui permet l'export de données elle est
+utilisé dans la fonction exportFunc (gestion.js)
+le /" qui encadre un nom de champ avec majuscule pose problème dans l'application je remplace par &quot; qui est le caractère de remplacement en xml*/
+$query_export = "
+SELECT * FROM syntaxa.st_syntaxon AS t 
+LEFT OUTER JOIN syntaxa.st_chorologie c on (t.&quot;codeEnregistrementSyntax&quot;=c.&quot;codeEnregistrement&quot;)
+LEFT OUTER JOIN syntaxa.st_correspondance_pvf p on (t.&quot;codeEnregistrementSyntax&quot;=p.&quot;codeEnregistrementSyntaxon&quot;)
+where true ";
+
+/*même chose pour $export_id*/	
+$export_id = "t.&quot;codeEnregistrementSyntax&quot;";
+	
 //$tables = array ('st_syntaxon','st_etage_bioclim','st_etage_veg','st_chorologie','st_correspondance_eunis','st_correspondance_hic','st_correspondance_pvf');
 
 if (!isset($_POST["etape"])) {$etape = 1;}
