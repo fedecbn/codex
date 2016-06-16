@@ -162,7 +162,8 @@ function export_txt ($nom_fichier,$query) {
         {
             $col=$ligne="";
             foreach ($info as $column => $value) {
-                if (!empty($ref_col[$column])) $col.=$ref_col[$column]['description']."\t";
+                if (!empty($ref_col[$column]) & $page!=='syntaxa' ) $col.=$ref_col[$column]['description']."\t"; //pour toutes les rubriques sauf syntaxa le fichier d'export contient en entête de colonne la description
+				elseif (!empty($ref_col[$column]) & $page=='syntaxa' ) $col.=$ref_col[$column]['nom_champ']."\t"; //pour syntaxa le fichier d'export contient en entête de colonne le nom du champ
 				else $col.=$column."\t";
 					
 				if ($value == "t") $value = "Oui";
