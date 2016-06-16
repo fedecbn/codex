@@ -7,7 +7,7 @@
  Interface avec la base de données (modification et ajout)         
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------ INITIALISATION*/ session_start();
+/*------------------------------------------------------------------------------ INITIALISATION*/
 include ("commun.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);
@@ -19,9 +19,16 @@ define ("DEBUG",false);
 $id = isset($_POST['id']) ? $_POST['id'] : "";
 $mode = $_POST['m'] != null ? $_POST['m'] : null;
 $jdd = $_POST['jdd'];
+var_dump($jdd);
 $typverif = $_POST['typverif'];
 $typpush = $_POST['typpush'];
 $typdiff = $_POST['typdiff'];
+$delimitr = $_POST['delimitr'];
+if ($delimitr == 'virgule')	$delimitr_source = ","; 
+	elseif ($delimitr == 'point_virgule')	$delimitr_source = ";"; 
+	elseif ($delimitr == 'tab')	$delimitr_source = "\t"; 
+	else $delimitr_source = ';';
+$not_all_columns = $_POST['not_all_columns'] != null ? $_POST['not_all_columns'] : 't';
 $lonely_file = $_POST['lonely_file'] != null ? $_POST['lonely_file'] : 'f';
 $infrataxon = $_POST['infrataxon'] != null ? $_POST['infrataxon'] : 'f';
 $from_propre = $_POST['from_propre'] != null ? $_POST['from_propre'] : 'f';
@@ -69,10 +76,32 @@ if (!empty ($id))
 		/*IMPORT*/
 		case "import" : {
 			$path .= "import/";
-			/*Récupération des cj_jdd*/
-			
-			if ($lonely_file == true) {$file = substr(substr($file, 4), 0, -4);$query = "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser, '$file');";}
-			else $query = "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser);";
+			/*Récupération des cd_jdd*/
+			if ($lonely_file == 'FALSE' AND $not_all_columns == 'FALSE') {
+				$les_fichiers = scandir($path);
+				unset($les_fichiers[array_search("..", $les_fichiers)]);unset($les_fichiers[array_search(".", $les_fichiers)]);	unset($les_fichiers[array_search(".gitignore", $les_fichiers)]);
+				$query = "";
+				foreach ($les_fichiers as $key => $val){
+					$file = substr(substr($val, 4), 0, -4);
+					$handle = fopen($path.$val,'r');
+					$buffer = fgets($handle);
+					$champs = rtrim(rtrim(str_replace($delimitr_source,',',$buffer)),', ');
+					$query .= "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser, '$delimitr', '$file', '$champs');";
+					}
+				}
+			elseif ($lonely_file == 'TRUE' AND $not_all_columns == 'FALSE') {
+				$file = substr(substr($val, 4), 0, -4);
+				$handle = fopen($path.$val,'r');
+				$buffer = fgets($handle);
+				$champs = rtrim(rtrim(str_replace($delimitr_source,',',$buffer)),', ');
+				$query = "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser, '$delimitr', '$file', '$champs');";
+				}
+			elseif ($lonely_file == 'TRUE' AND $not_all_columns == 'TRUE') {
+				$file = substr(substr($file, 4), 0, -4);
+				$query = "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser, '$delimitr', '$file');";
+				}
+			else $query = "SELECT * FROM hub_import('$id', '$jdd', '$path', $ecraser, '$delimitr');";
+			// echo $query;
 			pg_query ($db2,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 			}
 			break;

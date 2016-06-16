@@ -7,7 +7,7 @@
  Formulaire Pop-up         
 --------------------------------------------------------------------
 --------------------------------------------------------------------*/
-/*------------------------------------------------------------------------------ INITIALISATION*/ session_start();
+/*------------------------------------------------------------------------------ INITIALISATION*/
 include ("commun.inc.php");
 /*D1 : Droit accès à la page*/
 $base_file = substr(basename(__FILE__),0,-4);
@@ -63,6 +63,12 @@ $format = array(
 	"sinp" => "SINP"
 	);
 
+$delimitr = array(
+	"point_virgule" => "Point-virgule",
+	"tab" => "Tabulation",
+	"virgule" => "Virgule"
+	);
+	
 /*Liste de fichiers*/
 $files_import = scandir($path."/import");
 $files_export = scandir($path."/export");
@@ -199,54 +205,90 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 		echo ("<fieldset>");		
 			echo ("<LEGEND> Jeux de données </LEGEND>");
 			/*Analyse du dossier*/
-			$handle = fopen($path."/import/std_metadonnees.csv",'r');
-			while (($buffer = fgets($handle)) !== false) {$temp = explode(';',$buffer); $cd_jdd[] = $temp[1]; $typ_jdd[] = $temp[2];}
-			unset($cd_jdd[array_search('cd_jdd', $cd_jdd)]);unset($typ_jdd[array_search('typ_jdd', $typ_jdd)]);
-			echo ("<table class = \"basic_table\">");
-			echo ("<tr><td>Jeux de données à importer</td><td>Type de jeu données</td></tr>");
-			foreach ($cd_jdd as $key => $val)
-				echo ("<tr><td>$val</td><td>$typ_jdd[$key]</td></tr>");
-			echo ("</table>");
-			/*Envoie des jdd*/
-			if (array_search('data',$typ_jdd) != false AND array_search('taxa',$typ_jdd) != false) echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"all\">");
-			elseif (array_search('data',$typ_jdd) != false) echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"data\">");
-			elseif (array_search('taxa',$typ_jdd) != false) echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"taxa\">");
-			else echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"vide\">");
-			
-			/*Écraser?*/
-			echo ("<BR>");
-			metaform_bool ("Écraser l'existant? ",null,"ecraser",'f');
-			echo ("<BR>");
-			
-			/*Cas d'un fichier simple*/
-			$onchange = "onChange=\"javascript:apparition_champ2('lonely_file1','div_lonely_file');\"";
-			metaform_bool_appared ("Importer un seul fichier ",null,$onchange,null,"lonely_file","f");
-			echo ("<div id = \"div_lonely_file\" style=\"display:none\">");
-			echo ("<select id=\"file\" name=\"file\">");
-			echo ("<option value=\"\" checked></option>");
-				foreach ($files_import as $key => $val) 
-					echo ("<option value=\"$val\">".$val."</option>");
-				echo ("</select>");			
-			echo ("</div>");
-			
-			/*Les formats*/
-			echo ("<div id = \"div_format\" style=\"\">");
-				echo ("<label class=\"preField\">Format d'import</label>");
-				echo ("<select id=\"format\" name=\"format\">");
-				foreach ($format as $key => $val) 
-					echo ("<option value=\"$key\">".$val."</option>");
-				echo ("</select>");
-			echo ("</div>");
-			
-			/*Liste des fichiers dans le dossier d'import*/
-			echo ("<BR><BR>");
-			echo ("<table class = \"basic_table\">");
-			echo ("<tr><td>Liste des fichiers dans le dossier d'import</td></tr>");
-			foreach ($files_import as $key => $val)
-				echo ("<tr><td>$val</td></tr>");
-			echo ("</table>");
-		echo ("</fieldset>");
-		echo ("</form>");
+			$meta = $path."/import/std_metadonnees.csv";
+			if (file_exists($meta)) {
+				$handle = fopen($meta,'r');
+				/*Recherche du champ "cd_jdd"*/
+				$buffer = fgets($handle);
+				if (strpos(";",$buffer) != false) $delimitr_chosen = ";"; elseif (strpos(",",$buffer) != false) $delimitr_chosen = ","; else $delimitr_chosen = "\t";
+				$temp = explode($delimitr_chosen,$buffer);
+				$id_cd_jdd = array_search("cd_jdd",$temp);$id_typ_jdd = array_search("typ_jdd",$temp);
+				/*affichage des jeux de données*/
+				while (($buffer = fgets($handle)) !== false) {$temp = explode($delimitr_chosen,$buffer);  $cd_jdd[] = $temp[$id_cd_jdd]; $typ_jdd[] = $temp[$id_typ_jdd];}
+				echo ("<table class = \"basic_table\">");
+				echo ("<tr><td>Jeux de données à importer</td><td>Type de jeu données</td></tr>");
+				foreach ($cd_jdd as $key => $val)
+					echo ("<tr><td>$val</td><td>$typ_jdd[$key]</td></tr>");
+				echo ("</table>");
+				/*Envoie des jdd*/
+				if (is_int(array_search('data',$typ_jdd)) AND is_int(array_search('taxa',$typ_jdd))) echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"all\">");
+					elseif (is_int(array_search('data',$typ_jdd))) echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"data\">");
+					elseif (is_int(array_search('taxa',$typ_jdd))) echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"taxa\">");
+					else echo ("<input type=\"hidden\" name=\"jdd\" id=\"jdd\" value=\"vide\">");
+				
+				echo ("<TABLE><TR><TD>");
+				/*Écraser?*/
+				echo ("<BR>");
+				metaform_bool ("Écraser l'existant? ",null,"ecraser",'f');
+				echo ("<BR>");
+				
+				/*Cas d'un fichier simple*/
+				$onchange = "onChange=\"javascript:apparition_champ2('lonely_file1','div_lonely_file');\"";
+				metaform_bool_appared ("Importer un seul fichier ? ",null,$onchange,null,"lonely_file","f");
+				echo ("<div id = \"div_lonely_file\" style=\"display:none\">");
+				echo ("<select id=\"file\" name=\"file\">");
+				echo ("<option value=\"\" checked></option>");
+					foreach ($files_import as $key => $val) 
+						echo ("<option value=\"$val\">".$val."</option>");
+					echo ("</select>");			
+				echo ("</div>");
+		
+				/*Import de pas toutes els colonnes*/
+				echo ("<BR>");
+				metaform_bool ("100% colonnes présentes? ",null,"not_all_columns",'t');
+				echo ("<BR>");
+				echo ("<BR>");
+				
+				echo ("</TD><TD>");
+				
+				/*Delimiter*/
+				echo ("<div id = \"div_delimitr\" style=\"\">");
+					echo ("<label class=\"preField\">Delimiter CSV</label>");			
+					echo ("<select id=\"delimitr\" name=\"delimitr\">");
+					foreach ($delimitr as $key => $val) 
+						echo ("<option value=\"$key\">".$val."</option>");
+					echo ("</select>");			
+				echo ("</div>");
+				
+				/*Les formats*/
+				echo ("<div id = \"div_format\" style=\"\">");
+					echo ("<label class=\"preField\">Format d'import</label>");
+					echo ("<select id=\"format\" name=\"format\">");
+					foreach ($format as $key => $val) 
+						echo ("<option value=\"$key\">".$val."</option>");
+					echo ("</select>");
+				echo ("</div>");
+				
+				echo ("</TD></TR></TABLE>");
+				
+				/*Liste des fichiers dans le dossier d'import*/
+				echo ("<BR><BR>");
+				echo ("<table class = \"basic_table\">");
+				echo ("<tr><td>Liste des fichiers dans le dossier d'import</td></tr>");
+				foreach ($files_import as $key => $val)
+					echo ("<tr><td>$val</td></tr>");
+				echo ("</table>");
+			echo ("</fieldset>");
+			echo ("</form>");
+			}
+			else echo ("Pas de données à importer (absence de fichier std_metadonnees.csv). 
+			<BR> Attention à la nomenclature des fichiers. <BR> Ils doivent suivre la rêgle suivante : <b>std_</b><i>nom_de_la_table</i>.csv
+			<BR>
+			<BR> - Pour les métadonnées : std_metadonnees.csv / std_metadonnees_acteur.csv / std_metadonnees_territoire.csv
+			<BR> - Pour le DATA : std_releve.csv / std_releve_territoire.csv / std_releve_acteur.csv / std_observation.csv
+			<BR> - Pour le TAXA : std_entite.csv / std_entite_statut.csv / std_entite_biblio.csv / std_entite_referentiel.csv / std_entite_verna.csv / std_releve_acteur.csv
+			<BR>
+			<BR> A venir, la possibilité de piloter la mise à jour des données avec la fonction hub_connect directement sur le codex");
 			}
 			break;
 	//------------------------------------------------------------------------------ Import de taxon
