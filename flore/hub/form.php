@@ -210,7 +210,7 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 				$handle = fopen($meta,'r');
 				/*Recherche du champ "cd_jdd"*/
 				$buffer = fgets($handle);
-				if (strpos(";",$buffer) != false) $delimitr_chosen = ";"; elseif (strpos(",",$buffer) != false) $delimitr_chosen = ","; else $delimitr_chosen = "\t";
+				if (strpos($buffer,";") != false) $delimitr_chosen = ";"; elseif (strpos($buffer,",") != false) $delimitr_chosen = ","; else $delimitr_chosen = "\t";
 				$temp = explode($delimitr_chosen,$buffer);
 				$id_cd_jdd = array_search("cd_jdd",$temp);$id_typ_jdd = array_search("typ_jdd",$temp);
 				/*affichage des jeux de données*/
