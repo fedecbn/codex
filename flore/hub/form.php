@@ -210,11 +210,13 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 				$handle = fopen($meta,'r');
 				/*Recherche du champ "cd_jdd"*/
 				$buffer = fgets($handle);
+				$buffer = str_replace("\"","",$buffer);
 				if (strpos($buffer,";") != false) $delimitr_chosen = ";"; elseif (strpos($buffer,",") != false) $delimitr_chosen = ","; else $delimitr_chosen = "\t";
 				$temp = explode($delimitr_chosen,$buffer);
+
 				$id_cd_jdd = array_search("cd_jdd",$temp);$id_typ_jdd = array_search("typ_jdd",$temp);
 				/*affichage des jeux de données*/
-				while (($buffer = fgets($handle)) !== false) {$temp = explode($delimitr_chosen,$buffer);  $cd_jdd[] = $temp[$id_cd_jdd]; $typ_jdd[] = $temp[$id_typ_jdd];}
+				while (($buffer = fgets($handle)) !== false) {$temp = explode($delimitr_chosen,str_replace("\"","",$buffer));  $cd_jdd[] = $temp[$id_cd_jdd]; $typ_jdd[] = $temp[$id_typ_jdd];}
 				echo ("<table class = \"basic_table\">");
 				echo ("<tr><td>Jeux de données à importer</td><td>Type de jeu données</td></tr>");
 				foreach ($cd_jdd as $key => $val)
