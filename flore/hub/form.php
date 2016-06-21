@@ -98,8 +98,8 @@ $jdd_cbn_propre = $jdd_cbn_propre == null ? array() : $jdd_cbn_propre;
  $all = array("all" => "Tous les jeux de données");	$list_taxon = array("list_taxon" => "Liste des taxons");
  $jdd["verif"] = array_merge($all,$fsd,$jdd_cbn);
  $jdd["export"] = $jdd["verif"] = array_merge($all,$fsd,$list_taxon,$jdd_cbn);
- $jdd["import"] =  $jdd["clear"] = $jdd["del"] = $jdd["push"] =  $jdd["diff"] = array_merge($all,$fsd_simple,$jdd_cbn);
- $jdd["pull"] = array_merge($all,$fsd_simple,$jdd_cbn_propre);
+ $jdd["import"] =  $jdd["clear"] = $jdd["push"] =  $jdd["diff"] = array_merge($all,$fsd_simple,$jdd_cbn);
+ $jdd["pull"] = $jdd["del"] = array_merge($all,$fsd_simple,$jdd_cbn_propre);
  
  /*Liste de taxon*/
 $query = "SELECT cd_ref, nom_valide  FROM $id.zz_log_liste_taxon LIMIT 10";
