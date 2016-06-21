@@ -43,7 +43,7 @@ $bouton2 = array (
 $bouton3 = array (
 		
 		array ("id" => "clear","titre"=>"Vider -partie temp","text" => "Dernier nettoyage : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "del","titre"=>"Vider -partie propre","text" => "Dernier nettoyage : ","niveau" => 255,"cbn"=>true),
+		array ("id" => "del","titre"=>"Vider -partie propre","text" => "Dernier nettoyage : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "log","titre"=>"Vider les logs","text" => "Dernier nettoyage","niveau" => 128,"cbn"=>true)
 		);
 
