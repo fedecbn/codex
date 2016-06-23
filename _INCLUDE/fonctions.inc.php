@@ -1747,8 +1747,6 @@ function bt_edit($id,$class = 'edit') {return '<a class=\"'.$class.'\" id=\"'.$i
 
 function bt_validate($id,$action) {
 
-
-
 if ($action == 'valid') {
 	$class1 = 'valid';$bt1 = 'validate'; $title1 = 'Valider';
 	$class2 = 'invalid';$bt2 = 'invalidate'; $title2 = 'Invalider';
@@ -1768,5 +1766,12 @@ $boutons = 	'<a class=\"'.$class1.'\" id=\"valida_'.$id.'\" value=\"'.$id.'\"><i
 
 return $boutons;
 }
+
+function hub_log($schema,$fction) 
+	{
+	$db2=sql_connect_hub(SQL_base_hub);
+	$cmd = "SELECT * FROM hub_log_simple('$schema','$fction','".str_replace('"','',str_replace('\'','',pg_last_error($db2)))."');";
+	 pg_query ($db2,$cmd);
+	}
 
 ?>
