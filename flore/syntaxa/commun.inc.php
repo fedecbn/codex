@@ -27,11 +27,11 @@ $query_module = "
 SELECT t.* 
 	FROM syntaxa.st_syntaxon t 
 	WHERE t.\"codeEnregistrementSyntax\"=";
-
+	
 $query_module_biblio = "
-SELECT t.* 
-	FROM syntaxa.st_biblio t 
-	WHERE t.\"codeEnregistrement\"=";	
+SELECT t.\"codePublication\", t.\"libPublication\",t.\"urlPublication\"
+FROM syntaxa.st_biblio t
+WHERE t.\"codeEnregistrement\"=";	
 	
 $query_module_correspondance_pvf1 = "
 SELECT t.*
@@ -83,10 +83,16 @@ inner join
 on t.\"codeEtageBioclim\"=li.\"codeEtageBioclim\" 
 WHERE t.\"codeEnregistrement\"=";	
 
-$query_module_biblio = "
-SELECT t.\"codePublication\", t.\"libPublication\",t.\"urlPublication\"
-FROM syntaxa.st_biblio t
-WHERE t.\"codeEnregistrement\"=";	
+
+$query_module_cortege_floristique = "
+SELECT t.\"idRattachementReferentiel\", tax.\"nom_complet_taxon_referentiel\" 
+FROM syntaxa.st_cortege_floristique t
+inner join 
+(select * from  syntaxa.referentiel_taxo) tax
+on t.\"idRattachementReferentiel\"=tax.\"id_rattachement_referentiel\" 
+WHERE t.\"codeEnregistrementSyntaxon\"=";
+
+
 
 
 //requete qui va chercher les commentaires sur les champs dans les tables système de postgresql (la description)

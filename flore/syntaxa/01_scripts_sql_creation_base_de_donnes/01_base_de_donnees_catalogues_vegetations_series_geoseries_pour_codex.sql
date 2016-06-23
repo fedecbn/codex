@@ -768,7 +768,7 @@ COMMENT ON COLUMN syntaxa.st_ref_geomorpho.id_tri is 'Colonne de tri pour les me
 -- object: syntaxa.st_cortege_floristique | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_cortege_floristique cascade;
 CREATE TABLE syntaxa.st_cortege_floristique(
-	"idCortegeFloristique" text,
+	"idCortegeFloristique" serial not null,
 	"codeEnregistrementSyntaxon" text,
 	"idRattachementReferentiel" text,
 	"typeTaxon" text
