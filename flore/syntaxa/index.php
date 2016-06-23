@@ -648,7 +648,8 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 			/*Cortège floristique*/
 			echo ("<br>CORTEGE FLORISTIQUE <hr>");
 			
-			echo "<br>";
+			/*la liste est trop longue a charger*/
+/*			echo "<br>";
 			$num_rows_cortege_flo = pg_num_rows($result_cortege_flo);
 			if ($num_rows_cortege_flo > 0) {
 			metaform_sel_multi ("Cortège floristique","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo, this.form.cortege_flo_select);'",$ref[$champ_ref['idRattachementReferentiel']],"cortege_flo","",pg_fetch_result(pg_query ($db,$query_description."'nom_complet_taxon_referentiel'".";"),0,"description" ));
@@ -658,7 +659,7 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 					metaform_sel_multi ("Cortège floristique sélectionné","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo_select, this.form.cortege_flo);'","","cortege_flo_select","");
 			}
 			echo "<br>";
-			
+*/			
 			echo ("</fieldset>");
 			echo ("<hr>");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/

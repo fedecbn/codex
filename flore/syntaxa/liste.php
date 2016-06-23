@@ -25,7 +25,7 @@ if ($droit_page) {
 //------------------------------------------------------------------------------ VAR.
 
 //------------------------------------------------------------------------------ PARMS.
-
+define ("DEBUG",false);
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
 $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
@@ -49,10 +49,10 @@ $sOrder = $filters['sOrder'];
 $sWhere = $filters['sWhere']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query= $query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
+$query= $query_liste." where true ".$sWhere." ".$sOrder." ".$sLimit;
 
-//echo "<br>".$query;
-
+if (DEBUG) echo "<br>".$sWhere;
+if (DEBUG) echo "<br>".$query;
 
 $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
 if (pg_num_rows ($result)) 
