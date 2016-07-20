@@ -292,6 +292,8 @@ select * from syntaxa.temp_st_syntaxon;
 --  CREATION FONCTION
 
 
+
+
 CREATE OR REPLACE FUNCTION hub_add(libSchema varchar, jdd varchar, in_array text[]) RETURNS int AS
 $BODY$ 
 DECLARE libTable varchar;DECLARE x text[]; DECLARE listeChamp1 varchar; DECLARE listeChamp2 varchar; DECLARE i varchar; 
@@ -301,9 +303,9 @@ CASE WHEN jdd = 'syntaxa' THEN
 	FOREACH libTable in  array in_array
 	--EXECUTE 'SELECT DISTINCT tbl_name FROM syntaxa.fsd_'||jdd||' where tbl_name in ( ''st_serie_petitegeoserie'' );'
 		LOOP 
-		EXECUTE 'TRUNCATE "'||libSchema||'".'||libTable||' CASCADE';
-		EXECUTE 'SELECT string_agg(''"''||column_name||''"::''||data_type,'','')  FROM information_schema.columns where table_name = '''||libTable||''' AND table_schema = '''||libSchema||''' ' INTO listeChamp1;
-		EXECUTE 'SELECT string_agg(''"''||column_name||''"'','','')  FROM information_schema.columns where table_name = '''||libTable||''' AND table_schema = '''||libSchema||''' ' INTO listeChamp2;
+		--EXECUTE 'TRUNCATE "'||libSchema||'".'||libTable||' CASCADE';
+		EXECUTE 'SELECT string_agg(''"''||column_name||''"::''||data_type,'','')  FROM information_schema.columns where table_name = '''||libTable||''' AND table_schema = '''||libSchema||''' and column_name <>''id_tri'' and column_name <>''uid'' ' INTO listeChamp1;
+		EXECUTE 'SELECT string_agg(''"''||column_name||''"'','','')  FROM information_schema.columns where table_name = '''||libTable||''' AND table_schema = '''||libSchema||''' and column_name <>''id_tri'' and column_name <>''uid'' ' INTO listeChamp2;
 		EXECUTE 'INSERT INTO "'||libSchema||'"."'||libTable||'" ('||listeChamp2||') SELECT '||listeChamp1||' FROM "'||libSchema||'"."temp_'||libTable||'" z ';
 		END LOOP;
 END CASE;

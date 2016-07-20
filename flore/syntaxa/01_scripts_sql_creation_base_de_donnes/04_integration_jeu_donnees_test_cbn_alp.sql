@@ -3,7 +3,7 @@
 
 --------------------------------------------------------------------------CREATION DES TABLES-----------------------------------------------------------------
 -- object: syntaxa.temp_st_catalogue_description | type: TABLE --
-/* 
+
 
 DROP TABLE IF EXISTS syntaxa.temp_st_catalogue_description cascade;
 CREATE TABLE syntaxa.temp_st_catalogue_description("identifiantCatalogue" character varying,"libelleCatalogue" character varying,
@@ -103,7 +103,7 @@ CREATE TABLE syntaxa.temp_st_annuaire_personnes("idPersonne" character varying,p
 DROP TABLE IF EXISTS syntaxa.temp_st_collaborateur cascade;
 CREATE TABLE syntaxa.temp_st_collaborateur("idCollaborateur" character varying,"identifiantCatalogue" character varying,"idOrganisme" character varying,"acronymeOrganisme" character varying,"idPersonne" character varying, prenom character varying, nom character varying);
 
-*/
+
 
 
 
@@ -151,7 +151,7 @@ order by table_name asc;*/
 -------------------------------------------------------------------------------------------
 --CREATION D'UNE TABLE QUI DETAILLE LE FSD ET QUI VA REMPLIR LES TABLES TEMPORAIRES
 ----------------------------------------------------------------------------------------------
-/*
+
 ------CREATION TABLE FSD SYNTAXA
 
 drop table if exists syntaxa.fsd_syntaxa;
@@ -251,7 +251,7 @@ select * from creation_fsd ('syntaxa');
 select * from syntaxa.fsd_syntaxa;
 
 
-*/
+
 
 
 ------------------------------------------------------------------------------------------
@@ -275,7 +275,7 @@ END CASE;
 RETURN 1; END; $BODY$  LANGUAGE plpgsql;
 
 
-select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_alp/');
+select * from hub_import('syntaxa','syntaxa', 'D:\02_jeu_donnees_test_cbn_alp/');
 select * from syntaxa.temp_st_syntaxon;
 
 ------------------------
@@ -305,7 +305,7 @@ select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_bpa/');
 --------------------------------------------------------------------------
 --remplissage des nomSyntaxonRetenu
 -------------------------------------------------------------------------
-/*update syntaxa.temp_st_syntaxon set "nomSyntaxonRetenu"= foo."nomSyntaxonRetenu" from 
+update syntaxa.temp_st_syntaxon set "nomSyntaxonRetenu"= foo."nomSyntaxonRetenu" from 
 	(        select s1.*, s2."nomCompletSyntaxon" as "nomSyntaxonRetenu"
 	from (select "idSyntaxon", "nomCompletSyntaxon", "idSyntaxonRetenu" from syntaxa.temp_st_syntaxon) as s1
 	left outer join
@@ -313,7 +313,7 @@ select * from hub_import('syntaxa','syntaxa', 'D:\jeu_donnees_test_cbn_bpa/');
 	on 
 	s1."idSyntaxonRetenu"=s2."idSyntaxon") as foo
 	
- where temp_st_syntaxon."idSyntaxon"=foo."idSyntaxon";*/
+ where temp_st_syntaxon."idSyntaxon"=foo."idSyntaxon";
 
 --------------------------------------------------------------------------
 ---ALIMENTATION DES TABLES PERMANENTES A PARTIR DES TABLES TEMPORAIRES
