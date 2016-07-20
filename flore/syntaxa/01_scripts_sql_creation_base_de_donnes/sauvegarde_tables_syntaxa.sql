@@ -12,17 +12,22 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-
-SET search_path = syntaxa, pg_catalog;
-
 SET default_tablespace = '';
-
 SET default_with_oids = false;
 
 --
 -- TOC entry 367 (class 1259 OID 20929)
 -- Name: fsd_syntaxa; Type: TABLE; Schema: syntaxa; Owner: postgres; Tablespace: 
 --
+
+ create schema syntaxa authorization to user_codex;
+GRANT ALL ON SCHEMA syntaxa TO user_codex;
+COMMENT ON SCHEMA syntaxa
+  IS 'Applications';
+  
+  
+SET search_path = syntaxa, pg_catalog;
+   
 
 CREATE TABLE fsd_syntaxa (
     id integer NOT NULL,

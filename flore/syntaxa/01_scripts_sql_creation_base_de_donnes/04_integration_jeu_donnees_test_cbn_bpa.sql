@@ -3,6 +3,7 @@
 
 --------------------------------------------------------------------------CREATION DES TABLES-----------------------------------------------------------------
 -- object: syntaxa.temp_st_catalogue_description | type: TABLE --
+/*
 DROP TABLE IF EXISTS syntaxa.temp_st_catalogue_description cascade;
 CREATE TABLE syntaxa.temp_st_catalogue_description("identifiantCatalogue" character varying,"libelleCatalogue" character varying,
 	"versionCatalogue" character varying,"typeCatalogue" character varying,"dateCreationCatalogue" character varying,"dateMiseAJourCatalogue" character varying,"idCollaborateurCatalogue" character varying,"idTerritoireCatalogue" character varying,"codeTypeTerritoireCatalogue" character varying,
@@ -100,7 +101,7 @@ CREATE TABLE syntaxa.temp_st_annuaire_personnes("idPersonne" character varying,p
 -- object: syntaxa.temp_st_collaborateur | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.temp_st_collaborateur cascade;
 CREATE TABLE syntaxa.temp_st_collaborateur("idCollaborateur" character varying,"identifiantCatalogue" character varying,"idOrganisme" character varying,"acronymeOrganisme" character varying,"idPersonne" character varying, prenom character varying, nom character varying);
-
+*/
 
 ------------------------------------------------------------------------------REMPLISSAGE DES TABLES-----------------------------------------------------------------
 
@@ -265,7 +266,7 @@ END CASE;
 RETURN 1; END; $BODY$  LANGUAGE plpgsql;
 
 
-select * from hub_import('syntaxa','syntaxa', 'F:\jeu_donnees_test/');
+select * from hub_import('syntaxa','syntaxa', 'F:\02_jeu_donnees_test_cbn_bpa/');
 
 select * from syntaxa.temp_st_syntaxon;
 
@@ -275,7 +276,7 @@ select * from syntaxa.temp_st_syntaxon;
 --------------------------------------------------------------------------
 --remplissage des nomSyntaxonRetenu
 -------------------------------------------------------------------------
-/*update syntaxa.temp_st_syntaxon set "nomSyntaxonRetenu"= foo."nomSyntaxonRetenu" from 
+update syntaxa.temp_st_syntaxon set "nomSyntaxonRetenu"= foo."nomSyntaxonRetenu" from 
 	(        select s1.*, s2."nomCompletSyntaxon" as "nomSyntaxonRetenu"
 	from (select "idSyntaxon", "nomCompletSyntaxon", "idSyntaxonRetenu" from syntaxa.temp_st_syntaxon) as s1
 	left outer join
@@ -283,7 +284,7 @@ select * from syntaxa.temp_st_syntaxon;
 	on 
 	s1."idSyntaxonRetenu"=s2."idSyntaxon") as foo
 	
- where temp_st_syntaxon."idSyntaxon"=foo."idSyntaxon";*/
+ where temp_st_syntaxon."idSyntaxon"=foo."idSyntaxon";
 
 --------------------------------------------------------------------------
 ---ALIMENTATION DES TABLES PERMANENTES A PARTIR DES TABLES TEMPORAIRES
