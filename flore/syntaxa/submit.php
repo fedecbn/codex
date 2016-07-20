@@ -42,6 +42,8 @@ if (!empty ($id))
 		echo "<br> departement select";var_dump($_POST["departement_select"]);
 		echo "<br> etage veg";var_dump($_POST["etage_veg"]);
 		echo "<br> etage veg select";var_dump($_POST["etage_veg_select"]);
+				echo "<br> etage bioclim";var_dump($_POST["etage_bioclim"]);
+		echo "<br> etage bioclim select";var_dump($_POST["etage_bioclim_select"]);
 		echo "<br> eunis";var_dump($_POST["eunis"]);
 		echo "<br> eunis select";var_dump($_POST["eunis_select"]);
 		
@@ -563,7 +565,7 @@ if (!empty($add))
 		{
    if (DEBUG) echo "valeur=".$val."<br>";
    $val="'".$val."'";
-   $query="SELECT setval('syntaxa.\"st_etage_bioclim_idCorresEtageBioclim_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageBioclim\")+1 FROM syntaxa.st_etage_veg), 1), false);";
+   $query="SELECT setval('syntaxa.\"st_etage_bioclim_idCorresEtageBioclim_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageBioclim\")+1 FROM syntaxa.st_etage_bioclim), 1), false);";
    $query.="INSERT INTO syntaxa.st_etage_bioclim (\"codeEnregistrement\",\"codeEtageBioclim\") VALUES ($id,$val); ";
    add_suivi2($etape,$id_user,$id,'st_etage_bioclim','codeEtageBioclim','',$val,$id_page,'manuel','ajout');
 		}
