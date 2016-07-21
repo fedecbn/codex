@@ -101,10 +101,12 @@ foreach ($dir  as $key => $val)
 // $ref_admin_cpt = implode(",", $ref_cpt);
 // $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
 $query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
+
 foreach ($dir  as $key => $val)
 	{
 	$query_admin .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$val', false, true, true, true, true, true, true, true);";
 	}
+	
 // $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
 $pos = 0; //initialisation d'un variable de position de la rubrique dans la liste
