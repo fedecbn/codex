@@ -76,9 +76,9 @@ echo ("</div>");
 
 /*-------------------------------------------------------------------------------------*/
 /*Variables----------------------------------------------------------------------------*/
-$action=isset ($_POST['action']) ? $_POST['action'] : "";
-$dir = scandir("../");
-/*suppression des valeurs non concernées*/
+$action=isset ($_POST['action']) ? $_POST['action'] : ""; //variable permettant de définir le case en cours
+$dir = scandir("../"); //récupération du nom des rubriques
+/*suppression des rubriques non concernées*/
 $less = array ('bugs', 'home', 'module_admin','commun','index.php','.','..');
 foreach ($less as $element)
 	unset($dir[array_search($element, $dir)]);
@@ -89,21 +89,21 @@ foreach ($dir  as $key => $val)
 	include ("../$val/desc.inc.php");
 	$rub[$val] = $name_page;
 	/*pour la création du compte admin*/
-	$nvx[$val] = "niveau_".$val;
-	$nvx_cpt[$val] = "255";
-	$ref[$val] = "ref_".$val;
-	$ref_cpt[$val] = "TRUE";
+	// $nvx[$val] = "niveau_".$val;
+	// $nvx_cpt[$val] = "255";
+	// $ref[$val] = "ref_".$val;
+	// $ref_cpt[$val] = "TRUE";
 	}
 /*pour la création du compte admin suite*/
-$nvx_admin = implode(",", $nvx);
-$nvx_admin_cpt = implode(",", $nvx_cpt);
-$ref_admin = implode(",", $ref);
-$ref_admin_cpt = implode(",", $ref_cpt);
+// $nvx_admin = implode(",", $nvx);
+// $nvx_admin_cpt = implode(",", $nvx_cpt);
+// $ref_admin = implode(",", $ref);
+// $ref_admin_cpt = implode(",", $ref_cpt);
 // $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
 $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 // $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
-$pos = 0;
+$pos = 0; //initialisation d'un variable de position de la rubrique dans la liste
 
 switch ($action)
 {
@@ -116,28 +116,29 @@ case "install-param":	{
 	/*Renseignement des valeurs du formulaire*/
 	if (file_exists("../../_INCLUDE/config_sql.inc.php"))
 		{
-		require_once ("../../_INCLUDE/config_sql.inc.php");		
+		require_once ("../../_INCLUDE/config_sql.inc.php"); //récupération des variables de connexion à la base dans le fichier config_sql.inc.php		
 		$host = SQL_server;$port = SQL_port;$user = SQL_user;$mdp = SQL_pass;$dbname = SQL_base;
 		$db = connexion ($host,$port,$user,$mdp,$dbname);	
 
 		// var_dump($_SESSION["droit_user"]);
 		/*D1 : Droit accès à la page*/
-		$base_file = substr(basename(__FILE__),0,-4);
+		$base_file = substr(basename(__FILE__),0,-4); //récupère le nom du fichier install.php sans le suffixe .php
 		$id_page = "home";
 		$droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
-		if ($droit_page) {
+		if ($droit_page) {                           //seul l'administrateur à les droits d'installation (bdd table applications.droit)
 
 		
 			foreach ($rub as $key => $val)
 				{
-				$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";
+				$query = "SELECT 1 FROM information_schema.schemata WHERE schema_name = '".$key."';";  //vérification de l'existence du schema associé à la rubrique dans la base de données codex
 				$schema = pg_query($db,$query);
 				$row = pg_fetch_row($schema);
 				
-				if ($row[0] == "1") 		{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
-				elseif (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql") == TRUE) 	
-											{$rub_ok[$key] = 'f';$desc[$key] = "";}
-				else 						{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
+				if ($row[0] == "1") 
+					{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
+				elseif (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql")) //vérification de l'existence du fichier qui défini l'architecture du schéma associé à la rubrique	
+					{$rub_ok[$key] = 'f';$desc[$key] = "";}
+				else 	{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
 				}
 		//------------------------------------------------------------------------------ SI PAS ACCES 
 			} else require ("../commun/access_denied.php"); 
@@ -146,12 +147,17 @@ case "install-param":	{
 	else
 		{
 		require_once ("../../_INCLUDE/config_sql.inc.example.php");	
-		foreach ($rub  as $key => $val)	{$rub_ok[$key] = 'f'; $desc[$key] = "";}
+		foreach ($rub  as $key => $val)	
+			{
+			if (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql"))
+				{$rub_ok[$key] = 'f'; $desc[$key] = "";}
+			else {$rub_ok[$key] = 'f'; $desc[$key] = " bloque";}
+			}
 		}
 		
 	echo ("<div id=\"fiche\" >");
 	echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
-	echo ("<center><input type=\"hidden\" name=\"action\" value=\"install-set\" />");
+	echo ("<center><input type=\"hidden\" name=\"action\" value=\"install-set\" />"); //au lancement du formulaire (bouton "lancer l'installation") on se redirige dans le case install-set
 	if (!file_exists("../../_INCLUDE/config_sql.inc.php"))
 	{
 	//------------------------------------------------------------------------------ EDIT LR GRP1
@@ -182,7 +188,7 @@ case "install-param":	{
 					$rub_ok["refnat"] = 't';
 					foreach ($rub as $key => $val)
 						{
-						if (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql") == FALSE) $desc[$key] = " bloque";
+						// if (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql") == FALSE) $desc[$key] = " bloque";
 						metaform_bool ($val,$desc[$key],$key,$rub_ok[$key]);
 						// metaform_bool ($val,$desc[$key],$key."_data",$rub_ok[$key]);
 						echo ("<BR>");
