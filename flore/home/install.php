@@ -136,7 +136,9 @@ case "install-param":	{
 				
 				if ($row[0] == "1") 
 					{$rub_ok[$key] = 't';$desc[$key] = " bloque";}
+
 				elseif (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql")) //vérification de l'existence du fichier qui défini l'architecture du schéma associé à la rubrique	
+
 					{$rub_ok[$key] = 'f';$desc[$key] = "";}
 				else 	{$rub_ok[$key] = 'f';$desc[$key] = " bloque";}
 				}
@@ -149,7 +151,9 @@ case "install-param":	{
 		require_once ("../../_INCLUDE/config_sql.inc.example.php");	
 		foreach ($rub  as $key => $val)	
 			{
+
 			if (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql"))
+
 				{$rub_ok[$key] = 'f'; $desc[$key] = "";}
 			else {$rub_ok[$key] = 'f'; $desc[$key] = " bloque";}
 			}
