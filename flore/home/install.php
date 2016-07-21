@@ -101,11 +101,6 @@ foreach ($dir  as $key => $val)
 // $ref_admin_cpt = implode(",", $ref_cpt);
 // $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
 $query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
-
-foreach ($dir  as $key => $val)
-	{
-	$query_admin .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$val', false, true, true, true, true, true, true, true);";
-	}
 	
 // $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
@@ -273,6 +268,9 @@ case "install-set":	{
 			$query .= create_query("../../_SQL/bdd_codex_data_referentiels.sql",$user_codex);
 			$result = pg_query($conn_codex,$query);
 			}
+		/*Ajout des droits pour la rubrique home*/
+		$query = "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', 'home', false, true, true, true, true, true, true, true);";
+		$result = pg_query($conn_codex,$query);
 		
 		/*les autres rubriques*/
 		foreach ($rub as $key => $val)
@@ -285,7 +283,8 @@ case "install-set":	{
 					$data = "../../_SQL/bdd_codex_data_$key.sql";
 					$query = create_query($archi,$user_codex);
 					$query .= create_query($data,$user_codex);
-					$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";
+					$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";				
+					$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
 					$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 					$result = pg_query($conn_codex,$query);
 					echo ("L'architecture de la $val a été implémentée<BR>"); 
