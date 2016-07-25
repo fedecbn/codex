@@ -210,7 +210,7 @@ case "install-param":	{
 /*Réalisation de l'installation--------------------------------------------------------*/
 case "install-set":	{
 	echo ("<div id=\"fiche\" >");
-	foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
+	//foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />'; //en mode DEBUG affiche la valeur des $_POST
 	if (isset($_POST["host"]) AND isset($_POST["port"]) AND isset($_POST["user"]) AND isset($_POST["mdp"]) AND isset($_POST["dbname"]) AND isset($_POST["user_codex"]) AND isset($_POST["mdp_codex"]))
 		{$host = $_POST["host"];$port = $_POST["port"];$user = $_POST["user"];$mdp = $_POST["mdp"];$dbname = $_POST["dbname"];$user_codex = $_POST["user_codex"];$mdp_codex = $_POST["mdp_codex"];}
 	elseif (file_exists("../../_INCLUDE/config_sql.inc.php"))
@@ -269,8 +269,15 @@ case "install-set":	{
 			$result = pg_query($conn_codex,$query);
 			}
 		/*Ajout des droits pour la rubrique home*/
+		$query = "SELECT 1 FROM applications.utilisateur_role WHERE id_user = 'ADMI1' and rubrique='home';";
+		$result = pg_query($conn_codex,$query);
+		$row = pg_fetch_row($result);
+		
+		if ($row[0] != "1")
+			{  
 		$query = "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', 'home', false, true, true, true, true, true, true, true);";
 		$result = pg_query($conn_codex,$query);
+			}
 		
 		/*les autres rubriques*/
 		foreach ($rub as $key => $val)
@@ -293,7 +300,7 @@ case "install-set":	{
 					echo ("---<BR>");
 				}
 				else
-					echo ("L'architecture de la $val existait déjà<BR>"); 
+					echo ("La rubrique $val ne peut être installée, le fichier d'installation bdd_codex_archi_$key.sql est manquant <BR>"); 
 			$pos ++;
 			}
 
