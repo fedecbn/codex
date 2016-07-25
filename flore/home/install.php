@@ -286,16 +286,74 @@ case "install-set":	{
 				{
 				if ($_POST[$key] == 'TRUE')
 					{
-					$archi = "../../_SQL/bdd_codex_archi_$key.sql";
-					$data = "../../_SQL/bdd_codex_data_$key.sql";
-					$query = create_query($archi,$user_codex);
-					$query .= create_query($data,$user_codex);
-					$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";				
-					$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
-					$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
-					$result = pg_query($conn_codex,$query);
-					echo ("L'architecture de la $val a été implémentée<BR>"); 
+					if ($key == 'refnat')
+						{
+						//decompresser les fichiers zip dans le dossier sql qui contient soit les .csv soit les .sql par défaut la fonction overwrite est activée
+						//attention il faut avoir les droits d'écriture dans le dossier du codex
+						foreach (glob("../$key/sql/*.zip") as $filename) {
+							$zip = new ZipArchive;
+							//var_dump($zip);
+							//if ($zip->open("../$key/sql/taxons.zip") === TRUE) {
+								if ($zip->open("$filename") === TRUE) {
+							    $zip->extractTo("../$key/sql/");
+							    $zip->close();
+							    //echo 'ok <br>';
+								} else {
+							   // echo 'échec <br>';
+								}
+							    //echo "$filename <br>";
+							}
+						/*creation du schema de la rubrique $key et du squelette de ses tables*/	
+						$archi = "../$key/sql/archi.sql";
+						$query = create_query($archi,$user_codex);
+						
+						/*import des données en base à partir des fichiers sql (sauf fichier archi.sql)*/
+						foreach (glob("../$key/sql/*.sql") as $filename) {
+							if (strpos($filename, 'archi') === false) 
+								{
+								//$query .= create_query($data,$user_codex);  //cette requête faisait planter l'installation car remplacer sur un fichier trop lourd est gourmand en mémoire
+								$query .= file_get_contents($filename); //pour tous les fichiers .sql sauf archi.sql
+								}														 
+							}
+	
+						/*import des données en base à partir des fichiers .csv avec COPY FROM*/
+						//on peut tester si on est sous windows ou linux pour respecter slash et antislash mais a priori avec realpath ça fonctionne
+						foreach (glob("../$key/sql/*.csv") as $filename) {   //renvoit le chemin relatif des fichiers csv du dossier
+							    echo realpath($filename). "<br>";      ///renvoi le chemin absolu des fichiers csv du dossier et respecte les slash pour le copy from
+							    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+							    echo 'Le serveur tourne sous Windows ! il faut utiliser des antislash pour le chemin <br>';
+							    //exemple: $data_csv= dirname(dirname(__FILE__))."\\$key\\sql\\taxons.csv";
+							    $data_csv=realpath($filename);
+							    $query .= "COPY refnat.taxons from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
+							    //echo "le fichier csv du copy from est=". $data_csv;
+							    } else {
+							    //echo 'Le serveur ne tourne pas sous Windows !il faut utiliser des slash pour le chemin <br>';
+							    //exemple: $data_csv= dirname(dirname(__FILE__))."/$key/sql/taxons.csv";
+							    $data_csv= dirname(dirname(__FILE__)).$filename;
+							    $query .= "COPY refnat.taxons from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
+							    //echo $data_csv."<br>";
+							    }
+							}
+							
+						/*finalisation de la query*/
+						$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";				
+						$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
+						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
+						$result = pg_query($conn_codex,$query);
+						echo ("L'architecture de la $val a été implémentée<BR>"); 
+					} else {
+						$archi = "../../_SQL/bdd_codex_archi_$key.sql";
+						$data = "../../_SQL/bdd_codex_data_$key.sql";
+						$query = create_query($archi,$user_codex);
+						$query .= create_query($data,$user_codex);
+						$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";				
+						$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
+						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
+						$result = pg_query($conn_codex,$query);
+						echo ("L'architecture de la $val a été implémentée<BR>"); 
+						}
 					}
+				
 				else
 					echo ("---<BR>");
 				}
