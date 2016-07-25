@@ -100,7 +100,8 @@ foreach ($dir  as $key => $val)
 // $ref_admin = implode(",", $ref);
 // $ref_admin_cpt = implode(",", $ref_cpt);
 // $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
-$query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
+$query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
+	
 // $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
 $pos = 0; //initialisation d'un variable de position de la rubrique dans la liste
@@ -209,6 +210,7 @@ case "install-param":	{
 /*Réalisation de l'installation--------------------------------------------------------*/
 case "install-set":	{
 	echo ("<div id=\"fiche\" >");
+	foreach($_POST as $key => $val) echo '$_POST["'.$key.'"]='.$val.'<br />';
 	if (isset($_POST["host"]) AND isset($_POST["port"]) AND isset($_POST["user"]) AND isset($_POST["mdp"]) AND isset($_POST["dbname"]) AND isset($_POST["user_codex"]) AND isset($_POST["mdp_codex"]))
 		{$host = $_POST["host"];$port = $_POST["port"];$user = $_POST["user"];$mdp = $_POST["mdp"];$dbname = $_POST["dbname"];$user_codex = $_POST["user_codex"];$mdp_codex = $_POST["mdp_codex"];}
 	elseif (file_exists("../../_INCLUDE/config_sql.inc.php"))
@@ -266,6 +268,9 @@ case "install-set":	{
 			$query .= create_query("../../_SQL/bdd_codex_data_referentiels.sql",$user_codex);
 			$result = pg_query($conn_codex,$query);
 			}
+		/*Ajout des droits pour la rubrique home*/
+		$query = "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', 'home', false, true, true, true, true, true, true, true);";
+		$result = pg_query($conn_codex,$query);
 		
 		/*les autres rubriques*/
 		foreach ($rub as $key => $val)
@@ -278,7 +283,8 @@ case "install-set":	{
 					$data = "../../_SQL/bdd_codex_data_$key.sql";
 					$query = create_query($archi,$user_codex);
 					$query .= create_query($data,$user_codex);
-					$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";
+					$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";				
+					$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
 					$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 					$result = pg_query($conn_codex,$query);
 					echo ("L'architecture de la $val a été implémentée<BR>"); 
@@ -303,7 +309,7 @@ case "install-set":	{
 			$sql_file = str_replace("codex_user",$_POST["mdp_codex"],$sql_file);
 			$sql_file = str_replace("postgres",$_POST["user"],$sql_file);
 			$sql_file = str_replace("test",$_POST["mdp"],$sql_file);
-			$sql_file = str_replace("codex",$_POST["dbname"],$sql_file);
+			$sql_file = str_replace("\"codex\"","\"".$_POST["dbname"]."\"",$sql_file);
 			
 			/*Ajout à erme de la mise à jour des séquences lors de l'import de données avec UID*/
 			/*SELECT setval('refnat.taxons_uid_seq', COALESCE((SELECT MAX(uid)+1 FROM refnat.taxons), 1), false);*/

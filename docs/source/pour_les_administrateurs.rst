@@ -108,3 +108,12 @@ Pour s'assurer que les mises à jour ont bien été réalisée :
   * Comparez avec le plusgrand numéro présent dans le dossier "_SQL/update_bdd"
   
 Il vous faudra alors lancer tous les fichiers SQL dont le nom se situe entre ces deux numéros.
+
+
+************************************************************************************************************
+Mettre à jour la documentation
+************************************************************************************************************
+
+Utilisation de Sphinx
+
+Installation de Sphinx
