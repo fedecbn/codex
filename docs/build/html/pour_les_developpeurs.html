@@ -85,7 +85,11 @@
 <li class="toctree-l1"><a class="reference internal" href="pour_les_utilisateurs.html">Pour les utilisateurs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pour_les_administrateurs.html">Pour les administrateurs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Pour les développeurs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#comment-installer-le-codex">Comment installer le codex?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#architecture-du-codex">Architecture du Codex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quelques-fichiers-particuliers">Quelques fichiers particuliers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fichiers-javascript">Fichiers Javascript</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-creer-une-nouvelle-rubrique">Comment créer une nouvelle rubrique?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-parametrer-les-tableaux-de-synthese">Comment paramétrer les tableaux de synthèse?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-gerer-les-fiches">Comment gérer les fiches?</a></li>
@@ -141,8 +145,60 @@
   <div class="section" id="pour-les-developpeurs">
 <h1>Pour les développeurs<a class="headerlink" href="#pour-les-developpeurs" title="Lien permanent vers ce titre">¶</a></h1>
 <p>Bienvenue sur le Wiki du Codex pour les développeurs</p>
-<div class="section" id="comment-installer-le-codex">
-<h2>Comment installer le codex?<a class="headerlink" href="#comment-installer-le-codex" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="architecture-du-codex">
+<h2>Architecture du Codex<a class="headerlink" href="#architecture-du-codex" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Voici la description du contenu de chaque dossier :
+- .git
+- _DATA: contient les données à importer ou les données exportées (dossier EXPORTS). Aujourd&#8217;hui, les autres dossiers (alp, als, bal...) sont/peuvent être utilisés par la rubrique &#8220;Interaction avec le hub&#8221;. Leur création n&#8217;est pas automatique (fonction à ajouter lors de la création d&#8217;une nouvelle ligne dans cette rubrique).
+- _GRAPH : contient toutes les images utilisées par le codex.
+- _INCLUDE : contient toutes les librairies/éléments nécessaires au fonctionnement du codex</p>
+<blockquote>
+<div><ul>
+<li><p class="first">css : tous les CSS (NB : toute la configuration du css est majoritairement géré par eval.css)</p>
+</li>
+<li><p class="first">font : tous les éléments de polices</p>
+</li>
+<li><dl class="first docutils">
+<dt>js <span class="classifier-delimiter">:</span> <span class="classifier">tous les javascripts externes (jquery,datatable,wysiwyg...) et les javascripts maison.</span></dt>
+<dd><ul class="first last simple">
+<li>fiche.js : xxx</li>
+<li>functions.js : xxx</li>
+<li>gestion.js : xxx</li>
+<li>interact.js : xxx</li>
+<li>liste.js : xxx</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">admin.lang.php : Gestion de la traduction anglais / français ($lang)</p>
+</li>
+<li><p class="first">common.lang.php : Définition des variables de label + italien ($lang)</p>
+</li>
+<li><p class="first">config_sql.inc.php : Paramètre de connexion aux bases de données + data path</p>
+</li>
+<li><p class="first">connector.php : Controleur d&#8217;accès</p>
+</li>
+<li><p class="first">constants.inc.php : Gestion des constantes</p>
+</li>
+<li><p class="first">fonctions.inc.php : Fonctions php utilisées par le Codex.</p>
+</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>_SQL : xxx</li>
+<li>docs : xxx</li>
+<li>flore : xxx</li>
+<li>.gitignore: xxx</li>
+<li>index.php: xxx</li>
+<li>README.md : xxx</li>
+</ul>
+</div>
+<div class="section" id="quelques-fichiers-particuliers">
+<h2>Quelques fichiers particuliers<a class="headerlink" href="#quelques-fichiers-particuliers" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="fichiers-javascript">
+<h3>Fichiers Javascript<a class="headerlink" href="#fichiers-javascript" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Fichiers maisons :</p>
+</div>
 </div>
 <div class="section" id="comment-creer-une-nouvelle-rubrique">
 <h2>Comment créer une nouvelle rubrique?<a class="headerlink" href="#comment-creer-une-nouvelle-rubrique" title="Lien permanent vers ce titre">¶</a></h2>
