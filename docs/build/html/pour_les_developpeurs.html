@@ -85,8 +85,20 @@
 <li class="toctree-l1"><a class="reference internal" href="pour_les_utilisateurs.html">Pour les utilisateurs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pour_les_administrateurs.html">Pour les administrateurs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pour les développeurs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#architecture-du-codex">Architecture du Codex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#architecture-fichier-du-codex">Architecture fichier du Codex</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#architecture-base-de-donnees-du-codex">Architecture Base de données du Codex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#le-schema-application">Le schema application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#les-schemas-rubrique">Les schemas &#8220;rubrique&#8221;</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#le-schema-referentiel">Le schema référentiel</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-creer-une-nouvelle-rubrique">Comment créer une nouvelle rubrique?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gestion-des-droits">Gestion des droits</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#les-niveaux-de-droits">Les niveaux de droits</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#les-roles">Les rôles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definir-les-droits">Définir les droits</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-parametrer-les-tableaux-de-synthese">Comment paramétrer les tableaux de synthèse?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-gerer-les-fiches">Comment gérer les fiches?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-ajouter-de-nouveaux-onglets">Comment ajouter de nouveaux onglets?</a></li>
@@ -141,19 +153,22 @@
   <div class="section" id="pour-les-developpeurs">
 <h1>Pour les développeurs<a class="headerlink" href="#pour-les-developpeurs" title="Lien permanent vers ce titre">¶</a></h1>
 <p>Bienvenue sur le Wiki du Codex pour les développeurs</p>
-<div class="section" id="architecture-du-codex">
-<h2>Architecture du Codex<a class="headerlink" href="#architecture-du-codex" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="architecture-fichier-du-codex">
+<h2>Architecture fichier du Codex<a class="headerlink" href="#architecture-fichier-du-codex" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Voici la description du contenu de chaque dossier :</p>
-<ul>
-<li><p class="first">.git : dossier git permettant le versionnement de l&#8217;application</p>
-</li>
-<li><p class="first">_DATA : contient les données à importer ou les données exportées (dossier EXPORTS). Aujourd&#8217;hui, les autres dossiers (alp, als, bal...) sont/peuvent être utilisés par la rubrique &#8220;Interaction avec le hub&#8221;. Leur création n&#8217;est pas automatique (fonction à ajouter lors de la création d&#8217;une nouvelle ligne dans cette rubrique).</p>
-</li>
-<li><p class="first">_GRAPH : contient toutes les images utilisées par le codex.</p>
-</li>
-<li><p class="first">_INCLUDE : contient toutes les librairies/éléments nécessaires au fonctionnement du codex</p>
 <blockquote>
-<div><ul>
+<div><cite>.git</cite></div></blockquote>
+<p>dossier git permettant le versionnement de l&#8217;application</p>
+<blockquote>
+<div><cite>_DATA</cite></div></blockquote>
+<p>contient les données à importer ou les données exportées (dossier EXPORTS). Aujourd&#8217;hui, les autres dossiers (alp, als, bal...) sont/peuvent être utilisés par la rubrique &#8220;Interaction avec le hub&#8221;. Leur création n&#8217;est pas automatique (fonction à ajouter lors de la création d&#8217;une nouvelle ligne dans cette rubrique).</p>
+<blockquote>
+<div><cite>_GRAPH</cite></div></blockquote>
+<p>contient toutes les images utilisées par le codex.</p>
+<blockquote>
+<div><cite>_INCLUDE</cite></div></blockquote>
+<p>contient toutes les librairies/éléments nécessaires au fonctionnement du codex</p>
+<ul>
 <li><p class="first">css : tous les CSS (NB : toute la configuration du css est majoritairement géré par eval.css)</p>
 </li>
 <li><p class="first">font : tous les éléments de polices</p>
@@ -180,19 +195,20 @@
 <li><p class="first">constants.inc.php : Gestion des constantes</p>
 </li>
 <li><p class="first">fonctions.inc.php : Fonctions php utilisées par le Codex.</p>
-</li>
-</ul>
+<blockquote>
+<div><p><cite>_SQL</cite></p>
 </div></blockquote>
 </li>
-<li><p class="first">_SQL : fichiers SQL d&#8217;installation + fichier de mise à jour de la base avec les nouvelles versions de l&#8217;outil (update_bdd)</p>
-</li>
-<li><p class="first">docs : source et build de la documentation (produite avec Sphinx)</p>
-</li>
-<li><p class="first">flore : rubriques du codex.</p>
+</ul>
+<p>fichiers SQL d&#8217;installation + fichier de mise à jour de la base avec les nouvelles versions de l&#8217;outil (update_bdd)</p>
+<blockquote>
+<div><cite>docs</cite></div></blockquote>
+<p>source et build de la documentation (produite avec Sphinx)</p>
+<blockquote>
+<div><cite>flore</cite></div></blockquote>
+<p>rubriques du codex. Les rubriques catnat, eee, fsd, hub, lr,lsi, refnat, syntaxa sont des rubriques thématiques. Elles ont été généralisé mais ne sont pas toutes au même niveau de généralisation. la rubrique bug est obsolète (pas maintenu), la rubrique commun est peu utilisée (devrait être ajouté à _INCLUDE), la rubrique default est une rubrique type,la rubrique module-admin est spécial (non généralisé). Les rubriques génériques comprennent :</p>
 <blockquote>
 <div><ul>
-<li><p class="first">les rubriques catnat, eee, fsd, hub, lr,lsi, refnat, syntaxa sont des rubriques thématiques. Elles ont été généralisé mais ne sont pas toutes au même niveau de généralisation. Elles comprennent :</p>
-</li>
 <li><p class="first">commun.inc.php :</p>
 <blockquote>
 <div><ul class="simple">
@@ -211,25 +227,47 @@
 <li><p class="first">liste.php (et parfois liste_user) = json avec toutes les données du tableau de synthèse</p>
 </li>
 <li><p class="first">submit.php : utilisé lors de l&#8217;enregistrement</p>
-</li>
-<li><p class="first">Les autres rubriques :</p>
 <blockquote>
-<div><ul class="simple">
-<li>la rubrique bug est obsolète (pas maintenu),</li>
-<li>la rubrique commun est peu utilisée (devrait être ajouté à _INCLUDE),</li>
-<li>la rubrique default est une rubrique type,</li>
-<li>la rubrique module-admin est spécial (non généralisé)</li>
-</ul>
+<div><p><cite>les autres fichiers</cite></p>
 </div></blockquote>
 </li>
 </ul>
 </div></blockquote>
-</li>
-<li><p class="first">.gitignore: les éléments à ne pas sauvegarder lors du versionnement</p>
-</li>
-<li><p class="first">README.md : description de l&#8217;application.</p>
-</li>
+<ul class="simple">
+<li>.gitignore: les éléments à ne pas sauvegarder lors du versionnement</li>
+<li>README.md : description de l&#8217;application.</li>
 </ul>
+</div>
+<div class="section" id="architecture-base-de-donnees-du-codex">
+<h2>Architecture Base de données du Codex<a class="headerlink" href="#architecture-base-de-donnees-du-codex" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="le-schema-application">
+<h3>Le schema application<a class="headerlink" href="#le-schema-application" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le schema application est le schema utilisé par l&#8217;application pour faire la gestion des rubriques, des onglets, des utlisateurs des droits...</p>
+<blockquote>
+<div><cite>bug</cite></div></blockquote>
+<p>(obsolète) table rassemblant tous les bugs remontés par les utilisateurs.</p>
+<blockquote>
+<div><cite>droit</cite></div></blockquote>
+<p>La gestion des droits est basé sur un système non hierarchisé. Le principe      de base</p>
+<blockquote>
+<div><p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+<p><cite>xxx</cite></p>
+</div></blockquote>
+</div>
+<div class="section" id="les-schemas-rubrique">
+<h3>Les schemas &#8220;rubrique&#8221;<a class="headerlink" href="#les-schemas-rubrique" title="Lien permanent vers ce titre">¶</a></h3>
+</div>
+<div class="section" id="le-schema-referentiel">
+<h3>Le schema référentiel<a class="headerlink" href="#le-schema-referentiel" title="Lien permanent vers ce titre">¶</a></h3>
+</div>
 </div>
 <div class="section" id="comment-creer-une-nouvelle-rubrique">
 <h2>Comment créer une nouvelle rubrique?<a class="headerlink" href="#comment-creer-une-nouvelle-rubrique" title="Lien permanent vers ce titre">¶</a></h2>
@@ -241,6 +279,38 @@ Une des améliorations possible serait que l&#8217;administration des rubriques 
 <li>utilisez la fonction new_rubrique en choisissant le nom de la rubrique que vous souhaitez créer (ex : SELECT * FROM new_rubrique(&#8216;toto&#8217;); ==&gt; un nouveau schema &#8216;toto&#8217; est créé)</li>
 <li>dupliquez le dossier &#8220;defaut&#8221; et renommez-le avec le nom du schéma créé ce dessus (ex : &#8216;toto&#8217;). ATTENTION : le nom doit être exactement identique.</li>
 </ul>
+</div>
+<div class="section" id="gestion-des-droits">
+<h2>Gestion des droits<a class="headerlink" href="#gestion-des-droits" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La gestion des droits est basée sur un système non hierarchisé de rôle pour chaque utilisateur. Chaque rôle a droit ou non d&#8217;accéder à des objets dans une rubrique. Ces droits sont classé par type de droit, appelé également niveaux de droits (droit d&#8217;accès à une page, droit d&#8217;accès à un bouton...).</p>
+<div class="section" id="les-niveaux-de-droits">
+<h3>Les niveaux de droits<a class="headerlink" href="#les-niveaux-de-droits" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les niveaux de droits, ou type de droit, sont une manière de faciliter la gestion globale des droits. On distingue les niveaux suivant  :</p>
+<ul class="simple">
+<li><strong>d1</strong> : droit d&#8217;accès aux fichiers. Ce type de droit permet de définir quel role peut accéder à quel fichier fichier. Dans ce cas, l&#8217;objet est le fichier,</li>
+<li><strong>d2</strong> : droit d&#8217;accès aux objets de la rubrique. Ce type de droit permet de définir quel rôle peut accéder à quel objet d&#8217;une rubrique. Dans ce cas, l&#8217;objet peut être un bouton, une image...,</li>
+<li><strong>d3</strong> : droit d&#8217;accès spécifique à l&#8217;utilisateur. Ce type de droit permet de définir, en fonction de l&#8217;utilisateur, quel accès il possède (ex : dans la partie &#8220;administration &gt; utilisateurs&#8221;, un CBN ne peut voir que les utilisateurs de son CBN),</li>
+<li><strong>d4</strong> : droit d&#8217;accès à une champ. Ce type de droit permet de définir quel rôle peut, dans une fiche, modifier un champ. Dans le cas contraire, le champ sera bloqué,</li>
+<li><strong>d5</strong> : droit de modification de la base. Ce type de droit permet de définir sur quel rôle a le droit de modifier la base de données (ajout, modification, suppression).</li>
+</ul>
+<p>A ce jour, seulement les niveaux de droit d1 et d2 ont été mis en place.</p>
+</div>
+<div class="section" id="les-roles">
+<h3>Les rôles<a class="headerlink" href="#les-roles" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour chaque rubrique, l&#8217;utilisateur possède un ou plusieurs rôles. Le rôle par défaut d&#8217;un utilsateur à sa création est &#8220;pas d&#8217;accès&#8221; (en base de donnéées, &#8220;pas d&#8217;accès&#8221; = TRUE). Un utilisateur qui a accès à une rubrique a au moins un rôle activé (en base de données &#8220;<cite>nom_du_role</cite> = TRUE&#8221;) ET la colonne &#8220;pas d&#8217;acces&#8221; = FALSE. La gestion des rôle pour chaque utilisateur est géré, dans la base de données, dans la table <strong>utilisateur_role</strong>.</p>
+</div>
+<div class="section" id="definir-les-droits">
+<h3>Définir les droits<a class="headerlink" href="#definir-les-droits" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Au sein de la base de données, la table <strong>droit</strong> fait le lien entre les rôles et les niveaux de droit. Ainsi, il est possible de définir dans cette table quel rôle a accès à quel droit sur tel objet d&#8217;une rubrique. Aujourd&#8217;hui, la gestion de la définition des droits n&#8217;a pas été interfacé avec le codex (gestion direct en base de données).</p>
+<ul class="simple">
+<li>Ajouter une règle d&#8217;accès</li>
+</ul>
+<p>La première étape lors pour définir les droits est de se poser la question de &#8220;quel rôle aura le droit de réaliser cette action?&#8221;. En répondant à cette question, il est alors possible de rajouter une ligne dans la table droit qui correspond à la réponse à cette question. Ensuite, il est possible d&#8217;accèder à cette nouvelle règle en utilisant dans le code à la fonction <strong>ref_droit</strong>.</p>
+<ul class="simple">
+<li>Ajouter des rôles</li>
+</ul>
+<p>La gestion des droits n&#8217;étant pas hierarchisée, il est possible d&#8217;ajouter des rôles en fonction du besoin dans le cas où les rôles existants ne suffisent pas. Ex : ajout du rôle de validateur. Pour se faire, il est nécessaire d&#8217;ajouter une colonne à la table <strong>utilisateur_role</strong> et d&#8217;attribuer le rôle correspondant aux utilisateurs. Les règles correspondantes à ce nouveau rôle devront être décrit dans la table <strong>droit</strong></p>
+</div>
 </div>
 <div class="section" id="comment-parametrer-les-tableaux-de-synthese">
 <h2>Comment paramétrer les tableaux de synthèse?<a class="headerlink" href="#comment-parametrer-les-tableaux-de-synthese" title="Lien permanent vers ce titre">¶</a></h2>
