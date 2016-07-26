@@ -100,7 +100,9 @@ foreach ($dir  as $key => $val)
 // $ref_admin = implode(",", $ref);
 // $ref_admin_cpt = implode(",", $ref_cpt);
 // $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
-$query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
+
+//attention  ici pour l'accès à la rubrique refnat on a encore l'ancienne gestion des droits avec les niveaux 255 qui devraient être remplacés par le système des droits d1,d2, d3
+$query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, ref_refnat, niveau_refnat) VALUES ('ADMI1',16,'admin','admin','admin','admin','true','255');";
 	
 // $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
@@ -230,7 +232,7 @@ case "install-set":	{
 		$bd_test = pg_fetch_row($result); 
 		if ($bd_test[0] == false)
 			{
-			$result = pg_query($conn_admin,"CREATE DATABASE $dbname ENCODING = 'UTF8' LC_COLLATE = 'French_France.1252' LC_CTYPE = 'French_France.1252';");
+			$result = pg_query($conn_admin,"CREATE DATABASE $dbname ENCODING = 'UTF8';");
 			echo ("La base de données $dbname a été créée<BR>"); 
 			}
 		else
@@ -328,16 +330,13 @@ case "install-set":	{
 						foreach (glob("../$key/sql/*.csv") as $filename) 
 							{   //renvoit le chemin relatif des fichiers csv du dossier
 							//echo realpath($filename). "<br>";      ///renvoi le chemin absolu des fichiers csv du dossier et respecte les slash pour le copy from
-							//if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-							//echo 'Le serveur tourne sous Windows ! il faut utiliser des antislash pour le chemin <br>';
-							//exemple: $data_csv= dirname(dirname(__FILE__))."\\$key\\sql\\taxons.csv";
-							$data_csv=realpath($filename);
+							$data_csv=realpath($filename); //echo "le fichier csv du copy from est=". $data_csv;
 							$nom_table=rtrim(basename("$filename",".csv").PHP_EOL);
 							$query_verif = "SELECT 1 FROM information_schema.tables WHERE table_schema = '".$key."' and table_name='".$nom_table."';";
 							//echo $query_verif."<br>";
 							$verif = pg_query($conn_codex,$query_verif);
 							$row_verif = pg_fetch_row($verif);
-							var_dump($row_verif);
+							//var_dump($row_verif);
 								if ($row_verif[0] == false)
 								{
 								//echo "la table ".$nom_table." n'existe pas dans la base, le fichier csv ne doit pas être importé <br>";
@@ -347,17 +346,7 @@ case "install-set":	{
 								$query .= "COPY $key.$nom_table from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
 								$requete="COPY $key.$nom_table from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
 								//echo "requete csv=".$requete."<br>";
-								}
-									    //echo "le fichier csv du copy from est=". $data_csv;
-									    //} else {
-									    //echo 'Le serveur ne tourne pas sous Windows !il faut utiliser des slash pour le chemin <br>';
-									    //exemple: $data_csv= dirname(dirname(__FILE__))."/$key/sql/taxons.csv";
-									    //$data_csv= dirname(dirname(__FILE__)).$filename;
-									    
-									    //$query .= "COPY refnat.taxons from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
-									    
-									    //echo $data_csv."<br>";
-									    //}
+								}		    
 							}
 									
 						/*finalisation de la query*/
@@ -365,7 +354,7 @@ case "install-set":	{
 						$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
 						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 						$result = pg_query($conn_codex,$query);
-						echo ("L'architecture de la $val a été implémentée<BR>"); 
+						echo ("L'architecture de la $val a été implémentée avec la nouvelle méthode<BR>"); 
 					} else {
 						$archi = "../../_SQL/bdd_codex_archi_$key.sql";
 						$data = "../../_SQL/bdd_codex_data_$key.sql";
@@ -375,7 +364,7 @@ case "install-set":	{
 						$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
 						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 						$result = pg_query($conn_codex,$query);
-						echo ("L'architecture de la $val a été implémentée<BR>"); 
+						echo ("L'architecture de la $val a été implémentée avec l'ancienne méthode<BR>"); 
 						}
 					}
 						
