@@ -84,12 +84,8 @@
                 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="pour_les_utilisateurs.html">Pour les utilisateurs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pour_les_administrateurs.html">Pour les administrateurs</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Pour les développeurs</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Pour les développeurs</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#architecture-du-codex">Architecture du Codex</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#quelques-fichiers-particuliers">Quelques fichiers particuliers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fichiers-javascript">Fichiers Javascript</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-creer-une-nouvelle-rubrique">Comment créer une nouvelle rubrique?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-parametrer-les-tableaux-de-synthese">Comment paramétrer les tableaux de synthèse?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-gerer-les-fiches">Comment gérer les fiches?</a></li>
@@ -147,28 +143,31 @@
 <p>Bienvenue sur le Wiki du Codex pour les développeurs</p>
 <div class="section" id="architecture-du-codex">
 <h2>Architecture du Codex<a class="headerlink" href="#architecture-du-codex" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Voici la description du contenu de chaque dossier :
-- .git
-- _DATA: contient les données à importer ou les données exportées (dossier EXPORTS). Aujourd&#8217;hui, les autres dossiers (alp, als, bal...) sont/peuvent être utilisés par la rubrique &#8220;Interaction avec le hub&#8221;. Leur création n&#8217;est pas automatique (fonction à ajouter lors de la création d&#8217;une nouvelle ligne dans cette rubrique).
-- _GRAPH : contient toutes les images utilisées par le codex.
-- _INCLUDE : contient toutes les librairies/éléments nécessaires au fonctionnement du codex</p>
+<p>Voici la description du contenu de chaque dossier :</p>
+<ul>
+<li><p class="first">.git : dossier git permettant le versionnement de l&#8217;application</p>
+</li>
+<li><p class="first">_DATA : contient les données à importer ou les données exportées (dossier EXPORTS). Aujourd&#8217;hui, les autres dossiers (alp, als, bal...) sont/peuvent être utilisés par la rubrique &#8220;Interaction avec le hub&#8221;. Leur création n&#8217;est pas automatique (fonction à ajouter lors de la création d&#8217;une nouvelle ligne dans cette rubrique).</p>
+</li>
+<li><p class="first">_GRAPH : contient toutes les images utilisées par le codex.</p>
+</li>
+<li><p class="first">_INCLUDE : contient toutes les librairies/éléments nécessaires au fonctionnement du codex</p>
 <blockquote>
 <div><ul>
 <li><p class="first">css : tous les CSS (NB : toute la configuration du css est majoritairement géré par eval.css)</p>
 </li>
 <li><p class="first">font : tous les éléments de polices</p>
 </li>
-<li><dl class="first docutils">
-<dt>js <span class="classifier-delimiter">:</span> <span class="classifier">tous les javascripts externes (jquery,datatable,wysiwyg...) et les javascripts maison.</span></dt>
-<dd><ul class="first last simple">
-<li>fiche.js : xxx</li>
-<li>functions.js : xxx</li>
-<li>gestion.js : xxx</li>
-<li>interact.js : xxx</li>
-<li>liste.js : xxx</li>
+<li><p class="first">js : tous les javascripts externes (jquery,datatable,wysiwyg...) et les javascripts maison.</p>
+<blockquote>
+<div><ul class="simple">
+<li>gestion.js : (obsolète) ancien fichier javascript qui rassemblait tous les fichier suivant</li>
+<li>fiche.js : boutons et interactions avec les fiches (génériques aux rubriques)</li>
+<li>functions.js : fonctions génériques javascripts (export, suppression, validation...)</li>
+<li>interact.js : boutons et interactions avec les tableaux de synthèse (génériques aux rubriques)</li>
+<li>liste.js : interaction avec la liste</li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
 <li><p class="first">admin.lang.php : Gestion de la traduction anglais / français ($lang)</p>
 </li>
@@ -184,28 +183,64 @@
 </li>
 </ul>
 </div></blockquote>
-<ul class="simple">
-<li>_SQL : xxx</li>
-<li>docs : xxx</li>
-<li>flore : xxx</li>
-<li>.gitignore: xxx</li>
-<li>index.php: xxx</li>
-<li>README.md : xxx</li>
+</li>
+<li><p class="first">_SQL : fichiers SQL d&#8217;installation + fichier de mise à jour de la base avec les nouvelles versions de l&#8217;outil (update_bdd)</p>
+</li>
+<li><p class="first">docs : source et build de la documentation (produite avec Sphinx)</p>
+</li>
+<li><p class="first">flore : rubriques du codex.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">les rubriques catnat, eee, fsd, hub, lr,lsi, refnat, syntaxa sont des rubriques thématiques. Elles ont été généralisé mais ne sont pas toutes au même niveau de généralisation. Elles comprennent :</p>
+</li>
+<li><p class="first">commun.inc.php :</p>
+<blockquote>
+<div><ul class="simple">
+<li>initialise et fait le lien avec toutes les bibliothèques nécessaire (_INCLUDE)</li>
+<li>définit un certain nombre de constantes</li>
+<li>détermine les requêtes SQL globales (requête du tableau de synthèse, requête d&#8217;export, requête de discussion...)</li>
+<li>label spécifiques (boutons ajouter, titres...)</li>
+<li>construction des en-tête de colonne</li>
 </ul>
-</div>
-<div class="section" id="quelques-fichiers-particuliers">
-<h2>Quelques fichiers particuliers<a class="headerlink" href="#quelques-fichiers-particuliers" title="Lien permanent vers ce titre">¶</a></h2>
-<div class="section" id="fichiers-javascript">
-<h3>Fichiers Javascript<a class="headerlink" href="#fichiers-javascript" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Fichiers maisons :</p>
-</div>
+</div></blockquote>
+</li>
+<li><p class="first">del.php : utilisé lors de suppression</p>
+</li>
+<li><p class="first">index.php : interface principale</p>
+</li>
+<li><p class="first">liste.php (et parfois liste_user) = json avec toutes les données du tableau de synthèse</p>
+</li>
+<li><p class="first">submit.php : utilisé lors de l&#8217;enregistrement</p>
+</li>
+<li><p class="first">Les autres rubriques :</p>
+<blockquote>
+<div><ul class="simple">
+<li>la rubrique bug est obsolète (pas maintenu),</li>
+<li>la rubrique commun est peu utilisée (devrait être ajouté à _INCLUDE),</li>
+<li>la rubrique default est une rubrique type,</li>
+<li>la rubrique module-admin est spécial (non généralisé)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">.gitignore: les éléments à ne pas sauvegarder lors du versionnement</p>
+</li>
+<li><p class="first">README.md : description de l&#8217;application.</p>
+</li>
+</ul>
 </div>
 <div class="section" id="comment-creer-une-nouvelle-rubrique">
 <h2>Comment créer une nouvelle rubrique?<a class="headerlink" href="#comment-creer-une-nouvelle-rubrique" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Processus encore manuel qui sera intégrer à terme dans le codex (dans la partie administration)
-- lancez les scripts sql du fichier _DATA/fonctions.sql
-- utilisez la fonction new_rubrique ==&gt; un nouveau schema est créé
-- dupliquez le dossier _base_module et renommez le avec le nom du schéma créé ce dessus.</p>
+<p>Aujourd&#8217;hui, le processus de création de rubrique est encore manuel.
+Une des améliorations possible serait que l&#8217;administration des rubriques soient directement intérefacées dans le codex (dans la partie administration).</p>
+<p>Actuellement, pour créer une nouvelle rubrique il faut :</p>
+<ul class="simple">
+<li>lancez les scripts sql du fichier _DATA/fonctions.sql. Ce script créé plusieurs fonction pl/pgsql pour créer des rubriques.</li>
+<li>utilisez la fonction new_rubrique en choisissant le nom de la rubrique que vous souhaitez créer (ex : SELECT * FROM new_rubrique(&#8216;toto&#8217;); ==&gt; un nouveau schema &#8216;toto&#8217; est créé)</li>
+<li>dupliquez le dossier &#8220;defaut&#8221; et renommez-le avec le nom du schéma créé ce dessus (ex : &#8216;toto&#8217;). ATTENTION : le nom doit être exactement identique.</li>
+</ul>
 </div>
 <div class="section" id="comment-parametrer-les-tableaux-de-synthese">
 <h2>Comment paramétrer les tableaux de synthèse?<a class="headerlink" href="#comment-parametrer-les-tableaux-de-synthese" title="Lien permanent vers ce titre">¶</a></h2>
