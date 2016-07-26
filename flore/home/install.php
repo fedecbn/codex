@@ -65,7 +65,7 @@ $(document).ready(function(){
 });
 </script> 
 <?php
-
+ignore_user_abort(true);
 html_header_2 ("utf-8","table_eval.css","jquery-te-1.4.0.css","Installation de Codex");
 /*-------------------------------------------------------------------------------------*/
 /*En-tête------------------------------------------------------------------------------*/
@@ -324,6 +324,7 @@ case "install-set":	{
 
 						/*import des données en base à partir des fichiers .csv avec COPY FROM*/
 						//on peut tester si on est sous windows ou linux pour respecter slash et antislash mais a priori avec realpath ça fonctionne
+						set_time_limit(0);
 						foreach (glob("../$key/sql/*.csv") as $filename) 
 							{   //renvoit le chemin relatif des fichiers csv du dossier
 							//echo realpath($filename). "<br>";      ///renvoi le chemin absolu des fichiers csv du dossier et respecte les slash pour le copy from
