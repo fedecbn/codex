@@ -1,3 +1,4 @@
 _INCLUDE/config_sql.inc.php
 _GRAPH/carte/*
 _INCLUDE/install-ok.txt
+flore/*/sql/*.csv
