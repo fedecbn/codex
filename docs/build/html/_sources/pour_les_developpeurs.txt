@@ -5,7 +5,7 @@ Pour les développeurs
 Bienvenue sur le Wiki du Codex pour les développeurs
 
 ******************************************************
-Architecture fichier du Codex
+L'architecture fichier
 ******************************************************
 Voici la description du contenu de chaque dossier :
 
@@ -73,8 +73,14 @@ rubriques du codex. Les rubriques catnat, eee, fsd, hub, lr,lsi, refnat, syntaxa
 * .gitignore: les éléments à ne pas sauvegarder lors du versionnement
 * README.md : description de l'application.
 
+=============================================
+Mise à jour de l'architecture fichier
+=============================================
+
+Le Codex est un projet libre de droit, déposé sur github (http://github.com/fedecbn/codex). La mise à jour des fichiers se fait directement par l'utilisation de de git (git pull).
+
 ******************************************************
-Architecture Base de données du Codex
+La Base de données
 ******************************************************
 
 =============================
@@ -85,39 +91,84 @@ Le schema application est le schema utilisé par l'application pour faire la ges
 
 	`bug`
 
-(obsolète) table rassemblant tous les bugs remontés par les utilisateurs.
+`(obsolète)` Table rassemblant tous les bugs remontés par les utilisateurs.
 
 	`droit`
 	
-La gestion des droits est basé sur un système non hierarchisé. Le principe	de base
+Table rassemblant les règles de gestion des droit. La gestion des droits est basée sur un système de rôle non hierarchisé : un rôle (`colonne role`) à accès à un objet (`colonne objet`), présent dans un onglet (`colonne onglet`) d'une rubrique particulière (`colonne rubrique`). Ces droits sont classé par type (`colonne typ_droit`), décrit dans le chapitre :ref:`nvx-droit`.
 
-	`xxx`
+	`log`
 
-	`xxx`
+Table rassemblant les logs généraux de l'application selon les utilisateurs (`colonne id_user` = identifiant de l'utilisateur, référentiel = applications.utilisateur).
 
-	`xxx`
+	`onglet`
 
-	`xxx`
+Table rassemblant la description (`colonne nom` pour le nom de l'onglet, `colonne ss_titre` pour le sous-titre de l'onglet) des différents onglets de chaque rubrique
+
+	`pres`
+
+Table rassemblant les textes d'en-tête (`colonne page` = 'header') et de pied de page (`colonne page` = 'footer') de la page d'acceuil (`colonne pres`)	en fonction du module (`colonne id_module`).
+
+	`rubrique`
+
+Table rassemblant les informations nécessaire pour l'affichage du bouton d'accès au rubrique : son identifiant (`colonne id_module`), sa position les unes par rapport aux autres (`colonne pos`), son icone de représentation (`colonne icone`), son chemin d'accès vers les fichiers (`colonne link`), son type (`colonne typ` - 'list' = rubrique classique, 'admin' = rubrique d'administration).
+
+	`suivi`
+
+Table rassemblant toutes les modifications réalisé dans une rubrique. A chaque enregistrement, cette table historise les valeurs anciennes et nouvelles de chaque table.
+
+	`update_bdd`
+
+Table rassemblant l'historique des mises à jour de la base de données. Ce système, permettant de mettre à jour la base en même temps que les mises à jour logiciels est décrit dans le chapitre :ref:`maj-bdd`.
+
+	`utilisateur`
+
+Table rassemblant tous les utilisateurs, leur identifiant (`colonne id_user`), leur cbn (`colonne id_cbn`), leur nom et prénom. Les colonnes `ref` et `niveau` étaient utilisées pour la gestion des droits. Ces colonnes sont obsolètes.
+
+	`utilisateur_role`
 	
-	`xxx`
-	
-	`xxx`
-	
-	`xxx`
-	
-	`xxx`
-	
-	`xxx`
-	
-	`xxx`
+Table rassemblant les rôles de chaque utilisateurs (`colonne id_user`) pour chaque rubrique (`colonne rubrique`). Chacune des autres colonnes correspondent aux rôles disponible pour cette rubrique.
 	
 =============================
 Les schemas "rubrique"
 =============================
 
+Afin d'avoir une approche le plus modulaire possible, chaque rubrique possède son schema propre de base de données. l'architecture de ces schemas (tables, champs...) sont propre à chaque rubrique SAUF pour certaines tables, qui sont générique à chaque rubrique et que l'on retourve dans chaque schema (ayant subit une généralisation) :
+
+	`discussion`
+
+Table rassemblant les éléments de discussion réalisé au niveau des fiches. En bas de chaque fiche, il est possible, pour un utilisateur avec le rôle de "participant", d'ajouter un commentaire spécifique à la fiche. Dans ce cas, ce commentaire sera enregistrer dans la table `discussion` et sera affiché en bas de la fiche. Un projet de développement est de sortir centraliser ces discussions dans le schema `application`
+
 =============================
 Le schema référentiel
 =============================
+
+Le schema `référentiel` rassemble les référentiels utilisés par les rubriques. La majorité de ces référentiels ont été implémenté pour la rubrique "liste rouge" (schema `lr`). Un développement à prévoir est de rappatrier ces référetiels au sein même du schéma, pour plus de modularité. 2 tables extrèmement importantes sont présentent dans ce schema :
+
+	`champs`
+	
+Table rassemblant la description de toutes les tables de toute les rubriques. Cette table permet de renseigner toutes les informations nécessaire à l'application pour afficher et gérer les champs de ces rubriques à travers, notamment, son typage personnalisé (`colonne type`), son libellé court (`colonne description`) et long (`colonne description_longue`), le référentiel auquel il est rattaché (`colonne referentiel`), sa position dans le tableau de synthèse (`colonne pos`), la taille et style de la colonne (`colonne jvs_desc_column`) et les paramètre de filtrage de la colonne (`colonne jvs_filter_column`).
+	
+	`champs_ref`
+
+Table rassemblant les informations correspondantes aux référentiels utilisés par les champs. On y retrouve le nom du référentiel (`colonne nom_ref` - ce nom est totalement arbitraire), le système de clé-valeur du référentiel (`colonne cle` et `colonne valeur`), ainsi que l'endroit où le référentiel se trouve (`colonne schema` et colonne `table_ref`).
+	
+
+.. _maj-bdd:
+
+=============================================
+Mise à jour de la base de données
+=============================================
+
+La mise à jour de la base de données n'est pas automatique avec la mise à jour du code. Un procédure parallèle doit être géré à chaque mise à jour de la base.
+
+Le fonctionnement est le suivant : 
+
+* Création d'un fichier sql : Lors d'un développement nécesitant la mise à jour de la base de données, cette modification doit êter scripté en sql ET générique (applicable à toute les situations possibles). Ce fichier doit être inspiré des fichiers précédents.
+
+A POURSUIVRE
+
+Cette procédure manuelle pourrait être automatisé à chaque nouveau fichier sql ajouté (détection d'un nouveau fichier par rapport à l'historique des mise à jour).
 
 ******************************************************
 Comment créer une nouvelle rubrique?
@@ -137,6 +188,8 @@ Gestion des droits
 ******************************************************
 
 La gestion des droits est basée sur un système non hierarchisé de rôle pour chaque utilisateur. Chaque rôle a droit ou non d'accéder à des objets dans une rubrique. Ces droits sont classé par type de droit, appelé également niveaux de droits (droit d'accès à une page, droit d'accès à un bouton...).
+
+.. _nvx-droit:
 
 ===============================
 Les niveaux de droits
