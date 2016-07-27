@@ -85,11 +85,15 @@
 <li class="toctree-l1"><a class="reference internal" href="pour_les_utilisateurs.html">Pour les utilisateurs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pour_les_administrateurs.html">Pour les administrateurs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pour les développeurs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#architecture-fichier-du-codex">Architecture fichier du Codex</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#architecture-base-de-donnees-du-codex">Architecture Base de données du Codex</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#l-architecture-fichier">L&#8217;architecture fichier</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mise-a-jour-de-l-architecture-fichier">Mise à jour de l&#8217;architecture fichier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#la-base-de-donnees">La Base de données</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#le-schema-application">Le schema application</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#les-schemas-rubrique">Les schemas &#8220;rubrique&#8221;</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#le-schema-referentiel">Le schema référentiel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mise-a-jour-de-la-base-de-donnees">Mise à jour de la base de données</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#comment-creer-une-nouvelle-rubrique">Comment créer une nouvelle rubrique?</a></li>
@@ -153,8 +157,8 @@
   <div class="section" id="pour-les-developpeurs">
 <h1>Pour les développeurs<a class="headerlink" href="#pour-les-developpeurs" title="Lien permanent vers ce titre">¶</a></h1>
 <p>Bienvenue sur le Wiki du Codex pour les développeurs</p>
-<div class="section" id="architecture-fichier-du-codex">
-<h2>Architecture fichier du Codex<a class="headerlink" href="#architecture-fichier-du-codex" title="Lien permanent vers ce titre">¶</a></h2>
+<div class="section" id="l-architecture-fichier">
+<h2>L&#8217;architecture fichier<a class="headerlink" href="#l-architecture-fichier" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Voici la description du contenu de chaque dossier :</p>
 <blockquote>
 <div><cite>.git</cite></div></blockquote>
@@ -237,36 +241,73 @@
 <li>.gitignore: les éléments à ne pas sauvegarder lors du versionnement</li>
 <li>README.md : description de l&#8217;application.</li>
 </ul>
+<div class="section" id="mise-a-jour-de-l-architecture-fichier">
+<h3>Mise à jour de l&#8217;architecture fichier<a class="headerlink" href="#mise-a-jour-de-l-architecture-fichier" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le Codex est un projet libre de droit, déposé sur github (<a class="reference external" href="http://github.com/fedecbn/codex">http://github.com/fedecbn/codex</a>). La mise à jour des fichiers se fait directement par l&#8217;utilisation de de git (git pull).</p>
 </div>
-<div class="section" id="architecture-base-de-donnees-du-codex">
-<h2>Architecture Base de données du Codex<a class="headerlink" href="#architecture-base-de-donnees-du-codex" title="Lien permanent vers ce titre">¶</a></h2>
+</div>
+<div class="section" id="la-base-de-donnees">
+<h2>La Base de données<a class="headerlink" href="#la-base-de-donnees" title="Lien permanent vers ce titre">¶</a></h2>
 <div class="section" id="le-schema-application">
 <h3>Le schema application<a class="headerlink" href="#le-schema-application" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Le schema application est le schema utilisé par l&#8217;application pour faire la gestion des rubriques, des onglets, des utlisateurs des droits...</p>
 <blockquote>
 <div><cite>bug</cite></div></blockquote>
-<p>(obsolète) table rassemblant tous les bugs remontés par les utilisateurs.</p>
+<p><cite>(obsolète)</cite> Table rassemblant tous les bugs remontés par les utilisateurs.</p>
 <blockquote>
 <div><cite>droit</cite></div></blockquote>
-<p>La gestion des droits est basé sur un système non hierarchisé. Le principe      de base</p>
+<p>Table rassemblant les règles de gestion des droit. La gestion des droits est basée sur un système de rôle non hierarchisé : un rôle (<cite>colonne role</cite>) à accès à un objet (<cite>colonne objet</cite>), présent dans un onglet (<cite>colonne onglet</cite>) d&#8217;une rubrique particulière (<cite>colonne rubrique</cite>). Ces droits sont classé par type (<cite>colonne typ_droit</cite>), décrit dans le chapitre <a class="reference internal" href="#nvx-droit"><span class="std std-ref">Les niveaux de droits</span></a>.</p>
 <blockquote>
-<div><p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-<p><cite>xxx</cite></p>
-</div></blockquote>
+<div><cite>log</cite></div></blockquote>
+<p>Table rassemblant les logs généraux de l&#8217;application selon les utilisateurs (<cite>colonne id_user</cite> = identifiant de l&#8217;utilisateur, référentiel = applications.utilisateur).</p>
+<blockquote>
+<div><cite>onglet</cite></div></blockquote>
+<p>Table rassemblant la description (<cite>colonne nom</cite> pour le nom de l&#8217;onglet, <cite>colonne ss_titre</cite> pour le sous-titre de l&#8217;onglet) des différents onglets de chaque rubrique</p>
+<blockquote>
+<div><cite>pres</cite></div></blockquote>
+<p>Table rassemblant les textes d&#8217;en-tête (<cite>colonne page</cite> = &#8216;header&#8217;) et de pied de page (<cite>colonne page</cite> = &#8216;footer&#8217;) de la page d&#8217;acceuil (<cite>colonne pres</cite>) en fonction du module (<cite>colonne id_module</cite>).</p>
+<blockquote>
+<div><cite>rubrique</cite></div></blockquote>
+<p>Table rassemblant les informations nécessaire pour l&#8217;affichage du bouton d&#8217;accès au rubrique : son identifiant (<cite>colonne id_module</cite>), sa position les unes par rapport aux autres (<cite>colonne pos</cite>), son icone de représentation (<cite>colonne icone</cite>), son chemin d&#8217;accès vers les fichiers (<cite>colonne link</cite>), son type (<cite>colonne typ</cite> - &#8216;list&#8217; = rubrique classique, &#8216;admin&#8217; = rubrique d&#8217;administration).</p>
+<blockquote>
+<div><cite>suivi</cite></div></blockquote>
+<p>Table rassemblant toutes les modifications réalisé dans une rubrique. A chaque enregistrement, cette table historise les valeurs anciennes et nouvelles de chaque table.</p>
+<blockquote>
+<div><cite>update_bdd</cite></div></blockquote>
+<p>Table rassemblant l&#8217;historique des mises à jour de la base de données. Ce système, permettant de mettre à jour la base en même temps que les mises à jour logiciels est décrit dans le chapitre <a class="reference internal" href="#maj-bdd"><span class="std std-ref">Mise à jour de la base de données</span></a>.</p>
+<blockquote>
+<div><cite>utilisateur</cite></div></blockquote>
+<p>Table rassemblant tous les utilisateurs, leur identifiant (<cite>colonne id_user</cite>), leur cbn (<cite>colonne id_cbn</cite>), leur nom et prénom. Les colonnes <cite>ref</cite> et <cite>niveau</cite> étaient utilisées pour la gestion des droits. Ces colonnes sont obsolètes.</p>
+<blockquote>
+<div><cite>utilisateur_role</cite></div></blockquote>
+<p>Table rassemblant les rôles de chaque utilisateurs (<cite>colonne id_user</cite>) pour chaque rubrique (<cite>colonne rubrique</cite>). Chacune des autres colonnes correspondent aux rôles disponible pour cette rubrique.</p>
 </div>
 <div class="section" id="les-schemas-rubrique">
 <h3>Les schemas &#8220;rubrique&#8221;<a class="headerlink" href="#les-schemas-rubrique" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Afin d&#8217;avoir une approche le plus modulaire possible, chaque rubrique possède son schema propre de base de données. l&#8217;architecture de ces schemas (tables, champs...) sont propre à chaque rubrique SAUF pour certaines tables, qui sont générique à chaque rubrique et que l&#8217;on retourve dans chaque schema (ayant subit une généralisation) :</p>
+<blockquote>
+<div><cite>discussion</cite></div></blockquote>
+<p>Table rassemblant les éléments de discussion réalisé au niveau des fiches. En bas de chaque fiche, il est possible, pour un utilisateur avec le rôle de &#8220;participant&#8221;, d&#8217;ajouter un commentaire spécifique à la fiche. Dans ce cas, ce commentaire sera enregistrer dans la table <cite>discussion</cite> et sera affiché en bas de la fiche. Un projet de développement est de sortir centraliser ces discussions dans le schema <cite>application</cite></p>
 </div>
 <div class="section" id="le-schema-referentiel">
 <h3>Le schema référentiel<a class="headerlink" href="#le-schema-referentiel" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Le schema <cite>référentiel</cite> rassemble les référentiels utilisés par les rubriques. La majorité de ces référentiels ont été implémenté pour la rubrique &#8220;liste rouge&#8221; (schema <cite>lr</cite>). Un développement à prévoir est de rappatrier ces référetiels au sein même du schéma, pour plus de modularité. 2 tables extrèmement importantes sont présentent dans ce schema :</p>
+<blockquote>
+<div><cite>champs</cite></div></blockquote>
+<p>Table rassemblant la description de toutes les tables de toute les rubriques. Cette table permet de renseigner toutes les informations nécessaire à l&#8217;application pour afficher et gérer les champs de ces rubriques à travers, notamment, son typage personnalisé (<cite>colonne type</cite>), son libellé court (<cite>colonne description</cite>) et long (<cite>colonne description_longue</cite>), le référentiel auquel il est rattaché (<cite>colonne referentiel</cite>), sa position dans le tableau de synthèse (<cite>colonne pos</cite>), la taille et style de la colonne (<cite>colonne jvs_desc_column</cite>) et les paramètre de filtrage de la colonne (<cite>colonne jvs_filter_column</cite>).</p>
+<blockquote>
+<div><cite>champs_ref</cite></div></blockquote>
+<p>Table rassemblant les informations correspondantes aux référentiels utilisés par les champs. On y retrouve le nom du référentiel (<cite>colonne nom_ref</cite> - ce nom est totalement arbitraire), le système de clé-valeur du référentiel (<cite>colonne cle</cite> et <cite>colonne valeur</cite>), ainsi que l&#8217;endroit où le référentiel se trouve (<cite>colonne schema</cite> et colonne <cite>table_ref</cite>).</p>
+</div>
+<div class="section" id="mise-a-jour-de-la-base-de-donnees">
+<span id="maj-bdd"></span><h3>Mise à jour de la base de données<a class="headerlink" href="#mise-a-jour-de-la-base-de-donnees" title="Lien permanent vers ce titre">¶</a></h3>
+<p>La mise à jour de la base de données n&#8217;est pas automatique avec la mise à jour du code. Un procédure parallèle doit être géré à chaque mise à jour de la base.</p>
+<p>Le fonctionnement est le suivant :</p>
+<ul class="simple">
+<li>Création d&#8217;un fichier sql : Lors d&#8217;un développement nécesitant la mise à jour de la base de données, cette modification doit êter scripté en sql ET générique (applicable à toute les situations possibles). Ce fichier doit être inspiré des fichiers précédents.</li>
+</ul>
+<p>A POURSUIVRE</p>
+<p>Cette procédure manuelle pourrait être automatisé à chaque nouveau fichier sql ajouté (détection d&#8217;un nouveau fichier par rapport à l&#8217;historique des mise à jour).</p>
 </div>
 </div>
 <div class="section" id="comment-creer-une-nouvelle-rubrique">
@@ -284,7 +325,7 @@ Une des améliorations possible serait que l&#8217;administration des rubriques 
 <h2>Gestion des droits<a class="headerlink" href="#gestion-des-droits" title="Lien permanent vers ce titre">¶</a></h2>
 <p>La gestion des droits est basée sur un système non hierarchisé de rôle pour chaque utilisateur. Chaque rôle a droit ou non d&#8217;accéder à des objets dans une rubrique. Ces droits sont classé par type de droit, appelé également niveaux de droits (droit d&#8217;accès à une page, droit d&#8217;accès à un bouton...).</p>
 <div class="section" id="les-niveaux-de-droits">
-<h3>Les niveaux de droits<a class="headerlink" href="#les-niveaux-de-droits" title="Lien permanent vers ce titre">¶</a></h3>
+<span id="nvx-droit"></span><h3>Les niveaux de droits<a class="headerlink" href="#les-niveaux-de-droits" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Les niveaux de droits, ou type de droit, sont une manière de faciliter la gestion globale des droits. On distingue les niveaux suivant  :</p>
 <ul class="simple">
 <li><strong>d1</strong> : droit d&#8217;accès aux fichiers. Ce type de droit permet de définir quel role peut accéder à quel fichier fichier. Dans ce cas, l&#8217;objet est le fichier,</li>

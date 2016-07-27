@@ -17,10 +17,4 @@ Contents:
    bugs_connus
    developpement_prevues
    
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
