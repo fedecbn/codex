@@ -276,7 +276,7 @@ function ref_colonne_et_valeur ($rubrique)	{
 	global $db, $ref, $aColumns, $aColumnsExp, $aColumnsTot, $aColumnsSub, $champ_ref;
 // "\"$colname18\""
 //------------------------------------------------------------------------------ Récupération des valeurs référentiels
-	$query = "SELECT nom_champ,table_champ,champ_interface, schema, nom_ref, table_ref, cle, valeur,orderby, champs_ref.where_champ, champs_ref.where_value FROM referentiels.champs RIGHT JOIN referentiels.champs_ref ON referentiel = nom_ref WHERE rubrique_ref = '$rubrique'";
+	$query = "SELECT nom_champ,table_champ,champ_interface, schema, nom_ref, table_ref, cle, valeur,orderby, champs_ref.where_champ, champs_ref.where_value FROM referentiels.champs RIGHT JOIN referentiels.champs_ref ON referentiel = nom_ref AND rubrique_ref = rubrique_champ WHERE rubrique_ref = '$rubrique'";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 	while ($row = pg_fetch_assoc ($result)) {
