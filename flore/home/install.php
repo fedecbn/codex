@@ -102,7 +102,7 @@ foreach ($dir  as $key => $val)
 // $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
 
 //attention  ici pour l'accès à la rubrique refnat on a encore l'ancienne gestion des droits avec les niveaux 255 qui devraient être remplacés par le système des droits d1,d2, d3
-$query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, ref_refnat, niveau_refnat) VALUES ('ADMI1',16,'admin','admin','admin','admin','true','255');";
+$query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, ref_refnat, niveau_refnat, ref_lr, niveau_lr) VALUES ('ADMI1',16,'admin','admin','admin','admin','true','255', 'true','255');";
 	
 // $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
@@ -198,6 +198,12 @@ case "install-param":	{
 						// if (file_exists("../../_SQL/bdd_codex_archi_".$key.".sql") == FALSE) $desc[$key] = " bloque";
 						metaform_bool ($val,$desc[$key],$key,$rub_ok[$key]);
 						// metaform_bool ($val,$desc[$key],$key."_data",$rub_ok[$key]);
+						if ($key=='refnat')
+							 {echo "  * <i>L'installation de cette rubrique est <b>>à 2 minutes</b>, soyez patients</i>";}
+						elseif  ($key=='lr' or $key=='eee' or $key=='catnat')
+							{echo "  * <i>L'installation de la rubrique Référentiel National est <b>nécessaire</b> pour cette rubrique</i>";}
+						else
+							{echo "";}
 						echo ("<BR>");
 						}
 					echo ("</td></tr></table>");	
@@ -287,7 +293,7 @@ case "install-set":	{
 				{
 				if ($_POST[$key] == 'TRUE')
 					{
-					if ($key == 'refnat' or $key == 'syntaxa')
+					if ($key == 'refnat' or $key == 'syntaxa' or $key == 'lr')
 					//if ($key == 'syntaxa')
 					{
 						//decompresser les fichiers zip dans le dossier sql qui contient soit les .csv soit les .sql par défaut la fonction overwrite est activée
