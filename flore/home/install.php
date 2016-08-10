@@ -266,13 +266,17 @@ case "install-set":	{
 		$row = pg_fetch_row($schema);
 		if ($row[0] != "1")
 			{
-			$archi = "../../_SQL/bdd_codex_archi_$key.sql";
-			$data = "../../_SQL/bdd_codex_data_$key.sql";
+			//$archi = "../../_SQL/bdd_codex_archi_$key.sql";
+			//$data = "../../_SQL/bdd_codex_data_$key.sql";
+			$archi = "../../flore/home/sql/archi_applications.sql";
+			$data = "../../flore/home/sql/data_applications.sql";
 			$query = create_query($archi,$user_codex);
 			$query .= create_query($data,$user_codex);
 			$query .= $query_admin;
-			$query .= create_query("../../_SQL/bdd_codex_archi_referentiels.sql",$user_codex);
-			$query .= create_query("../../_SQL/bdd_codex_data_referentiels.sql",$user_codex);
+			$query .= create_query("../../flore/home/sql/archi_referentiels.sql",$user_codex);
+			$query .= create_query("../../flore/home/sql/data_referentiels.sql",$user_codex);
+			//$query .= create_query("../../_SQL/bdd_codex_archi_referentiels.sql",$user_codex);
+			//$query .= create_query("../../_SQL/bdd_codex_data_referentiels.sql",$user_codex);
 			$result = pg_query($conn_codex,$query);
 			}
 		/*Ajout des droits pour la rubrique home*/
@@ -293,9 +297,8 @@ case "install-set":	{
 				{
 				if ($_POST[$key] == 'TRUE')
 					{
-					if ($key == 'refnat' or $key == 'syntaxa' or $key == 'lr' or $key == 'catnat')
-					//if ($key == 'syntaxa')
-					{
+//					if ($key == 'refnat' or $key == 'syntaxa' or $key == 'lr' or $key == 'catnat' or $key == 'eee')
+//					{
 						//decompresser les fichiers zip dans le dossier sql qui contient soit les .csv soit les .sql par défaut la fonction overwrite est activée
 						//attention il faut avoir les droits d'écriture dans le dossier du codex
 						foreach (glob("../$key/sql/*.zip") as $filename) 
@@ -361,17 +364,17 @@ case "install-set":	{
 						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 						$result = pg_query($conn_codex,$query);
 						echo ("L'architecture de la $val a été implémentée avec la nouvelle méthode<BR>"); 
-					} else {
-						$archi = "../../_SQL/bdd_codex_archi_$key.sql";
-						$data = "../../_SQL/bdd_codex_data_$key.sql";
-						$query = create_query($archi,$user_codex);
-						$query .= create_query($data,$user_codex);
-						$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";				
-						$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
-						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
-						$result = pg_query($conn_codex,$query);
-						echo ("L'architecture de la $val a été implémentée avec l'ancienne méthode<BR>"); 
-						}
+//					} else {
+//						$archi = "../../_SQL/bdd_codex_archi_$key.sql";
+//						$data = "../../_SQL/bdd_codex_data_$key.sql";
+//						$query = create_query($archi,$user_codex);
+//						$query .= create_query($data,$user_codex);
+//						$query .= "INSERT INTO applications.rubrique (id_rubrique, id_module, pos, icone, titre, descr, niveau, link, lang) VALUES ($pos, '$key', $pos ,'saisie.png', '$val', '', 1, '../$key/index.php', 0);";				
+//						$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', '$key', false, true, true, true, true, true, true, true);";
+//						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
+//						$result = pg_query($conn_codex,$query);
+//						echo ("L'architecture de la $val a été implémentée avec l'ancienne méthode<BR>"); 
+//						}
 					}
 						
 				else
