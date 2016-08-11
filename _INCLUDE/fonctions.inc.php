@@ -1367,7 +1367,7 @@ else
 	if ($catnat == 'TRUE'){
 		$select="SELECT uid FROM catnat.taxons_nat WHERE uid = $uid_modif;";
 		$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".$select);
-		$uid=pg_result($result,0,"uid");
+		$uid=pg_fetch_result($result,0,"uid");
 		
 		if ($uid != null) {
 			$query .= "
@@ -1384,8 +1384,7 @@ else
 	if ($eee == 'TRUE'){
 		$select="SELECT uid FROM eee.taxons WHERE uid = $uid_modif;";
 		$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".$select);
-		$uid=pg_result($result,0,"uid");
-		
+		$uid=pg_fetch_result($result,0,"uid");
 		if ($uid != null) {
 			$query .= "
 			UPDATE eee.taxons SET cd_ref=$cd_ref,nom_sci=$nom_complet,nom_verna=$nom_vern,lib_rang=$rang WHERE uid=$uid_modif;
@@ -1401,7 +1400,7 @@ else
 	if ($lr == 'TRUE'){
 		$select="SELECT uid FROM lr.taxons WHERE uid = $uid_modif;";
 		$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".$select);
-		$uid=pg_result($result,0,"uid");
+		$uid=pg_fetch_result($result,0,"uid");
 		
 		if ($uid != null) {
 			$query .= "
