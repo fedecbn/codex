@@ -73,6 +73,8 @@ rubriques du codex. Les rubriques catnat, eee, fsd, hub, lr,lsi, refnat, syntaxa
 * .gitignore: les éléments à ne pas sauvegarder lors du versionnement
 * README.md : description de l'application.
 
+.. _maj-codex:
+
 =============================================
 Mise à jour de l'architecture fichier
 =============================================
@@ -160,15 +162,29 @@ Table rassemblant les informations correspondantes aux référentiels utilisés 
 Mise à jour de la base de données
 =============================================
 
-La mise à jour de la base de données n'est pas automatique avec la mise à jour du code. Un procédure parallèle doit être géré à chaque mise à jour de la base.
+La mise à jour de la base de données n'est pas automatique avec la mise à jour du code. Un procédure parallèle doit être réalisé à chaque mise à jour de la base.
 
-Le fonctionnement est le suivant : 
+**Dans le cas où vous souhaitez simplement mettre à jour la base de données suivant les modifications réalisées par les autres développeurs**, le fonctionnement est le suivant :
 
-* Création d'un fichier sql : Lors d'un développement nécesitant la mise à jour de la base de données, cette modification doit êter scripté en sql ET générique (applicable à toute les situations possibles). Ce fichier doit être inspiré des fichiers précédents.
+* Comparez les mises à jours : dans la base de données, regarder le contenu de la table `applications.update_bdd` et vérifiez les dernières mises à jours réalisées. Un fois la mise à jour logiciel réalisée avec git (cf. :ref:`maj-codex`). Comparez avec le numéro des dernièrs fichiers présent dans le dossier _SQL/update_bdd.
 
-A POURSUIVRE
+* Lancez les mise à jour : tous les fichiers dont le nom n'apparait pas dans la table `applications.update_bdd` devront être lancés. Assurez-vous, dans les variables initiales qu'il n'est pas nécessaire de renseigner quelquechose au début du fichier.
 
-Cette procédure manuelle pourrait être automatisé à chaque nouveau fichier sql ajouté (détection d'un nouveau fichier par rapport à l'historique des mise à jour).
+Cette procédure manuelle pourrait être, à terme, automatisé à chaque nouveau fichier sql ajouté (détection d'un nouveau fichier par rapport à l'historique des mise à jour).
+
+**Dans le cas où vous souhaitez vous même proposer une nouvelle modification à la base**, le fonctionnement est le suivant : 
+
+* Création d'un fichier sql : Lors d'un développement nécesitant la mise à jour de la base de données, cette modification doit êter scripté en sql ET générique (applicable à toute les situations possibles, générique face aux utilisateurs impactés). Ce fichier doit être positionner avec les autres fichiers de mise à jours (dossier _SQL/update_bdd) et doit être nommé de tel manière qu'il vient à la suite des autres fichiers (nomenclature numérique). Il est FORTEMENT conseillé de s'inspiré des fichiers précédents.
+
+* Le contenu : 
+  
+  * une première partie paramétrage permet, ponctuellement, de passer un certain nombre de variables nécessaire à la mise à jour (ex : `user_codex` nom du rôle administrateur, spécifique à la base de données - `phase` qui permet de gerer une phase de test de la mise à jour de la base si nécessaire).
+  * une deuxieme partie permet de réaliser les modifications à réaliser sur la base (ALTER TABLE, INSERT/UPDATE...). **ATTENTION**, il est impératif que le script de mise à jour puisse être répété (par exemple, si le script comprend un CREATE TABLE, il faudra auparavant un DROP TABLE IF EXISTS).
+  * une troisième partie permet de gérer la traçabilité de la mise à jour. Il faut alors ici décrire la raison de la mise à jour, le code du dernier commit ainsi que le nom du fichier sql en question.
+
+* La phase de test : avant de mettre votre script en production, assurez-vous que la variable `phase` soit bien égal à `test` et lancer/modifier autant que souhaitez le script.
+* Lancement du fichier sql : Une fois que le script est finalisé, commentez/décommentez les lignes de la variable `phase` pour qu'elle soit égal à `prod`. Lancez une dernière fois le fichier. Ainsi, l'historique de votre base sera à jour.
+* Commit des modifications : ce nouveau fichier pourra alors être le fruit d'un commit spécificique, et pourra êter partagé avec les autres développeurs.
 
 ******************************************************
 Comment créer une nouvelle rubrique?

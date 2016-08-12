@@ -242,7 +242,7 @@
 <li>README.md : description de l&#8217;application.</li>
 </ul>
 <div class="section" id="mise-a-jour-de-l-architecture-fichier">
-<h3>Mise à jour de l&#8217;architecture fichier<a class="headerlink" href="#mise-a-jour-de-l-architecture-fichier" title="Lien permanent vers ce titre">¶</a></h3>
+<span id="maj-codex"></span><h3>Mise à jour de l&#8217;architecture fichier<a class="headerlink" href="#mise-a-jour-de-l-architecture-fichier" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Le Codex est un projet libre de droit, déposé sur github (<a class="reference external" href="http://github.com/fedecbn/codex">http://github.com/fedecbn/codex</a>). La mise à jour des fichiers se fait directement par l&#8217;utilisation de de git (git pull).</p>
 </div>
 </div>
@@ -301,13 +301,26 @@
 </div>
 <div class="section" id="mise-a-jour-de-la-base-de-donnees">
 <span id="maj-bdd"></span><h3>Mise à jour de la base de données<a class="headerlink" href="#mise-a-jour-de-la-base-de-donnees" title="Lien permanent vers ce titre">¶</a></h3>
-<p>La mise à jour de la base de données n&#8217;est pas automatique avec la mise à jour du code. Un procédure parallèle doit être géré à chaque mise à jour de la base.</p>
-<p>Le fonctionnement est le suivant :</p>
+<p>La mise à jour de la base de données n&#8217;est pas automatique avec la mise à jour du code. Un procédure parallèle doit être réalisé à chaque mise à jour de la base.</p>
+<p><strong>Dans le cas où vous souhaitez simplement mettre à jour la base de données suivant les modifications réalisées par les autres développeurs</strong>, le fonctionnement est le suivant :</p>
 <ul class="simple">
-<li>Création d&#8217;un fichier sql : Lors d&#8217;un développement nécesitant la mise à jour de la base de données, cette modification doit êter scripté en sql ET générique (applicable à toute les situations possibles). Ce fichier doit être inspiré des fichiers précédents.</li>
+<li>Comparez les mises à jours : dans la base de données, regarder le contenu de la table <cite>applications.update_bdd</cite> et vérifiez les dernières mises à jours réalisées. Un fois la mise à jour logiciel réalisée avec git (cf. <a class="reference internal" href="#maj-codex"><span class="std std-ref">Mise à jour de l&#8217;architecture fichier</span></a>). Comparez avec le numéro des dernièrs fichiers présent dans le dossier _SQL/update_bdd.</li>
+<li>Lancez les mise à jour : tous les fichiers dont le nom n&#8217;apparait pas dans la table <cite>applications.update_bdd</cite> devront être lancés. Assurez-vous, dans les variables initiales qu&#8217;il n&#8217;est pas nécessaire de renseigner quelquechose au début du fichier.</li>
 </ul>
-<p>A POURSUIVRE</p>
-<p>Cette procédure manuelle pourrait être automatisé à chaque nouveau fichier sql ajouté (détection d&#8217;un nouveau fichier par rapport à l&#8217;historique des mise à jour).</p>
+<p>Cette procédure manuelle pourrait être, à terme, automatisé à chaque nouveau fichier sql ajouté (détection d&#8217;un nouveau fichier par rapport à l&#8217;historique des mise à jour).</p>
+<p><strong>Dans le cas où vous souhaitez vous même proposer une nouvelle modification à la base</strong>, le fonctionnement est le suivant :</p>
+<ul class="simple">
+<li>Création d&#8217;un fichier sql : Lors d&#8217;un développement nécesitant la mise à jour de la base de données, cette modification doit êter scripté en sql ET générique (applicable à toute les situations possibles, générique face aux utilisateurs impactés). Ce fichier doit être positionner avec les autres fichiers de mise à jours (dossier _SQL/update_bdd) et doit être nommé de tel manière qu&#8217;il vient à la suite des autres fichiers (nomenclature numérique). Il est FORTEMENT conseillé de s&#8217;inspiré des fichiers précédents.</li>
+<li>Le contenu :<ul>
+<li>une première partie paramétrage permet, ponctuellement, de passer un certain nombre de variables nécessaire à la mise à jour (ex : <cite>user_codex</cite> nom du rôle administrateur, spécifique à la base de données - <cite>phase</cite> qui permet de gerer une phase de test de la mise à jour de la base si nécessaire).</li>
+<li>une deuxieme partie permet de réaliser les modifications à réaliser sur la base (ALTER TABLE, INSERT/UPDATE...). <strong>ATTENTION</strong>, il est impératif que le script de mise à jour puisse être répété (par exemple, si le script comprend un CREATE TABLE, il faudra auparavant un DROP TABLE IF EXISTS).</li>
+<li>une troisième partie permet de gérer la traçabilité de la mise à jour. Il faut alors ici décrire la raison de la mise à jour, le code du dernier commit ainsi que le nom du fichier sql en question.</li>
+</ul>
+</li>
+<li>La phase de test : avant de mettre votre script en production, assurez-vous que la variable <cite>phase</cite> soit bien égal à <cite>test</cite> et lancer/modifier autant que souhaitez le script.</li>
+<li>Lancement du fichier sql : Une fois que le script est finalisé, commentez/décommentez les lignes de la variable <cite>phase</cite> pour qu&#8217;elle soit égal à <cite>prod</cite>. Lancez une dernière fois le fichier. Ainsi, l&#8217;historique de votre base sera à jour.</li>
+<li>Commit des modifications : ce nouveau fichier pourra alors être le fruit d&#8217;un commit spécificique, et pourra êter partagé avec les autres développeurs.</li>
+</ul>
 </div>
 </div>
 <div class="section" id="comment-creer-une-nouvelle-rubrique">
