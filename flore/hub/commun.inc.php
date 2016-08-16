@@ -38,7 +38,8 @@ $bouton2 = array (
 		array ("id" => "verif","titre"=>"Vérifier conformité","text" => "Dernière vérification : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "diff","titre"=>"Analyser  différences","text" => "Dernière analyse : ","niveau" => 128,"cbn"=>true),
 		array ("id" => "push","titre"=>"Pousser les données","text" => "Dernier push : ","niveau" => 128,"cbn"=>true),
-		array ("id" => "pull","titre"=>"Tirer les données","text" => "Dernier pull : ","niveau" => 128,"cbn"=>true)
+		array ("id" => "pull","titre"=>"Tirer les données","text" => "Dernier pull : ","niveau" => 128,"cbn"=>true),
+		array ("id" => "publicate","titre"=>"Publier les données","text" => "Dernière publication : ","niveau" => 128,"cbn"=>true)
 		);
 $bouton3 = array (
 		
