@@ -20,7 +20,7 @@ $table="syntaxa.st_cortege_floristique";
 
 //----------------------------------------------------------------------------- PARMS.
 $idsyntaxon = isset($_POST['idsyntaxon']) ? $_POST['idsyntaxon'] : "";
-//$idrattachement= isset($_POST['idrattachement']) ? $_POST['idrattachement'] : "";;
+$idrattachement= isset($_POST['idrattachement']) ? $_POST['idrattachement'] : "";;
 $FICHE_TYPE = isset($_POST['FICHE_TYPE']) ? $_POST['FICHE_TYPE'] : 1;
 $taxon = isset($_POST['taxon']) ? $_POST['taxon'] : "";
 $CD_REF = isset($_POST['CD_REF']) ? $_POST['CD_REF'] : "";
@@ -59,8 +59,8 @@ alter table syntaxa.st_cortege_floristique add column cd_ref text;
 alter table syntaxa.st_cortege_floristique add column nom_complet text;
 alter table syntaxa.st_cortege_floristique add column "rqTaxon" text;
 */
-//      $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,id_rattachement_referentiel,cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7',".$idrattachement.",".$CD_REF.",'".$taxon."',".sql_format($COMM).");";
-        $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7',".$CD_REF.",'".$taxon."',".sql_format($COMM).");";
+     $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,\"idRattachementReferentiel\",cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7','".$idrattachement."',".$CD_REF.",'".$taxon."',".sql_format($COMM).");";
+//   $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7',".$CD_REF.",'".$taxon."',".sql_format($COMM).");";
 echo "idrattachement:". $idrattachement."<br>";
 		echo $query."<br>"; 
 		$result=pg_query($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);

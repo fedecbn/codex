@@ -31,7 +31,8 @@ $(document).ready(function() {
                         return{
                             label: item.NOM_COMPLET,
                             value: item.value,
-                            CD_REF: item.CD_REF
+                            CD_REF: item.CD_REF,
+							idrattachement: item.idrattachement
                         }
                     }));
                 }
@@ -40,11 +41,13 @@ $(document).ready(function() {
         minLength:6,
         select: function(event, ui){
             $('#taxon2_CD_REF').val(ui.item.CD_REF);
+			$('#idrattachement').val(ui.item.idrattachement);
         }
 	});
     $("#taxon2").change(function() {
         if ($("#taxon2").val() == ""){
             $("#taxon2_CD_REF").val("");
+			$("#idrattachement").val("");
         }
     });
 
@@ -188,13 +191,14 @@ function taxon_list(FICHE_TYPE){
 function taxon_add(FICHE_TYPE){
     var idsyntaxon = $("#idsyntaxon").val();                           
     var taxon = $("#taxon"+FICHE_TYPE).val();                           
-    var CD_REF = $("#taxon"+FICHE_TYPE+"_CD_REF").val();                           
+    var CD_REF = $("#taxon"+FICHE_TYPE+"_CD_REF").val();
+	var idrattachement = $("#idrattachement").val();   	
     var COMM = $("#COMM").val();                           
 
     console.log('taxon_add FICHE_TYPE='+FICHE_TYPE);
     if (idsyntaxon != "" & taxon != "" & CD_REF != "") 
     {
-    	var url = 'submit=1&taxon='+escape(taxon)+'&CD_REF='+escape(CD_REF)+'&FICHE_TYPE='+FICHE_TYPE+'&idsyntaxon='+escape(idsyntaxon)+'&COMM='+escape(COMM);              
+    	var url = 'submit=1&taxon='+escape(taxon)+'&CD_REF='+escape(CD_REF)+'&idrattachement='+escape(idrattachement)+'&FICHE_TYPE='+FICHE_TYPE+'&idsyntaxon='+escape(idsyntaxon)+'&COMM='+escape(COMM);              
 		$.ajax({
 			type: "POST",
             url: "../commun/taxon_process.php",
@@ -207,6 +211,7 @@ function taxon_add(FICHE_TYPE){
 				$("#taxon"+FICHE_TYPE).val('');
 				$("#taxon"+FICHE_TYPE+"_CD_REF").val('');
 				$("#COMM").val('');
+				$("#idrattachement").val('');
 				taxon_list(FICHE_TYPE);
 			}
 		});
