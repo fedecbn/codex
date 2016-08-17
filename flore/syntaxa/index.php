@@ -61,6 +61,7 @@ $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 <script type="text/javascript" language="javascript" src="js/commun.js"></script>
+<script type="text/javascript" language="javascript" src="js/alliance-form.js"></script> 
 
 <!-- Utilise le jquery validation plugin pour obliger le remplissage de certaines cases du formulaire avant l'enregistrement--> 
 <script type="text/javascript" language="javascript" >
@@ -317,7 +318,7 @@ switch ($mode) {
 					$result_etage_bioclim_enregistre = $output4;
 					//var_dump($result_etage_bioclim);
 
-			//QUERY CORTEGE FLORISTIQUE
+/*			//QUERY CORTEGE FLORISTIQUE
 			$query_cortege_flo= $query_module_cortege_floristique.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result_cortege_flo=pg_query($db,$query_cortege_flo) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_cortege_flo),false);
@@ -328,7 +329,7 @@ switch ($mode) {
 					$result_cortege_flo_enregistre = $output5;
 					//var_dump($result_etage_bioclim);
 
-			
+*/			
 
 
 			// Loop through rows in the result set
@@ -371,8 +372,8 @@ switch ($mode) {
 			echo ("<br>");
 			metaform_text ("Identifiant du syntaxon"," ",30,"width:30em;","idSyntaxon",pg_result($result_syntaxon,0,"\"idSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'idSyntaxon'".";"),0,"description" ));		
 			metaform_text ("Identifiant du syntaxon retenu"," ",30,"width:30em;","idSyntaxonRetenu",pg_result($result_syntaxon,0,"\"idSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'idSyntaxonRetenu'".";"),0,"description" ));							
-			metaform_text ("Nom du syntaxon","",30,"width:30em;","nomSyntaxon",pg_result($result_syntaxon,0,"\"nomSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxon'".";"),0,"description" ));
-			metaform_text ("Auteur du syntaxon","",30,"width:30em;","auteurSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"auteurSyntaxon\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'auteurSyntaxon'".";"),0,"description" ));
+			metaform_text ("Nom du syntaxon","",30,"width:30em;","nomSyntaxon",pg_result($result_syntaxon,0,"\"nomSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxon'".";"),0,"description" ),'',"off");
+			metaform_text ("Auteur du syntaxon","",30,"width:30em;","auteurSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"auteurSyntaxon\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'auteurSyntaxon'".";"),0,"description" ),'',"off");
 			metaform_text ("Nom complet du syntaxon"," bloque",30,"width:30em;","nomCompletSyntaxon",pg_result($result_syntaxon,0,"\"nomCompletSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
 			metaform_text ("Nom raccourcit"," ",30,"width:30em;","nomSyntaxonRaccourci",pg_result($result_syntaxon,0,"\"nomSyntaxonRaccourci\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRaccourci'".";"),0,"description" ));
 			metaform_sel ("Type de synonymie","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result_syntaxon,0,"\"typeSynonymie\""), pg_fetch_result(pg_query ($db,$query_description."'typeSynonymie'".";"),0,"description" ));
@@ -670,6 +671,17 @@ switch ($mode) {
 
 			/*Cortège floristique*/
 			echo ("<br>CORTEGE FLORISTIQUE <hr>");
+			echo "<br>";
+			echo ("<input type=\"hidden\" size=\"60\" id=\"idsyntaxon\" value=$id />");
+			echo ("<input type=\"hidden\" size=\"60\" id=\"taxref_flore_sql\" value=\"SELECT cd_ref_referentiel as CD_REF,nom_complet_taxon_referentiel as NOM_COMPLET, id_rattachement_referentiel FROM syntaxa.referentiel_taxo where version_referentiel='7' AND \" />");
+            echo ("<label class=\"preField\">Plantes</label><input type=\"text\" style=\"padding: 2px;font-size: 14;border: 2px solid #C6C5B5;\" id=\"taxon2\" size=\"45\" maxlength=\"200\" /> ");
+            echo ("<input type=\"hidden\" id=\"taxon2_CD_REF\" />");
+            echo ("<img src=\"../../_GRAPH/details_open.png\" class=\"add\" border=\"0\" title=\"Ajouter\" onclick=\"javascript:return taxon_add(2);\"/><br>"); 
+            echo ("<label class=\"preField\">Commentaire</label><input type=\"text\" style=\"padding: 2px;font-size: 14;border: 2px solid #C6C5B5;\" id=\"COMM\" size=\"49\" maxlength=\"200\" /><br> ");
+			echo "liste taxon2:<br>";
+			echo ("<div id=\"taxon_list_2\"></div>");
+            echo ("<script>taxon_list(2)</script>");
+
 			
 			/*la liste est trop longue a charger*/
 /*			echo "<br>";
