@@ -68,11 +68,14 @@ echo "idrattachement:". $idrattachement."<br>";
     $query="SELECT * FROM ".$table." WHERE \"codeEnregistrementSyntaxon\"='".$idsyntaxon."';";    // Affiche la liste
 //echo $query; 
 	$result=pg_query($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
-	echo ("<table class=\"list\" >");
+	echo ("<table border=1 class=\"list\" >");
     if (pg_num_rows($result)>0)
     	while($row = pg_fetch_array($result))
         {
-        	echo '<tr class=\"list\" ><form id="form" action="taxon_delete.php?id='.$row['idCortegeFloristique'].'" method="post"><td valign="middle" width="100%">'.utf8_encode($row['nom_complet']).' '.utf8_encode($row['rqTaxon']).'</td>
+			//<td valign="middle" width="100%">'.utf8_encode($row['nom_complet']).' '.utf8_encode($row['rqTaxon']).'</td>
+        	echo '<tr class=\"list\" ><form id="form" action="taxon_delete.php?id='.$row['idCortegeFloristique'].'" method="post">
+			<td valign="middle" width="50%">'.utf8_encode($row['nom_complet']).'</td>
+			<td valign="middle" width="50%">'.utf8_encode($row['rqTaxon']).'</td>
     		<td valign="middle" width="10%">
     		<input type="hidden" class="tax_id" id="tax_id" value="'.$row['idCortegeFloristique'].'" />
 			<input type="hidden" class="type_id" id="tax_id" value="'.$FICHE_TYPE.'" />

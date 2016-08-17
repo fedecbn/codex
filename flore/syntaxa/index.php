@@ -679,26 +679,9 @@ switch ($mode) {
 			echo ("<label class=\"preField\">idrattachement</label><input type=\"text\" id=\"idrattachement\" />");
             echo ("<img src=\"../../_GRAPH/details_open.png\" class=\"add\" border=\"0\" title=\"Ajouter\" onclick=\"javascript:return taxon_add(2);\"/><br>"); 
             echo ("<label class=\"preField\">Commentaire</label><input type=\"text\" style=\"padding: 2px;font-size: 14;border: 2px solid #C6C5B5;\" id=\"COMM\" size=\"49\" maxlength=\"200\" /><br> ");
-			echo "liste taxon2:<br>";
+//			echo "liste taxon2:<br>";
 			echo ("<div id=\"taxon_list_2\"></div>");
-            echo ("<script>taxon_list(2)</script>");
-
-			
-			/*la liste est trop longue a charger*/
-/*			echo "<br>";
-			$num_rows_cortege_flo = pg_num_rows($result_cortege_flo);
-			if ($num_rows_cortege_flo > 0) 
-			{
-				metaform_sel_multi ("Cortège floristique","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo, this.form.cortege_flo_select);'",$ref[$champ_ref['idRattachementReferentiel']],"cortege_flo","",pg_fetch_result(pg_query ($db,$query_description."'nom_complet_taxon_referentiel'".";"),0,"description" ));
-				metaform_sel_multi ("Cortège floristique sélectionné","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo_select, this.form.cortege_flo);'",$result_cortege_flo_enregistre,"cortege_flo_select","");
-			} 
-			else 
-			{
-				metaform_sel_multi ("Cortège floristique","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo, this.form.cortege_flo_select);'",$ref[$champ_ref['idRattachementReferentiel']],"cortege_flo","",pg_fetch_result(pg_query ($db,$query_description."'nom_complet_taxon_referentiel'".";"),0,"description" ));
-				metaform_sel_multi ("Cortège floristique sélectionné","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo_select, this.form.cortege_flo);'","","cortege_flo_select","");
-			}
-			echo "<br>";
-*/			
+            echo ("<script>taxon_list(2)</script>");		
 			echo ("</fieldset>");
 			echo ("<hr>");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
