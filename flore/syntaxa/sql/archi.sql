@@ -923,7 +923,7 @@ ALTER SEQUENCE "st_correspondance_pvf_idCorrespondancePVF_seq" OWNED BY st_corre
 --
 
 CREATE TABLE st_cortege_floristique (
-    "idCortegeFloristique" text,
+    "idCortegeFloristique" serial not null,
     "codeEnregistrementSyntaxon" text,
     "idRattachementReferentiel" text,
     "typeTaxon" text
