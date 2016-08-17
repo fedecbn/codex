@@ -638,7 +638,7 @@ function aff_table_next ($id_onglet,$id_liste) {
     echo ("<br>");
 }*/
 
-function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$placeholder='')
+function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$placeholder='',$autocomplete='on')
 {
 	
 	if (strpos($descr,"no_lab") === false)
@@ -649,7 +649,7 @@ function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$plac
 	if (!isset($extra)) $extra = "";		
 	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
 	if (strpos($descr,"bloque") !== false) {$extra .= " disabled class=\"bloque\"";}
-	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"   placeholder=\"$placeholder\" size=\"".$long."\" value=\"".$val."\" $extra style=\"$style\"/>");
+	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"   placeholder=\"$placeholder\" autocomplete=\"$autocomplete\" size=\"".$long."\" value=\"".$val."\"  $extra style=\"$style\"/>");
     echo ("<br>");
 }
 
