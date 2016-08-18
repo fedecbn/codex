@@ -673,7 +673,7 @@ switch ($mode) {
 			echo ("<br>CORTEGE FLORISTIQUE <hr>");
 			echo "<br>";
 			echo ("<input type=\"hidden\" size=\"60\" id=\"idsyntaxon\" value=$id />");
-			echo ("<input type=\"hidden\" size=\"60\" id=\"taxref_flore_sql\" value=\"SELECT cd_ref_referentiel as cd_ref,nom_complet_taxon_referentiel as nom_complet, id_rattachement_referentiel FROM syntaxa.referentiel_taxo where version_referentiel='7' AND \" />");
+			echo ("<input type=\"hidden\" size=\"60\" id=\"taxref_flore_sql\" value=\"SELECT cd_ref_referentiel as cd_ref,nom_complet_taxon_referentiel as nom_complet, id_rattachement_referentiel FROM syntaxa.referentiel_taxo where code_referentiel ='TAXREF' and version_referentiel='7' AND \" />");
             echo ("<label class=\"preField\">Plantes</label><input type=\"text\" style=\"padding: 2px;font-size: 14;border: 2px solid #C6C5B5;\" id=\"taxon2\" size=\"45\" maxlength=\"200\" /> ");
             echo ("<label class=\"preField\">cd_ref</label><input type=\"text\" id=\"taxon2_CD_REF\" />");
 			echo ("<label class=\"preField\">idrattachement</label><input type=\"text\" id=\"idrattachement\" />");
