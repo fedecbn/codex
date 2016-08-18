@@ -102,6 +102,13 @@
 			return (false);
 		});
 		
+	$( "#publicate_button" )
+        .button({text: true})
+        .click(function() {
+			metaForm ("Publier des données",670,500,'#publicate-dialog',"form.php","submit.php",$(this).attr('name'),$(this).attr('value'),"Publier");
+			return (false);
+		});
+		
 	$( "#bilan_button" )
         .button({text: true})
         .click(function() {
