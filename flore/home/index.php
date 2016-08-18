@@ -105,6 +105,10 @@ switch ($action)
 			echo ("<b>Fédération des Conservatoires botaniques nationaux</b><br><br>");
 			echo ("<a href=\"http://www.fcbn.fr/\" target=\"_blank\">www.fcbn.fr</a><br>");
 			echo ("<br>");
+			echo ("<center><br>Documentation :<br>");
+			echo ("<br>");
+			echo ("<a href=\"http://codex.fcbn.fr/docs/build/html/\" target=\"_blank\">Cliquez pour un accès à la doc</a><br>");
+			echo ("<br>");
 				echo ("<form method=\"POST\" id=\"mail1\" name=\"mail\" action=\"#\" >");
 				echo ("<input type=\"hidden\" name=\"action\" id=\"action\" value=\"mdp\" />");
 				// echo ("<input type=\"submit\" value=\"récuperer mon mot de passe\" />");
