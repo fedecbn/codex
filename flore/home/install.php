@@ -448,6 +448,7 @@ function create_query($sql,$user_codex) {
 	$query = file_get_contents($sql);
 	$query = str_replace("pg_user",$user_codex,$query);
 	$query = str_replace("postgres",$user_codex,$query);
+	$query = str_replace("user_codex",$user_codex,$query);
 	return $query;
 }	
 ?>
