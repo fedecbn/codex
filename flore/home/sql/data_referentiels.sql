@@ -871,6 +871,15 @@ INSERT INTO champs (id, rubrique_champ, nom_champ, type, description, table_cham
 INSERT INTO champs (id, rubrique_champ, nom_champ, type, description, table_champ, referentiel, pos, description_longue, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, jvs_desc_column, jvs_filter_column) VALUES (362, 'lsi', 'link_2', 'string', 'Lien 2', 'news', NULL, 6, 'lien de la news', true, 'link_2', 'link_2', true, 'news', '{ "sWidth": "5%" }', '{ "type": "text" }');
 INSERT INTO champs (id, rubrique_champ, nom_champ, type, description, table_champ, referentiel, pos, description_longue, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, jvs_desc_column, jvs_filter_column) VALUES (363, 'lsi', 'date', 'string', 'Date', 'news', NULL, 7, 'date de la création du billet', true, 'date', 'date', true, 'news', '{ "sWidth": "5%" }', '{ "type": "text" }');
 
+--- Mise à jour 
+INSERT INTO referentiels.champs (rubrique_champ, nom_champ, type, description, table_champ, referentiel, pos, description_longue, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, jvs_desc_column, jvs_filter_column) VALUES 
+('user', 'niveau', 'val', 'Niveau de droit', 'utilisateur_role', null, 4, 'Niveau de droit', false, 'niveau', 'niveau', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
+('user', 'id_user', 'string', 'Code utilisateur', 'utilisateur', NULL, 0, 'Code utilisateur', false, 'id_user', 'id_user', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
+('user', 'prenom', 'string', 'Prénom', 'utilisateur', NULL, 1, 'Prénom', false, 'prenom', 'prenom', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
+('user', 'nom', 'string', 'Nom', 'utilisateur', NULL, 2, 'Nom', false, 'nom', 'nom', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
+('user', 'referent', 'bool', 'Référent LSI', 'utilisateur_role', NULL, 5, 'Référent LSI', false, 'referent', 'referent', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
+('user', 'id_cbn', 'val', 'Institution', 'utilisateur', 'id_cbn', 3, 'Institution', false, 'id_cbn', 'id_cbn', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }');
+
 
 --
 -- Name: champs_id_seq; Type: SEQUENCE SET; Schema: referentiels; Owner: postgres
@@ -996,6 +1005,8 @@ INSERT INTO chgt_cat (id_chgt_cat, cd_chgt_cat, lib_chgt_cat) VALUES (4, 'Nve', 
 INSERT INTO chgt_cat (id_chgt_cat, cd_chgt_cat, lib_chgt_cat) VALUES (5, 'NVm', 'Changement non véritable (NV)- lié à un changement de la méthodologie ou des lignes directrices d’application (NVm)');
 INSERT INTO chgt_cat (id_chgt_cat, cd_chgt_cat, lib_chgt_cat) VALUES (6, 'Non', 'Aucun changement (Non)');
 
+INSERT INTO referentiels.champs_ref (nom_ref, cle, valeur, schema, table_ref, orderby, rubrique_ref, where_champ, where_value) VALUES 
+('id_cbn', 'id_cbn', 'lib_cbn', 'referentiels', 'cbn', '', 'user', NULL, NULL);
 
 --
 -- Name: chgt_cat_id_chgt_cat_seq; Type: SEQUENCE SET; Schema: referentiels; Owner: pg_user
