@@ -1,0 +1,57 @@
+COPY refnat.taxref_changes_30_utf8 to '/home/export_pgsql/taxref_changes_30_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_40_utf8 to '/home/export_pgsql/taxref_changes_40_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_50_utf8 to '/home/export_pgsql/taxref_changes_50_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_60_utf8 to '/home/export_pgsql/taxref_changes_60_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_70_utf8 to '/home/export_pgsql/taxref_changes_70_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_80_utf8 to '/home/export_pgsql/taxref_changes_80_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_90_utf8 to '/home/export_pgsql/taxref_changes_90_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv20_utf8 to '/home/export_pgsql/taxrefv20_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv30_utf8 to '/home/export_pgsql/taxrefv30_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv40_utf8 to '/home/export_pgsql/taxrefv40_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv50_utf8 to '/home/export_pgsql/taxrefv50_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv60_utf8 to '/home/export_pgsql/taxrefv60_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv70_utf8 to '/home/export_pgsql/taxrefv70_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv80_utf8 to '/home/export_pgsql/taxrefv80_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv90_utf8 to '/home/export_pgsql/taxrefv90_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+
+
+
+
+
+truncate refnat.taxref_changes_30_utf8  ;
+truncate refnat.taxref_changes_40_utf8  ;
+truncate refnat.taxref_changes_50_utf8  ;
+truncate refnat.taxref_changes_60_utf8  ;
+truncate refnat.taxref_changes_70_utf8 ;
+truncate refnat.taxref_changes_80_utf8 ;
+truncate refnat.taxref_changes_90_utf8   ;
+truncate refnat.taxrefv20_utf8  ;
+truncate refnat.taxrefv30_utf8 ;
+truncate refnat.taxrefv40_utf8  ;
+truncate refnat.taxrefv50_utf8 ;
+truncate refnat.taxrefv60_utf8 ;
+truncate refnat.taxrefv70_utf8  ;
+truncate refnat.taxrefv80_utf8 ;
+truncate refnat.taxrefv90_utf8 ;
+
+
+--attention il faut refaire le test en incluant la table taxons
+COPY refnat.taxref_changes_30_utf8 from 'F:\export_refnat\taxref_changes_30_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_40_utf8 from 'F:\export_refnat\taxref_changes_40_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_50_utf8 from 'F:\export_refnat\taxref_changes_50_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_60_utf8 from 'F:\export_refnat\taxref_changes_60_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_70_utf8 from 'F:\export_refnat\taxref_changes_70_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_80_utf8 from 'F:\export_refnat\taxref_changes_80_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxref_changes_90_utf8 from 'F:\export_refnat\taxref_changes_90_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv20_utf8 from 'F:\export_refnat\taxrefv20_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv30_utf8 from 'F:\export_refnat\taxrefv30_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv40_utf8 from 'F:\export_refnat\taxrefv40_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv50_utf8 from 'F:\export_refnat\taxrefv50_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv60_utf8 from 'F:\export_refnat\taxrefv60_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv70_utf8 from 'F:\export_refnat\taxrefv70_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv80_utf8 from 'F:\export_refnat\taxrefv80_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+COPY refnat.taxrefv90_utf8 from 'F:\export_refnat\taxrefv90_utf8.csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;
+
+
+SELECT pg_reload_conf();
+show checkpoint_segments;

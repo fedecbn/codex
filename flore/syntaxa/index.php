@@ -61,6 +61,7 @@ $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript" language="javascript" src="../../_INCLUDE/js/icheck.min.js"></script>
 <script type="text/javascript" language="javascript" src="js/commun.js"></script>
+<script type="text/javascript" language="javascript" src="js/alliance-form.js"></script> 
 
 <!-- Utilise le jquery validation plugin pour obliger le remplissage de certaines cases du formulaire avant l'enregistrement--> 
 <script type="text/javascript" language="javascript" >
@@ -172,37 +173,38 @@ switch ($mode) {
     break;
 
 /*------------------------------------------------------------------------------ #CAS AJOUT D'UNE FICHE */
-	case "add" : {
+	case "add" : 
+	{
 /*A faire: Ajouter L'autocomplétion*/
-include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de fiche*/
-    }
-    break;
+		include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de fiche*/
+	} break;
 
 /*--------------------------------------------------------------------------------------------------------- */
 /*------------------------------------------------------------------------------ #CAS MODIFICATION DE FICHE */
 /*--------------------------------------------------------------------------------------------------------- */
 	case "view" : 
-	case "edit" : {
+	case "edit" : 
+	{
 /*------------------------------------------------------------------------------ REF. */
 
 
 /*------------------------------------------------------------------------------ #Onglet 1*/
-        echo ("<div id=\"$id_page\" >");
-        echo ("</div>");
-/*------------------------------------------------------------------------------ #Onglet Fiche*/
-        echo ("<div id=\"fiche\" >");
-        echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
-
-        echo ("<div style=\"float:left;\">");
-            echo ("<font size=5 color=#2D8946 >".$lang[$lang_select]['edit_fiche']."</font>");
-        echo ("</div>");
-        echo ("<div style=\"float:right;\">");
-            if ($droit['save_fiche']) echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-            if ($droit['retour_fiche']) echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
+		echo ("<div id=\"$id_page\" >");
 		echo ("</div>");
-		if (isset($_GET['id']) & !empty($_GET['id'])) { 
-            $id="'".$_GET['id']."'";
-            echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
+/*------------------------------------------------------------------------------ #Onglet Fiche*/
+		echo ("<div id=\"fiche\" >");
+		echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
+		echo ("<div style=\"float:left;\">");
+		echo ("<font size=5 color=#2D8946 >".$lang[$lang_select]['edit_fiche']."</font>");
+		echo ("</div>");
+		echo ("<div style=\"float:right;\">");
+		if ($droit['save_fiche']) echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+		if ($droit['retour_fiche']) echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
+		echo ("</div>");
+		if (isset($_GET['id']) & !empty($_GET['id'])) 
+		{ 
+			$id="'".$_GET['id']."'";
+			echo ("<input type=\"hidden\" name=\"id\" value=\"".$id."\" />");
 			
 			
         /*-----------------REQUETES UTILISEES POUR RENVOYER LE RESULTAT DES TABLES AYANT DEJA DES DONNEES-------------*/
@@ -316,7 +318,7 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 					$result_etage_bioclim_enregistre = $output4;
 					//var_dump($result_etage_bioclim);
 
-			//QUERY CORTEGE FLORISTIQUE
+/*			//QUERY CORTEGE FLORISTIQUE
 			$query_cortege_flo= $query_module_cortege_floristique.$id.";";				
 			//utilisation de pg_numrow pour s'assurer que la table est pleine et ne rien afficher si pas pleine
 			$result_cortege_flo=pg_query($db,$query_cortege_flo) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result_cortege_flo),false);
@@ -327,15 +329,17 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 					$result_cortege_flo_enregistre = $output5;
 					//var_dump($result_etage_bioclim);
 
-			
+*/			
 
 
 			// Loop through rows in the result set
-			for($i = 0; $i < $numrows2; $i++) { $row = pg_fetch_array($result_biblio, $i);echo $row["codeEnregistrement"];}
+//			for($i = 0; $i < $numrows2; $i++) { $row = pg_fetch_array($result_biblio, $i);
+//			echo $row["codeEnregistrement"];}
 			
 
 			
-            if (pg_num_rows ($result_syntaxon)) {
+			if (pg_num_rows ($result_syntaxon)) 
+			{
 			
 			echo ("<br><br>");
 				
@@ -349,65 +353,63 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 	
 	
 	//------------------------------------------------------------------------------ EDIT fieldset1
+	//---------1er encadré de la page
 	//----------Attention la fonction pg_fetch_result() is case sensitive donc faire attention aux noms de colonnes avec majuscule en les encadrant avec \"\"
-//var_dump($ref);
-//var_dump(pg_result($result,0,"\"salinite\""));
-//var_dump(pg_result($result,0,"\"rangSyntaxon\""));
-//var_dump($ref[$champ_ref["salinite"]]);
-//var_dump($ref[$champ_ref["temperature"]]);
-//var_dump($ref['st_ref_type_synonymie']);
-//var_dump($ref[$champ_ref["idCritiqueSyntax"]]);
-//var_dump($ref["st_ref_critique"]);
-//var_dump($aColumnsTot['syntaxa']['idCritique']);
-//var_dump($aColumnsTot['syntaxa']['idCritiqueSyntax']);
-//var_dump($aColumnsTot['syntaxa']['exposition']);
-//var_dump($aColumnsTot['syntaxa']);
-//$identite = array('nom' => 'blabla','nom' => 'blibli', 'prenom' => 'Hugo','age' => 19, 'estEtudiant' => true); var_dump($identite['nom']);
+			//var_dump($ref);
+			//var_dump(pg_result($result,0,"\"rangSyntaxon\""));
+			//var_dump($ref[$champ_ref["idCritiqueSyntax"]]);
+			//var_dump($ref["st_ref_critique"]);
+			//var_dump($aColumnsTot['syntaxa']['exposition']);
+			//var_dump($aColumnsTot['syntaxa']);
 
 
 			echo ("<table border=0 width=\"100%\"><tr valign=top ><td width=50%>");
-//                    echo ("<fieldset style=\"width:670px;\" ><LEGEND> Habitat </LEGEND>");
-            echo ("<fieldset ><LEGEND> Nomenclature </LEGEND>");
-				metaform_sel ("Catalogue","",30,$ref[$champ_ref["idCatalogue"]],"idCatalogue",pg_result($result_syntaxon,0,"\"idCatalogue\""), pg_fetch_result(pg_query ($db,$query_description."'idCatalogue'".";"),0,"description" ));			
-				metaform_text ("<b>Code de l'enregistrement*</b>"," ",30,"width:30em;","codeEnregistrementSyntax",sql_format_quote(pg_result($result_syntaxon,0,"\"codeEnregistrementSyntax\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'codeEnregistrementSyntax'".";"),0,"description" ));
-				echo ("<br>");
-				metaform_text ("Identifiant du syntaxon"," ",30,"width:30em;","idSyntaxon",pg_result($result_syntaxon,0,"\"idSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'idSyntaxon'".";"),0,"description" ));		
-				metaform_text ("Identifiant du syntaxon retenu"," ",30,"width:30em;","idSyntaxonRetenu",pg_result($result_syntaxon,0,"\"idSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'idSyntaxonRetenu'".";"),0,"description" ));							
-				//metaform_text ("Code de l'enregistrement"," ",20,"<br>","codeEnregistrementSyntax",sql_format_quote(pg_result($result_syntaxon,0,"\"$colname1\"" ),'undo_text'));
-				metaform_text ("Nom du syntaxon","",30,"width:30em;","nomSyntaxon",pg_result($result_syntaxon,0,"\"nomSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxon'".";"),0,"description" ));
-				metaform_text ("Auteur du syntaxon","",30,"width:30em;","auteurSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"auteurSyntaxon\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'auteurSyntaxon'".";"),0,"description" ));
-				metaform_text ("Nom complet du syntaxon"," bloque",30,"width:30em;","nomCompletSyntaxon",pg_result($result_syntaxon,0,"\"nomCompletSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
-				metaform_text ("Nom raccourcit"," ",30,"width:30em;","nomSyntaxonRaccourci",pg_result($result_syntaxon,0,"\"nomSyntaxonRaccourci\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRaccourci'".";"),0,"description" ));
-				metaform_sel ("Type de synonymie","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result_syntaxon,0,"\"typeSynonymie\""), pg_fetch_result(pg_query ($db,$query_description."'typeSynonymie'".";"),0,"description" ));
-				metaform_text ("Nom syntaxon retenu"," ",30,"width:30em;","nomSyntaxonRetenu",pg_result($result_syntaxon,0,"\"nomSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRetenu'".";"),0,"description" ));
-				$tooltip=pg_fetch_result(pg_query ($db,$query_description."'rqNomenclaturale'".";"),0,"description" );
-				//style=\"width:70em;\"
-				metaform_text_area ("Remarque nomenclaturale","",57,50,"","rqNomenclaturale",sql_format_quote(pg_result($result_syntaxon,0,"\"rqNomenclaturale\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'rqNomenclaturale'".";"),0,"description" ));
-				metaform_sel ("Rang syntaxon","","",$ref[$champ_ref["rangSyntaxon"]],"rangSyntaxon",pg_result($result_syntaxon,0,"\"rangSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'rangSyntaxon'".";"),0,"description" ));
-				//metaform_text ("Nom syntaxon sup","",30,"width:30em;","nomSyntaxonSup",pg_result($result_syntaxon,0,"\"nomSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRetenu'".";"),0,"description" ));
-				metaform_text ("Nom français","",30,"width:30em;","nomFrancaisSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"nomFrancaisSyntaxon\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'nomFrancaisSyntaxon'".";"),0,"description" ));
-				metaform_text_area ("Diagnose courte","",57,50,"","diagnoseCourteSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"diagnoseCourteSyntaxon\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'diagnoseCourteSyntaxon'".";"),0,"description" ));
-				metaform_sel ("Typicité","",30,$ref[$champ_ref["idCritiqueSyntax"]],"idCritique",pg_result($result_syntaxon,0,"\"idCritique\""), pg_fetch_result(pg_query ($db,$query_description."'idCritique'".";"),0,"description" ));
-				metaform_text ("Remarque typicité","",30,"width:30em;","rqCritique",pg_result($result_syntaxon,0,"\"rqCritique\""), pg_fetch_result(pg_query ($db,$query_description."'rqCritique'".";"),0,"description" ));
+			
+			echo ("<fieldset ><LEGEND> Nomenclature </LEGEND>");
+			
+			metaform_sel ("Catalogue","",30,$ref[$champ_ref["idCatalogue"]],"idCatalogue",pg_result($result_syntaxon,0,"\"idCatalogue\""), pg_fetch_result(pg_query ($db,$query_description."'idCatalogue'".";"),0,"description" ));			
+			metaform_text ("<b>Code de l'enregistrement*</b>"," ",30,"width:30em;","codeEnregistrementSyntax",sql_format_quote(pg_result($result_syntaxon,0,"\"codeEnregistrementSyntax\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'codeEnregistrementSyntax'".";"),0,"description" ));
+			echo ("<br>");
+			metaform_text ("Identifiant du syntaxon"," ",30,"width:30em;","idSyntaxon",pg_result($result_syntaxon,0,"\"idSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'idSyntaxon'".";"),0,"description" ));		
+			metaform_text ("Identifiant du syntaxon retenu"," ",30,"width:30em;","idSyntaxonRetenu",pg_result($result_syntaxon,0,"\"idSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'idSyntaxonRetenu'".";"),0,"description" ));							
+			metaform_text ("Nom du syntaxon","",30,"width:30em;","nomSyntaxon",pg_result($result_syntaxon,0,"\"nomSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxon'".";"),0,"description" ),'',"off");
+			metaform_text ("Auteur du syntaxon","",30,"width:30em;","auteurSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"auteurSyntaxon\"" ),'undo_text'), pg_fetch_result(pg_query ($db,$query_description."'auteurSyntaxon'".";"),0,"description" ),'',"off");
+			metaform_text ("Nom complet du syntaxon"," bloque",30,"width:30em;","nomCompletSyntaxon",pg_result($result_syntaxon,0,"\"nomCompletSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'nomCompletSyntaxon'".";"),0,"description" ));
+			metaform_text ("Nom raccourcit"," ",30,"width:30em;","nomSyntaxonRaccourci",pg_result($result_syntaxon,0,"\"nomSyntaxonRaccourci\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRaccourci'".";"),0,"description" ));
+			metaform_sel ("Type de synonymie","",30,$ref[$champ_ref['typeSynonymie']],"typeSynonymie",pg_result($result_syntaxon,0,"\"typeSynonymie\""), pg_fetch_result(pg_query ($db,$query_description."'typeSynonymie'".";"),0,"description" ));
+			metaform_text ("Nom syntaxon retenu"," ",30,"width:30em;","nomSyntaxonRetenu",pg_result($result_syntaxon,0,"\"nomSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRetenu'".";"),0,"description" ));
+			$tooltip=pg_fetch_result(pg_query ($db,$query_description."'rqNomenclaturale'".";"),0,"description" );
+			//style=\"width:70em;\"
+			metaform_text_area ("Remarque nomenclaturale","",57,50,"","rqNomenclaturale",sql_format_quote(pg_result($result_syntaxon,0,"\"rqNomenclaturale\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'rqNomenclaturale'".";"),0,"description" ));
+			metaform_sel ("Rang syntaxon","","",$ref[$champ_ref["rangSyntaxon"]],"rangSyntaxon",pg_result($result_syntaxon,0,"\"rangSyntaxon\""), pg_fetch_result(pg_query ($db,$query_description."'rangSyntaxon'".";"),0,"description" ));
+			//metaform_text ("Nom syntaxon sup","",30,"width:30em;","nomSyntaxonSup",pg_result($result_syntaxon,0,"\"nomSyntaxonRetenu\""), pg_fetch_result(pg_query ($db,$query_description."'nomSyntaxonRetenu'".";"),0,"description" ));
+			metaform_text ("Nom français","",30,"width:30em;","nomFrancaisSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"nomFrancaisSyntaxon\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'nomFrancaisSyntaxon'".";"),0,"description" ));
+			metaform_text_area ("Diagnose courte","",57,50,"","diagnoseCourteSyntaxon",sql_format_quote(pg_result($result_syntaxon,0,"\"diagnoseCourteSyntaxon\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'diagnoseCourteSyntaxon'".";"),0,"description" ));
+			metaform_sel ("Typicité","",30,$ref[$champ_ref["idCritiqueSyntax"]],"idCritique",pg_result($result_syntaxon,0,"\"idCritique\""), pg_fetch_result(pg_query ($db,$query_description."'idCritique'".";"),0,"description" ));
+			metaform_text ("Remarque typicité","",30,"width:30em;","rqCritique",pg_result($result_syntaxon,0,"\"rqCritique\""), pg_fetch_result(pg_query ($db,$query_description."'rqCritique'".";"),0,"description" ));
 				
 
-            echo ("</fieldset>");
+			echo ("</fieldset>");
 			
-		/*------------------------------------------------------------------------------ EDIT fieldset2*/
+	//*------------------------------------------------------------------------------ EDIT fieldset2*/
+	//---------2d encadré de la page
+			
 			echo ("<fieldset  ><LEGEND> Bibliographie </LEGEND>");
-                /*On utilise ici le résultat de la query_biblio pour avoir accès à la table st_biblio*/
+			/*On utilise ici le résultat de la query_biblio pour avoir accès à la table st_biblio*/
 			
-				$num_rows_biblio = pg_num_rows($result_biblio);
-				if ($num_rows_biblio > 0) {
+			$num_rows_biblio = pg_num_rows($result_biblio);
+			if ($num_rows_biblio > 0) 
+			{
 				metaform_text_area ("Libellé de la ressource","",57,50,"","libPublication",sql_format_quote(pg_result($result_biblio,0,"\"libPublication\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'libPublication'".";"),0,"description" ));	
 				metaform_text_url ("url de la ressource","",20,"","urlPublication",pg_result($result_biblio,0,"\"urlPublication\""), pg_fetch_result(pg_query ($db,$query_description."'urlPublication'".";"),0,"description" ));
 				metaform_text ("Identifiant de la ressource","",20,"","codePublication",pg_result($result_biblio,0,"\"codePublication\""), pg_fetch_result(pg_query ($db,$query_description."'codePublication'".";"),0,"description" ));
-				}
-				else {
-					metaform_text_area ("Libellé de la ressource","",57,50,"","libPublication",'', pg_fetch_result(pg_query ($db,$query_description."'libPublication'".";"),0,"description" ));
-					metaform_text_url ("url de la ressource","",20,"","urlPublication",'', pg_fetch_result(pg_query ($db,$query_description."'urlPublication'".";"),0,"description" ));
-					metaform_text ("Identifiant de la ressource","",20,"","codePublication",'', pg_fetch_result(pg_query ($db,$query_description."'codePublication'".";"),0,"description" ));
-				}
+			}
+			else 
+			{
+				metaform_text_area ("Libellé de la ressource","",57,50,"","libPublication",'', pg_fetch_result(pg_query ($db,$query_description."'libPublication'".";"),0,"description" ));
+				metaform_text_url ("url de la ressource","",20,"","urlPublication",'', pg_fetch_result(pg_query ($db,$query_description."'urlPublication'".";"),0,"description" ));
+				metaform_text ("Identifiant de la ressource","",20,"","codePublication",'', pg_fetch_result(pg_query ($db,$query_description."'codePublication'".";"),0,"description" ));
+			}
 				echo ("</fieldset>");
 					
 				
@@ -432,83 +434,96 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 	
 */	
 	
-            echo ("</fieldset>");
+			echo ("</fieldset>");
 		/*------------------------------------------------------------------------------ EDIT fieldset3*/
-            echo ("<fieldset><LEGEND> Fichier rattaché (photo numérique) </LEGEND>");
-			   /* echo ("<a><input type=\"file\" name=\"file_image\" /></a>");
-               /* $list_photos=scandir (PNM_PHOTO_PATH);
-                $list_photos[0]=$list_photos[1]="";
-                metaform_sel2 ("Fichier rattaché","","style=width:30em;","<br>",$list_photos,"PHOTO",mysql_result($result,0,"PHOTO"));*/
-            echo ("</fieldset>");
+		//---------3eme encadré de la page
+			
+			echo ("<fieldset><LEGEND> Fichier rattaché (photo numérique) </LEGEND>");
+			/* echo ("<a><input type=\"file\" name=\"file_image\" /></a>");
+			/* $list_photos=scandir (PNM_PHOTO_PATH);
+			$list_photos[0]=$list_photos[1]="";
+			metaform_sel2 ("Fichier rattaché","","style=width:30em;","<br>",$list_photos,"PHOTO",mysql_result($result,0,"PHOTO"));*/
+			echo ("</fieldset>");
 		/*------------------------------------------------------------------------------ EDIT fieldset4*/
-            echo ("</td><td width=50%>");
+		//---------4eme encadré de la page
+			
+			echo ("</td><td width=50%>");
 			echo ("<fieldset><LEGEND> Correspondances </LEGEND>");
+			
 			echo ("<br>PHYTOSOCIOLOGIE <hr>");
-
-		
+			
 			$num_rows_pvf1 = pg_num_rows($result_pvf1);
 			$num_rows_pvf2 = pg_num_rows($result_pvf2);
 			
-			if ($num_rows_pvf1 > 0) {
-			//echo pg_result($result_pvf1,0,"\"idRattachementPVF\"");
-			metaform_sel ("Rattachement PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF1",pg_result($result_pvf1,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));			
-			} else 
+			if ($num_rows_pvf1 > 0) 
 			{
-			metaform_sel ("PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF1","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
+			//echo pg_result($result_pvf1,0,"\"idRattachementPVF\"");
+				metaform_sel ("Rattachement PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF1",pg_result($result_pvf1,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));			
+			} 
+			else 
+			{
+				metaform_sel ("PVF 1","",30,$ref['liste_pvf1'],"idRattachementPVF1","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
 			}
 			echo "<br>";
 			
-			if ($num_rows_pvf2 > 0) {
+			if ($num_rows_pvf2 > 0) 
+			{
 			//echo pg_result($result_pvf2,0,"\"idRattachementPVF\"");
-			metaform_sel (" Rattachement PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF2",pg_result($result_pvf2,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));	
+				metaform_sel (" Rattachement PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF2",pg_result($result_pvf2,0,"\"idRattachementPVF\""), pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));	
 			//dans le cas où les tables sont vides (pas d'enregistrement il faut faire une condition sinon l'affichage des données pose problème car le pg_result ne renvoi rien
-			} else {
+			} else 
+			{
 				metaform_sel ("PVF 2","",30,$ref['liste_pvf2'],"idRattachementPVF2","", pg_fetch_result(pg_query ($db,$query_description."'idRattachementPVF'".";"),0,"description" ));
 			}
 
-			
-	
 			echo ("<br>HABITATS<hr>");
 
 			$num_rows_hic = pg_num_rows($result_hic);
-			if ($num_rows_hic > 0) {
+			if ($num_rows_hic > 0) 
+			{
 			//var_dump( $result_hic_enregistre);
-			metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
-            metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'",$result_hic_enregistre,"hic_select","");
-			} else {
-					metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
-					metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'","","hic_select","");
+				metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
+				metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'",$result_hic_enregistre,"hic_select","");
+			} 
+			else 
+			{
+				metaform_sel_multi ("Rattachement HIC","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic, this.form.hic_select);'",$ref[$champ_ref['codeHIC']],"hic","",pg_fetch_result(pg_query ($db,$query_description."'codeHIC'".";"),0,"description" ));
+				metaform_sel_multi ("HIC sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.hic_select, this.form.hic);'","","hic_select","");
 			}
 			echo "<br>";
 
 /* 			$num_rows_eunis = pg_num_rows($result_eunis);
 			echo "num_rows_eunis"; var_dump ($num_rows_eunis);
-			if ($num_rows_eunis > 0) {
-			//var_dump( $result_eunis_enregistre);
-			metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'codeEUNIS'".";"),0,"description" ));
-            metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'",$result_eunis_enregistre,"eunis_select","");
-			} else {
-					metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'codeEUNIS'".";"),0,"description" ));
-					metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");
+			if ($num_rows_eunis > 0) 
+			{
+				//var_dump( $result_eunis_enregistre);
+				metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'codeEUNIS'".";"),0,"description" ));
+				metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'",$result_eunis_enregistre,"eunis_select","");
+			} 
+			else 
+			{
+				metaform_sel_multi ("Rattachement EUNIS","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis, this.form.eunis_select);'",$ref[$champ_ref['codeEUNIS']],"eunis","",pg_fetch_result(pg_query ($db,$query_description."'codeEUNIS'".";"),0,"description" ));
+				metaform_sel_multi ("EUNIS sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.eunis_select, this.form.eunis);'","","eunis_select","");
 			}
 			echo "<br>"; */
 			
 			
 
-            echo ("</fieldset>");
+			echo ("</fieldset>");
 			
 		
-				/* //bout de code a utiliser si on veut aller vers une fiche taxon dans refnat
-				echo ("</td><td>");	
-					if ($niveau >= 128)
-						echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
-				*/
-				//echo ("</td></tr>");
-				//echo ("</table>");
+			/* //bout de code a utiliser si on veut aller vers une fiche taxon dans refnat
+			echo ("</td><td>");	
+			if ($niveau >= 128)
+				echo ("<a href = \"../refnat/index.php?m=edit&id=$id\" class=edit id=\"modif_taxon\" ><img src=\"../../_GRAPH/psuiv.gif\" title=\"Accès rapide Refnat\" ></a>"); 
+			*/
+			//echo ("</td></tr>");
+			//echo ("</table>");
 				
 		/*------------------------------------------------------------------------------ EDIT fieldset5*/
+		//---------5eme encadré de la page
 
-                echo ("<fieldset><LEGEND>Chorologie</LEGEND>");	
+			echo ("<fieldset><LEGEND>Chorologie</LEGEND>");	
 			/*répartition territoire et générale*/		
 			
 			metaform_text_area ("Répartition générale","",57,50,"","repartitionGenerale",sql_format_quote(pg_result($result_syntaxon,0,"\"repartitionGenerale\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'repartitionGenerale'".";"),0,"description" ));
@@ -517,6 +532,7 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 			
 			/*chorologie départementale et autres territoires (table multivariée)*/
 			
+			//DEBUG
 /*			$num_rows = pg_num_rows($result_chorologie);
 			if ($num_rows > 0) {
 			echo ("<BR><BR>");
@@ -531,36 +547,40 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 			
 			$num_rows_dep = pg_num_rows($result_departement);
 //			$num_rows_rag = pg_num_rows($result_region_agr);
-			if ($num_rows_dep > 0) {
-			metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
-            metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",$result_departement_enregistre,"departement_select","");
-			} else {
-					metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
-					metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'","","departement_select","");
+			if ($num_rows_dep > 0) 
+			{
+				metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
+				metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'",$result_departement_enregistre,"departement_select","");
+			}
+			else 
+			{
+				metaform_sel_multi ("Présence départementale","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement, this.form.departement_select);'",$ref['liste_departement'],"departement","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
+				metaform_sel_multi ("Départements sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.departement_select, this.form.departement);'","","departement_select","");
 			}
 			echo "<br>";
 			
-/*			if ($num_rows_rag > 0) {
-			metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
-            metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'",$result_region_agr_enregistre,"region_agricole_select","");
-			 } else {
-					echo "<br>";
-					metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
-					metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'","","region_agricole_select","");
+/*			if ($num_rows_rag > 0) 
+			{
+				metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
+				metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'",$result_region_agr_enregistre,"region_agricole_select","");
+			 }
+			 else 
+			 {
+				echo "<br>";
+				metaform_sel_multi ("Présence région agricole","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole, this.form.region_agricole_select);'",$ref['liste_region_agricole'],"region_agricole","",pg_fetch_result(pg_query ($db,$query_description."'idTerritoire'".";"),0,"description" ));
+				metaform_sel_multi ("Région agricole sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.region_agricole_select, this.form.region_agricole);'","","region_agricole_select","");
 			 }
 */
-			
 			echo ("</fieldset>");
 
 		/*------------------------------------------------------------------------------ EDIT fieldset6*/
-		
+		//---------6eme encadré de la page
             
-					echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");
+			echo ("<fieldset><LEGEND>Phénologie, physionomie, écologie</LEGEND>");
 					
 			/*écologie générale*/		
 			
 			metaform_text_area ("Description écologie","",57,50,"","descriptionEcologie",sql_format_quote(pg_result($result_syntaxon,0,"\"descriptionEcologie\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'descriptionEcologie'".";"),0,"description" ));
-			
 			echo ("<table><tr><td width=33%>");
 			metaform_sel ("Type physionomique)","",30,$ref[$champ_ref['typePhysionomique']],"typePhysionomique",pg_result($result_syntaxon,0,"\"typePhysionomique\""), pg_fetch_result(pg_query ($db,$query_description."'typePhysionomique'".";"),0,"description" ));
 			echo ("</td><td width=33%>");
@@ -570,7 +590,6 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 			echo ("</td></tr></table>"); 
 			echo ("<br>");
 			
-			
 			echo ("<table><tr><td width=33%>");
 			metaform_text_area ("Remarque phénologie","",57,50,"","rqPhenologie",sql_format_quote(pg_result($result_syntaxon,0,"\"rqPhenologie\""),'undo'), pg_fetch_result(pg_query ($db,$query_description."'rqPhenologie'".";"),0,"description" ));
 			echo ("</td><td width=33%>");
@@ -579,9 +598,7 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 			metaform_sel ("Fin de période optimale","",30,$ref[$champ_ref['periodeFinObsOptimale']],"periodeFinObsOptimale",pg_result($result_syntaxon,0,"\"periodeFinObsOptimale\""), pg_fetch_result(pg_query ($db,$query_description."'periodeFinObsOptimale'".";"),0,"description" ));
 			echo ("</td></tr></table>"); 
 			echo ("<br>");
-						
-
-						
+									
 			echo ("<table><tr><td width=50%>");
 			metaform_sel ("Humidité principale","",30,$ref[$champ_ref['humiditePrincipale']],"humiditePrincipale",pg_result($result_syntaxon,0,"\"humiditePrincipale\""), pg_fetch_result(pg_query ($db,$query_description."'humiditePrincipale'".";"),0,"description" ));
 			echo ("</td><td width=50%>");
@@ -600,88 +617,95 @@ include ("../syntaxa/add_fiche.php"); /*renvoi vers le formulaire php d'ajout de
 			/*table des valences écologiques*/
 
 			$liste_valences = array('trophie'=>'trophie','température'=>'temperature', 'luminosité'=>'luminosite','exposition'=>'exposition','salinité'=>'salinite','neige'=>'neige','continentalité'=>'continentalite','ombroclimat'=>'ombroclimat');
-			
 			echo ("<table border=1 width=\"1200\">");
 			echo ("<th style=\"width:5em;\"></th>");			
 					
-					/*en-tête*/
+			/*en-tête*/
 
-			foreach ($liste_valences as $label_valence => $champ_valence)	{
-					echo ("<th style=\" text-align: center;	vertical-align: center; width:5em;\">$label_valence</th>");
-					}
+			foreach ($liste_valences as $label_valence => $champ_valence)	
+			{
+				echo ("<th style=\" text-align: center;	vertical-align: center; width:5em;\">$label_valence</th>");
+			}
 					
-					/*valeurs*/
+			/*valeurs*/
 
-				echo ("<tr valign=top>");	
-				echo ("<td style=\" text-align: center;	vertical-align: center;\">valences</td>");
-				foreach ($liste_valences as $label_valence => $champ_valence)	{
-						echo ("<td>");
-						metaform_sel_tableau (""," no_lab","width:5em;",$ref[$champ_ref[$champ_valence]],$champ_valence,pg_result($result_syntaxon,0,"\"$champ_valence\""), pg_fetch_result(pg_query ($db,$query_description."'$champ_valence'".";"),0,"description" ));
-						echo ("</td>");
-					}
+			echo ("<tr valign=top>");	
+			echo ("<td style=\" text-align: center;	vertical-align: center;\">valences</td>");
+			foreach ($liste_valences as $label_valence => $champ_valence)	
+			{
+				echo ("<td>");
+				metaform_sel_tableau (""," no_lab","width:5em;",$ref[$champ_ref[$champ_valence]],$champ_valence,pg_result($result_syntaxon,0,"\"$champ_valence\""), pg_fetch_result(pg_query ($db,$query_description."'$champ_valence'".";"),0,"description" ));
+				echo ("</td>");
+			}
 			echo ("</tr>");
 			echo("</table><br>");
 			
 			/*Etagement*/
 			echo ("<br>ETAGEMENT <hr>");
 			$num_rows_etag = pg_num_rows($result_etage_veg);
-			if ($num_rows_etag > 0) {
-			metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
-            metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'",$result_etage_veg_enregistre,"etage_veg_select","");
-			} else {
-					metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
-					metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'","","etage_veg_select","");
+			if ($num_rows_etag > 0) 
+			{
+				metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
+				metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'",$result_etage_veg_enregistre,"etage_veg_select","");
+			} 
+			else 
+			{
+				metaform_sel_multi ("Etages de végétation","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg, this.form.etage_veg_select);'",$ref[$champ_ref['codeEtageVeg']],"etage_veg","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageVeg'".";"),0,"description" ));
+				metaform_sel_multi ("Etages de végétation sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_veg_select, this.form.etage_veg);'","","etage_veg_select","");
 			}
 			echo "<br>";
 			
 			echo "<br>";
 			$num_rows_etag_bioclim = pg_num_rows($result_etage_bioclim);
-			if ($num_rows_etag_bioclim > 0) {
-			metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageBioclim'".";"),0,"description" ));
-            metaform_sel_multi ("Etages bioclimatiques sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'",$result_etage_bioclim_enregistre,"etage_bioclim_select","");
-			} else {
-					metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageBioclim'".";"),0,"description" ));
-					metaform_sel_multi ("Etages bioclimatiques sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'","","etage_bioclim_select","");
+			if ($num_rows_etag_bioclim > 0) 
+			{
+				metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageBioclim'".";"),0,"description" ));
+				metaform_sel_multi ("Etages bioclimatiques sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'",$result_etage_bioclim_enregistre,"etage_bioclim_select","");
+			} 
+			else 
+			{
+				metaform_sel_multi ("Etages bioclimatiques","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim, this.form.etage_bioclim_select);'",$ref[$champ_ref['codeEtageBioclim']],"etage_bioclim","",pg_fetch_result(pg_query ($db,$query_description."'codeEtageBioclim'".";"),0,"description" ));
+				metaform_sel_multi ("Etages bioclimatiques sélectionné(s)","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.etage_bioclim_select, this.form.etage_bioclim);'","","etage_bioclim_select","");
 			}
 			echo "<br>";
 
 			/*Cortège floristique*/
 			echo ("<br>CORTEGE FLORISTIQUE <hr>");
-			
-			/*la liste est trop longue a charger*/
-/*			echo "<br>";
-			$num_rows_cortege_flo = pg_num_rows($result_cortege_flo);
-			if ($num_rows_cortege_flo > 0) {
-			metaform_sel_multi ("Cortège floristique","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo, this.form.cortege_flo_select);'",$ref[$champ_ref['idRattachementReferentiel']],"cortege_flo","",pg_fetch_result(pg_query ($db,$query_description."'nom_complet_taxon_referentiel'".";"),0,"description" ));
-            metaform_sel_multi ("Cortège floristique sélectionné","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo_select, this.form.cortege_flo);'",$result_cortege_flo_enregistre,"cortege_flo_select","");
-			} else {
-					metaform_sel_multi ("Cortège floristique","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo, this.form.cortege_flo_select);'",$ref[$champ_ref['idRattachementReferentiel']],"cortege_flo","",pg_fetch_result(pg_query ($db,$query_description."'nom_complet_taxon_referentiel'".";"),0,"description" ));
-					metaform_sel_multi ("Cortège floristique sélectionné","",5,"width: 240px;","OnDblClick='javascript: deplacer( this.form.cortege_flo_select, this.form.cortege_flo);'","","cortege_flo_select","");
-			}
 			echo "<br>";
-*/			
+			echo ("<input type=\"hidden\" size=\"60\" id=\"idsyntaxon\" value=$id />");
+			echo ("<input type=\"hidden\" size=\"60\" id=\"taxref_flore_sql\" value=\"SELECT cd_ref_referentiel as cd_ref,nom_complet_taxon_referentiel as nom_complet, id_rattachement_referentiel FROM syntaxa.referentiel_taxo where code_referentiel ='TAXREF' and version_referentiel='7' AND \" />");
+            echo ("<label class=\"preField\">Plantes</label><input type=\"text\" style=\"padding: 2px;font-size: 14;border: 2px solid #C6C5B5;\" id=\"taxon2\" size=\"45\" maxlength=\"200\" /> ");
+            echo ("<label class=\"preField\">cd_ref</label><input type=\"text\" id=\"taxon2_CD_REF\" />");
+			echo ("<label class=\"preField\">idrattachement</label><input type=\"text\" id=\"idrattachement\" />");
+            echo ("<img src=\"../../_GRAPH/details_open.png\" class=\"add\" border=\"0\" title=\"Ajouter\" onclick=\"javascript:return taxon_add(2);\"/><br>"); 
+            echo ("<label class=\"preField\">Commentaire</label><input type=\"text\" style=\"padding: 2px;font-size: 14;border: 2px solid #C6C5B5;\" id=\"COMM\" size=\"49\" maxlength=\"200\" /><br> ");
+//			echo "liste taxon2:<br>";
+			echo ("<div id=\"taxon_list_2\"></div>");
+            echo ("<script>taxon_list(2)</script>");		
 			echo ("</fieldset>");
 			echo ("<hr>");
 	/* ----------------------------------------------------------------------------- EDIT SAVE*/
 			echo ("<div style=\"float:right;\"><br>");
-				if ($droit['save_fiche']) echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-				if ($droit['retour_fiche']) echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
-				echo ("</div>");
-				echo ("</form>");
-				} else fatal_error ("ID ".$id." > Vide !",false);
-			} else fatal_error ("ID ".$id." > Vide !",false);
+			
+			if ($droit['save_fiche']) echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+			if ($droit['retour_fiche']) echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
 			echo ("</div>");
+			echo ("</form>");
+			} 
+			else fatal_error ("ID ".$id." > Vide !",false);
+			} 
+		else fatal_error ("ID ".$id." > Vide !",false);
+		echo ("</div>");
 
-			echo ("<div id=\"exit-confirm\" title=\"Retour\">");
-				echo ("<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>".$lang[$lang_select]['retour_dialog']."</p>");
-			echo ("</div>");
+		echo ("<div id=\"exit-confirm\" title=\"Retour\">");
+		echo ("<p><span class=\"ui-icon ui-icon-alert\" style=\"float:left; margin:0 7px 20px 0;\"></span>".$lang[$lang_select]['retour_dialog']."</p>");
+		echo ("</div>");
 
-			echo ("<div id=\"enregistrer-dialog\">");
-				echo ("<center><img src=\"../../_GRAPH/check.png\"  /><br>".$lang[$lang_select]['enregistrer_dialog']."</center>");
-			echo ("</div>");
+		echo ("<div id=\"enregistrer-dialog\">");
+		echo ("<center><img src=\"../../_GRAPH/check.png\"  /><br>".$lang[$lang_select]['enregistrer_dialog']."</center>");
+		echo ("</div>");
 		}
 		break;
-
 	}
 
 //------------------------------------------------------------------------------

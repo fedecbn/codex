@@ -276,7 +276,7 @@ function ref_colonne_et_valeur ($rubrique)	{
 	global $db, $ref, $aColumns, $aColumnsExp, $aColumnsTot, $aColumnsSub, $champ_ref;
 // "\"$colname18\""
 //------------------------------------------------------------------------------ Récupération des valeurs référentiels
-	$query = "SELECT nom_champ,table_champ,champ_interface, schema, nom_ref, table_ref, cle, valeur,orderby, champs_ref.where_champ, champs_ref.where_value FROM referentiels.champs RIGHT JOIN referentiels.champs_ref ON referentiel = nom_ref WHERE rubrique_ref = '$rubrique'";
+	$query = "SELECT nom_champ,table_champ,champ_interface, schema, nom_ref, table_ref, cle, valeur,orderby, champs_ref.where_champ, champs_ref.where_value FROM referentiels.champs RIGHT JOIN referentiels.champs_ref ON referentiel = nom_ref AND rubrique_ref = rubrique_champ WHERE rubrique_ref = '$rubrique'";
 	// if (DEBUG) echo "<BR> $query";
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);unset($query);
 	while ($row = pg_fetch_assoc ($result)) {
@@ -638,7 +638,7 @@ function aff_table_next ($id_onglet,$id_liste) {
     echo ("<br>");
 }*/
 
-function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$placeholder='')
+function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$placeholder='',$autocomplete='on')
 {
 	
 	if (strpos($descr,"no_lab") === false)
@@ -649,7 +649,7 @@ function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$plac
 	if (!isset($extra)) $extra = "";		
 	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
 	if (strpos($descr,"bloque") !== false) {$extra .= " disabled class=\"bloque\"";}
-	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"   placeholder=\"$placeholder\" size=\"".$long."\" value=\"".$val."\" $extra style=\"$style\"/>");
+	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"   placeholder=\"$placeholder\" autocomplete=\"$autocomplete\" size=\"".$long."\" value=\"".$val."\"  $extra style=\"$style\"/>");
     echo ("<br>");
 }
 
@@ -1367,7 +1367,7 @@ else
 	if ($catnat == 'TRUE'){
 		$select="SELECT uid FROM catnat.taxons_nat WHERE uid = $uid_modif;";
 		$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".$select);
-		$uid=pg_result($result,0,"uid");
+		$uid=pg_fetch_result($result,0,"uid");
 		
 		if ($uid != null) {
 			$query .= "
@@ -1384,8 +1384,7 @@ else
 	if ($eee == 'TRUE'){
 		$select="SELECT uid FROM eee.taxons WHERE uid = $uid_modif;";
 		$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".$select);
-		$uid=pg_result($result,0,"uid");
-		
+		$uid=pg_fetch_result($result,0,"uid");
 		if ($uid != null) {
 			$query .= "
 			UPDATE eee.taxons SET cd_ref=$cd_ref,nom_sci=$nom_complet,nom_verna=$nom_vern,lib_rang=$rang WHERE uid=$uid_modif;
@@ -1401,7 +1400,7 @@ else
 	if ($lr == 'TRUE'){
 		$select="SELECT uid FROM lr.taxons WHERE uid = $uid_modif;";
 		$result=pg_query ($db,$select) or die ("Erreur pgSQL : ".$select);
-		$uid=pg_result($result,0,"uid");
+		$uid=pg_fetch_result($result,0,"uid");
 		
 		if ($uid != null) {
 			$query .= "

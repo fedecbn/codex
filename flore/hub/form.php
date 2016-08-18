@@ -99,7 +99,7 @@ $jdd_cbn_propre = $jdd_cbn_propre == null ? array() : $jdd_cbn_propre;
  $jdd["verif"] = array_merge($all,$fsd,$jdd_cbn);
  $jdd["export"] = $jdd["verif"] = array_merge($all,$fsd,$list_taxon,$jdd_cbn);
  $jdd["import"] =  $jdd["clear"] = $jdd["push"] =  $jdd["diff"] = array_merge($all,$fsd_simple,$jdd_cbn);
- $jdd["pull"] = $jdd["del"] = array_merge($all,$fsd_simple,$jdd_cbn_propre);
+ $jdd["pull"] = $jdd["del"] = $jdd["publicate"] = array_merge($all,$fsd_simple,$jdd_cbn_propre);
  
  /*Liste de taxon*/
 $query = "SELECT cd_ref, nom_valide  FROM $id.zz_log_liste_taxon LIMIT 10";
@@ -459,6 +459,21 @@ if (isset($_GET['id']) & !empty($_GET['id']))
 						echo ("<tr><td>$val</td></tr>");
 					echo ("</table>");
 
+		echo ("</fieldset>");
+		echo ("</form>");
+			}
+			break;
+	//------------------------------------------------------------------------------ Publicate
+		case "publicate" : {
+		echo ("<form method=\"POST\" id=\"form1\" name=\"publicate\" action=\"#\" >");
+		echo ("<fieldset>");
+			echo ("<LEGEND> Choix des données à publier </LEGEND>");
+			echo ("<label class=\"preField\">Jeu(x) de données</label><select id=\"jdd\" name=\"jdd\" >");
+			foreach ($jdd[$mode] as $key => $val) 
+				echo ("<option value=\"$key\">".$val."</option>");
+			echo ("</select>");
+			echo ("<BR>");
+			echo ("Le(s) jeu(x) de données selectionné(s) migrera(/ont) vers le SI FLORE <b>la nuit prochaine à partir de 22h00</b>");
 		echo ("</fieldset>");
 		echo ("</form>");
 			}

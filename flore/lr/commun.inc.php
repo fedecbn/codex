@@ -30,11 +30,10 @@ $onglet = ref_onglet($id_rub);
 
 //------------------------------------------------------------------------------ QUERY du module
 $query_module = "
-	SELECT t.*,c.*,e.*, f.indi_cal  
+	SELECT t.*,c.*,e.* 
 	FROM lr.taxons AS t 
 	LEFT JOIN lr.chorologie AS c ON c.uid=t.uid 
 	LEFT JOIN lr.evaluation AS e ON e.uid=t.uid
-	LEFT JOIN catnat.statut_nat AS f ON f.uid = t.uid
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.$id_rub = TRUE AND t.uid=";
 

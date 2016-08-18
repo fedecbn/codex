@@ -75,7 +75,7 @@ if (!empty ($id))
 			if (DEBUG) echo "<br>".$update;
 			$result=pg_query ($db,$update) or die ("Erreur pgSQL : ".pg_result_error ($result));
 		
-			add_and_modif_taxon ($in,'modif',$id);
+			add_and_modif_taxon ($in,'modif',$id); //fonction qui permet l'insertion du taxon dans la table de la rubrique pour laquelle le boleen a été coché (ex: le taxon appartient à la rubrique eee) 
 		}
 	if ($niveau >= 64)	/*Seulement les participants et au dessus*/
 		{

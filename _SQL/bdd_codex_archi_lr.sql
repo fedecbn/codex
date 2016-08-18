@@ -3,23 +3,22 @@
 --
 
 SET statement_timeout = 0;
---SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: lr; Type: SCHEMA; Schema: -; Owner: pg_user
+-- Name: lr; Type: SCHEMA; Schema: -; Owner: user_codex
 --
 
 CREATE SCHEMA lr;
 
 
-ALTER SCHEMA lr OWNER TO pg_user;
+ALTER SCHEMA lr OWNER TO user_codex;
 
 --
--- Name: SCHEMA lr; Type: COMMENT; Schema: -; Owner: pg_user
+-- Name: SCHEMA lr; Type: COMMENT; Schema: -; Owner: user_codex
 --
 
 COMMENT ON SCHEMA lr IS 'Liste Rouge';
@@ -32,7 +31,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: chorologie; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: chorologie; Type: TABLE; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 CREATE TABLE chorologie (
@@ -68,17 +67,17 @@ CREATE TABLE chorologie (
 );
 
 
-ALTER TABLE lr.chorologie OWNER TO pg_user;
+ALTER TABLE lr.chorologie OWNER TO user_codex;
 
 --
--- Name: TABLE chorologie; Type: COMMENT; Schema: lr; Owner: pg_user
+-- Name: TABLE chorologie; Type: COMMENT; Schema: lr; Owner: user_codex
 --
 
 COMMENT ON TABLE chorologie IS 'Taxons chorologie';
 
 
 --
--- Name: discussion; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: discussion; Type: TABLE; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 CREATE TABLE discussion (
@@ -93,10 +92,10 @@ CREATE TABLE discussion (
 );
 
 
-ALTER TABLE lr.discussion OWNER TO pg_user;
+ALTER TABLE lr.discussion OWNER TO user_codex;
 
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: lr; Owner: pg_user
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE; Schema: lr; Owner: user_codex
 --
 
 CREATE SEQUENCE discussion_id_discussion_seq
@@ -107,17 +106,17 @@ CREATE SEQUENCE discussion_id_discussion_seq
     CACHE 1;
 
 
-ALTER TABLE lr.discussion_id_discussion_seq OWNER TO pg_user;
+ALTER TABLE lr.discussion_id_discussion_seq OWNER TO user_codex;
 
 --
--- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: lr; Owner: pg_user
+-- Name: discussion_id_discussion_seq; Type: SEQUENCE OWNED BY; Schema: lr; Owner: user_codex
 --
 
 ALTER SEQUENCE discussion_id_discussion_seq OWNED BY discussion.id_discussion;
 
 
 --
--- Name: evaluation; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: evaluation; Type: TABLE; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 CREATE TABLE evaluation (
@@ -165,21 +164,35 @@ CREATE TABLE evaluation (
     id_raison_ajust integer,
     uid integer NOT NULL,
     commentaire_eval text,
-    avancement smallint DEFAULT 1
+    avancement smallint DEFAULT 1,
+    version integer DEFAULT 1
 );
 
 
-ALTER TABLE lr.evaluation OWNER TO pg_user;
+ALTER TABLE lr.evaluation OWNER TO user_codex;
 
 --
--- Name: TABLE evaluation; Type: COMMENT; Schema: lr; Owner: pg_user
+-- Name: TABLE evaluation; Type: COMMENT; Schema: lr; Owner: user_codex
 --
 
 COMMENT ON TABLE evaluation IS 'Taxons évaluation';
 
 
 --
--- Name: taxons; Type: TABLE; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: presence_tag; Type: TABLE; Schema: lr; Owner: user_codex; Tablespace: 
+--
+
+CREATE TABLE presence_tag (
+    uid integer NOT NULL,
+    typ_geo character varying NOT NULL,
+    cd_geo character varying NOT NULL
+);
+
+
+ALTER TABLE lr.presence_tag OWNER TO user_codex;
+
+--
+-- Name: taxons; Type: TABLE; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 CREATE TABLE taxons (
@@ -194,28 +207,105 @@ CREATE TABLE taxons (
     hybride boolean,
     id_indi integer,
     id_rang integer,
-    uid integer NOT NULL
+    uid integer NOT NULL,
+    indi_cal character varying
 );
 
 
-ALTER TABLE lr.taxons OWNER TO pg_user;
+ALTER TABLE lr.taxons OWNER TO user_codex;
 
 --
--- Name: TABLE taxons; Type: COMMENT; Schema: lr; Owner: pg_user
+-- Name: TABLE taxons; Type: COMMENT; Schema: lr; Owner: user_codex
 --
 
 COMMENT ON TABLE taxons IS 'Taxons liste rouge';
 
 
 --
--- Name: id_discussion; Type: DEFAULT; Schema: lr; Owner: pg_user
+-- Name: COLUMN taxons.indi_cal; Type: COMMENT; Schema: lr; Owner: user_codex
+--
+
+COMMENT ON COLUMN taxons.indi_cal IS 'indigénat calculé';
+
+
+--
+-- Name: validation; Type: TABLE; Schema: lr; Owner: user_codex; Tablespace: 
+--
+
+CREATE TABLE validation (
+    id integer NOT NULL,
+    uid integer,
+    version_val integer,
+    id_user character varying,
+    validation character varying,
+    val_com character varying,
+    dat_val timestamp without time zone,
+    etape_val smallint
+);
+
+
+ALTER TABLE lr.validation OWNER TO user_codex;
+
+--
+-- Name: validation_globale; Type: TABLE; Schema: lr; Owner: user_codex; Tablespace: 
+--
+
+CREATE TABLE validation_globale (
+    uid integer NOT NULL,
+    nbval integer,
+    nbvalcbn integer,
+    listval character varying,
+    listvalcbn character varying,
+    nbinval integer,
+    nbinvalcbn integer,
+    listinval character varying,
+    listinvalcbn character varying,
+    nbpot integer,
+    nbpotcbn integer,
+    listpot character varying,
+    listpotcbn character varying
+);
+
+
+ALTER TABLE lr.validation_globale OWNER TO user_codex;
+
+--
+-- Name: validation_id_seq; Type: SEQUENCE; Schema: lr; Owner: user_codex
+--
+
+CREATE SEQUENCE validation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE lr.validation_id_seq OWNER TO user_codex;
+
+--
+-- Name: validation_id_seq; Type: SEQUENCE OWNED BY; Schema: lr; Owner: user_codex
+--
+
+ALTER SEQUENCE validation_id_seq OWNED BY validation.id;
+
+
+--
+-- Name: id_discussion; Type: DEFAULT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY discussion ALTER COLUMN id_discussion SET DEFAULT nextval('discussion_id_discussion_seq'::regclass);
 
 
 --
--- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: id; Type: DEFAULT; Schema: lr; Owner: user_codex
+--
+
+ALTER TABLE ONLY validation ALTER COLUMN id SET DEFAULT nextval('validation_id_seq'::regclass);
+
+
+--
+-- Name: id_discussion_pkey; Type: CONSTRAINT; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 ALTER TABLE ONLY discussion
@@ -223,7 +313,7 @@ ALTER TABLE ONLY discussion
 
 
 --
--- Name: pk_chorologie; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: pk_chorologie; Type: CONSTRAINT; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 ALTER TABLE ONLY chorologie
@@ -231,7 +321,7 @@ ALTER TABLE ONLY chorologie
 
 
 --
--- Name: pk_evaluation; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: pk_evaluation; Type: CONSTRAINT; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 ALTER TABLE ONLY evaluation
@@ -239,7 +329,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: pk_taxon; Type: CONSTRAINT; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: pk_taxon; Type: CONSTRAINT; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 ALTER TABLE ONLY taxons
@@ -247,21 +337,45 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: evaluation_etape_idx; Type: INDEX; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: presence_tag_pk; Type: CONSTRAINT; Schema: lr; Owner: user_codex; Tablespace: 
+--
+
+ALTER TABLE ONLY presence_tag
+    ADD CONSTRAINT presence_tag_pk PRIMARY KEY (uid, typ_geo, cd_geo);
+
+
+--
+-- Name: val_pk; Type: CONSTRAINT; Schema: lr; Owner: user_codex; Tablespace: 
+--
+
+ALTER TABLE ONLY validation
+    ADD CONSTRAINT val_pk PRIMARY KEY (id);
+
+
+--
+-- Name: validation_globale_pk; Type: CONSTRAINT; Schema: lr; Owner: user_codex; Tablespace: 
+--
+
+ALTER TABLE ONLY validation_globale
+    ADD CONSTRAINT validation_globale_pk PRIMARY KEY (uid);
+
+
+--
+-- Name: evaluation_etape_idx; Type: INDEX; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 CREATE INDEX evaluation_etape_idx ON evaluation USING btree (etape);
 
 
 --
--- Name: taxons_cd_ref_idx; Type: INDEX; Schema: lr; Owner: pg_user; Tablespace: 
+-- Name: taxons_cd_ref_idx; Type: INDEX; Schema: lr; Owner: user_codex; Tablespace: 
 --
 
 CREATE INDEX taxons_cd_ref_idx ON taxons USING btree (cd_ref);
 
 
 --
--- Name: FK_indi; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: FK_indi; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY taxons
@@ -269,7 +383,7 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: FK_nbindiv; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: FK_nbindiv; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY chorologie
@@ -277,7 +391,7 @@ ALTER TABLE ONLY chorologie
 
 
 --
--- Name: FK_nbloc; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: FK_nbloc; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY chorologie
@@ -285,7 +399,7 @@ ALTER TABLE ONLY chorologie
 
 
 --
--- Name: FK_rang; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: FK_rang; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY taxons
@@ -293,7 +407,7 @@ ALTER TABLE ONLY taxons
 
 
 --
--- Name: ajtm; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: ajtm; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -301,7 +415,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cat1; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: cat1; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -309,7 +423,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cat234; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: cat234; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -317,7 +431,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cata; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: cata; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -325,7 +439,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catb; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: catb; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -333,7 +447,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catd; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: catd; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -341,7 +455,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cate; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: cate; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -349,7 +463,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: cateuro; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: cateuro; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -357,7 +471,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catfin; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: catfin; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -365,7 +479,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catini; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: catini; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -373,7 +487,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: catpreced; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: catpreced; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -381,7 +495,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita1; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: crita1; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -389,7 +503,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita2; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: crita2; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -397,7 +511,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita3; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: crita3; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -405,7 +519,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: crita4; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: crita4; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -413,7 +527,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: critc1; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: critc1; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -421,7 +535,7 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: critc2; Type: FK CONSTRAINT; Schema: lr; Owner: pg_user
+-- Name: critc2; Type: FK CONSTRAINT; Schema: lr; Owner: user_codex
 --
 
 ALTER TABLE ONLY evaluation
@@ -429,42 +543,84 @@ ALTER TABLE ONLY evaluation
 
 
 --
--- Name: lr; Type: ACL; Schema: -; Owner: pg_user
+-- Name: lr; Type: ACL; Schema: -; Owner: user_codex
 --
 
 REVOKE ALL ON SCHEMA lr FROM PUBLIC;
-REVOKE ALL ON SCHEMA lr FROM pg_user;
-GRANT ALL ON SCHEMA lr TO pg_user;
+REVOKE ALL ON SCHEMA lr FROM user_codex;
+GRANT ALL ON SCHEMA lr TO user_codex;
 
 
 --
--- Name: chorologie; Type: ACL; Schema: lr; Owner: pg_user
+-- Name: chorologie; Type: ACL; Schema: lr; Owner: user_codex
 --
 
 REVOKE ALL ON TABLE chorologie FROM PUBLIC;
-REVOKE ALL ON TABLE chorologie FROM pg_user;
-GRANT ALL ON TABLE chorologie TO pg_user;
-GRANT ALL ON TABLE chorologie TO postgres;
+REVOKE ALL ON TABLE chorologie FROM user_codex;
+GRANT ALL ON TABLE chorologie TO user_codex;
 
 
 --
--- Name: evaluation; Type: ACL; Schema: lr; Owner: pg_user
+-- Name: discussion; Type: ACL; Schema: lr; Owner: user_codex
+--
+
+REVOKE ALL ON TABLE discussion FROM PUBLIC;
+REVOKE ALL ON TABLE discussion FROM user_codex;
+GRANT ALL ON TABLE discussion TO user_codex;
+
+
+--
+-- Name: evaluation; Type: ACL; Schema: lr; Owner: user_codex
 --
 
 REVOKE ALL ON TABLE evaluation FROM PUBLIC;
-REVOKE ALL ON TABLE evaluation FROM pg_user;
-GRANT ALL ON TABLE evaluation TO pg_user;
-GRANT ALL ON TABLE evaluation TO postgres;
+REVOKE ALL ON TABLE evaluation FROM user_codex;
+GRANT ALL ON TABLE evaluation TO user_codex;
 
 
 --
--- Name: taxons; Type: ACL; Schema: lr; Owner: pg_user
+-- Name: presence_tag; Type: ACL; Schema: lr; Owner: user_codex
+--
+
+REVOKE ALL ON TABLE presence_tag FROM PUBLIC;
+REVOKE ALL ON TABLE presence_tag FROM user_codex;
+GRANT ALL ON TABLE presence_tag TO user_codex;
+
+
+--
+-- Name: taxons; Type: ACL; Schema: lr; Owner: user_codex
 --
 
 REVOKE ALL ON TABLE taxons FROM PUBLIC;
-REVOKE ALL ON TABLE taxons FROM pg_user;
-GRANT ALL ON TABLE taxons TO pg_user;
-GRANT ALL ON TABLE taxons TO postgres;
+REVOKE ALL ON TABLE taxons FROM user_codex;
+GRANT ALL ON TABLE taxons TO user_codex;
+
+
+--
+-- Name: validation; Type: ACL; Schema: lr; Owner: user_codex
+--
+
+REVOKE ALL ON TABLE validation FROM PUBLIC;
+REVOKE ALL ON TABLE validation FROM user_codex;
+GRANT ALL ON TABLE validation TO user_codex;
+
+
+--
+-- Name: validation_globale; Type: ACL; Schema: lr; Owner: user_codex
+--
+
+REVOKE ALL ON TABLE validation_globale FROM PUBLIC;
+REVOKE ALL ON TABLE validation_globale FROM user_codex;
+GRANT ALL ON TABLE validation_globale TO user_codex;
+
+
+--
+-- Name: validation_id_seq; Type: ACL; Schema: lr; Owner: user_codex
+--
+
+REVOKE ALL ON SEQUENCE validation_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE validation_id_seq FROM user_codex;
+GRANT ALL ON SEQUENCE validation_id_seq TO user_codex;
 
 
 --

@@ -293,3 +293,31 @@ SELECT pg_catalog.setval('pres_id_pres_seq', 39, true);
 -- PostgreSQL database dump complete
 --
 
+
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('4', 'refnat', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('3', 'catnat', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('1', 'lr', 'lr', 'Evaluation', 'Liste des taxons');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('1', 'lr', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('2', 'eee', 'eval_reg', 'Eval Régionale', 'Liste des évaluations');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('2', 'eee', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('5', 'lsi', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('6', 'fsd', 'meta', 'META', 'Format standard de données - META');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('6', 'fsd', 'data', 'DATA', 'Format standard de données - DATA');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('6', 'fsd', 'taxa', 'TAXA', 'Format standard de données - TAXA');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('6', 'fsd', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('10', 'hub', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('12', 'module_admin', 'text', 'Rubriques', 'Liste des rubriques');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('12', 'module_admin', 'user', 'Utilisateurs', 'Liste des utilisateurs');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('12', 'module_admin', 'suivi', 'Suivi des modif', 'Liste des modifications');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('12', 'module_admin', 'log', 'Logs', 'Listes des logs');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('13', 'bugs', 'tab-new', 'Nouveaux / En cours', 'Liste des bugs');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('13', 'bugs', 'tab-ok', 'Traités', 'Liste des bugs');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('1', 'lr', 'valid_lr', 'Validation', 'Liste des évaluations');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('11', 'syntaxa', 'syntaxa', 'Catalogues', 'Liste des catalogues');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('11', 'syntaxa', 'droit', 'Utilisateurs', 'Utilisateurs de la rubrique');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('10', 'hub', 'hub', 'Etat du Hub', 'Liste des CBN');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('2', 'eee', 'eee', 'Eval Nationale', 'Liste des taxons');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('3', 'catnat', 'catnat', 'Catalogue National', 'Liste des taxons');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('4', 'refnat', 'refnat', 'Evolution TAXREF', 'Liste des taxons');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('5', 'lsi', 'lsi', 'News', 'Liste des actualités');
+INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('6', 'fsd', 'fsd', 'Dictionnaire de données', 'Liste des champs');

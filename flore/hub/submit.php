@@ -221,6 +221,15 @@ if (!empty ($id))
 			}
 			break;
 		
+		/*PUBLICATION*/
+		case "publicate" : {
+			$query = "SELECT * FROM hub_publicate('$id','$jdd');";
+			$result = pg_query ($db2,$query);
+			if ($result == false) hub_log($id,$fction); /*erreur*/
+			unset($query);
+			}
+			break;
+		
 		/*BILAN*/
 		case "bilan" : {
 			$fction = "hub_bilan";
