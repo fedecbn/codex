@@ -116,7 +116,7 @@ echo $sOutput;
 	//------------------------------------------------------------------------------ SI PAS ACCES 
 	} else {
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
 	$sOutput .= '"aaData": [ ';

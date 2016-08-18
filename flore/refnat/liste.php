@@ -15,7 +15,8 @@ $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
-$onglet = 'refnat';
+// $onglet = 'refnat';
+$onglet = $_GET['onglet'];
 
 //------------------------------------------------------------------------------ PARMS.
 /*Droit sur les boutons de la dernière colonne*/
@@ -27,16 +28,16 @@ $db=sql_connect (SQL_base);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 
 //------------------------------------------------------------------------------ REF.		
-ref_colonne_et_valeur ($id_page);
+ref_colonne_et_valeur ($onglet);
 
 //------------------------------------------------------------------------------ FILTERS
-$filters = filter_column($aColumns[$id_page]);
+$filters = filter_column($aColumns[$onglet]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query= $query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
+$query= $query_liste[$onglet]." ".$sWhere." ".$sOrder." ".$sLimit;
 
 // echo "<br>".$query;
 
@@ -47,7 +48,8 @@ else $aResultTotal=0;
 $iTotal = $aResultTotal;
 
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	// $sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 //	$sOutput .= '"iTotalDisplayRecords": '.$iFilteredTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
@@ -55,7 +57,7 @@ $iTotal = $aResultTotal;
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
 	{
 		$sOutput .= "[";
-		foreach ($aColumns[$id_page] as $key => $value) {
+		foreach ($aColumns[$onglet] as $key => $value) {
 		/*---------------*/
 		/*cas paticuliers*/
 		/*---------------*/
@@ -89,7 +91,7 @@ echo $sOutput;
 	//------------------------------------------------------------------------------ SI PAS ACCES 
 	} else {
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
 	$sOutput .= '"aaData": [ ';

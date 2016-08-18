@@ -21,7 +21,7 @@
 //------------------------------------------------------------------------------ LISTES / Construction du tableau
 
     if (typeof oTable == 'undefined') {
-        var oTable = $('#data-liste').dataTable({
+        var oTable = $('#onglet0-liste').dataTable({
    	    "bJQueryUI": true,
         "iDisplayLength": 100,
     	"aLengthMenu": [[50,100,300],[50,100,300]],
@@ -34,7 +34,8 @@
     	"bAutoWidth": false,
 		"bProcessing": true,
     	"bServerSide": true,
-    	"sAjaxSource": "liste.php",
+    	"sAjaxSource": "liste.php?onglet=refnat",
+		"sServerMethod": "POST", 
         "bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
             localStorage.setItem( 'data_'+window.location.pathname, JSON.stringify(oData) );
@@ -118,7 +119,7 @@
 		});        
 		oTable.fnSort( [ [2,'desc'] ] );		
 
-		include("../commun/js/user.js");
+		include("../commun/js/user_new.js");
 				
 		} else {
 		oTable.fnClearTable (false);
