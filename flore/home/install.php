@@ -46,6 +46,11 @@ $(document).ready(function(){
             text: true
         });
 	
+	$("#desinstall-button")
+        .button({
+            text: true
+        });
+	
 	$("#install-finish-button")
         .button({
             text: true
@@ -172,19 +177,19 @@ case "install-param":	{
 			echo ("<fieldset style=\"width: 50%;\"><LEGEND>Connexion au serveur de base de données</LEGEND>");
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 800px;\">");
-						metaform_text ("Hôte","",50,"","host",SQL_server);
+						metaform_text ("Hôte","",50,"","host","localhost");
 						metaform_text ("Port","",25,"","port",5432);
-						metaform_text ("Utilisateur admin","",50,"","user",SQL_admin_user);
-						metaform_pw ("Mot de passe admin","",50,"","mdp",SQL_admin_pass);
+						metaform_text ("Utilisateur admin","",50,"","user","postgres");
+						metaform_pw ("Mot de passe admin","",50,"","mdp",null);
 					echo ("</td></tr></table>");	
 				echo ("</fieldset>");
 	//------------------------------------------------------------------------------ EDIT LR GRP2 
 			echo ("<fieldset  style=\"width: 50%;\"><LEGEND> Création de la base de données </LEGEND>");
 					echo ("<table border=0 width=\"100%\"><tr valign=top >");
 					echo ("<td style=\"width: 800px;\">");
-						metaform_text ("Nom de la base","",50,"","dbname",SQL_base);
-						metaform_text ("Utilisateur codex","",50,"","user_codex",SQL_user);
-						metaform_pw ("Mot de passe codex","",20,"","mdp_codex",SQL_pass);
+						metaform_text ("Nom de la base","",50,"","dbname","codex");
+						metaform_text ("Utilisateur codex","",50,"","user_codex",null);
+						metaform_pw ("Mot de passe codex","",20,"","mdp_codex",null);
 					echo ("</td></tr></table>");	
 				echo ("</fieldset>");
 	}
@@ -212,6 +217,16 @@ case "install-param":	{
 		echo ("</div></center>");
 		echo ("<center><button id=\"install-button\">Lancer l'installation</button></center>");
 	echo ("</form>");
+	
+	/*Desinstallation*/
+	if (file_exists("../../_INCLUDE/config_sql.inc.php"))
+		{	
+		echo ("<form method=\"POST\" id=\"form2\" class=\"form2\" name=\"desinstall\" action=\"\" >");
+			echo ("<input type=\"hidden\" name=\"action\" value=\"desinstall\" />");
+			echo ("<BR><BR><center><button id=\"desinstall-button\">Désinstaller</button><BR>Attention, opération non réversible (supprime la base de données).</center> ");
+		echo ("</form>");		
+		}
+
 	}
 	break;
 /*-------------------------------------------------------------------------------------*/
@@ -402,13 +417,13 @@ case "install-set":	{
 		if (!file_exists("../../_INCLUDE/config_sql.inc.php"))
 			{
 			$sql_file = file_get_contents("../../_INCLUDE/config_sql.inc.example.php");
-			$sql_file = str_replace("localhost",$_POST["host"],$sql_file);
-			$sql_file = str_replace("5432",$_POST["port"],$sql_file);
-			$sql_file = str_replace("user_codex",$_POST["user_codex"],$sql_file);
-			$sql_file = str_replace("codex_user",$_POST["mdp_codex"],$sql_file);
-			$sql_file = str_replace("postgres",$_POST["user"],$sql_file);
-			$sql_file = str_replace("test",$_POST["mdp"],$sql_file);
-			$sql_file = str_replace("\"codex\"","\"".$_POST["dbname"]."\"",$sql_file);
+			$sql_file = str_replace("(\"SQL_server\", \"\")","(\"SQL_server\", \"".$_POST["host"]."\")",$sql_file);
+			$sql_file = str_replace("(\"SQL_port\", \"\")","(\"SQL_port\", \"".$_POST["port"]."\")",$sql_file);
+			$sql_file = str_replace("(\"SQL_user\", \"\")","(\"SQL_user\", \"".$_POST["user_codex"]."\")",$sql_file);
+			$sql_file = str_replace("(\"SQL_pass\", \"\")","(\"SQL_pass\", \"".$_POST["mdp_codex"]."\")",$sql_file);
+			$sql_file = str_replace("(\"SQL_admin_user\", \"\")","(\"SQL_admin_user\", \"".$_POST["user"]."\")",$sql_file);
+			$sql_file = str_replace("(\"SQL_admin_pass\", \"\")","(\"SQL_admin_pass\", \"".$_POST["mdp"]."\")",$sql_file);
+			$sql_file = str_replace("(\"SQL_base\", \"\")","(\"SQL_base\", \"".$_POST["dbname"]."\")",$sql_file);
 			
 			/*Ajout à erme de la mise à jour des séquences lors de l'import de données avec UID*/
 			/*SELECT setval('refnat.taxons_uid_seq', COALESCE((SELECT MAX(uid)+1 FROM refnat.taxons), 1), false);*/
@@ -444,6 +459,17 @@ case "install-finish":	{
 	// fopen("../../_INCLUDE/install-ok.txt","w+");
 	header("Location: ../../index.php");
 
+	}
+	break;
+
+case "desinstall":	{
+	require_once ("../../_INCLUDE/config_sql.inc.php"); //récupération des variables de connexion à la base dans le fichier config_sql.inc.php		
+	$host = SQL_server;$port = SQL_port;$user = SQL_admin_user;$mdp = SQL_admin_pass;$dbname = SQL_base; $user_codex = SQL_user;$mdp_codex = SQL_pass;
+	$conn_pg = connexion ($host,$port,$user,$mdp,"postgres");
+	$query = "DROP DATABASE $dbname;";
+	$result = pg_query($conn_pg,$query);
+	unlink("../../_INCLUDE/config_sql.inc.php");
+	header("Location: install.php");
 	}
 	break;
 }
