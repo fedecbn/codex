@@ -927,7 +927,12 @@ CREATE TABLE st_cortege_floristique (
     "idCortegeFloristique" serial not null,
     "codeEnregistrementSyntaxon" text,
     "idRattachementReferentiel" text,
-    "typeTaxon" text
+    "typeTaxon" text,
+     code_referentiel text,
+     version_referentiel text,
+     cd_ref text,
+     nom_complet text,
+     "rqTaxon" text
 );
 
 

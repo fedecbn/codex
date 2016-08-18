@@ -25,7 +25,12 @@ WHEN test_schema =1 THEN 	DROP TABLE IF EXISTS syntaxa.st_cortege_floristique ca
 							"idCortegeFloristique" serial not null,
 							"codeEnregistrementSyntaxon" text,
 							"idRattachementReferentiel" text,
-							"typeTaxon" text
+							"typeTaxon" text,
+							"code_referentiel" text,
+							"version_referentiel" text,
+							"cd_ref" text,
+							"nom_complet" text,
+							"rqTaxon" text
 							);
 							-- ddl-end --
 							COMMENT ON TABLE syntaxa.st_cortege_floristique IS 'Cortège floristique qui accompagne le syntaxon';
