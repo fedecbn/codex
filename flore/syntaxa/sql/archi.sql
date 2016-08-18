@@ -34,6 +34,7 @@ SET default_with_oids = false;
 -- Name: fsd_syntaxa; Type: TABLE; Schema: syntaxa; Owner: postgres; Tablespace: 
 --
 
+
 CREATE TABLE fsd_syntaxa (
     id integer NOT NULL,
     tbl_name character varying,
@@ -926,7 +927,12 @@ CREATE TABLE st_cortege_floristique (
     "idCortegeFloristique" serial not null,
     "codeEnregistrementSyntaxon" text,
     "idRattachementReferentiel" text,
-    "typeTaxon" text
+    "typeTaxon" text,
+     code_referentiel text,
+     version_referentiel text,
+     cd_ref text,
+     nom_complet text,
+     "rqTaxon" text
 );
 
 

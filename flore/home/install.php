@@ -295,7 +295,7 @@ case "install-set":	{
 			{
 			if (isset($_POST[$key]))
 				{
-				if ($_POST[$key] == 'TRUE')
+				if ($_POST[$key] == 'TRUE') //si le bouton radio a été coché en "Oui"
 					{
 //					if ($key == 'refnat' or $key == 'syntaxa' or $key == 'lr' or $key == 'catnat' or $key == 'eee')
 //					{
@@ -387,7 +387,7 @@ case "install-set":	{
 
 			
 		/*------------------------------------------*/
-		/*parametrage du ficher de conf sql_connect*/
+		/*parametrage du ficher de conf config_sql.inc.php*/
 		if (!file_exists("../../_INCLUDE/config_sql.inc.php"))
 			{
 			$sql_file = file_get_contents("../../_INCLUDE/config_sql.inc.example.php");
