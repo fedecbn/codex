@@ -245,14 +245,15 @@ select * from creation_fsd ('syntaxa');
 
 select * from syntaxa.fsd_syntaxa;
 
+
 ------------------------------------------------------------------------------------------
 ---CREATION DE LA FONCTION DE REMPLISSAGE DES TABLES TEMPORAIRES A PARTIR DE FICHIERS CSV
 -------------------------------------------------------------------------------------------
 
 --creation des tables permanentes
-DROP FUNCTION IF EXISTS hub_import(libSchema varchar, jdd varchar, path varchar);
+DROP FUNCTION IF EXISTS hub_import_syntaxa(libSchema varchar, jdd varchar, path varchar);
 
-CREATE OR REPLACE FUNCTION hub_import(libSchema varchar, jdd varchar, path varchar) RETURNS integer AS 
+CREATE OR REPLACE FUNCTION hub_import_syntaxa(libSchema varchar, jdd varchar, path varchar) RETURNS integer AS 
 $BODY$ DECLARE libTable varchar; DECLARE i varchar; BEGIN
 --- Commande
 CASE WHEN jdd = 'syntaxa' THEN 
@@ -266,7 +267,7 @@ END CASE;
 RETURN 1; END; $BODY$  LANGUAGE plpgsql;
 
 
-select * from hub_import('syntaxa','syntaxa', 'F:\02_jeu_donnees_test_cbn_bpa/');
+select * from hub_import_syntaxa('syntaxa','syntaxa', 'F:\02_jeu_donnees_test_cbn_bpa/');
 
 select * from syntaxa.temp_st_syntaxon;
 
@@ -295,7 +296,7 @@ update syntaxa.temp_st_syntaxon set "nomSyntaxonRetenu"= foo."nomSyntaxonRetenu"
 
 
 
-CREATE OR REPLACE FUNCTION hub_add(libSchema varchar, jdd varchar, in_array text[]) RETURNS int AS
+CREATE OR REPLACE FUNCTION hub_add_syntaxa(libSchema varchar, jdd varchar, in_array text[]) RETURNS int AS
 $BODY$ 
 DECLARE libTable varchar;DECLARE x text[]; DECLARE listeChamp1 varchar; DECLARE listeChamp2 varchar; DECLARE i varchar; 
 BEGIN
@@ -323,24 +324,24 @@ RETURN 1; END; $BODY$  LANGUAGE plpgsql;
 
 ----REMPLISSAGE DE TOUTES LES TABLES D'UN COUP
 
-select * from hub_add('syntaxa','syntaxa',array['st_catalogue_description','st_syntaxon', 'st_serie_petitegeoserie','st_geo_sigmafacies','st_cortege_syntaxonomique','st_annuaire_personnes', 'st_annuaire_organismes', 'st_suivi_enregistrement', 'st_collaborateur']);
-select * from hub_add('syntaxa','syntaxa',array['st_suivi_enregistrement']);
+select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_catalogue_description','st_syntaxon', 'st_serie_petitegeoserie','st_geo_sigmafacies','st_cortege_syntaxonomique','st_annuaire_personnes', 'st_annuaire_organismes', 'st_suivi_enregistrement', 'st_collaborateur']);
+select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_suivi_enregistrement']);
 ---SINON REMPLISSAGE AU CAS PAR CAS 
 
 
 --REMPLISSAGE TABLE DE DESCRIPTION DU CATALOGUE
-select * from hub_add('syntaxa','syntaxa',array['st_catalogue_description']);
+select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_catalogue_description']);
 select * from syntaxa.st_catalogue_description;
 
 --REMPLISSAGE TABLE DES SYNTAXONS
 
-select * from hub_add('syntaxa','syntaxa',array['st_syntaxon']);
+select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_syntaxon']);
 select * from syntaxa.st_syntaxon;
 
 --REMPLISSAGE TABLE DES SERIES et GEOSERIES
 
 --truncate syntaxa.st_serie_petitegeoserie cascade;
---select * from hub_add('syntaxa','syntaxa',array['st_serie_petitegeoserie']);
+--select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_serie_petitegeoserie']);
 
 
 insert into syntaxa.st_serie_petitegeoserie("idCatalogue" ,"codeEnregistrementSerieGeoserie" ,"idSerieGeoserie" ,"nomSerieGeoserie" ,"auteurSerieGeoserie" ,"nomCompletSerieGeoserie" ,
@@ -387,10 +388,10 @@ case when exposition ='Aucune' then 'aucune' when exposition ='variable' then 'v
  
 
 --REMPLISSAGE TABLE DES SIGMAFACIES
---select * from hub_add('syntaxa','syntaxa',array['st_geo_sigmafacies']);
+--select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_geo_sigmafacies']);
 
 --truncate syntaxa.st_geo_sigmafacies cascade
---select * from hub_add('syntaxa','syntaxa',array['st_geo_sigmafacies']);
+--select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_geo_sigmafacies']);
 
 insert into syntaxa.st_geo_sigmafacies
 ( "idGeosigmafacies", "codeEnregistrementSerieGeoserie" , "codeFacies" , "libelleGeoSigmafacies",  "usage", "dominance","remarqueVariabilite")
@@ -456,7 +457,7 @@ il reste ces colonnes du modèle CBN BPA a intégrer...
 
  --REMPLISSAGE TABLES ANNUAIRES,  SUIVI ENREGISTREMENT
  
-select * from hub_add('syntaxa','syntaxa',array['st_annuaire_personnes', 'st_annuaire_organismes', 'st_suivi_enregistrement', 'st_collaborateur']);
+select * from hub_add_syntaxa('syntaxa','syntaxa',array['st_annuaire_personnes', 'st_annuaire_organismes', 'st_suivi_enregistrement', 'st_collaborateur']);
 
 
  --REMPLISSAGE TABLE CHOROLOGIE (pas terminé, voir ce qu'on fait de la répartition territoire)

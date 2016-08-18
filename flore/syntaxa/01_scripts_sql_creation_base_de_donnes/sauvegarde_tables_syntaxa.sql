@@ -19,8 +19,8 @@ SET default_with_oids = false;
 -- TOC entry 367 (class 1259 OID 20929)
 -- Name: fsd_syntaxa; Type: TABLE; Schema: syntaxa; Owner: postgres; Tablespace: 
 --
-
- create schema syntaxa authorization to user_codex;
+drop schema syntaxa cascade;
+ create schema syntaxa authorization user_codex;
 GRANT ALL ON SCHEMA syntaxa TO user_codex;
 COMMENT ON SCHEMA syntaxa
   IS 'Applications';
