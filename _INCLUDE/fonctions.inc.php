@@ -638,7 +638,7 @@ function aff_table_next ($id_onglet,$id_liste) {
     echo ("<br>");
 }*/
 
-function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$placeholder='')
+function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$placeholder='',$autocomplete='on')
 {
 	
 	if (strpos($descr,"no_lab") === false)
@@ -649,7 +649,7 @@ function metaform_text ($label,$descr,$long,$style,$champ,$val,$tooltip='',$plac
 	if (!isset($extra)) $extra = "";		
 	// if (strpos($descr,"bloque") != false) {$bloc .= " readonly disabled";$extra .= "background-color:#EFEFEF";}
 	if (strpos($descr,"bloque") !== false) {$extra .= " disabled class=\"bloque\"";}
-	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"   placeholder=\"$placeholder\" size=\"".$long."\" value=\"".$val."\" $extra style=\"$style\"/>");
+	echo ("<input type=\"text\" name=\"".$champ."\" id=\"".$champ."\"   placeholder=\"$placeholder\" autocomplete=\"$autocomplete\" size=\"".$long."\" value=\"".$val."\"  $extra style=\"$style\"/>");
     echo ("<br>");
 }
 
@@ -1634,7 +1634,7 @@ function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 
 function ref_onglet($id_page) {
 $db=sql_connect(SQL_base);
-$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page';";
+$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page' ORDER BY pos ASC;";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 While ($row = pg_fetch_assoc($result)) {
 	$onglet['id'][] = $row['onglet'];

@@ -771,7 +771,12 @@ CREATE TABLE syntaxa.st_cortege_floristique(
 	"idCortegeFloristique" serial not null,
 	"codeEnregistrementSyntaxon" text,
 	"idRattachementReferentiel" text,
-	"typeTaxon" text
+	"typeTaxon" text,
+	 code_referentiel text,
+	version_referentiel text,
+	cd_ref text,
+	nom_complet text,
+	"rqTaxon" text
 );
 -- ddl-end --
 COMMENT ON TABLE syntaxa.st_cortege_floristique IS 'Cortège floristique qui accompagne le syntaxon';

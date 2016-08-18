@@ -42,7 +42,7 @@ if (!empty ($id))
 		echo "<br> departement select";var_dump($_POST["departement_select"]);
 		echo "<br> etage veg";var_dump($_POST["etage_veg"]);
 		echo "<br> etage veg select";var_dump($_POST["etage_veg_select"]);
-				echo "<br> etage bioclim";var_dump($_POST["etage_bioclim"]);
+		echo "<br> etage bioclim";var_dump($_POST["etage_bioclim"]);
 		echo "<br> etage bioclim select";var_dump($_POST["etage_bioclim_select"]);
 		echo "<br> eunis";var_dump($_POST["eunis"]);
 		echo "<br> eunis select";var_dump($_POST["eunis_select"]);
@@ -435,9 +435,11 @@ if (!empty($supp))
 	
 if (!empty($add))
 	{
-   foreach ($add as $field => $val)
+	//mise à jour de la sequence pour la colonne serial idChorologie (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+	$query.="SELECT setval('syntaxa.\"st_chorologie_idChorologie_seq\" ', COALESCE((SELECT MAX(\"idChorologie\")+1 FROM syntaxa.st_chorologie), 1), false);";
+	foreach ($add as $field => $val)
 		{
-   if (DEBUG) echo "valeur=".$val."<br>";
+   if (DEBUG) echo "<br>valeur=".$val."<br>";
    $val="'".$val."'";
    $query.="INSERT INTO syntaxa.st_chorologie (\"codeEnregistrement\",\"idTerritoire\") VALUES ($id,$val); ";
    add_suivi2($etape,$id_user,$id,'st_chorologie','idTerritoire','',$val,$id_page,'manuel','ajout');
@@ -477,8 +479,8 @@ if (!empty($add))
 
 $supp = array_diff($etag_veg_base, $_POST["etage_veg_select"]);
 $add = array_diff($_POST["etage_veg_select"],$etag_veg_base);
-var_dump($supp);
-var_dump($add);
+echo 'supp:<br>';var_dump($supp);
+echo 'add:<br>';var_dump($add);
 
 if (!empty($supp))
 	{
@@ -497,19 +499,20 @@ if (!empty($supp))
 	
 if (!empty($add))
 	{
+    //mise à jour de la sequence pour la colonne serial idCorresEtageveg (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+   $query.="SELECT setval('syntaxa.\"st_etage_veg_idCorresEtageveg_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageveg\")+1 FROM syntaxa.st_etage_veg), 1), false);";
    foreach ($add as $field => $val)
 		{
-   if (DEBUG) echo "valeur=".$val."<br>";
+   if (DEBUG) echo "<br>valeur=".$val."<br>";
    $val="'".$val."'";
-   //mise à jour de la sequence pour la colonne serial idChorologie (en cas d'ajout manuel de données dans la table directement à travers la base de données)
-   $query="SELECT setval('syntaxa.\"st_etage_veg_idCorresEtageveg_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageveg\")+1 FROM syntaxa.st_etage_veg), 1), false);";
    $query.="INSERT INTO syntaxa.st_etage_veg (\"codeEnregistrement\",\"codeEtageVeg\") VALUES ($id,$val); ";
    add_suivi2($etape,$id_user,$id,'st_etage_veg','codeEtageVeg','',$val,$id_page,'manuel','ajout');
 		}
 	if (DEBUG) echo "<br>".$query;
     $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
-
+	pg_free_result ($result);
 	}
+	
 	
 
 //-----------------------------------------------------------EDITION DE LA TABLE DES ETAGES BIOCLIMATIQUES-------------------------------------------
@@ -560,12 +563,13 @@ if (!empty($supp))
 	}
 	
 if (!empty($add))
-	{
-   foreach ($add as $field => $val)
+	{ 
+	//mise à jour de la sequence pour la colonne serial idCorresEtageBioclim (en cas d'ajout manuel de données dans la table directement à travers la base de données)
+	$query.="SELECT setval('syntaxa.\"st_etage_bioclim_idCorresEtageBioclim_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageBioclim\")+1 FROM syntaxa.st_etage_bioclim), 1), false);";
+	foreach ($add as $field => $val)
 		{
    if (DEBUG) echo "valeur=".$val."<br>";
    $val="'".$val."'";
-   $query="SELECT setval('syntaxa.\"st_etage_bioclim_idCorresEtageBioclim_seq\" ', COALESCE((SELECT MAX(\"idCorresEtageBioclim\")+1 FROM syntaxa.st_etage_bioclim), 1), false);";
    $query.="INSERT INTO syntaxa.st_etage_bioclim (\"codeEnregistrement\",\"codeEtageBioclim\") VALUES ($id,$val); ";
    add_suivi2($etape,$id_user,$id,'st_etage_bioclim','codeEtageBioclim','',$val,$id_page,'manuel','ajout');
 		}

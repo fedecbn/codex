@@ -29,6 +29,8 @@ $db2=sql_connect_hub(SQL_base_hub);
 if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false);
 				
 //------------------------------------------------------------------------------ REF.		
+// if ($onglet == "user") ref_colonne_et_valeur ("droit_$id_page");
+// else ref_colonne_et_valeur ($onglet);
 ref_colonne_et_valeur ($onglet);
 
 //------------------------------------------------------------------------------ FILTERS
@@ -42,8 +44,9 @@ $query= $query_liste[$_GET['onglet']]." ".$sWhere." ".$sOrder." ".$sLimit;
 
 // echo "<br>".$query;
 
-// $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
-$result=pg_query ($db2,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+if ($onglet == 'user') $result=pg_query ($db,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+else $result=pg_query ($db2,$query) or die ("Erreur pgSQL : ".pg_result_error ($result));
+
 if (pg_num_rows ($result)) 
     $aResultTotal=pg_result($result,0,"total_count");
 else $aResultTotal=0; 

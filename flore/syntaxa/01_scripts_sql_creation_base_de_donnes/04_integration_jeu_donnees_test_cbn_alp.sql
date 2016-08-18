@@ -63,7 +63,7 @@ CREATE TABLE syntaxa.temp_st_geomorphologie("idVegGeomorpho" character varying,"
 
 -- object: syntaxa.st_cortege_floristique | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.temp_st_cortege_floristique cascade;
-CREATE TABLE syntaxa.temp_st_cortege_floristique("idCortegeFloristique" character varying,"codeEnregistrementSyntaxon" character varying,"idRattachementReferentiel" character varying,"typeTaxon" character varying);
+CREATE TABLE syntaxa.temp_st_cortege_floristique("idCortegeFloristique" character varying,"codeEnregistrementSyntaxon" character varying,"idRattachementReferentiel" character varying,"typeTaxon" character varying,   code_referentiel character varying,  version_referentiel character varying,  cd_ref character varying,  nom_complet character varying,  "rqTaxon" character varying);
 
 
 -- object: syntaxa.temp_st_correspondance_hic | type: TABLE --

@@ -297,7 +297,7 @@ case "install-set":	{
 			{
 			if (isset($_POST[$key]))
 				{
-				if ($_POST[$key] == 'TRUE')
+				if ($_POST[$key] == 'TRUE') //si le bouton radio a été coché en "Oui"
 					{
 //					if ($key == 'refnat' or $key == 'syntaxa' or $key == 'lr' or $key == 'catnat' or $key == 'eee')
 //					{
@@ -398,7 +398,7 @@ case "install-set":	{
 
 			
 		/*------------------------------------------*/
-		/*parametrage du ficher de conf sql_connect*/
+		/*parametrage du ficher de conf config_sql.inc.php*/
 		if (!file_exists("../../_INCLUDE/config_sql.inc.php"))
 			{
 			$sql_file = file_get_contents("../../_INCLUDE/config_sql.inc.example.php");
@@ -459,6 +459,7 @@ function create_query($sql,$user_codex) {
 	$query = file_get_contents($sql);
 	$query = str_replace("pg_user",$user_codex,$query);
 	$query = str_replace("postgres",$user_codex,$query);
+	$query = str_replace("user_codex",$user_codex,$query);
 	return $query;
 }	
 ?>
