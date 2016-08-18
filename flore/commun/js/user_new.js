@@ -12,6 +12,7 @@
 		"bProcessing": true,
     	"bServerSide": true,
     	"sAjaxSource": "liste.php?onglet=user",
+		"sServerMethod": "POST",
         "bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
             localStorage.setItem( 'user_'+window.location.pathname, JSON.stringify(oData) );
