@@ -30,8 +30,6 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 global $aColumns, $ref, $champ_ref ;
 ref_colonne_et_valeur ($onglet);
 
-// var_dump($aColumns[$onglet]);
-
 //------------------------------------------------------------------------------ MAIN
 $filters = filter_column_post($aColumns[$onglet]);
 $sLimit = $filters['sLimit'];  

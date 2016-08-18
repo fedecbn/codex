@@ -58,9 +58,9 @@
                 { type: "text" },                                               // 
                 { type: "text" },                                               // 
                 { type: "text" },                                               //   
-                { type: "select", values:[{ value: 1, label: 'CBN Alpin'},{ value: 2, label: 'CBN de Bailleul'},{ value: 3, label: 'CBN de Brest'},{ value: 4, label: 'CBN de Corse'},{ value: 5, label: 'CBN de Franche-Comté'},{ value: 6, label: 'CBN des Pyrénées et de Midi-Pyrénées'},{ value: 7, label: 'CBN du Bassin Parisien'},{ value: 8, label: 'CBN du Massif central'},{ value: 12, label: '[Guyane]'},{ value: 13, label: '[Grand Est]'},{ value: 14, label: '[Guadeloupe]'},{ value: 15, label: '[Martinique]'},{ value: 16, label: 'FCBN'},{ value: 0, label: 'inconnu'},{ value: 9, label: 'CBN Méditerranéen de Porquerolles'},{ value: 10, label: 'CBN Sud-Atlantique'},{ value: 11, label: 'CBN Mascarin'}]},                                               //  
-				{ type: "select", values: [{ value: 1, label: 'Lecteur' },{ value: 64, label: 'Participant' },{ value: 128, label: 'Evaluateur' },{ value: 255, label: 'Administrateur'}] },
-                { type: "select", values: [{ value: true, label: 'Oui'},{ value: false, label: 'Non' } ] }
+                { type: "select", values:[{ value: 1, label: 'CBN Alpin'},{ value: 2, label: 'CBN de Bailleul'},{ value: 3, label: 'CBN de Brest'},{ value: 4, label: 'CBN de Corse'},{ value: 5, label: 'CBN de Franche-Comté'},{ value: 6, label: 'CBN des Pyrénées et de Midi-Pyrénées'},{ value: 7, label: 'CBN du Bassin Parisien'},{ value: 8, label: 'CBN du Massif central'},{ value: 12, label: '[Guyane]'},{ value: 13, label: '[Grand Est]'},{ value: 14, label: '[Guadeloupe]'},{ value: 15, label: '[Martinique]'},{ value: 16, label: 'FCBN'},{ value: 0, label: 'inconnu'},{ value: 9, label: 'CBN Méditerranéen de Porquerolles'},{ value: 10, label: 'CBN Sud-Atlantique'},{ value: 11, label: 'CBN Mascarin'}]},
+				{ type: "select", values: [{ value: 'lecteur', label: 'Lecteur' },{ value: 'participant', label: 'Participant' },{ value: 'evaluateur', label: 'Evaluateur' },{ value: 'gestionnaire', label: 'Géstionnaire'},{ value: 'validateur', label: 'Validateur'},{ value: 'administrateur', label: 'Administrateur'}] },
+                { type: "select", values: [{ value: 'referent', label: 'Oui'}] }
 			]
 		});	
 	oTable2.fnSort( [ [2,'desc'] ] );
