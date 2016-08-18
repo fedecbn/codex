@@ -37,7 +37,7 @@ $query_module = "
 	JOIN refnat.taxons a ON a.uid = t.uid 
 	WHERE a.$id_rub = TRUE AND t.uid=";
 
-$query_liste = "
+$query_liste[$id_page] = "
 	SELECT count(*) OVER() AS total_count,
 	chorologie.*,evaluation.*, validation.*,taxons.*
 	FROM lr.taxons
@@ -47,6 +47,8 @@ $query_liste = "
 	JOIN refnat.taxons a ON a.uid = taxons.uid 
 	WHERE a.$id_rub = TRUE ";
 
+$query_liste["user"] = $query_liste["user"]."'".$id_page."' ";
+	
 $query_export = "
 SELECT *
 	FROM lr.taxons AS t  
@@ -57,10 +59,10 @@ SELECT *
 	";
 $export_id = "t.uid";
 
-$query_user = "
-	SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."
-	FROM applications.utilisateur
-	WHERE utilisateur.niveau_".$id_page." <> 0";
+// $query_user = "
+	// SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."
+	// FROM applications.utilisateur
+	// WHERE utilisateur.niveau_".$id_page." <> 0";
 
 $query_discussion = "
 	SELECT prenom||' '||nom||' ('||cd_cbn||') le '||to_char(datetime, 'dd/MM/YYYY')||' à '||to_char(datetime, 'HH24')||'h'||to_char(datetime, 'MI'), commentaire_eval 

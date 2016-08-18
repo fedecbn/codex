@@ -15,11 +15,11 @@ $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
-$onglet = 'eval';
-
+// $onglet = 'eval';
+$onglet = $_GET['onglet'];
 //------------------------------------------------------------------------------ PARMS.
 /*Droit sur les boutons de la dernière colonne*/
-$typ_droit='d2';$rubrique=$id_page;$onglet = 'lr';
+$typ_droit='d2';$rubrique=$id_page;
 $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
@@ -28,17 +28,18 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 
 //------------------------------------------------------------------------------ REF.
 global $aColumns, $ref, $champ_ref ;
-ref_colonne_et_valeur ($id_page);
+ref_colonne_et_valeur ($onglet);
 
+// var_dump($aColumns[$onglet]);
 
 //------------------------------------------------------------------------------ MAIN
-$filters = filter_column_post($aColumns[$id_page]);
+$filters = filter_column_post($aColumns[$onglet]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query=$query_liste." ".$sWhere." ".$sOrder." ".$sLimit;
+$query=$query_liste[$onglet]." ".$sWhere." ".$sOrder." ".$sLimit;
 
 // echo "<br>".$query;
 
@@ -59,7 +60,7 @@ $iTotal = $aResultTotal;
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
 	{
 		$sOutput .= "[";
-		foreach ($aColumns[$id_page] as $key => $value) {
+		foreach ($aColumns[$onglet] as $key => $value) {
 		/*---------------*/
 		/*cas paticuliers*/
 		/*---------------*/
