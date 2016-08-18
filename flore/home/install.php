@@ -287,6 +287,8 @@ case "install-set":	{
 		if ($row[0] != "1")
 			{  
 		$query = "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', 'home', false, true, true, true, true, true, true, true);";
+		$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', 'bugs', false, true, true, true, true, true, true, true);";
+		$query .= "INSERT INTO applications.utilisateur_role VALUES ('ADMI1', 'module_admin', false, true, true, true, true, true, true, true);";
 		$result = pg_query($conn_codex,$query);
 			}
 		
@@ -350,12 +352,21 @@ case "install-set":	{
 								{
 								//echo "la table ".$nom_table." n'existe pas dans la base, le fichier csv ne doit pas être importé <br>";
 								} 
-								else 
+								else //import des données à partir du fichier .csv dezippé
 								{
 								$query .= "COPY $key.$nom_table from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
-								$requete="COPY $key.$nom_table from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
+								
+/*								if ($key == 'refnat' and $nom_table=='taxons') 
+								{
+									$query .= "UPDATE refnat.taxons set catnat='FALSE', eee='FALSE', lr='FALSE';";
+								}
+*/
+								//$requete="COPY $key.$nom_table from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
 								//echo "requete csv=".$requete."<br>";
-								}		    
+								}
+
+							//suppression du csv dezippé	
+							unlink( $data_csv);
 							}
 									
 						/*finalisation de la query*/
