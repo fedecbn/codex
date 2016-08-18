@@ -46,6 +46,11 @@ $(document).ready(function(){
             text: true
         });
 	
+	$("#desinstall-button")
+        .button({
+            text: true
+        });
+	
 	$("#install-finish-button")
         .button({
             text: true
@@ -212,6 +217,16 @@ case "install-param":	{
 		echo ("</div></center>");
 		echo ("<center><button id=\"install-button\">Lancer l'installation</button></center>");
 	echo ("</form>");
+	
+	/*Desinstallation*/
+	if (file_exists("../../_INCLUDE/config_sql.inc.php"))
+		{	
+		echo ("<form method=\"POST\" id=\"form2\" class=\"form2\" name=\"desinstall\" action=\"\" >");
+			echo ("<input type=\"hidden\" name=\"action\" value=\"desinstall\" />");
+			echo ("<BR><BR><center><button id=\"desinstall-button\">Désinstaller</button><BR>Attention, opération non réversible (supprime la base de données).</center> ");
+		echo ("</form>");		
+		}
+
 	}
 	break;
 /*-------------------------------------------------------------------------------------*/
@@ -433,6 +448,16 @@ case "install-finish":	{
 	// fopen("../../_INCLUDE/install-ok.txt","w+");
 	header("Location: ../../index.php");
 
+	}
+	break;
+
+case "desinstall":	{
+	require_once ("../../_INCLUDE/config_sql.inc.php"); //récupération des variables de connexion à la base dans le fichier config_sql.inc.php		
+	$host = SQL_server;$port = SQL_port;$user = SQL_admin_user;$mdp = SQL_admin_pass;$dbname = SQL_base; $user_codex = SQL_user;$mdp_codex = SQL_pass;
+	$conn_codex = connexion ($host,$port,$user,$mdp,$dbname);
+	$query = "DROP DATABASE $dbname;";
+	$result = pg_query($conn_codex,$query);
+	unlink("../../_INCLUDE/config_sql.inc.php");
 	}
 	break;
 }
