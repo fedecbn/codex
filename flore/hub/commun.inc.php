@@ -22,11 +22,7 @@ $config=$_SESSION['id_config'];
 
 $lang_select=$_COOKIE['lang_select'];
 
-$onglet = array(
-	"id" => array ("hub","droit"),
-	"name" => array ("Etat du hub","Utilisateurs"),
-	"sstitre" => array ("Liste des CBN","Liste des droits")
-	);
+$onglet = ref_onglet($id_page);
 
 $bouton1 = array (
 		array ("id" => "import","titre"=>"Import de données","text" => "Dernier import : ","niveau" => 128,"cbn"=>true),
@@ -53,10 +49,12 @@ $bouton = array_merge($bouton1,$bouton2,$bouton3);
 //------------------------------------------------------------------------------ Querys
 $query_module = ""; /*Directement dans index.php*/
 
-$query_liste["hub"] = "
+$query_liste[$id_page] = "
 SELECT count(*) OVER() AS total_count,*
 	FROM public.bilan 
 	WHERE 1 = 1 ";
+	
+$query_liste["user"] = $query_liste["user"]."'".$id_page."' ";
 
 $query_user = "
 SELECT count(*) OVER() AS total_count,utilisateur.id_user,utilisateur.prenom,utilisateur.nom,utilisateur.id_cbn,utilisateur.niveau_".$id_page.", utilisateur.ref_".$id_page."
@@ -85,7 +83,7 @@ foreach ($bouton as $val)
 
 //------------------------------------------------------------------------------ CHAMPS du module
 
-foreach ($onglet["id"] as $val)
+foreach ($onglet["id"] as $key => $val)
 	{
 	$query = "SELECT nom_champ,description,description_longue FROM referentiels.champs WHERE rubrique_champ = '$val' AND pos IS NOT NULL ORDER BY pos";
 	$result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);

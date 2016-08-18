@@ -1634,7 +1634,7 @@ function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 
 function ref_onglet($id_page) {
 $db=sql_connect(SQL_base);
-$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page';";
+$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page' ORDER BY pos ASC;";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 While ($row = pg_fetch_assoc($result)) {
 	$onglet['id'][] = $row['onglet'];
