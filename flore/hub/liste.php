@@ -34,7 +34,8 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 ref_colonne_et_valeur ($onglet);
 
 //------------------------------------------------------------------------------ FILTERS
-$filters = filter_column($aColumns[$onglet]);
+$filters = filter_column_post($aColumns[$onglet]);
+// $filters = filter_column($aColumns[$onglet]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
@@ -53,8 +54,10 @@ else $aResultTotal=0;
 $iTotal = $aResultTotal;
 
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	// $sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
+	
 //	$sOutput .= '"iTotalDisplayRecords": '.$iFilteredTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
 	$sOutput .= '"aaData": [ ';
@@ -94,7 +97,7 @@ echo $sOutput;
 	//------------------------------------------------------------------------------ SI PAS ACCES 
 	} else {
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
 	$sOutput .= '"aaData": [ ';
