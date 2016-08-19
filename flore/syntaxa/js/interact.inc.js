@@ -65,18 +65,7 @@ $(function() {
 */
 
 
-/*
-function concatenatenomcomplet () {
-		var nom = $("#nomSyntaxon");
-		var pr = nom.val();
-		nom.removeClass("error");
-        document.getElementById('nomCompletSyntaxon').value=pr;
-		return (true);
-	};
-	
-$("#nomCompletSyntaxon").keyup (concatenatenomcomplet);
 
-*/
 
 $(function() {
   var scntDiv = $('#p_scents');
@@ -97,16 +86,19 @@ $(function() {
   });
 });
 
+
 function concatenatenomcomplet () {
   var nom = $("#nomSyntaxon");
   var auteur = $("#auteurSyntaxon");
-  var pr = nom.val() + " " + auteur.val();
+  //console.log('auteur:'+auteur.val());
+  var pr = (nom.val()).trim() + " " + (auteur.val()).trim(); //supression des espaces en fin de mot
   document.getElementById('nomCompletSyntaxon').value=pr;
   return (true);
 };
 
 $("#nomSyntaxon").keyup (concatenatenomcomplet);
 $("#auteurSyntaxon").keyup (concatenatenomcomplet);
+
 
 
 
