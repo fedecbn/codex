@@ -192,13 +192,14 @@ function taxon_add(FICHE_TYPE){
     var idsyntaxon = $("#idsyntaxon").val();                           
     var taxon = $("#taxon"+FICHE_TYPE).val();                           
     var CD_REF = $("#taxon"+FICHE_TYPE+"_CD_REF").val();
-	var idrattachement = $("#idrattachement").val();   	
+    var idrattachement = $("#idrattachement").val();
+    var iduser = $("#id_user").val();   	    
     var COMM = $("#COMM").val();                           
 
     console.log('taxon_add FICHE_TYPE='+FICHE_TYPE);
     if (idsyntaxon != "" & taxon != "" & CD_REF != "") 
     {
-    	var url = 'submit=1&taxon='+escape(taxon)+'&CD_REF='+escape(CD_REF)+'&idrattachement='+escape(idrattachement)+'&FICHE_TYPE='+FICHE_TYPE+'&idsyntaxon='+escape(idsyntaxon)+'&COMM='+escape(COMM);              
+    	var url = 'submit=1&taxon='+escape(taxon)+'&CD_REF='+escape(CD_REF)+'&idrattachement='+escape(idrattachement)+'&iduser='+escape(iduser)+'&FICHE_TYPE='+FICHE_TYPE+'&idsyntaxon='+escape(idsyntaxon)+'&COMM='+escape(COMM);              
 		$.ajax({
 			type: "POST",
             url: "../commun/taxon_process.php",
@@ -212,6 +213,7 @@ function taxon_add(FICHE_TYPE){
 				$("#taxon"+FICHE_TYPE+"_CD_REF").val('');
 				$("#COMM").val('');
 				$("#idrattachement").val('');
+				$("#iduser").val('');
 				taxon_list(FICHE_TYPE);
 			}
 		});

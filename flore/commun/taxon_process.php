@@ -20,6 +20,7 @@ $table="syntaxa.st_cortege_floristique";
 
 //----------------------------------------------------------------------------- PARMS.
 $idsyntaxon = isset($_POST['idsyntaxon']) ? $_POST['idsyntaxon'] : "";
+$iduser = isset($_POST['iduser']) ? $_POST['iduser'] : "";
 $idrattachement= isset($_POST['idrattachement']) ? $_POST['idrattachement'] : "";;
 $FICHE_TYPE = isset($_POST['FICHE_TYPE']) ? $_POST['FICHE_TYPE'] : 1;
 $taxon = isset($_POST['taxon']) ? $_POST['taxon'] : "";
@@ -59,11 +60,18 @@ alter table syntaxa.st_cortege_floristique add column cd_ref text;
 alter table syntaxa.st_cortege_floristique add column nom_complet text;
 alter table syntaxa.st_cortege_floristique add column "rqTaxon" text;
 */
-     $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,\"idRattachementReferentiel\",cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7','".$idrattachement."',".$CD_REF.",'".$taxon."',".sql_format($COMM).");";
-//   $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7',".$CD_REF.",'".$taxon."',".sql_format($COMM).");";
+     //echo "commentaire:".$_POST['COMM']."<br>";
+     //echo "commentaire utf8:".utf8_encode($_POST['COMM'])."<br>";
+     
+     $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,\"idRattachementReferentiel\",cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7','".$idrattachement."',".$CD_REF.",'".utf8_encode($taxon)."',".utf8_encode(sql_format($COMM)).");";
+     $query.="INSERT INTO applications.suivi (etape,id_user, tables,champ,valeur_1,valeur_2,datetime,rubrique,methode,type_modif,libelle_1,libelle_2,uid) VALUES ('2','".$iduser."','st_cortege_floristique','idRattachementReferentiel','','".$idrattachement."',NOW(),'syntaxa','manuel','ajout','','".$taxon."','".$idsyntaxon."');";
+
+     //   $query="INSERT INTO ".$table." (\"codeEnregistrementSyntaxon\",code_referentiel,version_referentiel,cd_ref,nom_complet,\"rqTaxon\") VALUES ('".$idsyntaxon."','TAXREF','7',".$CD_REF.",'".$taxon."',".sql_format($COMM).");";
+
 echo "idrattachement:". $idrattachement."<br>";
 		echo $query."<br>"; 
 		$result=pg_query($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
+     
     }
     $query="SELECT * FROM ".$table." WHERE \"codeEnregistrementSyntaxon\"='".$idsyntaxon."';";    // Affiche la liste
 //echo $query; 
@@ -74,8 +82,8 @@ echo "idrattachement:". $idrattachement."<br>";
         {
 			//<td valign="middle" width="100%">'.utf8_encode($row['nom_complet']).' '.utf8_encode($row['rqTaxon']).'</td>
         	echo '<tr class=\"list\" ><form id="form" action="taxon_delete.php?id='.$row['idCortegeFloristique'].'" method="post">
-			<td valign="middle" width="50%">'.utf8_encode($row['nom_complet']).'</td>
-			<td valign="middle" width="50%">'.utf8_encode($row['rqTaxon']).'</td>
+			<td valign="middle" width="50%">'.$row['nom_complet'].'</td>
+			<td valign="middle" width="50%">'.$row['rqTaxon'].'</td>
     		<td valign="middle" width="10%">
     		<input type="hidden" class="tax_id" id="tax_id" value="'.$row['idCortegeFloristique'].'" />
 			<input type="hidden" class="type_id" id="tax_id" value="'.$FICHE_TYPE.'" />

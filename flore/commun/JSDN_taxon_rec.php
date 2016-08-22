@@ -37,7 +37,7 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
      	$sOutput = '[';
         while ($row = pg_fetch_array($result,NULL,PGSQL_ASSOC)) {
 			$row_array['CD_REF'] = $row["cd_ref"]; //je le mets en minuscule car la requete envoyee ne respecte pas la casse des noms de champs en majuscule
-			$row_array['NOM_COMPLET'] = utf8_encode ($row["nom_complet"]); //je le mets en minuscule car la requete envoyee ne respecte pas la casse des noms de champs en majuscule
+			$row_array['NOM_COMPLET'] = $row["nom_complet"]; //je le mets en minuscule car la requete envoyee ne respecte pas la casse des noms de champs en majuscule
 			$row_array['idrattachement'] = utf8_encode ($row["id_rattachement_referentiel"]); //je le mets en minuscule car la requete envoyee ne respecte pas la casse des noms de champs en majuscule
     		$return_arr[]=$row_array;
     	}
