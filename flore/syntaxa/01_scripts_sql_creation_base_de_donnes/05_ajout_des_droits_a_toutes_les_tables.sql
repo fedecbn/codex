@@ -68,6 +68,9 @@ GRANT ALL PRIVILEGES ON syntaxa.st_correspondance_eunis TO user_codex;
 GRANT ALL PRIVILEGES ON syntaxa.st_collaborateur TO user_codex;
 GRANT ALL PRIVILEGES ON syntaxa.st_annuaire_organismes TO user_codex;
 GRANT ALL PRIVILEGES ON syntaxa.st_syntaxon TO user_codex;
+GRANT ALL PRIVILEGES ON syntaxa.st_ref_type_taxon TO user_codex;
+
+
 
 grant all on TABLE syntaxa."st_chorologie_idChorologie_seq" TO user_codex;
 grant all on TABLE syntaxa."st_catalogue_description_id_tri_seq" TO user_codex;

@@ -8744,6 +8744,22 @@ INSERT INTO st_ref_type_facies ("codeFacies", "libFacies", "libLongFacies", id_t
 
 SELECT pg_catalog.setval('st_ref_type_facies_id_tri_seq', 1, false);
 
+--
+-- TOC entry 2936 (class 0 OID 144839)
+-- Dependencies: 406
+-- Data for Name: st_ref_type_taxon; Type: TABLE DATA; Schema: syntaxa; Owner: postgres
+--
+
+INSERT INTO syntaxa.st_ref_type_taxon ("codeTypeTaxon", "libTypeTaxon", "libLongTypeTaxon", id_tri) VALUES ('cara', 'Caractéristique', 'taxon caractéristique', 1);
+INSERT INTO syntaxa.st_ref_type_taxon ("codeTypeTaxon", "libTypeTaxon", "libLongTypeTaxon", id_tri) VALUES ('diff', 'Différentiel', 'taxon différentiel', 2);
+INSERT INTO syntaxa.st_ref_type_taxon ("codeTypeTaxon", "libTypeTaxon", "libLongTypeTaxon", id_tri) VALUES ('NI', 'non indiqué', 'non indiqué', 0);
+
+--
+-- TOC entry 2977 (class 0 OID 0)
+-- Dependencies: 407
+-- Name: st_ref_type_taxon_id_tri_seq; Type: SEQUENCE SET; Schema: syntaxa; Owner: postgres
+--
+SELECT pg_catalog.setval('st_ref_type_taxon_id_tri_seq', 1, false);
 
 --
 -- TOC entry 2938 (class 0 OID 144847)

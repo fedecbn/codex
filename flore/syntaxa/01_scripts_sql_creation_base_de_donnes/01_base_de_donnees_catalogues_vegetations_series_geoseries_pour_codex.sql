@@ -786,6 +786,34 @@ COMMENT ON COLUMN syntaxa.st_cortege_floristique."idRattachementReferentiel" IS 
 COMMENT ON COLUMN syntaxa.st_cortege_floristique."typeTaxon" IS 'indique si le taxon est caractéristique ou différentiel';
 -- ddl-end --
 
+-- Table: syntaxa.st_ref_type_taxon
+
+-- DROP TABLE syntaxa.st_ref_type_taxon;
+
+-- Table: syntaxa.st_ref_type_taxon
+
+-- DROP TABLE syntaxa.st_ref_type_taxon;
+
+CREATE TABLE syntaxa.st_ref_type_taxon
+(
+  "codeTypeTaxon" text NOT NULL, -- code du type de faciès
+  "libTypeTaxon" text, -- libelle du type de faciès
+  "libLongTypeTaxon" text, -- libelle long du type de faciès
+  id_tri serial NOT NULL,
+  CONSTRAINT "codeTypeTaxon_pkey" PRIMARY KEY ("codeTypeTaxon")
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE syntaxa.st_ref_type_taxon
+  OWNER TO postgres;
+
+COMMENT ON TABLE syntaxa.st_ref_type_taxon IS 'Référentiel des types de taxons';
+COMMENT ON COLUMN syntaxa.st_ref_type_taxon."codeTypeTaxon" IS 'code du type de taxon';
+COMMENT ON COLUMN syntaxa.st_ref_type_taxon."libTypeTaxon" IS 'libelle du type de taxon';
+COMMENT ON COLUMN syntaxa.st_ref_type_taxon."libLongTypeTaxon" IS 'libelle long du type de taxon';
+
+
 -- object: syntaxa.st_ref_pvf | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_ref_pvf cascade;
 CREATE TABLE syntaxa.st_ref_pvf(

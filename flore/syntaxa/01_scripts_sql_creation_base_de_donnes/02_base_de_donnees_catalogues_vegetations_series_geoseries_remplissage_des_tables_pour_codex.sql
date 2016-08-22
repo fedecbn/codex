@@ -618,6 +618,12 @@ INSERT INTO syntaxa.st_ref_type_stade("codeTypeStade","libTypeStade") VALUES ('N
 */
 
 
+
+--table syntaxa.st_ref_type_taxon
+INSERT INTO syntaxa.st_ref_type_taxon ("codeTypeTaxon", "libTypeTaxon", "libLongTypeTaxon", id_tri) VALUES ('cara', 'Caractéristique', 'taxon caractéristique', 1);
+INSERT INTO syntaxa.st_ref_type_taxon ("codeTypeTaxon", "libTypeTaxon", "libLongTypeTaxon", id_tri) VALUES ('diff', 'Différentiel', 'taxon différentiel', 2);
+INSERT INTO syntaxa.st_ref_type_taxon ("codeTypeTaxon", "libTypeTaxon", "libLongTypeTaxon", id_tri) VALUES ('NI', 'non indiqué', 'non indiqué', 0);
+
 --table syntaxa.st_ref_type_facies
 truncate syntaxa.st_ref_type_facies cascade;
 
