@@ -654,7 +654,7 @@ if (!empty($_POST['idCatalogue2'])) {
 	$insert="INSERT INTO syntaxa.st_syntaxon (\"idCatalogue\",\"codeEnregistrementSyntax\", \"idSyntaxon\",\"nomSyntaxon\",
 	\"auteurSyntaxon\",\"nomCompletSyntaxon\",\"rangSyntaxon\") VALUES (";
 	$champs= rtrim (sql_format_quote($_POST[$codecatalogue],'do').",". sql_format_quote($_POST['idTerritoireObligatoire'],'do'),"'" )."_syntaxon_".$next_uid."',".sql_format_quote($_POST['idSyntaxon'],'do').",
-	".sql_format_quote($_POST['nomSyntaxon'],'do').",".sql_format_quote($_POST['auteurSyntaxon'],'do').",'".$_POST['nomSyntaxon']." ".$_POST['auteurSyntaxon']."',".sql_format_quote($_POST['rangSyntaxon'],'do').") RETURNING \"codeEnregistrementSyntax\";";
+	".sql_format_quote($_POST['nomSyntaxon'],'do').",".sql_format_quote($_POST['auteurSyntaxon'],'do').",TRIM('".$_POST['nomSyntaxon']." ".$_POST['auteurSyntaxon']."'),".sql_format_quote($_POST['rangSyntaxon'],'do').") RETURNING \"codeEnregistrementSyntax\";";
 	$query=	$insert.$champs;
 	
 	$result=pg_query ($db,$query) or die ("Erreur pgSQL : ".$query);
