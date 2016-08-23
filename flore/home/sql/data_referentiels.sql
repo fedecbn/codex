@@ -871,6 +871,11 @@ INSERT INTO champs (id, rubrique_champ, nom_champ, type, description, table_cham
 INSERT INTO champs (id, rubrique_champ, nom_champ, type, description, table_champ, referentiel, pos, description_longue, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, jvs_desc_column, jvs_filter_column) VALUES (362, 'lsi', 'link_2', 'string', 'Lien 2', 'news', NULL, 6, 'lien de la news', true, 'link_2', 'link_2', true, 'news', '{ "sWidth": "5%" }', '{ "type": "text" }');
 INSERT INTO champs (id, rubrique_champ, nom_champ, type, description, table_champ, referentiel, pos, description_longue, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, jvs_desc_column, jvs_filter_column) VALUES (363, 'lsi', 'date', 'string', 'Date', 'news', NULL, 7, 'date de la création du billet', true, 'date', 'date', true, 'news', '{ "sWidth": "5%" }', '{ "type": "text" }');
 
+--
+-- Name: champs_id_seq; Type: SEQUENCE SET; Schema: referentiels; Owner: postgres
+--
+
+SELECT pg_catalog.setval('champs_id_seq', 893, true);
 --- Mise à jour 
 INSERT INTO referentiels.champs (rubrique_champ, nom_champ, type, description, table_champ, referentiel, pos, description_longue, export_display, nom_champ_synthese, champ_interface, modifiable, table_bd, jvs_desc_column, jvs_filter_column) VALUES 
 ('user', 'niveau', 'val', 'Niveau de droit', 'utilisateur_role', null, 4, 'Niveau de droit', false, 'niveau', 'niveau', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
@@ -879,13 +884,6 @@ INSERT INTO referentiels.champs (rubrique_champ, nom_champ, type, description, t
 ('user', 'nom', 'string', 'Nom', 'utilisateur', NULL, 2, 'Nom', false, 'nom', 'nom', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
 ('user', 'referent', 'bool', 'Référent LSI', 'utilisateur_role', NULL, 5, 'Référent LSI', false, 'referent', 'referent', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }'),
 ('user', 'id_cbn', 'val', 'Institution', 'utilisateur', 'id_cbn', 3, 'Institution', false, 'id_cbn', 'id_cbn', false, 'utilisateur', '{ "sWidth": "5%" }', '{ "type": "text" }');
-
-
---
--- Name: champs_id_seq; Type: SEQUENCE SET; Schema: referentiels; Owner: postgres
---
-
-SELECT pg_catalog.setval('champs_id_seq', 893, true);
 
 
 --
