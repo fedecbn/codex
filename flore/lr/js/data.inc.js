@@ -20,7 +20,7 @@
 /*******************************************************************************/
 
     if (typeof oTable == 'undefined' && typeof oTable2 == 'undefined' ) {
-        var oTable = $('#data-liste').dataTable({
+        var oTable = $('#onglet0-liste').dataTable({
    	    "bJQueryUI": true,
    	    "iCookieDuration": 60*60*24,
         "iDisplayLength": 100,
@@ -34,7 +34,7 @@
     	"bAutoWidth": false,
 		"bProcessing": true,
     	"bServerSide": true,
-    	"sAjaxSource": "liste.php",
+    	"sAjaxSource": "liste.php?onglet=lr",
     	"sServerMethod": "POST",
         "bStateSave": true,
 		"fnStateSave": function (oSettings, oData) {
@@ -202,7 +202,7 @@
 		});        
 	oTable.fnSort( [ [0,'desc'] ] );		
 
-		include("../commun/js/user.js");
+		include("../commun/js/user_new.js");
 		
 	} else {
 		oTable.fnClearTable (false);

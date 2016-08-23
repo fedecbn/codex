@@ -40,8 +40,8 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 /*Cette fonction récupère toutes les référentiels utiles pour la page. Les référentiels sons stockés dans l'objet $ref*/
 ref_colonne_et_valeur ($id_page);
 /*Droits*/
-$typ_droit='d2';$rubrique=$id_page;$onglet = 'refnat';
-$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+$typ_droit='d2';$rubrique=$id_page;
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$id_page);
 
 //------------------------------------------------------------------------------ INIT JAVASCRIPT
 ?>
@@ -77,9 +77,9 @@ echo ("</div>");
 /*Deuxième bandeau : les onglets*/
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
 echo ("<ul>");
-echo ("<li><a href=\"#".$id_page."\">".$lang[$lang_select][$id_page]."</a></li>");
-echo ("<li><a href=\"#".$id_page_2."\">".$lang[$lang_select][$id_page_2]."</a></li>");
-echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
+  foreach ($onglet["id"] as $key => $val) 
+    echo ("<li><a href=\"#".$val."\">".$onglet["nom"][$key]."</a></li>"); 
+  echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
 echo ("</ul>");
 
 echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
@@ -90,11 +90,9 @@ switch ($mode) {
 /*------------------------------------------------------------------------------------------------------- */
     case "liste" : {
 /*------------------------------------------------------------------------------ #Onglet 1*/
-        echo ("<div id=\"".$id_page."\" >");
+		echo ("<div id=\"".$onglet["id"][0]."\" >"); 
             /*Troisième bandeau*/
-			echo ("<div id=\"titre2\">");
-                echo ($lang[$lang_select]["liste_taxons"]);
-            echo ("</div>");
+			echo ("<div id=\"titre2\">".$onglet["ss_titre"][0]."</div>"); 
             echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$id_page."_".$id_user.".csv\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
@@ -106,20 +104,17 @@ switch ($mode) {
             echo ("<div id=\"dialog\"></div>");
 			
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			aff_table_reborn ("onglet0",$onglet["id"][0]);
+			// aff_table_new ($id_page,true,true);			
 		echo ("</div>");
 //------------------------------------------------------------------------------ #deuxieme onglet (DROIT)
-        echo ("<div id=\"droit\" >");
+        echo ("<div id=\"".$onglet["id"][1]."\" >");
             /*Troisième bandeau*/
-            echo ("<div id=\"titre2\">");
-                echo "Droit d'utilisation de la rubrique";
-            echo ("</div>");
-            echo ("<div style=\"float:right;\">");
-            echo ("</div><br><br>");
+            echo ("<div id=\"titre2\">".$onglet["ss_titre"][1]."</div>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
-			aff_table_new ("droit",false,true);			
-        echo ("</div>");
+			aff_table_reborn ("user",$onglet["id"][1]);		
+		echo ("</div>");    
     }
     break;
 
@@ -129,7 +124,7 @@ switch ($mode) {
 echo ("<div id=\"$id_page\" >");
 echo ("</div>");
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
-echo ("<div id=\"fiche\" >");
+echo ("<div id=\"".$onglet["id"][0]."\" >"); 
 echo ("<form method=\"POST\" id=\"form1\" class=\"form1\" name=\"edit\" action=\"\" >");
 
 echo ("<div style=\"float:left;\">");

@@ -1251,7 +1251,7 @@ if ( isset( $_POST['iSortCol_0'] ) )                                            
 	{
 	$sOrder="ORDER BY ";  
 		foreach ($colonne as $key => $val )	{
-			if	($val['pos'] == $_POST['iSortCol_0'])	{
+			if	($val['pos'] == $_POST['iSortCol_0'] AND $val['nom_champ_synthese'] =! 'niveau' AND $val['nom_champ_synthese'] =! 'referent')	{
 				if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
 				if ( $_POST[ 'bSortable_'.intval($_POST['iSortCol_0']) ] == "true" ) {
 					$sOrder .= $table."\"".$val['nom_champ_synthese']."\" ".pg_escape_string( $_POST['sSortDir_0']);
@@ -1267,6 +1267,12 @@ foreach ($colonne as $key => $val )                                       // col
 	/*cas particulier*/
 	if ($val['nom_champ_synthese'] == 'libelle_tag' AND $_POST['sSearch_'.$val['pos']] != null)
 		$sHaving = "HAVING string_agg(libelle_tag,' / ') ::text ILIKE '%".pg_escape_string($_POST['sSearch_'.$val['pos']])."%' ";
+    elseif ($val['nom_champ_synthese'] == 'niveau' AND $_POST['sSearch_'.$val['pos']] != null)
+		$sWhere .= " AND utilisateur_role.".pg_escape_string($_POST['sSearch_'.$val['pos']])." = TRUE ";
+    elseif ($val['nom_champ_synthese'] == 'referent' AND $_POST['sSearch_'.$val['pos']] != null)
+		$sWhere .= " AND utilisateur_role.".pg_escape_string($_POST['sSearch_'.$val['pos']])." = TRUE ";
+	
+	/*Cas géréral*/
     elseif ( $_POST['bSearchable_'.$val['pos']] == "true" && $_POST['sSearch_'.$val['pos']] != '' )
 	{
 	if (!empty($val['table_bd'])) $table = "\"".$val['table_bd']."\"."; else $table ="";
@@ -1634,7 +1640,7 @@ function les_boutons($array_bouton,$niveau,$lang,$schema,$test_cbn) {
 
 function ref_onglet($id_page) {
 $db=sql_connect(SQL_base);
-$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page';";
+$query = "SELECT onglet, nom, ss_titre FROM applications.onglet WHERE rubrique = '$id_page' ORDER BY pos ASC;";
 $result=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($result),false);
 While ($row = pg_fetch_assoc($result)) {
 	$onglet['id'][] = $row['onglet'];

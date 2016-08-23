@@ -336,6 +336,46 @@ CREATE TABLE taxons (
 
 ALTER TABLE eee.taxons OWNER TO pg_user;
 
+
+CREATE TABLE reponse_regional
+(
+  uid integer NOT NULL,
+  cd_ref integer,
+  cbn character varying NOT NULL,
+  eval character varying NOT NULL,
+  idq integer NOT NULL,
+  source character varying,
+  CONSTRAINT "PK_reponse_regional" PRIMARY KEY (uid, cbn, eval, idq)
+);
+
+ALTER TABLE eee.reponse_regional OWNER TO pg_user;
+
+CREATE TABLE evaluation_regional
+(
+  uid integer NOT NULL,
+  cd_ref integer,
+  cbn character varying NOT NULL,
+  eval character varying NOT NULL,
+  q1 integer,
+  q2 integer,
+  q3 integer,
+  q4 integer,
+  ag integer,
+  q5 integer,
+  q6 integer,
+  q7 integer,
+  q8 integer,
+  bg integer,
+  q9 integer,
+  q10 integer,
+  q11 integer,
+  q12 integer,
+  cg integer,
+  total integer,
+  CONSTRAINT "PK_evaluation_regional" PRIMARY KEY (uid, cbn, eval)
+);
+
+ALTER TABLE eee.evaluation_regional OWNER TO pg_user;
 --
 -- Name: id_discussion; Type: DEFAULT; Schema: eee; Owner: pg_user
 --

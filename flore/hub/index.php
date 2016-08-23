@@ -66,7 +66,7 @@ echo ("</div>");
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
 echo ("<ul>");
 	foreach ($onglet["id"] as $key => $val)
-		echo ("<li><a href=\"#".$val."\">".$onglet["name"][$key]."</a></li>");
+		echo ("<li><a href=\"#".$val."\">".$onglet["nom"][$key]."</a></li>");
 	echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
 echo ("</ul>");
 
@@ -79,7 +79,7 @@ switch ($mode) {
     case "liste" : {
 /*------------------------------------------------------------------------------ #Onglet 1*/
         echo ("<div id=\"".$onglet["id"][0]."\" >");
-            echo ("<div id=\"titre2\">".$onglet["sstitre"][0]."</div>");
+            echo ("<div id=\"titre2\">".$onglet["ss_titre"][0]."</div>");
             echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"".$onglet["id"][0]."_".$id_user.".txt\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"t.uid\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />");
@@ -99,7 +99,7 @@ switch ($mode) {
 /*------------------------------------------------------------------------------ #Utilisateurs*/
         echo ("<div id=\"".$onglet["id"][1]."\" >");
             /*Troisième bandeau*/
-            echo ("<div id=\"titre2\">".$onglet["sstitre"][1]."</div>");
+            echo ("<div id=\"titre2\">".$onglet["ss_titre"][1]."</div>");
             echo ("<div id=\"dialog\"></div>");
 			/*Table des données*/
 			aff_table_reborn ("user",$onglet["id"][1]);		

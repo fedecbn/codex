@@ -321,3 +321,35 @@ INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('3', '
 INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('4', 'refnat', 'refnat', 'Evolution TAXREF', 'Liste des taxons');
 INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('5', 'lsi', 'lsi', 'News', 'Liste des actualités');
 INSERT INTO onglet (id_rubrique, rubrique, onglet, nom, ss_titre) VALUES ('6', 'fsd', 'fsd', 'Dictionnaire de données', 'Liste des champs');
+
+
+
+
+--- update
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'lr' AND onglet = 'lr';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'lr' AND onglet = 'droit';
+UPDATE applications.onglet SET pos = 3 WHERE rubrique = 'lr' AND onglet = 'valid';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'hub' AND onglet = 'hub';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'hub' AND onglet = 'droit';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'eee' AND onglet = 'eee';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'eee' AND onglet = 'eval_reg';
+UPDATE applications.onglet SET pos = 3 WHERE rubrique = 'eee' AND onglet = 'droit';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'catnat' AND onglet = 'catnat';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'catnat' AND onglet = 'droit';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'syntaxa' AND onglet = 'syntaxa';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'syntaxa' AND onglet = 'droit';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'module_admin' AND onglet = 'log';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'module_admin' AND onglet = 'suivi';
+UPDATE applications.onglet SET pos = 3 WHERE rubrique = 'module_admin' AND onglet = 'text';
+UPDATE applications.onglet SET pos = 4 WHERE rubrique = 'module_admin' AND onglet = 'user';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'bugs' AND onglet = 'tab-new';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'bugs' AND onglet = 'tab-ok';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'refnat' AND onglet = 'refnat';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'refnat' AND onglet = 'droit';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'lsi' AND onglet = 'lsi';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'lsi' AND onglet = 'droit';
+UPDATE applications.onglet SET pos = 1 WHERE rubrique = 'fsd' AND onglet = 'fsd';
+UPDATE applications.onglet SET pos = 2 WHERE rubrique = 'fsd' AND onglet = 'meta';
+UPDATE applications.onglet SET pos = 3 WHERE rubrique = 'fsd' AND onglet = 'data';
+UPDATE applications.onglet SET pos = 4 WHERE rubrique = 'fsd' AND onglet = 'taxa';
+UPDATE applications.onglet SET pos = 5 WHERE rubrique = 'fsd' AND onglet = 'droit';

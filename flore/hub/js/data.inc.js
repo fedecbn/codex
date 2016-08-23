@@ -35,6 +35,7 @@
 		"bProcessing": true,
     	"bServerSide": true,
     	"sAjaxSource": "liste.php?onglet=hub",
+		"sServerMethod": "POST",
         "bStateSave": true,
         "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 		switch (aData[0])                                                  // Stylisation!
@@ -95,7 +96,7 @@
                 { type: "text" }
 			]
 		});
-	include("../commun/js/user.js");        
+	include("../commun/js/user_new.js");        
 	} else {
 		oTable.fnClearTable (false);
 		oTable.fnDraw ();

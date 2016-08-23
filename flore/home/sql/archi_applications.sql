@@ -245,7 +245,8 @@ CREATE TABLE onglet (
     rubrique character varying,
     onglet character varying NOT NULL,
     nom character varying,
-    ss_titre character varying
+    ss_titre character varying,
+    pos integer
 );
 
 
