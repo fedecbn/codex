@@ -379,9 +379,6 @@ case "install-set":	{
 								//$requete="COPY $key.$nom_table from '$data_csv' CSV HEADER encoding 'UTF8' DELIMITER E'\t'  ;";
 								//echo "requete csv=".$requete."<br>";
 								}
-
-							//suppression du csv dezippé	
-							unlink( $data_csv);
 							}
 									
 						/*finalisation de la query*/
@@ -390,6 +387,14 @@ case "install-set":	{
 						$query .= "ALTER SCHEMA $key OWNER TO $user_codex";
 						$result = pg_query($conn_codex,$query);
 						echo ("L'architecture de la $val a été implémentée avec la nouvelle méthode<BR>"); 
+						
+						/*suppression des csv dezippe pour économiser de la place*/
+						foreach (glob("../$key/sql/*.csv") as $filename) 
+							{   //renvoit le chemin relatif des fichiers csv du dossier
+							$data_csv=realpath($filename); //renvoi le chemin absolu des fichiers
+							unlink( $data_csv);
+							}
+						
 //					} else {
 //						$archi = "../../_SQL/bdd_codex_archi_$key.sql";
 //						$data = "../../_SQL/bdd_codex_data_$key.sql";
