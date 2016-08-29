@@ -107,7 +107,7 @@ foreach ($dir  as $key => $val)
 // $query_admin =	"INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, $nvx_admin , $ref_admin) VALUES ('ADMI1',16,'admin','admin','admin','admin',$nvx_admin_cpt, $ref_admin_cpt);";
 
 //attention  ici pour l'accès à la rubrique refnat on a encore l'ancienne gestion des droits avec les niveaux 255 qui devraient être remplacés par le système des droits d1,d2, d3
-$query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, ref_refnat, niveau_refnat, ref_lr, niveau_lr, ref_catnat, niveau_catnat) VALUES ('ADMI1',16,'admin','admin','admin','admin','true','255', 'true','255', 'true','255');";
+$query_admin = "INSERT INTO applications.utilisateur(id_user, id_cbn, nom, prenom, login, pw, ref_refnat, niveau_refnat, ref_lr, niveau_lr, ref_catnat, niveau_catnat, ref_eee, niveau_eee) VALUES ('ADMI1',16,'admin','admin','admin','admin','true','255', 'true','255', 'true','255','true','255');";
 	
 // $query_admin .=	"INSERT INTO applications.utilisateur_droit(id_user, id_cbn, nom, prenom, login, pw) VALUES ('ADMI1',16,'admin','admin','admin','admin');";
 	
