@@ -8,10 +8,10 @@ BEGIN
 ----------------------------------------------------
 ------VARIABLES A DÉFINIR---------------------------
 ---## Pour tester la fonction. Une fois que vous souhaiter enregistrer la modif dans la table update_bdd, mettre la phase en "prod" ##--
- phase = 'test';
---phase = 'prod';
+--phase = 'test';
+phase = 'prod';
 ---## user_codex est l'utilisateur du codex (décommentez la ligne suivante si besoin) ##--
--- user_codex = 'pg_user';
+user_codex = 'pg_user';
 ----------------------------------------------------
 
 --- 1. Code permettant la mise à jour
@@ -33,10 +33,8 @@ WHEN test_schema =1 THEN 	DROP TABLE IF EXISTS syntaxa.st_ref_type_taxon cascade
 							WITH (
 							  OIDS=FALSE
 							);
-							ALTER TABLE syntaxa.st_ref_type_taxon
-							  OWNER TO postgres;
-							GRANT ALL PRIVILEGES ON syntaxa.st_ref_type_taxon TO postgres;
-							GRANT ALL PRIVILEGES ON syntaxa.st_ref_type_taxon TO user_codex;
+							EXECUTE 'ALTER TABLE syntaxa.st_ref_type_taxon OWNER TO '||user_codex||';';
+							EXECUTE 'GRANT ALL PRIVILEGES ON syntaxa.st_ref_type_taxon TO '||user_codex||';';
 							COMMENT ON TABLE syntaxa.st_ref_type_taxon IS 'Référentiel des types de taxons';
 							COMMENT ON COLUMN syntaxa.st_ref_type_taxon."codeTypeTaxon" IS 'code du type de taxon';
 							COMMENT ON COLUMN syntaxa.st_ref_type_taxon."libTypeTaxon" IS 'libelle du type de taxon';
