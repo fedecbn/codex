@@ -45,8 +45,8 @@ ref_colonne_et_valeur ($id_page);
 //$val= pg_fetch_result($result,"\"codeEnregistrementSyntax\"" ); echo $val;
 
 /*Droits*/
-$typ_droit='d2';$rubrique=$id_page;$onglet = 'syntaxa';
-$droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
+$typ_droit='d2';$rubrique=$id_page;
+$droit = ref_droit($id_user,$typ_droit,$rubrique,$id_page);
 
 //var_dump($droit);
 //var_dump($droit_page);
@@ -135,9 +135,9 @@ echo ("</div>");
 /*Deuxième bandeau : les onglets*/
 echo ("<div id=\"tabs\" style=\" min-height:800px;\">");
 echo ("<ul>");
-echo ("<li><a href=\"#".$id_page."\">".$lang[$lang_select][$id_page]."</a></li>");
-echo ("<li><a href=\"#".$id_page_2."\">".$lang[$lang_select][$id_page_2]."</a></li>");
-echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
+	foreach ($onglet["id"] as $key => $val)
+	echo ("<li><a href=\"#".$val."\">".$onglet["nom"][$key]."</a></li>");
+	echo ("<li><a href=\"#fiche\">".$lang[$lang_select]['fiche']."</a></li>");
 echo ("</ul>");
 
 echo ("<input type=\"hidden\" id=\"mode\" value=\"".$mode."\" />");
@@ -148,11 +148,9 @@ switch ($mode) {
 /*------------------------------------------------------------------------------------------------------- */
     case "liste" : {
 /*------------------------------------------------------------------------------ #Onglet 1*/
-        echo ("<div id=\"".$id_page."\" >");
+        echo ("<div id=\"".$onglet["id"][0]."\" >");
             /*Troisième bandeau*/
-			echo ("<div id=\"titre2\">");
-                echo ($lang[$lang_select]["liste_taxons"]);
-            echo ("</div>");
+	  echo ("<div id=\"titre2\">".$onglet["ss_titre"][0]."</div>");
             echo ("<input type=\"hidden\" id=\"export-TXT-fichier\" value=\"Liste_fiches_".$id_user.".txt\" />");
             echo ("<input type=\"hidden\" id=\"export-TXT-query-id\" value=\"$export_id\" />"); /*---- #Utilisé dans export_TXT.php*/
             echo ("<input type=\"hidden\" id=\"export-TXT-query\" value=\"$query_export\" />"); /*---- #Utilisé dans export_TXT.php*/
@@ -164,8 +162,16 @@ switch ($mode) {
             echo ("<div id=\"dialog\"></div>");
 			
 			/*Table des données*/
-			aff_table_new ($id_page,true,true);			
+			aff_table_reborn ("onglet0",$onglet["id"][0]);			
 		echo ("</div>");
+/*------------------------------------------------------------------------------ #deuxieme onglet (DROIT)*/
+        echo ("<div id=\"".$onglet["id"][1]."\" >");
+            /*Troisième bandeau*/
+            echo ("<div id=\"titre2\">".$onglet["ss_titre"][1]."</div>");
+            echo ("<div id=\"dialog\"></div>");
+			/*Table des données*/
+			aff_table_reborn ("user",$onglet["id"][1]);		
+		echo ("</div>");    
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
         echo ("<div id=\"fiche\" >");
         echo ("</div>");
@@ -189,7 +195,7 @@ switch ($mode) {
 
 
 /*------------------------------------------------------------------------------ #Onglet 1*/
-		echo ("<div id=\"$id_page\" >");
+		echo ("<div id=\"".$onglet["id"][0]."\" >");
 		echo ("</div>");
 /*------------------------------------------------------------------------------ #Onglet Fiche*/
 		echo ("<div id=\"fiche\" >");

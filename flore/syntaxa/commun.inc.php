@@ -23,6 +23,15 @@ $lang_select=$_COOKIE['lang_select'];
 
 $onglet = ref_onglet($id_page);
 
+$query_liste["user"] = $query_liste["user"]."'".$id_page."' "; //cette query est dans flore/commun/commun.inc.php car commune à toutes les rubriques
+
+
+$query_liste[$id_page] = "
+SELECT count(*) OVER() AS total_count,*
+	FROM syntaxa.st_syntaxon 
+	WHERE true 
+	";
+
 $query_module = "
 SELECT t.* 
 	FROM syntaxa.st_syntaxon t 
@@ -121,11 +130,6 @@ inner join
 on ch.\"idTerritoire\"=li.\"id_territoire\" 
 WHERE \"codeEnregistrement\" = ";
 
-
-$query_liste = "
-SELECT count(*) OVER() AS total_count,*
-	FROM syntaxa.st_syntaxon
-	";
 
 /*QUERY query_export est la query qui permet l'export de données elle est
 utilisé dans la fonction exportFunc (gestion.js)

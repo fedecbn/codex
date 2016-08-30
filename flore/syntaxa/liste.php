@@ -23,7 +23,7 @@ $droit_page = acces($id_page,'d1',$base_file,$_SESSION["droit_user"][$id_page]);
 if ($droit_page) {
 
 //------------------------------------------------------------------------------ VAR.
-
+$onglet = $_GET['onglet'];
 //------------------------------------------------------------------------------ PARMS.
 define ("DEBUG",false);
 //------------------------------------------------------------------------------ CONNEXION SERVEUR PostgreSQL
@@ -32,24 +32,24 @@ if (!$db) fatal_error ("Impossible de se connecter au serveur PostgreSQL.",false
 
 //------------------------------------------------------------------------------ REF.		
 global $aColumns, $ref, $champ_ref ;
-ref_colonne_et_valeur ($id_page);
-//var_dump($aColumns[$id_page]);
+ref_colonne_et_valeur ($onglet);
+//var_dump($aColumns[$onglet]);
 //var_dump($champ_ref);
 //var_dump($ref['codeEnregistrementSyntax']);
 // var_dump($ref['nomSyntaxonRetenu']);
 
 /*Droit sur les boutons de la dernière colonne*/
-$typ_droit='d2';$rubrique=$id_page;$onglet = 'syntaxa';
+$typ_droit='d2';$rubrique=$id_page;
 $droit = ref_droit($id_user,$typ_droit,$rubrique,$onglet);
 
 //------------------------------------------------------------------------------ FILTERS
-$filters = filter_column($aColumns[$id_page]);
+$filters = filter_column($aColumns[$onglet]);
 $sLimit = $filters['sLimit'];  
 $sOrder = $filters['sOrder']; 	
 $sWhere = $filters['sWhere']; 	
 
 //------------------------------------------------------------------------------ QUERY
-$query= $query_liste." where true ".$sWhere." ".$sOrder." ".$sLimit;
+$query= $query_liste[$onglet]." ".$sWhere." ".$sOrder." ".$sLimit;
 
 if (DEBUG) echo "<br>".$sWhere;
 if (DEBUG) echo "<br>".$query;
@@ -61,7 +61,7 @@ else $aResultTotal=0;
 $iTotal = $aResultTotal;
 
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 //	$sOutput .= '"iTotalDisplayRecords": '.$iFilteredTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
@@ -69,7 +69,7 @@ $iTotal = $aResultTotal;
     while ($row=pg_fetch_array ($result,NULL,PGSQL_ASSOC)) 
 	{ 
 		$sOutput .= "[";
-		foreach ($aColumns[$id_page] as $key => $value) {
+		foreach ($aColumns[$onglet] as $key => $value) {
 			//echo $row['codeEnregistrementSyntax'] ;
 		/*---------------*/
 		/*cas paticuliers*/
@@ -104,7 +104,7 @@ echo $sOutput;
 	//------------------------------------------------------------------------------ SI PAS ACCES 
 	} else {
 	$sOutput = '{';
-	$sOutput .= '"sEcho": '.intval($_GET['sEcho']).', ';
+	$sOutput .= '"sEcho": '.intval($_POST['sEcho']).', ';
 	$sOutput .= '"iTotalRecords": '.$iTotal.', ';
 	$sOutput .= '"iTotalDisplayRecords": '.$aResultTotal.', ';
 	$sOutput .= '"aaData": [ ';
