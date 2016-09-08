@@ -1166,6 +1166,13 @@ ALTER TABLE syntaxa."st_etage_veg_idCorresEtageveg_seq" OWNER TO postgres;
 
 ALTER SEQUENCE "st_etage_veg_idCorresEtageveg_seq" OWNED BY st_etage_veg."idCorresEtageveg";
 
+COMMENT ON TABLE syntaxa.st_etage_veg
+  IS 'Table de correspondance entre le syntaxon-série-petite géosérie et l''étage de végétation ';
+COMMENT ON COLUMN syntaxa.st_etage_veg."idCorresEtageveg" IS 'identifiant unique de la correspondance entre l''enregistrement et l''étage de végétation';
+COMMENT ON COLUMN syntaxa.st_etage_veg."codeEnregistrement" IS 'identifiant unique de l''enregistrement du syntaxon, faciès, série ou petite géosérie';
+COMMENT ON COLUMN syntaxa.st_etage_veg."codeEtageVeg" IS 'code de l''étage de végétation';
+COMMENT ON COLUMN syntaxa.st_etage_veg."libEtageVeg" IS 'libellé de l''étage de végétation';
+
 
 --
 -- Name: st_geo_sigmafacies; Type: TABLE; Schema: syntaxa; Owner: postgres; Tablespace: 
