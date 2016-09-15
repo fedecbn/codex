@@ -134,7 +134,7 @@ if (!empty ($id))
 			}
 			
 			$query = "SELECT * FROM hub_import_taxon('$id', '$path','$nomOrigine');";	
-			if ($infrataxon == 'TRUE') $query .= "SELECT * FROM hub_txInfra('$id');";
+			if ($infrataxon == 'TRUE') $query .= "SELECT * FROM hub_txInfra('$id',7);";
 			$result = pg_query ($db2,$query);
 			if ($result == false) hub_log($id,$fction); /*erreur*/
 			unset($query);
@@ -209,7 +209,7 @@ if (!empty ($id))
 				if ($infrataxon == 'TRUE') $source = 'listtaxoninfra';
 					else $source = 'listtaxon';
 				if ($source == 'listtaxoninfra')
-					$query = "SELECT * FROM hub_txInfra('$id');SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
+					$query = "SELECT * FROM hub_txInfra('$id',7);SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				else 
 					$query = "SELECT * FROM hub_export('$id', '$source', '$path','taxon');";
 				}
