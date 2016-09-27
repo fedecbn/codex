@@ -2962,6 +2962,78 @@ ALTER TABLE syntaxa.st_ref_type_facies_id_tri_seq OWNER TO postgres;
 ALTER SEQUENCE st_ref_type_facies_id_tri_seq OWNED BY st_ref_type_facies.id_tri;
 
 
+
+
+--
+-- Name: st_ref_type_facies; Type: TABLE; Schema: syntaxa; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE syntaxa.st_ref_type_taxon
+(
+  "codeTypeTaxon" text NOT NULL, -- code du type de taxon
+  "libTypeTaxon" text, -- libelle du type de taxon
+  "libLongTypeTaxon" text, -- libelle long du type de taxon
+  id_tri serial NOT NULL,
+  CONSTRAINT "codeTypeTaxon_pkey" PRIMARY KEY ("codeTypeTaxon")
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE syntaxa.st_ref_type_taxon  OWNER TO pg_user;
+
+--
+-- Name: TABLE st_ref_type_taxon; Type: COMMENT; Schema: syntaxa; Owner: postgres
+--
+
+COMMENT ON TABLE st_ref_type_taxon IS 'Référentiel des types de taxons';
+
+
+--
+-- Name: COLUMN st_ref_type_taxon."codeFacies"; Type: COMMENT; Schema: syntaxa; Owner: postgres
+--
+
+COMMENT ON COLUMN st_ref_type_taxon."codeTypeTaxon" IS 'code du type de taxon';
+
+
+--
+-- Name: COLUMN st_ref_type_taxon."libTypeTaxon"; Type: COMMENT; Schema: syntaxa; Owner: postgres
+--
+
+COMMENT ON COLUMN st_ref_type_taxon."libTypeTaxon" IS 'libelle du type de taxon';
+
+
+--
+-- Name: COLUMN st_ref_type_taxon."libLongTypeTaxon"; Type: COMMENT; Schema: syntaxa; Owner: postgres
+--
+
+COMMENT ON COLUMN st_ref_type_taxon."libLongTypeTaxon" IS 'libelle long du type de taxon';
+
+
+
+--
+-- Name: st_ref_type_taxon_id_tri_seq; Type: SEQUENCE; Schema: syntaxa; Owner: postgres
+--
+
+CREATE SEQUENCE st_ref_type_taxon_id_tri_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE syntaxa.st_ref_type_taxon_id_tri_seq OWNER TO postgres;
+
+--
+-- Name: st_ref_type_taxon_id_tri_seq; Type: SEQUENCE OWNED BY; Schema: syntaxa; Owner: postgres
+--
+
+ALTER SEQUENCE st_ref_type_taxon_id_tri_seq OWNED BY st_ref_type_taxon.id_tri;
+
+
+
+
+
 --
 -- Name: st_ref_type_physionomique; Type: TABLE; Schema: syntaxa; Owner: postgres; Tablespace: 
 --
