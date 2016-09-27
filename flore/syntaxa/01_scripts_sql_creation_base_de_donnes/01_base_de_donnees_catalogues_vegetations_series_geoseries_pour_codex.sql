@@ -753,16 +753,26 @@ COMMENT ON COLUMN syntaxa.st_geomorphologie."libGeomorphologie" IS 'libellé du 
 
 -- object: syntaxa.st_ref_geomorpho | type: TABLE --
 DROP TABLE IF EXISTS syntaxa.st_ref_geomorpho cascade;
-CREATE TABLE syntaxa.st_ref_geomorpho(
-	"idGeomorphologie" text,
-	"libGeomorphologie" text,
-	id_tri serial
+CREATE TABLE syntaxa.st_ref_geomorpho
+(
+  "idGeomorphologie" serial NOT NULL, -- identifiant du taxon géomorphologique
+  "domaine" text, 
+  "taxon" text,
+  "sous_taxon" text, 
+  id_tri serial NOT NULL
+)
+WITH (
+  OIDS=FALSE
 );
+
+COMMENT ON TABLE syntaxa.st_ref_geomorpho  IS 'Référentiel géomorphologique';
 -- ddl-end --
-COMMENT ON TABLE syntaxa.st_ref_geomorpho IS 'Référentiel géomorphologique';
-COMMENT ON COLUMN syntaxa.st_ref_geomorpho."idGeomorphologie" IS 'identifiant du taxon géomorphologique';
-COMMENT ON COLUMN syntaxa.st_ref_geomorpho."libGeomorphologie" IS 'libellé de la géomorphologie';
-COMMENT ON COLUMN syntaxa.st_ref_geomorpho.id_tri is 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
+COMMENT ON COLUMN syntaxa.st_ref_geomorpho."idGeomorphologie" IS 'identifiant de la géomorphologie';
+COMMENT ON COLUMN syntaxa.st_ref_geomorpho."domaine" IS 'domaine géomorphologique';
+COMMENT ON COLUMN syntaxa.st_ref_geomorpho."taxon" IS 'taxon géomorphologique';
+COMMENT ON COLUMN syntaxa.st_ref_geomorpho."sous_taxon" IS 'sous-taxon géomorphologique';
+COMMENT ON COLUMN syntaxa.st_ref_geomorpho.id_tri IS 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
+
 -- ddl-end --
 
 -- object: syntaxa.st_cortege_floristique | type: TABLE --
