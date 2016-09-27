@@ -1855,8 +1855,10 @@ ALTER SEQUENCE st_ref_exposition_id_tri_seq OWNED BY st_ref_exposition.id_tri;
 --
 
 CREATE TABLE st_ref_geomorpho (
-    "idGeomorphologie" text,
-    "libGeomorphologie" text,
+   "idGeomorphologie" integer NOT NULL, -- identifiant du taxon géomorphologique
+   "domaine" text, 
+    "taxon" text,
+    "sous_taxon" text, 
     id_tri integer NOT NULL
 );
 
@@ -1878,17 +1880,50 @@ COMMENT ON COLUMN st_ref_geomorpho."idGeomorphologie" IS 'identifiant du taxon g
 
 
 --
--- Name: COLUMN st_ref_geomorpho."libGeomorphologie"; Type: COMMENT; Schema: syntaxa; Owner: postgres
+-- Name: COLUMN st_ref_geomorpho."domaine"; Type: COMMENT; Schema: syntaxa; Owner: postgres
 --
 
-COMMENT ON COLUMN st_ref_geomorpho."libGeomorphologie" IS 'libellé de la géomorphologie';
+COMMENT ON COLUMN st_ref_geomorpho."domaine" IS 'domaine géomorphologique';
 
+
+--
+-- Name: COLUMN st_ref_geomorpho."taxon"; Type: COMMENT; Schema: syntaxa; Owner: postgres
+--
+
+COMMENT ON COLUMN st_ref_geomorpho."taxon" IS 'taxon géomorphologique';
+
+--
+-- Name: COLUMN st_ref_geomorpho."sous_taxon"; Type: COMMENT; Schema: syntaxa; Owner: postgres
+--
+
+COMMENT ON COLUMN st_ref_geomorpho."sous_taxon" IS 'sous_taxon géomorphologique';
 
 --
 -- Name: COLUMN st_ref_geomorpho.id_tri; Type: COMMENT; Schema: syntaxa; Owner: postgres
 --
 
 COMMENT ON COLUMN st_ref_geomorpho.id_tri IS 'Colonne de tri pour les menus déroulants de l''application codex ,0 correspond à non indiqué';
+
+
+--
+-- Name: st_ref_geomorpho_idGeomorphologie_seq; Type: SEQUENCE; Schema: syntaxa; Owner: postgres
+--
+
+CREATE SEQUENCE st_ref_geomorpho_idGeomorphologie_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE syntaxa.st_ref_geomorpho_idGeomorphologie_seq OWNER TO postgres;
+
+--
+-- Name: st_ref_geomorpho_idGeomorphologie_seq; Type: SEQUENCE OWNED BY; Schema: syntaxa; Owner: postgres
+--
+
+ALTER SEQUENCE st_ref_geomorpho_idGeomorphologie_seq OWNED BY st_ref_geomorpho.idGeomorphologie;
 
 
 --
@@ -1910,6 +1945,8 @@ ALTER TABLE syntaxa.st_ref_geomorpho_id_tri_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE st_ref_geomorpho_id_tri_seq OWNED BY st_ref_geomorpho.id_tri;
+
+
 
 
 --
