@@ -345,9 +345,12 @@ include ("../commun/add_fiche.php");
 			/*requete discussion*/
 			$query= $query_discussion.$id.";";
 			$discussion=pg_query ($db,$query) or fatal_error ("Erreur pgSQL : ".pg_result_error ($query),false);
-			if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion sur la fiche</label>"); else echo ("<label class=\"preField\">Discussion sur la fiche</label>");
-			if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" ></textarea><br><br>");
-			else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
+			if ($avancement != 3)
+			{
+				if ($niveau < 64) echo ("<label class=\"preField_calc\">Discussion sur la fiche</label>"); else echo ("<label class=\"preField\">Discussion sur la fiche</label>");
+				if ($niveau < 64) echo ("<textarea name=\"commentaire_eval\" $disa style=\"width:100em;background-color: #EFEFEF;\" rows=\"4\" ></textarea><br><br>");
+				else echo ("<textarea name=\"commentaire_eval\" style=\"width:100em;\" rows=\"4\" ></textarea><br><br>");
+			}
 			echo "<table>";
 			while ($val = pg_fetch_row($discussion)) {
 				echo "<tr valign=top style=\"border-bottom:1pt solid #D0C5AA;\">";
@@ -360,14 +363,11 @@ include ("../commun/add_fiche.php");
 		
 //------------------------------------------------------------------------------ EDIT LR GRP FIN
                 echo ("<br>");
-                echo ("<div style=\"float:right;\">");
-				if ($mode == "edit") {
-					echo ("<button id=\"enregistrer2-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
-                        echo ("<button id=\"retour2-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
-                    } else {
-                        echo ("<button id=\"retour4-button\">".$lang[$lang_select]['retour']."</button> ");
-                    }
-                echo ("</div>");
+				echo ("<div style=\"float:right;\">");
+					if ($droit['save_fiche'] AND ($avancement == 1 OR $avancement == 2)) echo ("<button id=\"enregistrer1-edit-button\">".$lang[$lang_select]['enregistrer']."</button> ");
+					if ($droit['retour_fiche']) echo ("<button id=\"retour1-button\">".$lang[$lang_select]['liste_taxons']."</button> ");
+				echo ("</div>");
+
                 echo ("</form>");
             } else fatal_error ("ID ".$id." > Pas de résultats !",false);
         } else fatal_error ("ID ".$id." > Vide !",false);
